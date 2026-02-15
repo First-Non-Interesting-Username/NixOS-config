@@ -26,7 +26,7 @@ The part after `-C` is unnecessary, it's only for you to easier differentiate yo
 ssh-keygen -t ed25519 -f ./ssh_host_ed25519_key -N "" -C "your_host_description"
 ```
 
-## 0.2 Add the encryption keys to .sops.yaml
+### 0.2 Add the encryption keys to .sops.yaml
 
 Run:
 
