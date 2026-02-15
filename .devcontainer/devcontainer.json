@@ -1,0 +1,30 @@
+{
+  "name": "Nix",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {
+      "extraNixConfig": "experimental-features = nix-command flakes"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[nix]": {
+          "editor.defaultFormatter": "jnoortheen.nix-ide"
+        },
+        "nix.enableLanguageServer": true,
+        "nix.serverPath": "nil",
+        "nix.formatterPath": "alejandra"
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "wakatime.vscode-wakatime",
+        "Google.geminicodeassist",
+        "jnoortheen.nix-ide"
+      ]
+    }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y yamllint && nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#alejandra nixpkgs#nil"
+}

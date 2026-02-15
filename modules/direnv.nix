@@ -1,0 +1,22 @@
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake = {
+    homeModules.direnv = {
+      pkgs,
+      lib,
+      config,
+      ...
+    }: {
+      programs = {
+        direnv = {
+          enable = true;
+          enableZshIntegration = true;
+          nix-direnv.enable = true;
+        };
+      };
+    };
+  };
+}
