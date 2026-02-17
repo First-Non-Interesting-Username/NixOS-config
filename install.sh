@@ -34,7 +34,7 @@ case "$confirm" in
 esac
 
 echo "Generating hardware config"
-sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o ./modules/hardware/${HOSTNAME}/facter.json
+sudo nix --extra-experimental-features "nix-command flakes" run nixpkgs#nixos-facter -- -o ./modules/hardware/${HOSTNAME}/facter.json
 
 git add .
 
@@ -46,7 +46,7 @@ cp -r . "$temp/etc/nixos/"
 echo "Copied flake to temporary directory"
 
 echo "Running nixos-anywhere..."
-nix shell github:nix-community/nixos-anywhere --command nixos-anywhere \
+nix --extra-experimental-features "nix-command flakes" shell github:nix-community/nixos-anywhere --command nixos-anywhere \
   --flake ".#${HOSTNAME}" \
   --copy-host-keys \
   --extra-files "$temp" \

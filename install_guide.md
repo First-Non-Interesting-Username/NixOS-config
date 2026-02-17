@@ -57,10 +57,10 @@ sudo -i
 
 ### 1.2 Install required packages (This step will be deleted after creating custom install ISO)
 
-We need git to clone the config, sops to add your key and
+We need git to clone the config and TBD
 
 ```bash
-nix-env -iA nixos.git nixos.sops
+nix-env -iA nixos.git
 ```
 
 ### 1.3 Clone the config
@@ -70,6 +70,7 @@ You will need the config to acctually install the system (duh).
 ```bash
 # Change to your repo if needed
 git clone https://github.com/First-Non-Interesting-Username/NixOS-config
+cd NixOS-config
 ```
 
 ### 1.4 Move the SSH keys to /etc/ssh

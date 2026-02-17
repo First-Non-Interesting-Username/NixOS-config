@@ -6,7 +6,6 @@
 }: let
   Hostname = "Laptop";
   Username = "nixi";
-  PublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYA7zLG+1j5EdxtOi+EJdtwsiC7hkfQn0b2TIVRvJo4 vscode@6256ca2c9029";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 1920;
@@ -17,7 +16,6 @@ in {
     specialArgs = {
       inherit self inputs;
       username = Username;
-      publicKey = PublicKey;
       gitName = GitName;
       gitEmail = GitEmail;
       width = Width;
@@ -56,7 +54,6 @@ in {
         home-manager.extraSpecialArgs = {
           inherit self inputs;
           username = Username;
-          publicKey = PublicKey;
           gitName = GitName;
           gitEmail = GitEmail;
           width = Width;
