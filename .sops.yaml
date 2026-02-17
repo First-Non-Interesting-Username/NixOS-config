@@ -11,6 +11,7 @@
 keys:
   # System age key (derived from SSH host private key)
   - &bluefin age18nl2k827fm6esp56a7vadd2lln3uww2j9vaaa2ads7z2zntppecqnpe92j
+  - &laptop age1lxeguqlvkd75um6yd2hsum269p2zly6g7tgdeqxm602ujjurjyvqe9g24u
 
   # Optional: Personal age key for editing secrets from any machine
   # Generate with: age-keygen -o ~/.config/sops/age/keys.txt
@@ -21,4 +22,4 @@ creation_rules:
     key_groups:
       - age:
           - *bluefin
-          # - *personal
+          - *laptop

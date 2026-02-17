@@ -43,6 +43,8 @@ sops updatekeys secrets/secrets.yaml
 
 in the root of this flake.
 
+# Now you have to boot into the live ISO
+
 ## 1. Prepare the Environment
 
 ### 1.1 Increase your permissions
