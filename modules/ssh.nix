@@ -12,13 +12,7 @@
       publicKey,
       ...
     }: {
-      sops.secrets.ssh_private_key = {
-        path = "/home/${username}/.ssh/id_ed25519";
-        owner = username;
-        mode = "0600";
-      };
       programs.ssh.startAgent = true;
-      users.users.${username}.openssh.authorizedKeys.keys = [publicKey];
       systemd.tmpfiles.rules = [
         "d /home/${username}/.ssh 0700 ${username} users - -"
       ];
