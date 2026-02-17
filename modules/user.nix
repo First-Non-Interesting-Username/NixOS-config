@@ -28,6 +28,18 @@
           ];
           openssh.authorizedKeys.keys = [publicKey];
           hashedPasswordFile = config.sops.secrets.sudo_password.path;
+          subUidRanges = [
+            {
+              startUid = 100000;
+              count = 65536;
+            }
+          ];
+          subGidRanges = [
+            {
+              startGid = 100000;
+              count = 65536;
+            }
+          ];
         };
       };
       sops.secrets.sudo_password = {

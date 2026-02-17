@@ -74,7 +74,16 @@ git clone https://github.com/First-Non-Interesting-Username/NixOS-config
 
 Copy the SSH keys (both private and public) generated in step `0.2` to `/etc/ssh`.
 
-#### 1.5 (TEMPORARY) Generate Networking Host ID
+### 1.5 Correct the permissions of the SSH keys
+
+The private key must have 600 permission, and the public key must have 644.
+
+```bash
+chmod 600 /etc/ssh/ssh_host_ed25519_key
+chmod 644 /etc/ssh/ssh_host_ed25519_key.pub
+```
+
+#### 1.6 (TEMPORARY) Generate Networking Host ID
 
 ZFS requires a unique `networking.hostId`. The default is "00000000", but it is best practice to set a unique one.
 

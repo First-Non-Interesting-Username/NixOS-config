@@ -108,14 +108,3 @@ sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key | tail -1
 
 # Compare with what's in .sops.yaml
 ```
-
-### Home-Manager secrets
-
-For user-level secrets, you also need a key at `~/.config/sops/age/keys.txt`:
-
-```bash
-mkdir -p ~/.config/sops/age
-age-keygen -o ~/.config/sops/age/keys.txt
-```
-
-Then add this public key to `.sops.yaml` as well.
