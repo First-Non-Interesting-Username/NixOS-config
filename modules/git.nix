@@ -43,7 +43,7 @@
         };
       };
       home.sessionVariables = {
-        GH_TOKEN = "$(cat ${config.sops.secrets.github_pat.path})";
+        GH_TOKEN = config.sops.secrets.github_pat.path;
       };
     };
   };

@@ -21,8 +21,8 @@
             "https://cache.nixos.org/"
             "https://nix-community.cachix.org/"
             "https://vicinae.cachix.org"
-            # Hyprland is building, despite this being added
             "https://hyprland.cachix.org"
+            "https://attic.xuyh0120.win/lantian"
           ];
 
           trusted-public-keys = [
@@ -30,6 +30,7 @@
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
             "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+            "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
           ];
 
           max-jobs = "auto";

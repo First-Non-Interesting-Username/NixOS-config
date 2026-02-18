@@ -19,11 +19,10 @@
       pkgs,
       lib,
       config,
-      vicinae,
       ...
     }: {
       imports = [
-        vicinae.homeManagerModules.default
+        inputs.vicinae.homeManagerModules.default
       ];
 
       home.packages = with pkgs; [
@@ -73,7 +72,7 @@
             favicon_service = "twenty";
             search_files_in_root = true;
             launcher_window = {
-              opacity = 0.98;
+              opacity = lib.mkForce 0.98;
             };
           };
           extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [

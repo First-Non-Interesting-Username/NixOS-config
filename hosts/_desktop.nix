@@ -3,14 +3,16 @@
   inputs,
   lib,
   ...
-}: let
-  Hostname = "Laptop";
+}:
+let
+  Hostname = "Desktop";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
-  Width = 1920;
-  Height = 1080;
-in {
+  Width = 2560;
+  Height = 1440;
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -38,7 +40,7 @@ in {
       self.nixosModules.user
       self.nixosModules.virtualization-desktop
       self.nixosModules.sunshine
-      self.nixosModules."hardware-${Hostname}"
+      #self.nixosModules."hardware-${Hostname}"
       self.nixosModules.networking-desktop
       self.nixosModules.audio
       self.nixosModules.printing
@@ -79,7 +81,6 @@ in {
             self.homeModules.hyprland
             self.homeModules.gaming
             self.homeModules.input
-            self.homeModules.terminal
           ];
         };
       }

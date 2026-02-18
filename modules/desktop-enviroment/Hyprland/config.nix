@@ -48,19 +48,19 @@
             layout = "dwindle";
 
             "col.active_border" = lib.mkForce (
-              "rgba(${config.stylix.base16Scheme.base08}ff) "
-              + "rgba(${config.stylix.base16Scheme.base09}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0A}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0B}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0C}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0D}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0E}ff) "
-              + "rgba(${config.stylix.base16Scheme.base0F}ff) "
-              + "rgba(${config.stylix.base16Scheme.base00}ff) "
+              "rgba(${config.lib.stylix.colors.base08}ff) "
+              + "rgba(${config.lib.stylix.colors.base09}ff) "
+              + "rgba(${config.lib.stylix.colors.base0A}ff) "
+              + "rgba(${config.lib.stylix.colors.base0B}ff) "
+              + "rgba(${config.lib.stylix.colors.base0C}ff) "
+              + "rgba(${config.lib.stylix.colors.base0D}ff) "
+              + "rgba(${config.lib.stylix.colors.base0E}ff) "
+              + "rgba(${config.lib.stylix.colors.base0F}ff) "
+              + "rgba(${config.lib.stylix.colors.base00}ff) "
               + "45deg"
             );
 
-            "col.inactive_border" = "rgba(${config.stylix.base16Scheme.base03}aa)";
+            "col.inactive_border" = lib.mkForce "rgba(${config.lib.stylix.colors.base03}aa)";
           };
 
           misc = {

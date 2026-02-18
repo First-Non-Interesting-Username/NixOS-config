@@ -1,4 +1,6 @@
-# NixOS Install Guide
+My config Install Guide
+
+> # NOT WORKING FOR NOW
 
 This guide will take you from fresh machine to complete setup, using parts of my NixOS configuration.
 

@@ -24,7 +24,7 @@
     }: {
       stylix.targets.qt = {
         enable = true;
-        platformTheme = "qtct";
+        platform = "qtct";
       };
       dconf = {
         enable = true;

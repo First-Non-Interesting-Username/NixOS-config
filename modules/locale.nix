@@ -26,13 +26,5 @@
 
       time.timeZone = "Europe/Warsaw";
     };
-    homeModules.locale = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      # Home config goes here
-    };
   };
 }

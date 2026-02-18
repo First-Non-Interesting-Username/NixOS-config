@@ -15,6 +15,7 @@
       users.users.${username}.shell = pkgs.zsh;
       programs.zsh.enable = true;
     };
+
     homeModules.shell = {
       pkgs,
       lib,

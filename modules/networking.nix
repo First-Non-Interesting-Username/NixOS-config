@@ -16,7 +16,7 @@
         hostName = hostname;
         networkmanager.enable = true;
 
-        useDHCP = lib.mkDefault false;
+        useDHCP = lib.mkDefault true;
 
         firewall = {
           enable = true;
@@ -37,6 +37,24 @@
       ...
     }: {
       # TBD
+    };
+    nixosModules.networking-minimal = {
+      pkgs,
+      lib,
+      config,
+      hostname,
+      ...
+    }: {
+      networking = {
+        hostName = hostname;
+        networkmanager.enable = true;
+
+        useDHCP = lib.mkDefault true;
+
+        firewall = {
+          enable = true;
+        };
+      };
     };
   };
 }
