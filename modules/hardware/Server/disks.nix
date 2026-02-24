@@ -4,7 +4,7 @@
   ...
 }: {
   flake = {
-    nixosModules.disks-Laptop = {
+    nixosModules.disks-Server = {
       pkgs,
       lib,
       config,
@@ -16,9 +16,16 @@
       ];
 
       boot = {
-        supportedFilesystems = ["zfs"];
-        zfs.devNodes = "/dev/disk/by-id";
         kernelParams = ["nohibernate"];
+        supportedFilesystems = ["zfs"];
+        zfs = {
+          forceImportRoot = false;
+          devNodes = "/dev/disk/by-id";
+          extraPools = [
+            "data"
+            "storage"
+          ];
+        };
       };
 
       services.zfs = {
@@ -29,13 +36,6 @@
           interval = "monthly";
         };
       };
-
-      fileSystems."/persist".neededForBoot = true;
-      fileSystems."/".neededForBoot = true;
-      fileSystems."/etc".neededForBoot = true;
-      fileSystems."/home".neededForBoot = true;
-      fileSystems."/var".neededForBoot = true;
-      fileSystems."/var/lib".neededForBoot = true;
     };
   };
 }

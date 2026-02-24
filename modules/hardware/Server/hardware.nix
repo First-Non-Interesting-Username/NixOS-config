@@ -4,24 +4,29 @@
   ...
 }: {
   flake = {
-    nixosModules.hardware-Minimal = {
+    nixosModules.hardware-Server = {
       pkgs,
       lib,
       config,
       ...
     }: {
+      services.qemuGuestAgent.enable = true;
+
       # 8 random digits/lowercase numbers
-      networking.hostId = "2b8779d2";
+      networking.hostId = "8c46cc1a";
 
       boot.initrd.availableKernelModules = [
+        "virtio_pci"
+        "virtio_blk"
+        "virtio_scsi"
         "ahci"
-        "nvme"
-        "sd_mod"
         "xhci_pci"
+        "usbhid"
+        "sr_mod"
       ];
 
       imports = [
-        self.nixosModules.disks-Minimal
+        self.nixosModules.disks-Server
       ];
     };
   };

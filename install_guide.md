@@ -1,6 +1,6 @@
 My config Install Guide
 
-> # NOT WORKING FOR NOW
+> # NOT WORKING FOR NOW, PLEASE DON'T USE, UNLESS YOU ACTIVELY WANT TO DESTROY YOUR SYSTEM
 
 This guide will take you from fresh machine to complete setup, using parts of my NixOS configuration.
 
