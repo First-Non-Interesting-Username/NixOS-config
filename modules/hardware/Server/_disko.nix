@@ -17,7 +17,6 @@
                 mountOptions = ["umask=0077"];
               };
             };
-
             swap = {
               size = "8G";
               content = {
@@ -26,7 +25,6 @@
                 randomEncryption = true;
               };
             };
-
             zfs = {
               size = "100%";
               content = {
@@ -84,7 +82,6 @@
           mountpoint = "none";
         };
         options.ashift = "12";
-
         datasets = {
           "root" = {
             type = "zfs_fs";
@@ -109,7 +106,6 @@
             mountpoint = "/home";
             options.mountpoint = "legacy";
           };
-
           "reserved" = {
             type = "zfs_fs";
             options = {
@@ -122,7 +118,6 @@
 
       data = {
         type = "zpool";
-        mountpoint = "/data";
         rootFsOptions = {
           compression = "zstd";
           xattr = "sa";
@@ -131,31 +126,24 @@
           mountpoint = "none";
         };
         options.ashift = "12";
-
         datasets = {
-          "stacks" = {
+          "root" = {
             type = "zfs_fs";
-            mountpoint = "/data/stacks";
+            mountpoint = "/mnt/data";
             options.mountpoint = "legacy";
           };
-
-          "volumes" = {
+          "reserved" = {
             type = "zfs_fs";
-            mountpoint = "/data/volumes";
-            options.mountpoint = "legacy";
-          };
-
-          "config" = {
-            type = "zfs_fs";
-            mountpoint = "/data/config";
-            options.mountpoint = "legacy";
+            options = {
+              mountpoint = "none";
+              refreservation = "1G";
+            };
           };
         };
       };
 
       storage = {
         type = "zpool";
-        mountpoint = "/mnt/storage";
         rootFsOptions = {
           compression = "zstd";
           xattr = "sa";
@@ -165,26 +153,12 @@
           mountpoint = "none";
         };
         options.ashift = "12";
-
         datasets = {
-          "media" = {
+          "root" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/storage/media";
+            mountpoint = "/mnt/storage";
             options.mountpoint = "legacy";
           };
-
-          "backups" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/storage/backups";
-            options.mountpoint = "legacy";
-          };
-
-          "downloads" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/storage/downloads";
-            options.mountpoint = "legacy";
-          };
-
           "reserved" = {
             type = "zfs_fs";
             options = {

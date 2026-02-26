@@ -3,14 +3,12 @@
   inputs,
   lib,
   ...
-}:
-let
+}: let
   Hostname = "Server";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
-in
-{
+in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -55,6 +53,7 @@ in
             self.homeModules.shell
             self.homeModules.direnv
             self.homeModules.theme
+            self.homeModules.nps
           ];
         };
       }
