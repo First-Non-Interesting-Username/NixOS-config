@@ -3,12 +3,15 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   Hostname = "Server";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
-in {
+  Domain = "iameasytoremember.duckdns.org";
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -17,6 +20,7 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      domain = Domain;
     };
     modules = [
       # System modules go here
@@ -42,6 +46,7 @@ in {
           gitName = GitName;
           gitEmail = GitEmail;
           hostname = Hostname;
+          domain = Domain;
         };
         home-manager.users.nixi = {
           imports = [
