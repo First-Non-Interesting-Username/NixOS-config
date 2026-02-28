@@ -3,7 +3,7 @@
     disk = {
       root = {
         type = "disk";
-        device = "/dev/vda";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {
@@ -38,7 +38,7 @@
 
       ssd = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/sdb";
         content = {
           type = "gpt";
           partitions = {
@@ -55,7 +55,7 @@
 
       hdd = {
         type = "disk";
-        device = "/dev/sdb";
+        device = "/dev/sdc";
         content = {
           type = "gpt";
           partitions = {
