@@ -8,7 +8,7 @@
       pkgs,
       lib,
       config,
-      modulesPath
+      modulesPath,
       ...
     }: {
       services.qemuGuest.enable = true;
