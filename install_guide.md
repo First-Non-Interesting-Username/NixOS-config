@@ -102,21 +102,7 @@ and put in `modules/hardware/yourhost/hardware.nix`, in the `networking.hostId` 
 
 ## 2. Install the system
 
-### 2a.1 Run the installation script
-
-Just run:
-
-```bash
-./install.sh <your_hostname>
-```
-
-It might be necesarry to make the script executable. In that case run
-
-```bash
-chmod +x install.sh
-```
-
-### 2b.1 Copy the flake to temporary directory
+### 2.1 Copy the flake to temporary directory
 
 Use whatever path you want (You will need to reuse this path).
 Make sure there is nothing in the `/whatever/path/` directory
@@ -125,7 +111,7 @@ Make sure there is nothing in the `/whatever/path/` directory
 cp -r . /whatever/path/etc/nixos
 ```
 
-### 2b.3 Create hardware config
+### 2.3 Create hardware config
 
 Replance HOSTNAME with your actual hostname
 
@@ -133,7 +119,7 @@ Replance HOSTNAME with your actual hostname
 nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o ./modules/hardware/HOSTNAME/facter.json
 ```
 
-### 2b.3 Add the facter report to git
+### 2.3 Add the facter report to git
 
 You will again have to replace HOSTNAME with your actual hostname.
 
@@ -141,13 +127,13 @@ You will again have to replace HOSTNAME with your actual hostname.
 git add ./modules/hardware/HOSTNAME/facter.json
 ```
 
-### 2b.4 Install the system
+### 2.4 Install the system
 
 HOSTNAME is your hostname, /whatever/path/etc/nixos is the same path as above.
 
 ```bash
 nix shell github:nix-community/nixos-anywhere --command nixos-anywhere \
-  --flake ".#HOSTNAME" \
+  --flake .#HOSTNAME \
   --copy-host-keys \
   --extra-files "/whatever/path" \
   --target-host "root@localhost"

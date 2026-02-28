@@ -8,9 +8,10 @@
       pkgs,
       lib,
       config,
+      modulesPath
       ...
     }: {
-      services.qemuGuestAgent.enable = true;
+      services.qemuGuest.enable = true;
 
       # 8 random digits/lowercase numbers
       networking.hostId = "8c46cc1a";
@@ -37,6 +38,7 @@
 
       imports = [
         self.nixosModules.disks-Server
+        [(modulesPath + "/profiles/qemu-guest.nix")];
       ];
     };
   };
