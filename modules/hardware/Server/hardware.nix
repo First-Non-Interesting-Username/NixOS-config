@@ -38,7 +38,7 @@
 
       imports = [
         self.nixosModules.disks-Server
-        [(modulesPath + "/profiles/qemu-guest.nix")]
+        (modulesPath + "/profiles/qemu-guest.nix")
       ];
     };
   };

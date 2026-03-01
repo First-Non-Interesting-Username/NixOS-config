@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  hostname,
   ...
 }: {
   flake = {
@@ -34,6 +33,7 @@
       pkgs,
       lib,
       config,
+      hostname,
       ...
     }: {
       networking = {
