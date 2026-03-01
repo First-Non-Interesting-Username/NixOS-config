@@ -79,7 +79,7 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     nix-podman-stacks = {
-      url = "github:First-Non-Interesting-Username/nix-podman-stacks";
+      url = "github:Tarow/nix-podman-stacks";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

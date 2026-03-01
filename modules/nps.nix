@@ -123,7 +123,7 @@
               };
             };
 
-            filebrowser_quantum = {
+            filebrowser-quantum = {
               enable = true;
               mounts = {
                 ${config.home.homeDirectory} = {
