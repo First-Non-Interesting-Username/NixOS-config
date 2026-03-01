@@ -75,8 +75,8 @@ in {
             self.homeModules.direnv
             self.homeModules.theme
             self.homeModules.browser
-            #self.homeModules.plasma
-            self.homeModules.hyprland
+            self.homeModules.plasma
+            #self.homeModules.hyprland
             self.homeModules.gaming
             self.homeModules.input
             self.homeModules.terminal

@@ -20,16 +20,16 @@
       programs = {
         gamescope.enable = true;
         gamemode.enable = true;
-        steam = {
-          enable = true;
-          gamescopeSession.enable = true;
-          remotePlay.openFirewall = true;
-          dedicatedServer.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = true;
-          extraCompatPackages = with pkgs; [
-            proton-ge-bin
-          ];
-        };
+        #steam = {
+        #  enable = true;
+        #  gamescopeSession.enable = true;
+        #  remotePlay.openFirewall = true;
+        #  dedicatedServer.openFirewall = true;
+        #  localNetworkGameTransfers.openFirewall = true;
+        #  extraCompatPackages = with pkgs; [
+        #    proton-ge-bin
+        #  ];
+        #};
       };
     };
     homeModules.gaming = {

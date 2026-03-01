@@ -66,10 +66,10 @@
           };
           "swap" = {
             type = "zfs_volume";
-            size = "36G";
+            size = "8G";
             content = {
               type = "swap";
-              resumeDevice = true;
+              resumeDevice = false;
             };
             options = {
               compression = "off";
