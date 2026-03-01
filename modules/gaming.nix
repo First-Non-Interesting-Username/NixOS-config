@@ -89,7 +89,6 @@
           protonPackages = with pkgs; [
             proton-ge-bin
           ];
-          steamPackage = osConfig.programs.steam.package;
         };
       };
     };

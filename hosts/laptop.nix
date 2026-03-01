@@ -45,8 +45,8 @@ in {
       self.nixosModules.security
       self.nixosModules.locale
       self.nixosModules.power
-      # self.nixosModules.plasma
-      self.nixosModules.hyprland
+      self.nixosModules.plasma
+      # self.nixosModules.hyprland
       self.nixosModules.gaming
       inputs.home-manager.nixosModules.home-manager
       {

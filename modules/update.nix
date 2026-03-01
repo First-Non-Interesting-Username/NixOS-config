@@ -17,7 +17,7 @@
           enable = true;
           extraArgs = "--keep-since 7d --keep 10 --gc";
         };
-        flake = inputs.self.outPath;
+        flake = "github:First-Non-Interesting-Username/NixOS-config#${config.networking.hostName}";
       };
       nix.optimise = {
         automatic = true;
@@ -25,14 +25,13 @@
       };
       system.autoUpgrade = {
         enable = true;
-        flake = inputs.self.outPath;
+        flake = "github:First-Non-Interesting-Username/NixOS-config#${config.networking.hostName}";
         allowReboot = false;
         persistent = true;
         dates = "02:00";
         randomizedDelaySec = "45min";
         operation = "boot";
         flags = [
-          "--print-build-logs"
           "-L"
         ];
       };

@@ -435,11 +435,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772330611,
-        "narHash": "sha256-UZjPc/d5XRxvjDbk4veAO4XFdvx6BUum2l40V688Xq8=",
+        "lastModified": 1772380461,
+        "narHash": "sha256-O3ukj3Bb3V0Tiy/4LUfLlBpWypJ9P0JeUgsKl2nmZZY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "58fd7ff0eec2cda43e705c4c0585729ec471d400",
+        "rev": "f140aa04d7d14f8a50ab27f3691b5766b17ae961",
         "type": "github"
       },
       "original": {
@@ -566,11 +566,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1772319987,
-        "narHash": "sha256-VJYMqQJYWMpBVb9bWVY1kxs9vgC+1Kh/DUPrqmpsBkw=",
+        "lastModified": 1772379082,
+        "narHash": "sha256-wYQHQB/IpSvk950ilPxdGrnTUpE95uU5UGHjIKpDAnw=",
         "ref": "refs/heads/main",
-        "rev": "2928d6af0ad1fa9f950c4ea8394739a468b5e34f",
-        "revCount": 6952,
+        "rev": "8ad96a95d62b16d5c9a141ad5a37b51388a68aef",
+        "revCount": 6955,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/hyprwm/Hyprland"
@@ -963,11 +963,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1772354577,
-        "narHash": "sha256-WIcZYqwSXP+SkmyTj8cU3SNgHYL31zeg+TCW/LcMrys=",
+        "lastModified": 1772356379,
+        "narHash": "sha256-/vdnU1Pk2LwgxS+Bk6PpPm6huB/Y3d14REvRmH3/qQw=",
         "owner": "Tarow",
         "repo": "nix-podman-stacks",
-        "rev": "13be17605e070d0ff579d93c94de2b3e70a1c198",
+        "rev": "7b7b6cf6fe8380386710028d9228ea933988e7d8",
         "type": "github"
       },
       "original": {
@@ -1174,11 +1174,11 @@
         "noctalia-qs": "noctalia-qs"
       },
       "locked": {
-        "lastModified": 1772319635,
-        "narHash": "sha256-ZVrtz08Fyp6knPEAbcD2+OYvs0T4pTII/xMElHpi31M=",
+        "lastModified": 1772383865,
+        "narHash": "sha256-cD6aL2MbHcZ8/PONWHZPnfs6+LUMm1hO4P/AoD5M9ik=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "5d03c56f4c8d7243e6ae97c045afa44aaac2bf0e",
+        "rev": "ebd2cf2be41450a4af3411f4773cfc6963658d9b",
         "type": "github"
       },
       "original": {
@@ -1243,11 +1243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770766818,
-        "narHash": "sha256-12RCFLyAedyMOdenUi7cN3ioJPEGjA/ZG1BLjugfUVs=",
+        "lastModified": 1772361940,
+        "narHash": "sha256-B1Cz+ydL1iaOnGlwOFld/C8lBECPtzhiy/pP93/CuyY=",
         "owner": "nix-community",
         "repo": "plasma-manager",
-        "rev": "44b928068359b7d2310a34de39555c63c93a2c90",
+        "rev": "a4b33606111c9c5dcd10009042bb710307174f51",
         "type": "github"
       },
       "original": {
