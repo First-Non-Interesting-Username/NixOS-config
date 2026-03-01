@@ -35,7 +35,7 @@
       nps = {
         defaultTz = "Europe/Warsaw";
         externalStorageBaseDir = "/mnt/storage";
-        hostIP4Address = "192.168.0.200";
+        hostIP4Address = "192.168.0.124";
         storageBaseDir = "/mnt/data";
         stacks = {
           lldap = {
