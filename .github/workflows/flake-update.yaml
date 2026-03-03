@@ -1,0 +1,40 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --exit-code flake.lock || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Open PR if changed
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update flake.lock"
+          title: "chore: weekly flake.lock update"
+          body: |
+            Automated `flake.lock` update via `nix flake update`.
+            Please review input changes before merging.
+          branch: "bot/flake-lock-update"
+          delete-branch: true
+          labels: dependencies

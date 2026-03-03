@@ -1,0 +1,49 @@
+name: Flake build
+
+on:
+  schedule:
+    - cron: "0 4 1 * *"
+  workflow_dispatch:
+
+jobs:
+  hosts:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: List nixosConfigurations
+        id: list
+        run: |
+          MATRIX=$(nix eval .#nixosConfigurations --apply 'x: builtins.attrNames x' --json)
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: hosts
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJson(needs.hosts.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Enable aarch64 via QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Add aarch64 as extra platform
+        run: |
+          echo "extra-platforms = aarch64-linux" | \
+          sudo tee -a /etc/nix/nix.conf
+          sudo systemctl restart nix-daemon
+
+      - name: Build ${{ matrix.host }}
+        run: |
+          nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
