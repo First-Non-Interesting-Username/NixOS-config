@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes pipe-operators
 
       - name: List nixosConfigurations
         id: list
@@ -31,8 +34,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes pipe-operators
       - uses: DeterminateSystems/magic-nix-cache-action@main
-
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
         with:
