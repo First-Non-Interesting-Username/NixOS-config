@@ -267,8 +267,8 @@
 
             staticConfig.certificatesResolvers.letsencrypt.acme = {
               dnsChallenge.provider = "duckdns";
-              storage = "/var/lib/traefik/acme.json";
-              email = gitEmail;
+              storage = lib.mkForce "/var/lib/traefik/acme.json";
+              email = lib.mkForce gitEmail;
             };
 
             geoblock = {

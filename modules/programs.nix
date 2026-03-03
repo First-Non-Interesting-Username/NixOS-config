@@ -9,17 +9,13 @@
       lib,
       config,
       username,
+      options,
       ...
     }: {
       programs.kdeconnect.enable = true;
 
       environment.persistence."/persist" =
-        lib.mkIf
-        (
-          config ? environment
-          && config.environment ? persistence
-          && config.environment.persistence ? "/persist"
-        )
+        lib.mkIf (options ? environment && options.environment ? persistence)
         {
           directories = [
             "/var/lib/kdeconnect"
@@ -27,12 +23,14 @@
           files = [
             # System-level files to persist
           ];
-          users.${username}.directories = [
-            ".config/kdeconnect"
-          ];
-          users.${username}.files = [
-            # User-level files to persist (relative to $HOME)
-          ];
+          users.${username} = {
+            directories = [
+              ".config/kdeconnect"
+            ];
+            files = [
+              # User-level files to persist (relative to $HOME)
+            ];
+          };
         };
     };
     homeModules.programs-desktop = {
