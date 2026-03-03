@@ -48,6 +48,7 @@ in {
       self.nixosModules.plasma
       # self.nixosModules.hyprland
       self.nixosModules.gaming
+      self.nixosModules.programs-desktop
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -80,6 +81,7 @@ in {
             self.homeModules.gaming
             self.homeModules.input
             self.homeModules.terminal
+            self.homeModules.programs-desktop
           ];
         };
       }

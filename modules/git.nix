@@ -43,7 +43,8 @@
         };
       };
       home.sessionVariables = {
-        GITHUB_TOKEN = config.sops.secrets.github_pat.path;
+        GH_TOKEN = config.sops.secrets.github_pat.path;
+        NIX_CONFIG = "access-tokens = github.com=$(cat ${config.sops.secrets.github_pat.path})";
       };
     };
   };

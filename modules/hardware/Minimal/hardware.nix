@@ -20,6 +20,8 @@
         "xhci_pci"
       ];
 
+      hardware.enableRedistributableFirmware = true;
+
       imports = [
         self.nixosModules.disks-Minimal
       ];

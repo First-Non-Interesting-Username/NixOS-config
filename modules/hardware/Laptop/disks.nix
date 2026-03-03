@@ -32,10 +32,6 @@
 
       fileSystems."/persist".neededForBoot = true;
       fileSystems."/".neededForBoot = true;
-      fileSystems."/etc".neededForBoot = true;
-      fileSystems."/home".neededForBoot = true;
-      fileSystems."/var".neededForBoot = true;
-      fileSystems."/var/lib".neededForBoot = true;
     };
   };
 }

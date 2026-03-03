@@ -4,14 +4,14 @@
   ...
 }: {
   flake = {
-    nixosModules.CHANGEME = {
+    nixosModules.programs-desktop = {
       pkgs,
       lib,
       config,
       username,
       ...
     }: {
-      # System config goes here
+      programs.kdeconnect.enable = true;
 
       environment.persistence."/persist" =
         lib.mkIf
@@ -22,21 +22,20 @@
         )
         {
           directories = [
-            # System-level dirs to persist
+            "/var/lib/kdeconnect"
           ];
           files = [
             # System-level files to persist
           ];
           users.${username}.directories = [
-            # User-level dirs to persist (relative to $HOME)
+            ".config/kdeconnect"
           ];
           users.${username}.files = [
             # User-level files to persist (relative to $HOME)
           ];
         };
     };
-
-    homeModules.CHANGEME = {
+    homeModules.programs-desktop = {
       pkgs,
       lib,
       config,
