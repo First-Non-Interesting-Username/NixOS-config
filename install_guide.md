@@ -132,11 +132,7 @@ git add ./modules/hardware/HOSTNAME/facter.json
 HOSTNAME is your hostname, /whatever/path/etc/nixos is the same path as above.
 
 ```bash
-nix shell github:nix-community/nixos-anywhere --command nixos-anywhere \
-  --flake .#HOSTNAME \
-  --copy-host-keys \
-  --extra-files "/whatever/path" \
-  --target-host "root@localhost"
+nix shell github:nix-community/nixos-anywhere --command nixos-anywhere   --flake "github:First-Non-Interesting-Username/NixOS-config#Laptop"   --copy-host-keys   --target-host "root@192.168.0.1XX"
 ```
 
 ## 3. Post-Install
