@@ -6,12 +6,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  check:
+    uses: ./.github/workflows/flake-check.yml
+
   hosts:
     runs-on: ubuntu-latest
+    needs: check
     outputs:
       matrix: ${{ steps.list.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
@@ -37,7 +42,9 @@ jobs:
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
+
       - uses: DeterminateSystems/magic-nix-cache-action@main
+
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -46,9 +53,64 @@ jobs:
       - name: Add aarch64 as extra platform
         run: |
           echo "extra-platforms = aarch64-linux" | \
-          sudo tee -a /etc/nix/nix.conf
+            sudo tee -a /etc/nix/nix.conf
           sudo systemctl restart nix-daemon
 
       - name: Build ${{ matrix.host }}
+        id: build
         run: |
           nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+
+  report:
+    runs-on: ubuntu-latest
+    needs: build
+    if: failure()
+    permissions:
+      issues: write
+    steps:
+      - name: Report failures to issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId
+            });
+
+            const failed = jobs.jobs
+              .filter(j => j.conclusion === 'failure' && j.name.startsWith('build'))
+              .map(j => `- \`${j.name}\` — [logs](${j.html_url})`)
+              .join('\n');
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'ci-failure',
+              state: 'open'
+            });
+
+            const title = '❌ Flake build failures';
+            const existing = issues.find(i => i.title === title);
+            const body = `## Flake Build Failures\n\n` +
+              `**Workflow:** ${context.workflow}\n` +
+              `**Run:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n` +
+              `**Date:** ${new Date().toUTCString()}\n\n` +
+              `### Failed hosts\n${failed || 'Unknown — check run logs'}`;
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['ci-failure']
+              });
+            }

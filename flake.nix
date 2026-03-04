@@ -84,8 +84,9 @@
     };
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -97,11 +98,12 @@
             lib,
             flake-parts-lib,
             ...
-          }: {
+          }:
+          {
             options.flake = flake-parts-lib.mkSubmoduleOptions {
               homeModules = lib.mkOption {
                 type = with lib.types; lazyAttrsOf raw;
-                default = {};
+                default = { };
               };
             };
           }

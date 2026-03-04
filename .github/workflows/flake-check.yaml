@@ -4,10 +4,17 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_call:
+    outputs:
+      success:
+        description: "Whether the flake check passed"
+        value: ${{ jobs.check.outputs.success }}
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      success: ${{ steps.check.outputs.success }}
     steps:
       - uses: actions/checkout@v4
 
@@ -15,7 +22,9 @@ jobs:
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
+
       - uses: DeterminateSystems/magic-nix-cache-action@main
+
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -24,8 +33,10 @@ jobs:
       - name: Add aarch64 as extra platform
         run: |
           echo "extra-platforms = aarch64-linux" | \
-          sudo tee -a /etc/nix/nix.conf
+            sudo tee -a /etc/nix/nix.conf
           sudo systemctl restart nix-daemon
 
       - name: Check flake
-        run: nix flake check
+        id: check
+        run: |
+          nix flake check && echo "success=true" >> $GITHUB_OUTPUT
