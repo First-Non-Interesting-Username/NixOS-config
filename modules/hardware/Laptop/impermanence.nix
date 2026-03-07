@@ -14,9 +14,10 @@
         inputs.impermanence.nixosModules.impermanence
       ];
 
-      boot.initrd.systemd.enable = true;
-
-      nix.settings.tmpdir = "/var/tmp";
+      boot = {
+        initrd.systemd.enable = true;
+        tmp.cleanOnBoot = true;
+      };
 
       systemd.tmpfiles.rules = [
         "d /persist/home/${username} 0700 ${username} users -"
@@ -41,7 +42,7 @@
           "/var/lib/flatpak"
           "/var/lib/sunshine"
           "/var/lib/sops-nix"
-          "/var/tmp"
+          "/tmp"
           "/var/cache/tuigreet"
           "/etc/nixos"
         ];

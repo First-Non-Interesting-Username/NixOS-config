@@ -21,7 +21,7 @@
 
       # sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json
       hardware.facter = lib.optionalAttrs (builtins.pathExists ./facter.json) {
-        reportPath = ./facter.json;
+        #reportPath = ./facter.json;
       };
 
       imports = [

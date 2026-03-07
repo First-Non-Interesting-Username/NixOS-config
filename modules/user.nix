@@ -12,6 +12,8 @@
       ...
     }: {
       users = {
+        # Temporary
+        users.root.hashedPassword = "$y$j9T$jAeTefhvysPMTp87pGpQd0$TqcFZZJ16UdfzfdbSrDje8QYBfvYvjMAEUQt62oM3f9";
         mutableUsers = false;
         users.${username} = {
           isNormalUser = true;
