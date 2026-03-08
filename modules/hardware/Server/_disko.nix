@@ -22,14 +22,60 @@
               content = {
                 type = "swap";
                 discardPolicy = "both";
-                randomEncryption = true;
               };
             };
-            zfs = {
+            root = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zroot";
+                type = "btrfs";
+                extraArgs = ["-f"];
+                subvolumes = {
+                  "@" = {
+                    mountpoint = "/";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                      "space_cache=v2"
+                      "discard=async"
+                    ];
+                  };
+                  "@nix" = {
+                    mountpoint = "/nix";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                      "space_cache=v2"
+                      "discard=async"
+                    ];
+                  };
+                  "@var" = {
+                    mountpoint = "/var";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                      "space_cache=v2"
+                      "discard=async"
+                    ];
+                  };
+                  "@home" = {
+                    mountpoint = "/home";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                      "space_cache=v2"
+                      "discard=async"
+                    ];
+                  };
+                  "@snapshots" = {
+                    mountpoint = "/.snapshots";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                      "space_cache=v2"
+                      "discard=async"
+                    ];
+                  };
+                };
               };
             };
           };
@@ -42,11 +88,16 @@
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            data = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "data";
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/mnt/data";
+                mountOptions = [
+                  "noatime"
+                  "errors=remount-ro"
+                ];
               };
             };
           };
@@ -59,111 +110,26 @@
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            storage = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "storage";
+                type = "filesystem";
+                format = "xfs";
+                extraArgs = [
+                  "-d"
+                  "su=64k,sw=1"
+                  "-l"
+                  "size=256m,lazy-count=1"
+                ];
+                mountpoint = "/mnt/storage";
+                mountOptions = [
+                  "noatime"
+                  "largeio"
+                  "inode64"
+                  "noquota"
+                  "allocsize=64m"
+                ];
               };
-            };
-          };
-        };
-      };
-    };
-
-    zpool = {
-      zroot = {
-        type = "zpool";
-        rootFsOptions = {
-          compression = "zstd";
-          atime = "off";
-          xattr = "sa";
-          acltype = "posixacl";
-          mountpoint = "none";
-        };
-        options.ashift = "12";
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-            options.mountpoint = "legacy";
-          };
-          "nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options = {
-              mountpoint = "legacy";
-              atime = "off";
-            };
-          };
-          "var" = {
-            type = "zfs_fs";
-            mountpoint = "/var";
-            options.mountpoint = "legacy";
-          };
-          "home" = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-            options.mountpoint = "legacy";
-          };
-          "reserved" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              refreservation = "1G";
-            };
-          };
-        };
-      };
-
-      data = {
-        type = "zpool";
-        rootFsOptions = {
-          compression = "zstd";
-          xattr = "sa";
-          acltype = "posixacl";
-          atime = "off";
-          mountpoint = "none";
-        };
-        options.ashift = "12";
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/data";
-            options.mountpoint = "legacy";
-          };
-          "reserved" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              refreservation = "1G";
-            };
-          };
-        };
-      };
-
-      storage = {
-        type = "zpool";
-        rootFsOptions = {
-          compression = "zstd";
-          xattr = "sa";
-          acltype = "posixacl";
-          atime = "off";
-          recordsize = "1M";
-          mountpoint = "none";
-        };
-        options.ashift = "12";
-        datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/storage";
-            options.mountpoint = "legacy";
-          };
-          "reserved" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              refreservation = "10G";
             };
           };
         };

@@ -27,7 +27,7 @@ in {
       self.nixosModules.home-manager
       self.nixosModules.flatpak
       self.nixosModules.git
-      self.nixosModules.secrets
+      self.nixosModules.secrets-impermanence
       self.nixosModules.ssh
       self.nixosModules.shell
       self.nixosModules.bootloader
@@ -49,6 +49,7 @@ in {
       # self.nixosModules.hyprland
       self.nixosModules.gaming
       self.nixosModules.programs-desktop
+      self.nixosModules.user-debug
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -68,7 +69,6 @@ in {
             self.homeModules.home-manager
             self.homeModules.flatpak
             self.homeModules.git
-            self.homeModules.secrets
             self.homeModules.ssh
             self.homeModules.shell
             self.homeModules.virtualization-desktop

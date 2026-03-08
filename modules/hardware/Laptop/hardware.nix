@@ -14,9 +14,6 @@
         enable = true;
       };
 
-      # 8 random digits/lowercase numbers
-      networking.hostId = "7d6087de";
-
       boot.initrd.kernelModules = ["amdgpu"];
 
       # sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json

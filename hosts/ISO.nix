@@ -53,7 +53,6 @@ in {
             # Home manager modules go here
             self.homeModules.home-manager
             self.homeModules.git
-            self.homeModules.secrets
             self.homeModules.ssh
             self.homeModules.shell
             self.homeModules.direnv

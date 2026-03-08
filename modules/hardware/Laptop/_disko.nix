@@ -1,4 +1,4 @@
-{
+{...}: {
   disko.devices = {
     disk = {
       main = {
@@ -20,63 +20,47 @@
                 ];
               };
             };
-            zfs = {
-              size = "100%";
+            swap = {
+              size = "8G";
+              type = "8200";
               content = {
-                type = "zfs";
-                pool = "rpool";
+                type = "swap";
+                resumeDevice = false;
               };
             };
-          };
-        };
-      };
-    };
-
-    zpool = {
-      rpool = {
-        type = "zpool";
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
-        rootFsOptions = {
-          compression = "zstd";
-          acltype = "posixacl";
-          xattr = "sa";
-          atime = "off";
-        };
-        datasets = {
-          "nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options = {
-              atime = "off";
-              canmount = "on";
-              mountpoint = "legacy";
-            };
-          };
-          "persist" = {
-            type = "zfs_fs";
-            mountpoint = "/persist";
-            options = {
-              atime = "off";
-              canmount = "on";
-              mountpoint = "legacy";
-            };
-          };
-          "swap" = {
-            type = "zfs_volume";
-            size = "8G";
-            content = {
-              type = "swap";
-              resumeDevice = false;
-            };
-            options = {
-              compression = "off";
-              logbias = "throughput";
-              sync = "standard";
-              primarycache = "metadata";
-              secondarycache = "none";
+            root = {
+              size = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = [
+                  "-L"
+                  "nixos"
+                  "-f"
+                ];
+                subvolumes = {
+                  "@nix" = {
+                    mountpoint = "/nix";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                  "@persist" = {
+                    mountpoint = "/persist";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                  "@snapshots" = {
+                    mountpoint = "/.snapshots";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                };
+              };
             };
           };
         };

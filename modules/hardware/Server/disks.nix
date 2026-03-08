@@ -17,16 +17,10 @@
       ];
 
       boot = {
-        kernelParams = ["nohibernate"];
-        supportedFilesystems = ["zfs"];
-        zfs = {
-          forceImportRoot = false;
-          devNodes = "/dev/disk/by-id";
-          extraPools = [
-            "data"
-            "storage"
-          ];
-        };
+        supportedFilesystems = [
+          "btrfs"
+          "xfs"
+        ];
       };
 
       systemd.tmpfiles.rules = [
@@ -34,13 +28,15 @@
         "d /mnt/storage 0755 ${username} users -"
       ];
 
-      services.zfs = {
-        autoSnapshot.enable = false;
-
-        autoScrub = {
+      services = {
+        btrfs.autoScrub = {
           enable = true;
+          fileSystems = ["/"];
           interval = "monthly";
         };
+        udev.extraRules = ''
+          ACTION=="add|change", KERNEL=="sdc", ATTR{queue/scheduler}="bfq"
+        '';
       };
     };
   };

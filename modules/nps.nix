@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 53;
@@ -21,11 +22,35 @@
           51820
         ];
       };
+
+      sops.secrets = {
+        "authelia/jwt_secret".owner = username;
+        "authelia/session_secret".owner = username;
+        "authelia/encryption_key".owner = username;
+        "authelia/oidc_hmac_secret".owner = username;
+        "authelia/oidc_rsa_pk".owner = username;
+        "lldap/jwt_secret".owner = username;
+        "lldap/key_seed".owner = username;
+        "lldap/admin_password".owner = username;
+        "crowdsec/enroll_key".owner = username;
+        "crowdsec/traefik_bouncer_key".owner = username;
+        "DUCKDNS_TOKEN".owner = username;
+        "filebrowser_quantum/authelia/client_secret".owner = username;
+        "microbin/admin_password".owner = username;
+        "grafana/authelia/client_secret".owner = username;
+        "searxng/secret_key".owner = username;
+        "jellyfin/authelia/client_secret".owner = username;
+        "qui/authelia/client_secret".owner = username;
+        "traefik/crowdsec_bouncer_key".owner = username;
+        "wg_easy/admin_password".owner = username;
+      };
     };
+
     homeModules.nps = {
       pkgs,
       lib,
       config,
+      osConfig,
       hostname,
       domain,
       gitEmail,
@@ -41,21 +66,21 @@
           lldap = {
             enable = true;
             baseDn = "DC=iameasytoremember,DC=duckdns,DC=org";
-            jwtSecretFile = config.sops.secrets."lldap/jwt_secret".path;
-            keySeedFile = config.sops.secrets."lldap/key_seed".path;
-            adminPasswordFile = config.sops.secrets."lldap/admin_password".path;
+            jwtSecretFile = osConfig.sops.secrets."lldap/jwt_secret".path;
+            keySeedFile = osConfig.sops.secrets."lldap/key_seed".path;
+            adminPasswordFile = osConfig.sops.secrets."lldap/admin_password".path;
           };
 
           authelia = {
             enable = true;
-            jwtSecretFile = config.sops.secrets."authelia/jwt_secret".path;
-            sessionSecretFile = config.sops.secrets."authelia/session_secret".path;
-            storageEncryptionKeyFile = config.sops.secrets."authelia/encryption_key".path;
+            jwtSecretFile = osConfig.sops.secrets."authelia/jwt_secret".path;
+            sessionSecretFile = osConfig.sops.secrets."authelia/session_secret".path;
+            storageEncryptionKeyFile = osConfig.sops.secrets."authelia/encryption_key".path;
             sessionProvider = "redis";
             oidc = {
               enable = true;
-              hmacSecretFile = config.sops.secrets."authelia/oidc_hmac_secret".path;
-              jwksRsaKeyFile = config.sops.secrets."authelia/oidc_rsa_pk".path;
+              hmacSecretFile = osConfig.sops.secrets."authelia/oidc_hmac_secret".path;
+              jwksRsaKeyFile = osConfig.sops.secrets."authelia/oidc_rsa_pk".path;
             };
           };
 
@@ -89,7 +114,7 @@
 
             extraEnv = {
               ENROLL_INSTANCE_NAME = "${hostname}";
-              ENROLL_KEY.fromFile = config.sops.secrets."crowdsec/enroll_key".path;
+              ENROLL_KEY.fromFile = osConfig.sops.secrets."crowdsec/enroll_key".path;
             };
           };
 
@@ -99,7 +124,7 @@
               {
                 provider = "duckdns";
                 domain = "${domain}";
-                token = "{{ file.Read `${config.sops.secrets."DUCKDNS_TOKEN".path}`}}";
+                token = "{{ file.Read `${osConfig.sops.secrets."DUCKDNS_TOKEN".path}`}}";
                 ip_version = "ipv4";
               }
             ];
@@ -132,7 +157,7 @@
             };
             oidc = {
               enable = true;
-              clientSecretFile = config.sops.secrets."filebrowser_quantum/authelia/client_secret".path;
+              clientSecretFile = osConfig.sops.secrets."filebrowser_quantum/authelia/client_secret".path;
             };
             settings.auth.methods.password.enabled = false;
             containers.filebrowser-quantum = {
@@ -158,7 +183,7 @@
 
             extraEnv = {
               MICROBIN_ADMIN_USERNAME = "admin";
-              MICROBIN_ADMIN_PASSWORD.fromFile = config.sops.secrets."microbin/admin_password".path;
+              MICROBIN_ADMIN_PASSWORD.fromFile = osConfig.sops.secrets."microbin/admin_password".path;
             };
             containers.microbin = {
               expose = true;
@@ -171,7 +196,7 @@
             grafana = {
               oidc = {
                 enable = true;
-                clientSecretFile = config.sops.secrets."grafana/authelia/client_secret".path;
+                clientSecretFile = osConfig.sops.secrets."grafana/authelia/client_secret".path;
               };
             };
             containers = {
@@ -212,7 +237,7 @@
 
           searxng = {
             enable = true;
-            secretKeyFile = config.sops.secrets."searxng/secret_key".path;
+            secretKeyFile = osConfig.sops.secrets."searxng/secret_key".path;
             containers.searxng = {
               forwardAuth = {
                 enable = true;
@@ -231,7 +256,7 @@
             jellyfin = {
               oidc = {
                 enable = true;
-                clientSecretFile = config.sops.secrets."jellyfin/authelia/client_secret".path;
+                clientSecretFile = osConfig.sops.secrets."jellyfin/authelia/client_secret".path;
               };
             };
 
@@ -239,7 +264,7 @@
               enable = true;
               oidc = {
                 enable = true;
-                clientSecretFile = config.sops.secrets."qui/authelia/client_secret".path;
+                clientSecretFile = osConfig.sops.secrets."qui/authelia/client_secret".path;
               };
             };
             qbittorrent.extraEnv = {
@@ -256,13 +281,14 @@
               };
             };
           };
+
           traefik = {
             enable = true;
 
             domain = "${domain}";
 
             extraEnv = {
-              DUCKDNS_TOKEN.fromFile = config.sops.secrets."DUCKDNS_TOKEN".path;
+              DUCKDNS_TOKEN.fromFile = osConfig.sops.secrets."DUCKDNS_TOKEN".path;
             };
 
             staticConfig.certificatesResolvers.letsencrypt.acme = {
@@ -308,7 +334,7 @@
               enableLogCollection = true;
               middleware = {
                 enable = true;
-                bouncerKeyFile = config.sops.secrets."traefik/crowdsec_bouncer_key".path;
+                bouncerKeyFile = osConfig.sops.secrets."traefik/crowdsec_bouncer_key".path;
               };
             };
 
@@ -324,11 +350,10 @@
             port = 51820;
 
             adminUsername = "admin";
-            adminPasswordFile = config.sops.secrets."wg_easy/admin_password".path;
+            adminPasswordFile = osConfig.sops.secrets."wg_easy/admin_password".path;
 
             extraEnv = {
               DISABLE_IPV6 = true;
-              # Maybe change to other DNS server?
               INIT_DNS = "192.168.0.1";
               INIT_ALLOWED_IPS = "192.168.0.0/24, 10.8.0.0/24";
             };
@@ -341,28 +366,6 @@
             };
           };
         };
-      };
-
-      sops.secrets = {
-        "authelia/jwt_secret" = {};
-        "authelia/session_secret" = {};
-        "authelia/encryption_key" = {};
-        "authelia/oidc_hmac_secret" = {};
-        "authelia/oidc_rsa_pk" = {};
-        "lldap/jwt_secret" = {};
-        "lldap/key_seed" = {};
-        "lldap/admin_password" = {};
-        "crowdsec/enroll_key" = {};
-        "crowdsec/traefik_bouncer_key" = {};
-        "DUCKDNS_TOKEN" = {};
-        "filebrowser_quantum/authelia/client_secret" = {};
-        "microbin/admin_password" = {};
-        "grafana/authelia/client_secret" = {};
-        "searxng/secret_key" = {};
-        "jellyfin/authelia/client_secret" = {};
-        "qui/authelia/client_secret" = {};
-        "traefik/crowdsec_bouncer_key" = {};
-        "wg_easy/admin_password" = {};
       };
     };
   };

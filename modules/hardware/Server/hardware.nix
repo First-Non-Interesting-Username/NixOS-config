@@ -13,9 +13,6 @@
     }: {
       services.qemuGuest.enable = true;
 
-      # 8 random digits/lowercase numbers
-      networking.hostId = "8c46cc1a";
-
       boot.initrd.availableKernelModules = [
         "virtio_pci"
         "virtio_blk"

@@ -44,23 +44,10 @@
 
       sops = {
         defaultSopsFile = "${self}/secrets/secrets.yaml";
-        age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
-      };
-    };
-
-    homeModules.secrets = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      imports = [
-        inputs.sops-nix.homeManagerModules.sops
-      ];
-
-      sops = {
-        defaultSopsFile = "${self}/secrets/secrets.yaml";
-        age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+        age = {
+          generateKey = false;
+          sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+        };
       };
     };
   };

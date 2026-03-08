@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       programs.git.enable = lib.mkForce false;
@@ -16,6 +17,9 @@
         git
         gh
       ];
+      sops.secrets.github_pat = {
+        owner = username;
+      };
     };
     homeModules.git = {
       pkgs,
@@ -23,6 +27,7 @@
       config,
       gitName,
       gitEmail,
+      osConfig,
       ...
     }: {
       programs = {
@@ -43,11 +48,9 @@
           };
         };
       };
-      sops.secrets.github_pat = {};
 
       home.sessionVariables = {
-        GH_TOKEN = config.sops.secrets.github_pat.path;
-        NIX_CONFIG = "access-tokens = github.com=${config.sops.secrets.github_pat.path}";
+        GH_TOKEN = osConfig.sops.secrets.github_pat.path;
       };
     };
   };
