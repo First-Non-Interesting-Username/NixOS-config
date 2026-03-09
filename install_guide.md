@@ -88,18 +88,6 @@ chmod 600 /etc/ssh/ssh_host_ed25519_key
 chmod 644 /etc/ssh/ssh_host_ed25519_key.pub
 ```
 
-#### 1.6 (TEMPORARY) Generate Networking Host ID
-
-ZFS requires a unique `networking.hostId`. The default is "00000000", but it is best practice to set a unique one.
-
-Generate it with:
-
-```bash
-head -c 4 /dev/urandom | od -A none -t x4
-```
-
-and put in `modules/hardware/yourhost/hardware.nix`, in the `networking.hostId` line.
-
 ## 2. Install the system
 
 ### 2.1 Copy the flake to temporary directory
@@ -132,7 +120,7 @@ git add ./modules/hardware/HOSTNAME/facter.json
 HOSTNAME is your hostname, /whatever/path/etc/nixos is the same path as above.
 
 ```bash
-nix shell github:nix-community/nixos-anywhere --command nixos-anywhere   --flake "github:First-Non-Interesting-Username/NixOS-config#Laptop"   --copy-host-keys   --target-host "root@192.168.0.1XX"
+nix shell github:nix-community/nixos-anywhere --command nixos-anywhere   --flake "github:First-Non-Interesting-Username/NixOS-config#Laptop"   --extra-files ./tmp   --target-host "root@192.168.0.120"
 ```
 
 ## 3. Post-Install
