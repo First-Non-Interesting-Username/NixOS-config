@@ -22,6 +22,9 @@
       config,
       ...
     }: {
+      imports = [
+        inputs.nix-index-database.hmModules.nix-index
+      ];
       programs = {
         zsh = {
           enable = true;
@@ -48,8 +51,10 @@
           '';
         };
 
+        nix-index-database.comma.enable = true;
         nix-index = {
           enable = true;
+          package = pkgs.nix-index;
           enableZshIntegration = true;
         };
 

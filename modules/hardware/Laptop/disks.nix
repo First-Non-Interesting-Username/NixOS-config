@@ -39,34 +39,6 @@
         "/persist" = {
           neededForBoot = true;
         };
-        "/etc" = {
-          depends = [
-            "/"
-            "/persist"
-          ];
-          neededForBoot = true;
-        };
-        "/home" = {
-          depends = [
-            "/"
-            "/persist"
-          ];
-          neededForBoot = true;
-        };
-        "/var" = {
-          depends = [
-            "/"
-            "/persist"
-          ];
-          neededForBoot = true;
-        };
-        "/var/lib" = {
-          depends = [
-            "/"
-            "/persist"
-          ];
-          neededForBoot = true;
-        };
       };
     };
   };

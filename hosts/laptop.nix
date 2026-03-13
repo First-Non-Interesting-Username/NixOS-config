@@ -50,6 +50,8 @@ in {
       self.nixosModules.gaming
       self.nixosModules.programs-desktop
       self.nixosModules.user-debug
+      #self.nixosModules.kernel-laptop
+      self.nixosModules.kernel-debug
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;

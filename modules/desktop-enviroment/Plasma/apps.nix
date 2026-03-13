@@ -10,6 +10,9 @@
       config,
       ...
     }: {
+      environment.systemPackages = with pkgs.kdePackages; [
+        qtstyleplugin-kvantum
+      ];
     };
     homeModules.plasma-apps = {
       pkgs,
@@ -33,6 +36,7 @@
         kolourpaint
         okular
         isoimagewriter
+        qtstyleplugin-kvantum
       ];
     };
   };
