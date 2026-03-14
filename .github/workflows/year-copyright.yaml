@@ -1,0 +1,56 @@
+name: Update Copyright Year
+
+on:
+  schedule:
+    - cron: "0 0 1 1 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-copyright:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Update copyright year in LICENSE
+        id: update
+        run: |
+          CURRENT_YEAR=$(date +%Y)
+          echo "current_year=$CURRENT_YEAR" >> $GITHUB_OUTPUT
+
+          sed -i "1s/Copyright (C) \([0-9]\{4\}\)-[0-9]\{4\}/Copyright (C) \1-$CURRENT_YEAR/" LICENSE
+          sed -i "1s/Copyright (C) \([0-9]\{4\}\) \(.*\)/Copyright (C) \1-$CURRENT_YEAR \2/" LICENSE
+
+      - name: Check if LICENSE actually changed
+        id: diff
+        run: |
+          if git diff --quiet LICENSE; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR if changed
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update copyright year to ${{ steps.update.outputs.current_year }}"
+          branch: chore/copyright-year-${{ steps.update.outputs.current_year }}
+          title: "chore: update copyright end year to ${{ steps.update.outputs.current_year }}"
+          body: |
+            Automated annual copyright year update.
+
+            Updates the end year in the `LICENSE` file copyright header to **${{ steps.update.outputs.current_year }}**.
+
+            Please review and merge if correct.
+          labels: chore
+          assignees: First-Non-Interesting-Username
+
+      - name: No change needed
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "Copyright year is already up to date. No PR needed."

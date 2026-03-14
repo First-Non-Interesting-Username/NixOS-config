@@ -104,6 +104,8 @@
 
         bat.enable = true;
 
+        fd.enable = true;
+
         fastfetch = {
           enable = true;
           settings = {
@@ -198,6 +200,7 @@
         tp = "trash-put";
         tl = "trash-list";
         te = "trash-empty";
+        tb = "nc termbin.com 9999";
       };
     };
   };
