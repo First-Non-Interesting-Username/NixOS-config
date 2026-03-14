@@ -85,6 +85,8 @@
         targets = {
           vscode.colors.enable = false;
           kde.enable = false;
+          qt.enable = false;
+          floorp.enable = false;
         };
       };
     };

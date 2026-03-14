@@ -23,7 +23,7 @@
       ...
     }: {
       imports = [
-        inputs.nix-index-database.hmModules.nix-index
+        inputs.nix-index-database.homeModules.nix-index
       ];
       programs = {
         zsh = {
@@ -32,7 +32,7 @@
           enableCompletion = true;
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
-          dotDir = ".config/zsh";
+          dotDir = "${config.xdg.configHome}/zsh";
           oh-my-zsh = {
             enable = true;
             plugins = [

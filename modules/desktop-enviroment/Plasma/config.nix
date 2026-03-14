@@ -65,7 +65,7 @@
           };
         };
 
-        workspace.iconStyle = config.stylix.icons.dark;
+        workspace.iconTheme = config.stylix.icons.dark;
       };
     };
   };
