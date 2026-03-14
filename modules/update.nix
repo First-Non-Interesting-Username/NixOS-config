@@ -17,7 +17,7 @@
           enable = true;
           extraArgs = "--keep-since 7d --keep 10 --gc";
         };
-        flake = "github:First-Non-Interesting-Username/NixOS-config#${config.networking.hostName}";
+        flake = "github:First-Non-Interesting-Username/NixOS-config";
       };
       nix.optimise = {
         automatic = true;
