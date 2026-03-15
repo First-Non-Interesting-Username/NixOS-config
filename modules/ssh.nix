@@ -18,16 +18,22 @@
       ];
       users.users.${username} = {
         openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGzRUdlC8OdgeZhL9Kn+57GHAmMpkfBG3iqPl3dRYTM Desktop_key"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFb1ByQK+SH7b7ZD+Epe5zYDyOUp2V0Sr/GcAfKy8J4y Laptop_key"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhyyqVG8KdfHL00jBin/8rJzaD1Str3lO7N+IeF8fPI Server_key"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGzRUdlC8OdgeZhL9Kn+57GHAmMpkfBG3iqPl3dRYTM Desktop_key"
         ];
       };
-      sops.secrets."private_ssh_key/${hostname}" = {
+      sops.secrets."ssh_keys/private/${hostname}" = {
         owner = username;
         group = config.users.users.${username}.group;
         mode = "0600";
         path = "${config.users.users.${username}.home}/.ssh/id_ed25519";
+      };
+      sops.secrets."ssh_keys/public/${hostname}" = {
+        owner = username;
+        group = config.users.users.${username}.group;
+        mode = "0644";
+        path = "${config.users.users.${username}.home}/.ssh/id_ed25519.pub";
       };
     };
     homeModules.ssh = {

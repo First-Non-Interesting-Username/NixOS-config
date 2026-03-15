@@ -43,6 +43,7 @@
         gh = {
           enable = true;
           settings = {
+            # gh ssh-key add ~/.ssh/id_ed25519.pub
             git_protocol = "ssh";
             prompt = "enabled";
           };
