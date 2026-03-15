@@ -2,71 +2,130 @@
   self,
   inputs,
   ...
-}: {
+}:
+{
   flake = {
-    nixosModules.plasma-config = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      services = {
-        xserver.enable = true;
-        desktopManager.plasma6.enable = true;
+    nixosModules.plasma-config =
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      {
+        services = {
+          xserver.enable = true;
+          desktopManager.plasma6.enable = true;
+        };
       };
-    };
-    homeModules.plasma-config = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: let
-      fonts = config.stylix.fonts;
-    in {
-      imports = [
-        inputs.plasma-manager.homeModules.plasma-manager
-      ];
+    homeModules.plasma-config =
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
+      let
+        fonts = config.stylix.fonts;
+      in
+      {
+        imports = [
+          inputs.plasma-manager.homeModules.plasma-manager
+        ];
 
-      programs.plasma = {
-        enable = true;
+        programs.plasma = {
+          enable = true;
 
-        workspace = {
-          wallpaper = toString config.stylix.image;
-          cursor = {
-            theme = config.stylix.cursor.name;
-            size = config.stylix.cursor.size;
+          workspace = {
+            iconTheme = config.stylix.icons.dark;
+            wallpaper = toString config.stylix.image;
+            cursor = {
+              theme = config.stylix.cursor.name;
+              size = config.stylix.cursor.size;
+            };
+          };
+
+          fonts = {
+            general = {
+              family = fonts.sansSerif.name;
+              pointSize = fonts.sizes.applications;
+            };
+            fixedWidth = {
+              family = fonts.monospace.name;
+              pointSize = fonts.sizes.terminal;
+            };
+            small = {
+              family = fonts.sansSerif.name;
+              pointSize = fonts.sizes.desktop;
+            };
+            toolbar = {
+              family = fonts.sansSerif.name;
+              pointSize = fonts.sizes.applications;
+            };
+            menu = {
+              family = fonts.sansSerif.name;
+              pointSize = fonts.sizes.applications;
+            };
+            windowTitle = {
+              family = fonts.sansSerif.name;
+              pointSize = fonts.sizes.applications;
+            };
+          };
+          shortcuts = {
+            kwin = {
+              "Kill Window" = "Meta+Q";
+              "Window Fullscreen" = "Meta+F";
+
+              "Switch to Desktop 1" = "Meta+1";
+              "Switch to Desktop 2" = "Meta+2";
+              "Switch to Desktop 3" = "Meta+3";
+              "Switch to Desktop 4" = "Meta+4";
+              "Switch to Desktop 5" = "Meta+5";
+              "Switch to Desktop 6" = "Meta+6";
+              "Switch to Desktop 7" = "Meta+7";
+              "Switch to Desktop 8" = "Meta+8";
+              "Switch to Desktop 9" = "Meta+9";
+              "Switch to Desktop 10" = "Meta+0";
+            };
+
+            "org.kde.krunner.desktop" = {
+              "_launch" = [
+                "Meta+D"
+                "Meta+Space"
+              ];
+            };
+
+            "services/kitty.desktop" = {
+              "_launch" = "Meta+Return";
+            };
+
+            "services/org.kde.dolphin.desktop" = {
+              "_launch" = "Meta+E";
+            };
+
+            "spectacle" = {
+              "RectangularRegionScreenShot" = "Shift+Print";
+            };
+
+            "org.kde.klipper.desktop" = {
+              "clipboard_action" = "Meta+B";
+            };
+
+            "services/hexecute.desktop" = {
+              "_launch" = "Meta+G";
+            };
+
+          };
+
+          configFile = {
+            kwinrc.Plugins.zoomEnabled = false;
+            kwinrc."ModifierOnlyShortcuts"."Meta" =
+              "org.kde.kglobalaccel,/component/kwin,,invokeShortcut,Overview";
+            kglobalshortcutsrc."kwin"."Zoom In" = ",,,Zoom In";
+            kglobalshortcutsrc."kwin"."Zoom Out" = ",,,Zoom Out";
+            kglobalshortcutsrc."kwin"."Zoom to Actual Size" = ",,,Zoom to Actual Size";
           };
         };
-
-        fonts = {
-          general = {
-            family = fonts.sansSerif.name;
-            pointSize = fonts.sizes.applications;
-          };
-          fixedWidth = {
-            family = fonts.monospace.name;
-            pointSize = fonts.sizes.terminal;
-          };
-          small = {
-            family = fonts.sansSerif.name;
-            pointSize = fonts.sizes.desktop;
-          };
-          toolbar = {
-            family = fonts.sansSerif.name;
-            pointSize = fonts.sizes.applications;
-          };
-          menu = {
-            family = fonts.sansSerif.name;
-            pointSize = fonts.sizes.applications;
-          };
-          windowTitle = {
-            family = fonts.sansSerif.name;
-            pointSize = fonts.sizes.applications;
-          };
-        };
-
-        workspace.iconTheme = config.stylix.icons.dark;
       };
-    };
   };
 }
