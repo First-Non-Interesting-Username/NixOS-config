@@ -28,7 +28,7 @@ in {
       self.nixosModules.flatpak
       self.nixosModules.git
       self.nixosModules.secrets-impermanence
-      self.nixosModules.ssh
+      self.nixosModules.ssh-impermanence
       self.nixosModules.shell
       self.nixosModules.bootloader
       self.nixosModules.update
