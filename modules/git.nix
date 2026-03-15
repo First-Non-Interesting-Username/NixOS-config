@@ -30,6 +30,7 @@
       osConfig,
       ...
     }: {
+      home.packages = with pkgs; [onefetch];
       programs = {
         git = {
           enable = true;
