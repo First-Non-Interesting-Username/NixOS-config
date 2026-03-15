@@ -12,7 +12,10 @@
       options,
       ...
     }: {
-      programs.kdeconnect.enable = true;
+      programs = {
+        kdeconnect.enable = true;
+        obsidian.enable = true;
+      };
 
       environment.persistence."/persist" =
         lib.mkIf (options ? environment && options.environment ? persistence)
