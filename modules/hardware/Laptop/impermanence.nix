@@ -56,7 +56,6 @@
             "Persist"
             "Games"
             "Downloads"
-            ".ssh"
             ".config/sops/age"
             ".local/share/atuin"
             ".local/share/zoxide"
