@@ -72,6 +72,11 @@
             pointSize = fonts.sizes.applications;
           };
         };
+
+        krunner = {
+          position = "center";
+        };
+
         shortcuts = {
           "plasmashell"."activate application launcher" = [];
           kwin = {
