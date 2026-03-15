@@ -49,7 +49,7 @@
         };
       };
 
-      programs.zsh.initExtra = ''
+      programs.zsh.initContent = ''
         export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
       '';
     };

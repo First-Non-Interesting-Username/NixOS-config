@@ -39,6 +39,11 @@
           };
         };
 
+        input.keyboard = {
+          layouts = [{layout = "pl";}];
+          options = ["caps:swapescape"];
+        };
+
         fonts = {
           general = {
             family = fonts.sansSerif.name;

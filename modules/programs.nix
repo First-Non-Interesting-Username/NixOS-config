@@ -14,7 +14,6 @@
     }: {
       programs = {
         kdeconnect.enable = true;
-        obsidian.enable = true;
       };
 
       environment.persistence."/persist" =
@@ -42,7 +41,11 @@
       config,
       ...
     }: {
-      # Home config goes here
+      programs = {
+        obsidian = {
+          enable = true;
+        };
+      };
     };
   };
 }
