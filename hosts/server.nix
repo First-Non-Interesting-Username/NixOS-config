@@ -3,7 +3,8 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   Hostname = "Server";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
@@ -11,7 +12,8 @@
   Domain = "iameasytoremember.duckdns.org";
   Width = 2560;
   Height = 1440;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -40,7 +42,6 @@ in {
       self.nixosModules.virtualization-server
       self.nixosModules.nps
       self.nixosModules.update
-      #self.nixosModules.security
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
