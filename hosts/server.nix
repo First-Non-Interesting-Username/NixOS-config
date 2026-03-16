@@ -38,7 +38,7 @@ in
       self.nixosModules.user
       self.nixosModules.networking-server
       self.nixosModules.locale
-      self.nixosModules.hardware-Server
+      self.nixosModules."hardware-${Hostname}"
       self.nixosModules.virtualization-server
       self.nixosModules.nps
       self.nixosModules.update
