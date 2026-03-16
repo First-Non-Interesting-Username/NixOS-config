@@ -28,6 +28,7 @@
           users.${username} = {
             directories = [
               ".config/kdeconnect"
+              ".config/obsidian"
             ];
             files = [
               # User-level files to persist (relative to $HOME)

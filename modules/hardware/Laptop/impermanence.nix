@@ -87,14 +87,12 @@
             ".config/VSCodium"
             ".vscode-oss"
             ".config/zed"
-            ".local/share/wakatime"
             ".local/share/flatpak"
             ".local/state"
             ".cache/fontconfig"
           ];
 
           files = [
-            ".wakatime.cfg"
           ];
         };
       };
