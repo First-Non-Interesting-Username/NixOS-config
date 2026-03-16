@@ -23,6 +23,11 @@
         ];
       };
 
+      systemd.tmpfiles.rules = [
+        "d /mnt/data/traefik/letsencrypt 0755 ${username} ${username} -"
+        "f /mnt/data/traefik/letsencrypt/acme.json 0600 ${username} ${username} -"
+      ];
+
       sops.secrets = {
         "authelia/jwt_secret".owner = username;
         "authelia/session_secret".owner = username;
@@ -293,7 +298,7 @@
 
             staticConfig.certificatesResolvers.letsencrypt.acme = {
               dnsChallenge.provider = "duckdns";
-              storage = lib.mkForce "/var/lib/traefik/acme.json";
+              storage = lib.mkForce "/letsencrypt/acme.json";
               email = lib.mkForce gitEmail;
             };
 
