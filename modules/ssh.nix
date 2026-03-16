@@ -89,10 +89,10 @@
       ];
       programs.ssh = {
         enable = true;
-        matchBlocks."*".addKeysToAgent = "yes";
         enableDefaultConfig = false;
         matchBlocks."*" = {
           identityFile = "~/.ssh/id_ed25519";
+          addKeysToAgent = "yes";
         };
         extraConfig = ''
           Host Server
