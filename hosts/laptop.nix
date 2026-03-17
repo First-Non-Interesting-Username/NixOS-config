@@ -3,14 +3,16 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   Hostname = "Laptop";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 1920;
   Height = 1080;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -49,9 +51,7 @@ in {
       # self.nixosModules.hyprland
       self.nixosModules.gaming
       self.nixosModules.programs-desktop
-      self.nixosModules.user-debug
-      #self.nixosModules.kernel-laptop
-      self.nixosModules.kernel-debug
+      self.nixosModules.kernel-laptop
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
