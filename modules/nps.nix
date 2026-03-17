@@ -297,7 +297,13 @@
             };
 
             staticConfig.certificatesResolvers.letsencrypt.acme = {
-              dnsChallenge.provider = "duckdns";
+              dnsChallenge = {
+                provider = "duckdns";
+                resolvers = [
+                  "1.1.1.1:53"
+                  "9.9.9.9:53"
+                ];
+              };
               storage = lib.mkForce "/letsencrypt/acme.json";
               email = lib.mkForce gitEmail;
             };
