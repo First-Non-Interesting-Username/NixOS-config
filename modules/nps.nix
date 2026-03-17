@@ -24,8 +24,8 @@
       };
 
       systemd.tmpfiles.rules = [
-        "d /mnt/data/traefik/letsencrypt 0755 ${username} ${username} -"
-        "f /mnt/data/traefik/letsencrypt/acme.json 0600 ${username} ${username} -"
+        "d /mnt/data/traefik/letsencrypt 0755 ${username} users -"
+        "f /mnt/data/traefik/letsencrypt/acme.json 0600 ${username} users -"
       ];
 
       sops.secrets = {
