@@ -303,6 +303,7 @@
                   "1.1.1.1:53"
                   "9.9.9.9:53"
                 ];
+                disablePropagationCheck = true;
               };
               storage = lib.mkForce "/letsencrypt/acme.json";
               email = lib.mkForce gitEmail;
