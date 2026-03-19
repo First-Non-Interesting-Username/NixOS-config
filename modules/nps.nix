@@ -173,11 +173,11 @@
             enable = true;
             mounts = {
               ${config.home.homeDirectory} = {
-                path = "home";
+                path = "/srv/home";
                 name = config.home.username;
               };
               ${config.nps.externalStorageBaseDir} = {
-                path = "hdd";
+                path = "/srv/hdd";
                 name = "hdd";
               };
             };
