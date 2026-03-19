@@ -48,6 +48,7 @@
         "qui/authelia/client_secret".owner = username;
         "traefik/crowdsec_bouncer_key".owner = username;
         "wg_easy/admin_password".owner = username;
+        "lldap/user_password".owner = username;
       };
     };
 
@@ -74,6 +75,23 @@
             jwtSecretFile = osConfig.sops.secrets."lldap/jwt_secret".path;
             keySeedFile = osConfig.sops.secrets."lldap/key_seed".path;
             adminPasswordFile = osConfig.sops.secrets."lldap/admin_password".path;
+
+            bootstrap.users.admin = {
+              id = "admin";
+              email = gitEmail;
+              password_file = osConfig.sops.secrets."lldap/user_password".path;
+              displayName = "Admin";
+              groups = [
+                "lldap_admin"
+                "lldap_password_manager"
+                "filebrowser-quantum_admin"
+                "filebrowser-quantum_user"
+                "grafana_admin"
+                "jellyfin_admin"
+                "jellyfin_user"
+                "qui_user"
+              ];
+            };
           };
 
           authelia = {
@@ -86,6 +104,9 @@
               enable = true;
               hmacSecretFile = osConfig.sops.secrets."authelia/oidc_hmac_secret".path;
               jwksRsaKeyFile = osConfig.sops.secrets."authelia/oidc_rsa_pk".path;
+            };
+            settings = {
+              notifier.filesystem.filename = "/config/notification.txt";
             };
           };
 
@@ -152,11 +173,11 @@
             enable = true;
             mounts = {
               ${config.home.homeDirectory} = {
-                path = config.home.homeDirectory;
+                path = "home";
                 name = config.home.username;
               };
               ${config.nps.externalStorageBaseDir} = {
-                path = "/hdd";
+                path = "hdd";
                 name = "hdd";
               };
             };
@@ -175,6 +196,7 @@
           homepage = {
             enable = true;
             containers.homepage = {
+              traefik.subDomain = "homepage";
               forwardAuth = {
                 enable = true;
                 rules = [{policy = "two_factor";}];
@@ -312,33 +334,7 @@
             geoblock = {
               enable = true;
               allowedCountries = [
-                #"AT"
-                #"BE"
-                #"BG"
-                #"HR"
-                #"CY"
-                #"CZ"
-                #"DK"
-                #"EE"
-                #"FI"
-                #"FR"
-                #"DE"
-                #"GR"
-                #"HU"
-                #"IE"
-                #"IT"
-                #"LV"
-                #"LT"
-                #"LU"
-                #"MT"
-                #"NL"
-                #"PL"
-                #"PT"
-                #"RO"
-                #"SK"
-                #"SI"
-                #"ES"
-                #"SE"
+                "PL"
               ];
             };
 
