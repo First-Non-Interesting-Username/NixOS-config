@@ -106,7 +106,7 @@
               jwksRsaKeyFile = osConfig.sops.secrets."authelia/oidc_rsa_pk".path;
             };
             settings = {
-              notifier.filesystem.filename = "/config/notification.txt";
+              notifier.filesystem.filename = lib.mkForce "/config/notification.txt";
             };
           };
 
@@ -335,6 +335,7 @@
               enable = true;
               allowedCountries = [
                 "PL"
+                "CH"
               ];
             };
 
