@@ -2,95 +2,114 @@
   self,
   inputs,
   ...
-}: {
+}:
+{
   flake = {
-    nixosModules.gaming = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
-      #nixpkgs.config.factorio = {
-      #  username = "Asmusin";
-      #  token = config.sops.secrets.factorio_token;
-      #};
-
-      sops.secrets.factorio_token = {};
-
-      programs = {
-        gamescope.enable = true;
-        gamemode.enable = true;
-        #steam = {
-        #  enable = true;
-        #  gamescopeSession.enable = true;
-        #  remotePlay.openFirewall = true;
-        #  dedicatedServer.openFirewall = true;
-        #  localNetworkGameTransfers.openFirewall = true;
-        #  extraCompatPackages = with pkgs; [
-        #    proton-ge-bin
-        #  ];
-        #};
-      };
-      home-manager.users.${username} = {
+    nixosModules.gaming =
+      {
         pkgs,
         lib,
         config,
+        username,
+        impermanence,
         ...
-      }: {
-        home.packages = with pkgs; [
-          #factorio
-          #factorio-space-age
-          prismlauncher
-          (pkgs.heroic.override {
-            extraPkgs = pkgs: [
-              pkgs.gamemode
-              pkgs.gamescope
-              pkgs.mangohud
-            ];
-          })
-        ];
-
-        home.sessionVariables = {
-          AMD_VULKAN_ICD = "RADV";
-          RADV_PERFTEST = "gpl";
-        };
-
-        programs = {
-          mangohud = {
-            enable = true;
-            settings = {
-              fps = true;
-              frametime = true;
-              cpu_stats = true;
-              gpu_stats = true;
-              ram = true;
-              vram = true;
-              position = "top-left";
+      }:
+      {
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
+            users.${username} = {
+              directories = [
+                ".local/share/Steam"
+                ".local/share/PrismLauncher"
+                ".config/heroic"
+                ".config/lutris"
+                ".local/share/lutris"
+                ".factorio"
+              ];
             };
           };
+        };
 
-          lutris = {
-            enable = true;
-            extraPackages = with pkgs; [
-              mangohud
-              gamemode
-              winetricks
-              gamescope
-              umu-launcher
-            ];
+        #nixpkgs.config.factorio = {
+        #  username = "Asmusin";
+        #  token = config.sops.secrets.factorio_token;
+        #};
 
-            winePackages = with pkgs; [
-              wineWow64Packages.staging
-              wineWow64Packages.full
-            ];
+        sops.secrets.factorio_token = {};
 
-            protonPackages = with pkgs; [
-              proton-ge-bin
-            ];
+        programs = {
+          gamescope.enable = true;
+          gamemode.enable = true;
+          #steam = {
+          #  enable = true;
+          #  gamescopeSession.enable = true;
+          #  remotePlay.openFirewall = true;
+          #  dedicatedServer.openFirewall = true;
+          #  localNetworkGameTransfers.openFirewall = true;
+          #  extraCompatPackages = with pkgs; [
+          #    proton-ge-bin
+          #  ];
+          #};
+        };
+        home-manager.users.${username} = {
+          pkgs,
+          lib,
+          config,
+          ...
+        }: {
+          home.packages = with pkgs; [
+            #factorio
+            #factorio-space-age
+            prismlauncher
+            (pkgs.heroic.override {
+              extraPkgs = pkgs: [
+                pkgs.gamemode
+                pkgs.gamescope
+                pkgs.mangohud
+              ];
+            })
+          ];
+
+          home.sessionVariables = {
+            AMD_VULKAN_ICD = "RADV";
+            RADV_PERFTEST = "gpl";
+          };
+
+          programs = {
+            mangohud = {
+              enable = true;
+              settings = {
+                fps = true;
+                frametime = true;
+                cpu_stats = true;
+                gpu_stats = true;
+                ram = true;
+                vram = true;
+                position = "top-left";
+              };
+            };
+
+            lutris = {
+              enable = true;
+              extraPackages = with pkgs; [
+                mangohud
+                gamemode
+                winetricks
+                gamescope
+                umu-launcher
+              ];
+
+              winePackages = with pkgs; [
+                wineWow64Packages.staging
+                wineWow64Packages.full
+              ];
+
+              protonPackages = with pkgs; [
+                proton-ge-bin
+              ];
+            };
           };
         };
       };
-    };
   };
 }

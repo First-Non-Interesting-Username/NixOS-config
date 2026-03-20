@@ -19,6 +19,7 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      impermanence = true;
     };
     modules = [
       # System modules go here

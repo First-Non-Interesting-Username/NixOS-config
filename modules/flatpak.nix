@@ -2,49 +2,66 @@
   self,
   inputs,
   ...
-}: {
+}:
+{
   flake = {
-    nixosModules.flatpak = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
-      services.flatpak.enable = true;
-      xdg.portal = {
-        enable = true;
-        extraPortals = [pkgs.xdg-desktop-portal-gtk];
-        config.common.default = "*";
-      };
-      home-manager.users.${username} = {
+    nixosModules.flatpak =
+      {
         pkgs,
         lib,
         config,
+        username,
+        impermanence,
         ...
-      }: {
-        imports = [
-          inputs.nix-flatpak.homeManagerModules.nix-flatpak
-        ];
-
-        services.flatpak = {
-          update.onActivation = true;
-          remotes = [
-            {
-              name = "flathub";
-              location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-            }
-          ];
-          packages = [
-            "com.github.tchx84.Flatseal"
-          ];
-          uninstallUnmanaged = true;
+      }:
+      {
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
+            directories = [
+              "/var/lib/flatpak"
+            ];
+            users.${username} = {
+              directories = [
+                ".local/share/flatpak"
+              ];
+            };
+          };
         };
 
-        home.packages = with pkgs; [
-          warehouse
-        ];
+        services.flatpak.enable = true;
+        xdg.portal = {
+          enable = true;
+          extraPortals = [pkgs.xdg-desktop-portal-gtk];
+          config.common.default = "*";
+        };
+        home-manager.users.${username} = {
+          pkgs,
+          lib,
+          config,
+          ...
+        }: {
+          imports = [
+            inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          ];
+
+          services.flatpak = {
+            update.onActivation = true;
+            remotes = [
+              {
+                name = "flathub";
+                location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+              }
+            ];
+            packages = [
+              "com.github.tchx84.Flatseal"
+            ];
+            uninstallUnmanaged = true;
+          };
+
+          home.packages = with pkgs; [
+            warehouse
+          ];
+        };
       };
-    };
   };
 }

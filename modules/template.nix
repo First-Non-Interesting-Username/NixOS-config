@@ -2,45 +2,51 @@
   self,
   inputs,
   ...
-}: {
+}:
+{
   flake = {
-    nixosModules.CHANGEME = {
-      pkgs,
-      lib,
-      config,
-      options,
-      username,
-      ...
-    }: {
-      # System config goes here
-      environment.persistence."/persist" =
-        lib.mkIf (options ? environment && options.environment ? persistence)
-        {
-          directories = [
-            # System-level dirs to persist
-          ];
-          files = [
-            # System-level files to persist
-          ];
-          users.${username} = {
-            directories = [
-              # User-level dirs to persist (relative to $HOME)
-            ];
-            files = [
-              # User-level files to persist (relative to $HOME)
-            ];
-          };
-        };
-
-      home-manager.users.${username} = {
+    nixosModules.CHANGEME =
+      {
         pkgs,
         lib,
         config,
-        osConfig,
+        username,
+        impermanence,
         ...
-      }: {
-        # Home config goes here
+      }:
+      {
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
+            directories = [
+              # System-level dirs to persist
+            ];
+            files = [
+              # System-level files to persist
+            ];
+            users.${username} = {
+              directories = [
+                # User-level dirs to persist (relative to $HOME)
+              ];
+              files = [
+                # User-level files to persist (relative to $HOME)
+              ];
+            };
+          };
+        };
+
+        # System config goes here
+
+        home-manager.users.${username} =
+          {
+            pkgs,
+            lib,
+            config,
+            osConfig,
+            ...
+          }:
+          {
+            # Home config goes here
+          };
       };
-    };
   };
 }

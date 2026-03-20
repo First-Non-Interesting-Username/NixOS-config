@@ -3,14 +3,16 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   Hostname = "Minimal";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 2560;
   Height = 1440;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -19,6 +21,7 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      impermanence = false;
     };
     modules = [
       # System modules go here
