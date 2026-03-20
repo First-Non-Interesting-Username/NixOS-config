@@ -77,10 +77,10 @@
             adminPasswordFile = osConfig.sops.secrets."lldap/admin_password".path;
 
             bootstrap.users.admin = {
-              id = "user_admin";
+              id = "admin";
               email = gitEmail;
               password_file = osConfig.sops.secrets."lldap/user_password".path;
-              displayName = "User Admin";
+              displayName = "Admin";
               groups = [
                 "lldap_admin"
                 "lldap_password_manager"
@@ -175,10 +175,12 @@
               ${config.home.homeDirectory} = {
                 path = "/srv/home";
                 name = config.home.username;
+                config.defaultEnabled = true;
               };
               ${config.nps.externalStorageBaseDir} = {
                 path = "/srv/hdd";
                 name = "hdd";
+                config.defaultEnabled = true;
               };
             };
             oidc = {
