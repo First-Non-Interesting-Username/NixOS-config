@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       xdg.portal = {
@@ -15,20 +16,17 @@
         config.common.default = "*";
       };
       programs.dconf.enable = true;
-    };
-    homeModules.hyprland-other = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      stylix.targets.qt = {
-        enable = true;
-        platform = "qtct";
-      };
-      dconf = {
-        enable = true;
-        #settings = {};
+
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        dconf = {
+          enable = true;
+          #settings = {};
+        };
       };
     };
   };

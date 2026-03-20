@@ -4,13 +4,13 @@
   lib,
   ...
 }: let
-  Hostname = "Server";
-  Username = "nixi";
-  GitName = "First-Non-Interesting-Username";
-  GitEmail = "janekmusin@proton.me";
-  Domain = "iameasytoremember.duckdns.org";
-  Width = 2560;
-  Height = 1440;
+  Hostname = "YOUR_HOSTNAME";
+  Username = "YOUR_USERNAME";
+  GitName = "YOUR_GIT_USERNAME";
+  GitEmail = "YOUR_GIT_EMAIL";
+  Width = 1920; # Width of your monitor in pixels, it will default to 1920
+  Height = 1080; # Width of your monitor in pixels, it will default to 1080
+  # some modules expect "domain", those modules are only for my personal use, open an issue if you need assistance with them
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -20,27 +20,10 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
-      domain = Domain;
     };
     modules = [
       # System modules go here
-      self.nixosModules.home-manager
-      self.nixosModules.git
-      self.nixosModules.secrets
-      self.nixosModules.ssh-server
-      self.nixosModules.ssh
-      self.nixosModules.shell
-      self.nixosModules.bootloader
-      self.nixosModules.nix
-      self.nixosModules.user
-      self.nixosModules.networking-server
-      self.nixosModules.locale
       self.nixosModules."hardware-${Hostname}"
-      self.nixosModules.virtualization-server
-      self.nixosModules.nps
-      self.nixosModules.update
-      self.nixosModules.theme
-      self.nixosModules.direnv
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -51,7 +34,6 @@ in {
           gitName = GitName;
           gitEmail = GitEmail;
           hostname = Hostname;
-          domain = Domain;
           width = Width;
           height = Height;
         };

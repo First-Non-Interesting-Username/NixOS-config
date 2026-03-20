@@ -35,6 +35,32 @@
         mode = "0644";
         path = "${config.users.users.${username}.home}/.ssh/id_ed25519.pub";
       };
+
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.packages = with pkgs; [
+          lazyssh
+        ];
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          matchBlocks."*" = {
+            identityFile = "~/.ssh/id_ed25519";
+            addKeysToAgent = "yes";
+          };
+          extraConfig = ''
+            Host Server
+              HostName iameasytoremember.duckdns.org
+              User nixi
+              Port 6767
+              IdentityFile ~/.ssh/id_ed25519
+          '';
+        };
+      };
     };
     nixosModules.ssh-impermanence = {
       pkgs,
@@ -77,32 +103,33 @@
           ];
         };
       };
-    };
-    homeModules.ssh = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      home.packages = with pkgs; [
-        lazyssh
-      ];
-      programs.ssh = {
-        enable = true;
-        enableDefaultConfig = false;
-        matchBlocks."*" = {
-          identityFile = "~/.ssh/id_ed25519";
-          addKeysToAgent = "yes";
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.packages = with pkgs; [
+          lazyssh
+        ];
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          matchBlocks."*" = {
+            identityFile = "~/.ssh/id_ed25519";
+            addKeysToAgent = "yes";
+          };
+          extraConfig = ''
+            Host Server
+              HostName iameasytoremember.duckdns.org
+              User nixi
+              Port 6767
+              IdentityFile ~/.ssh/id_ed25519
+          '';
         };
-        extraConfig = ''
-          Host Server
-            HostName iameasytoremember.duckdns.org
-            User nixi
-            Port 6767
-            IdentityFile ~/.ssh/id_ed25519
-        '';
       };
     };
+
     nixosModules.ssh-minimal = {
       pkgs,
       lib,

@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       hardware.graphics = {
@@ -27,18 +28,18 @@
         wayland-protocols
         wl-clipboard
       ];
-    };
-    homeModules.wayland = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      home.sessionVariables = {
-        NIXOS_OZONE_WL = "1";
-        SDL_VIDEODRIVER = "wayland";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        MOZ_ENABLE_WAYLAND = "1";
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.sessionVariables = {
+          NIXOS_OZONE_WL = "1";
+          SDL_VIDEODRIVER = "wayland";
+          _JAVA_AWT_WM_NONREPARENTING = "1";
+          MOZ_ENABLE_WAYLAND = "1";
+        };
       };
     };
   };

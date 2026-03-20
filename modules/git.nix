@@ -20,40 +20,40 @@
       sops.secrets.github_pat = {
         owner = username;
       };
-    };
-    homeModules.git = {
-      pkgs,
-      lib,
-      config,
-      gitName,
-      gitEmail,
-      osConfig,
-      ...
-    }: {
-      home.packages = with pkgs; [onefetch];
-      programs = {
-        git = {
-          enable = true;
-          settings = {
-            user.name = gitName;
-            user.email = gitEmail;
-            init.defaultBranch = "main";
-            pull.rebase = true;
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        gitName,
+        gitEmail,
+        osConfig,
+        ...
+      }: {
+        home.packages = with pkgs; [onefetch];
+        programs = {
+          git = {
+            enable = true;
+            settings = {
+              user.name = gitName;
+              user.email = gitEmail;
+              init.defaultBranch = "main";
+              pull.rebase = true;
+            };
+          };
+          gh = {
+            enable = true;
+            settings = {
+              # gh ssh-key add ~/.ssh/id_ed25519.pub
+              git_protocol = "ssh";
+              prompt = "enabled";
+            };
           };
         };
-        gh = {
-          enable = true;
-          settings = {
-            # gh ssh-key add ~/.ssh/id_ed25519.pub
-            git_protocol = "ssh";
-            prompt = "enabled";
-          };
-        };
-      };
 
-      programs.zsh.initContent = ''
-        export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
-      '';
+        programs.zsh.initContent = ''
+          export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
+        '';
+      };
     };
   };
 }

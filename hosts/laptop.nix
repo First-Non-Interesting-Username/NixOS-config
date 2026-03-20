@@ -18,8 +18,6 @@ in {
       username = Username;
       gitName = GitName;
       gitEmail = GitEmail;
-      width = Width;
-      height = Height;
       hostname = Hostname;
     };
     modules = [
@@ -37,7 +35,6 @@ in {
       self.nixosModules.input
       self.nixosModules.user
       self.nixosModules.virtualization-desktop
-      self.nixosModules.sunshine
       self.nixosModules."hardware-${Hostname}"
       self.nixosModules.networking-desktop
       self.nixosModules.audio
@@ -50,6 +47,11 @@ in {
       self.nixosModules.gaming
       self.nixosModules.programs-desktop
       self.nixosModules.kernel-laptop
+      self.nixosModules.terminal
+      self.nixosModules.theme
+      self.nixosModules.browser
+      self.nixosModules.IDE
+      self.nixosModules.direnv
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -62,27 +64,6 @@ in {
           width = Width;
           height = Height;
           hostname = Hostname;
-        };
-        home-manager.users.nixi = {
-          imports = [
-            # Home manager modules go here
-            self.homeModules.home-manager
-            self.homeModules.flatpak
-            self.homeModules.git
-            self.homeModules.ssh
-            self.homeModules.shell
-            self.homeModules.virtualization-desktop
-            self.homeModules.IDE
-            self.homeModules.direnv
-            self.homeModules.theme
-            self.homeModules.browser
-            self.homeModules.plasma
-            #self.homeModules.hyprland
-            self.homeModules.gaming
-            self.homeModules.input
-            self.homeModules.terminal
-            self.homeModules.programs-desktop
-          ];
         };
       }
     ];

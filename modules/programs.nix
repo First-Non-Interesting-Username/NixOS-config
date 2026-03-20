@@ -35,16 +35,16 @@
             ];
           };
         };
-    };
-    homeModules.programs-desktop = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      programs = {
-        obsidian = {
-          enable = true;
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        programs = {
+          obsidian = {
+            enable = true;
+          };
         };
       };
     };

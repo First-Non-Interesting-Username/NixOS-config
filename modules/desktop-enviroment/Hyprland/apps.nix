@@ -8,89 +8,90 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       environment.systemPackages = with pkgs; [
         inputs.hexecute.packages.${pkgs.stdenv.hostPlatform.system}.default
         brightnessctl
       ];
-    };
-    homeModules.hyprland-apps = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      imports = [
-        inputs.vicinae.homeManagerModules.default
-      ];
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        imports = [
+          inputs.vicinae.homeManagerModules.default
+        ];
 
-      home.packages = with pkgs; [
-        swayimg
-        grimblast
-        slurp
-        playerctl
-        wl-clipboard
-        pavucontrol
-        hyprnome
-        wireplumber
-        brightnessctl
+        home.packages = with pkgs; [
+          swayimg
+          grimblast
+          slurp
+          playerctl
+          wl-clipboard
+          pavucontrol
+          hyprnome
+          wireplumber
+          brightnessctl
 
-        kdePackages.dolphin
-        kdePackages.kio
-        kdePackages.kio-fuse
-        kdePackages.kio-extras
-        kdePackages.qtwayland
-        kdePackages.breeze-icons
-        kdePackages.qtsvg
-      ];
+          kdePackages.dolphin
+          kdePackages.kio
+          kdePackages.kio-fuse
+          kdePackages.kio-extras
+          kdePackages.qtwayland
+          kdePackages.breeze-icons
+          kdePackages.qtsvg
+        ];
 
-      programs.swayimg = {
-        enable = true;
-        settings = {
-          viewer = {
-            window = "#10000010";
-            scale = "fit";
-          };
-        };
-      };
-
-      services = {
-        vicinae = {
+        programs.swayimg = {
           enable = true;
-          systemd = {
-            enable = true;
-            autoStart = true;
-            environment = {
-              USE_LAYER_SHELL = 1;
-            };
-          };
           settings = {
-            close_on_focus_loss = true;
-            consider_preedit = true;
-            pop_to_root_on_close = true;
-            favicon_service = "twenty";
-            search_files_in_root = true;
-            launcher_window = {
-              opacity = lib.mkForce 0.98;
+            viewer = {
+              window = "#10000010";
+              scale = "fit";
             };
           };
-          extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
-            bluetooth
-            nix
-            power-profile
-            vscode-recents
-            ssh
-            searxng
-            hypr-keybinds
-            it-tools
-          ];
         };
 
-        hyprpolkitagent.enable = true;
-        cliphist = {
-          enable = true;
-          allowImages = true;
+        services = {
+          vicinae = {
+            enable = true;
+            systemd = {
+              enable = true;
+              autoStart = true;
+              environment = {
+                USE_LAYER_SHELL = 1;
+              };
+            };
+            settings = {
+              close_on_focus_loss = true;
+              consider_preedit = true;
+              pop_to_root_on_close = true;
+              favicon_service = "twenty";
+              search_files_in_root = true;
+              launcher_window = {
+                opacity = lib.mkForce 0.98;
+              };
+            };
+            extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+              bluetooth
+              nix
+              power-profile
+              vscode-recents
+              ssh
+              searxng
+              hypr-keybinds
+              it-tools
+            ];
+          };
+
+          hyprpolkitagent.enable = true;
+          cliphist = {
+            enable = true;
+            allowImages = true;
+          };
         };
       };
     };

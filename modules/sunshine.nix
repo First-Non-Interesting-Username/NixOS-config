@@ -18,15 +18,24 @@
         # Port 47990
       };
     };
-    homeModules.moonlight = {
+    nixosModules.moonlight = {
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
-      home.packages = with pkgs; [
-        moonlight-qt
-      ];
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        osConfig,
+        ...
+      }: {
+        home.packages = with pkgs; [
+          moonlight-qt
+        ];
+      };
     };
   };
 }

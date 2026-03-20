@@ -24,13 +24,5 @@
         ];
       };
     };
-    homeModules.printing = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      # Home config goes here
-    };
   };
 }

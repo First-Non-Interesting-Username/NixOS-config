@@ -17,17 +17,5 @@
         self.nixosModules.plasma-other
       ];
     };
-    homeModules.plasma = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      imports = [
-        self.homeModules.plasma-apps
-        self.homeModules.plasma-config
-        self.homeModules.plasma-other
-      ];
-    };
   };
 }

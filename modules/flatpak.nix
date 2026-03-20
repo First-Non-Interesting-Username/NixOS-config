@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       services.flatpak.enable = true;
@@ -16,35 +17,34 @@
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
         config.common.default = "*";
       };
-    };
-
-    homeModules.flatpak = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      imports = [
-        inputs.nix-flatpak.homeManagerModules.nix-flatpak
-      ];
-
-      services.flatpak = {
-        update.onActivation = true;
-        remotes = [
-          {
-            name = "flathub";
-            location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-          }
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        imports = [
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ];
-        packages = [
-          "com.github.tchx84.Flatseal"
+
+        services.flatpak = {
+          update.onActivation = true;
+          remotes = [
+            {
+              name = "flathub";
+              location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+            }
+          ];
+          packages = [
+            "com.github.tchx84.Flatseal"
+          ];
+          uninstallUnmanaged = true;
+        };
+
+        home.packages = with pkgs; [
+          warehouse
         ];
-        uninstallUnmanaged = true;
       };
-
-      home.packages = with pkgs; [
-        warehouse
-      ];
     };
   };
 }

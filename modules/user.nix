@@ -45,14 +45,6 @@
         neededForUsers = true;
       };
     };
-    homeModules.user = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      # Home config goes here
-    };
     nixosModules.user-debug = {
       pkgs,
       lib,

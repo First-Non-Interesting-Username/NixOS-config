@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       virtualisation.podman = {
@@ -20,21 +21,21 @@
         "binder_linux"
         "ashmem_linux"
       ];
-    };
-    homeModules.virtualization-desktop = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      home.packages = with pkgs; [
-        waydroid-helper
-        distroshelf
-      ];
-      programs = {
-        lazydocker.enable = true;
-        distrobox = {
-          enable = true;
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.packages = with pkgs; [
+          waydroid-helper
+          distroshelf
+        ];
+        programs = {
+          lazydocker.enable = true;
+          distrobox = {
+            enable = true;
+          };
         };
       };
     };

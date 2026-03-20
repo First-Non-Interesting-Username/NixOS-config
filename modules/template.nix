@@ -13,7 +13,6 @@
       ...
     }: {
       # System config goes here
-
       environment.persistence."/persist" =
         lib.mkIf (options ? environment && options.environment ? persistence)
         {
@@ -32,15 +31,16 @@
             ];
           };
         };
-    };
 
-    homeModules.CHANGEME = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      # Home config goes here
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        osConfig,
+        ...
+      }: {
+        # Home config goes here
+      };
     };
   };
 }

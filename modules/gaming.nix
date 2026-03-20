@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       #nixpkgs.config.factorio = {
@@ -31,63 +32,63 @@
         #  ];
         #};
       };
-    };
-    homeModules.gaming = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      home.packages = with pkgs; [
-        #factorio
-        #factorio-space-age
-        prismlauncher
-        (pkgs.heroic.override {
-          extraPkgs = pkgs: [
-            pkgs.gamemode
-            pkgs.gamescope
-            pkgs.mangohud
-          ];
-        })
-      ];
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.packages = with pkgs; [
+          #factorio
+          #factorio-space-age
+          prismlauncher
+          (pkgs.heroic.override {
+            extraPkgs = pkgs: [
+              pkgs.gamemode
+              pkgs.gamescope
+              pkgs.mangohud
+            ];
+          })
+        ];
 
-      home.sessionVariables = {
-        AMD_VULKAN_ICD = "RADV";
-        RADV_PERFTEST = "gpl";
-      };
-
-      programs = {
-        mangohud = {
-          enable = true;
-          settings = {
-            fps = true;
-            frametime = true;
-            cpu_stats = true;
-            gpu_stats = true;
-            ram = true;
-            vram = true;
-            position = "top-left";
-          };
+        home.sessionVariables = {
+          AMD_VULKAN_ICD = "RADV";
+          RADV_PERFTEST = "gpl";
         };
 
-        lutris = {
-          enable = true;
-          extraPackages = with pkgs; [
-            mangohud
-            gamemode
-            winetricks
-            gamescope
-            umu-launcher
-          ];
+        programs = {
+          mangohud = {
+            enable = true;
+            settings = {
+              fps = true;
+              frametime = true;
+              cpu_stats = true;
+              gpu_stats = true;
+              ram = true;
+              vram = true;
+              position = "top-left";
+            };
+          };
 
-          winePackages = with pkgs; [
-            wineWow64Packages.staging
-            wineWow64Packages.full
-          ];
+          lutris = {
+            enable = true;
+            extraPackages = with pkgs; [
+              mangohud
+              gamemode
+              winetricks
+              gamescope
+              umu-launcher
+            ];
 
-          protonPackages = with pkgs; [
-            proton-ge-bin
-          ];
+            winePackages = with pkgs; [
+              wineWow64Packages.staging
+              wineWow64Packages.full
+            ];
+
+            protonPackages = with pkgs; [
+              proton-ge-bin
+            ];
+          };
         };
       };
     };

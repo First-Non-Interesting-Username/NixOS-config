@@ -96,20 +96,6 @@
       ];
 
       imports = [
-        (
-          {
-            lib,
-            flake-parts-lib,
-            ...
-          }: {
-            options.flake = flake-parts-lib.mkSubmoduleOptions {
-              homeModules = lib.mkOption {
-                type = with lib.types; lazyAttrsOf raw;
-                default = {};
-              };
-            };
-          }
-        )
         (inputs.import-tree ./modules)
         (inputs.import-tree ./hosts)
       ];

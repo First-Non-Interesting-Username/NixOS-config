@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      username,
       ...
     }: {
       console.keyMap = "pl";
@@ -37,28 +38,27 @@
       };
       hardware.steam-hardware.enable = true;
       services.udev.packages = [pkgs.game-devices-udev-rules];
-    };
+      home-manager.users.${username} = {
+        pkgs,
+        lib,
+        config,
+        ...
+      }: {
+        home.keyboard = {
+          layout = "pl";
+          variant = "";
+          options = ["caps:escape"];
+        };
 
-    homeModules.input = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      home.keyboard = {
-        layout = "pl";
-        variant = "";
-        options = ["caps:escape"];
-      };
-
-      i18n.inputMethod = {
-        enable = true;
-        type = "fcitx5";
-        fcitx5.addons = [
-          pkgs.fcitx5-mozc
-          pkgs.fcitx5-gtk
-          pkgs.kdePackages.fcitx5-qt
-        ];
+        i18n.inputMethod = {
+          enable = true;
+          type = "fcitx5";
+          fcitx5.addons = [
+            pkgs.fcitx5-mozc
+            pkgs.fcitx5-gtk
+            pkgs.kdePackages.fcitx5-qt
+          ];
+        };
       };
     };
   };

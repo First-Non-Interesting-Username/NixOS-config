@@ -19,8 +19,6 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
-      width = Width;
-      height = Height;
     };
     modules = [
       # System modules go here
@@ -34,7 +32,8 @@ in {
       self.nixosModules.user
       self.nixosModules.networking-minimal
       self.nixosModules.locale
-      self.nixosModules.hardware-Minimal
+      self.nixosModules."hardware-${Hostname}"
+      self.nixosModules.theme
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -47,17 +46,6 @@ in {
           hostname = Hostname;
           width = Width;
           height = Height;
-        };
-        home-manager.users.nixi = {
-          imports = [
-            # Home manager modules go here
-            self.homeModules.home-manager
-            self.homeModules.git
-            self.homeModules.ssh
-            self.homeModules.shell
-            self.homeModules.direnv
-            self.homeModules.theme
-          ];
         };
       }
     ];
