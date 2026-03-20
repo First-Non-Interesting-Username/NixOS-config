@@ -45,7 +45,7 @@
           };
           initContent = ''
             if [[ $PWD == $HOME ]]; then
-                cd ~/persist
+                cd ~/Persist
             fi
             fastfetch
           '';

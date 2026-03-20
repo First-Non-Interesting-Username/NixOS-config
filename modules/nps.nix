@@ -77,10 +77,10 @@
             adminPasswordFile = osConfig.sops.secrets."lldap/admin_password".path;
 
             bootstrap.users.admin = {
-              id = "admin";
+              id = "user_admin";
               email = gitEmail;
               password_file = osConfig.sops.secrets."lldap/user_password".path;
-              displayName = "Admin";
+              displayName = "User Admin";
               groups = [
                 "lldap_admin"
                 "lldap_password_manager"
