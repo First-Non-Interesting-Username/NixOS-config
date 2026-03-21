@@ -21,6 +21,6 @@ There're 4 types of line: Text, Heading, Code and Mixed.
 - Each line of text SHOULD contain only one sentence and MUST end with either period or colon.
 - Docs MUST be in markdown.
 - Headings MUST NOT end with punctuation mark.
-- Code MUST be inside code blocks with syntax highlighting corresponding to the language they're written in.
+- Code MUST be inside code blocks with syntax highlighting corresponding to the language it is written in.
 - Mixed lines MUST follow Heading or Text rules, depending if they start with hashtag or not.
 - Docs MUST be formatted using the Prettier formatter.
