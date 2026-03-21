@@ -3,8 +3,7 @@
   inputs,
   lib,
   ...
-}:
-let
+}: let
   Hostname = "YOUR_HOSTNAME";
   Username = "YOUR_USERNAME";
   GitName = "YOUR_GIT_USERNAME";
@@ -12,8 +11,7 @@ let
   Width = 1920; # Width of your monitor in pixels, it will default to 1920
   Height = 1080; # Width of your monitor in pixels, it will default to 1080
   # some modules expect "domain", those modules are only for my personal use, open an issue if you need assistance with them
-in
-{
+in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
