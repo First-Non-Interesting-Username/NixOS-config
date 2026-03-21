@@ -73,6 +73,7 @@
               DisableProfileImport = true;
               EnableWidevine = true;
               Preferences = {
+                # TBD
                 "browser.download.useDownloadDir" = true;
                 "browser.download.alwaysOpenPanel" = false;
                 "browser.tabs.warnOnClose" = false;
