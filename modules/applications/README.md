@@ -4,6 +4,22 @@
 
 - Enables pipewire, with few supporting packages and compatiblity layers.
 
+## self.nixosModules.browser
+
+WIP
+
+IMPERATIVE:
+
+- Open Floorp.
+- Enable all extensions and log in to Proton Pass.
+
+- Installs Floorp.
+- Sets it as a default browser.
+- Changes few settings to my preffered values.
+- Adds few extensions.
+- Adds MyNixOS as a search engine.
+- Sets DDG as a default search engine.
+
 ## self.nixosModules.flatpak
 
 - Imports nix-flatpak for convinence and few extra options.
