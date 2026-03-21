@@ -12,6 +12,8 @@
 - Enables GTK.
 - Enables Stylix.
 
+###
+
 - Sets:
 - Theme to Gruvbox Dark.
 - Cursor to Bibata Modern Ice.
@@ -20,6 +22,8 @@
 - Sans Serif font to DejaVu Sans.
 - Serif font to DejaVu Serif.
 - Emoji font to Noto Color Emoji.
+
+###
 
 - Disables the following stylix targets: Vscode colors, KDE, QT and Floorp.
 
