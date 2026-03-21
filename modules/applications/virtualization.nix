@@ -15,9 +15,7 @@
         ...
       }:
       {
-        # We use 'config' as the single top-level attribute
         config = lib.mkMerge [
-          # Part 1: Conditional persistence
           (lib.mkIf impermanence {
             environment.persistence."/persist" = {
               directories = [ "/var/lib/containers" ];
@@ -31,7 +29,6 @@
             };
           })
 
-          # Part 2: Your standard configuration (moved inside config)
           {
             virtualisation = {
               podman = {
