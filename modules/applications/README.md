@@ -12,6 +12,8 @@ IMPERATIVE:
 
 - Open Floorp.
 - Enable all extensions and log in to Proton Pass.
+  
+###
 
 - Installs Floorp.
 - Sets it as a default browser.
@@ -55,6 +57,8 @@ IMPERATIVE:
 
 - Go to `https://localhost:47990`.
 - Set up Sunshine as you would on normal Linux. You can follow some tutorial for that.
+
+###
 
 - Sets up Sunshine service.
 - Makes fixes neccessary for it to work on Wayland.
