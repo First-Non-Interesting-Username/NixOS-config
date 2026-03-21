@@ -8,6 +8,7 @@
       pkgs,
       lib,
       config,
+      hostname,
       ...
     }: {
       programs.nh = {
@@ -25,7 +26,7 @@
       };
       system.autoUpgrade = {
         enable = true;
-        flake = "github:First-Non-Interesting-Username/NixOS-config#${config.networking.hostName}";
+        flake = "github:First-Non-Interesting-Username/NixOS-config#${hostname}";
         allowReboot = false;
         persistent = true;
         dates = "02:00";

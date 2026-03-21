@@ -14,7 +14,7 @@
     }: {
       programs.ssh.startAgent = true;
       systemd.tmpfiles.rules = [
-        "d /home/${username}/.ssh 0700 ${username} users - -"
+        "d ${config.users.users.${username}.home}/.ssh 0700 ${username} users - -"
       ];
       users.users.${username} = {
         openssh.authorizedKeys.keys = [
@@ -72,7 +72,7 @@
     }: {
       programs.ssh.startAgent = true;
       systemd.tmpfiles.rules = [
-        "d /home/${username}/.ssh 0700 ${username} users - -"
+        "d ${config.users.users.${username}.home}/.ssh 0700 ${username} users - -"
       ];
       users.users.${username} = {
         openssh.authorizedKeys.keys = [
@@ -130,7 +130,7 @@
       };
     };
 
-    nixosModules.ssh-minimal = {
+    nixosModules.ssh-debug = {
       pkgs,
       lib,
       config,
@@ -149,10 +149,12 @@
       lib,
       config,
       ...
-    }: {
+    }: let
+      sshPort = 6767;
+    in {
       services.openssh = {
         enable = true;
-        ports = [6767];
+        ports = [sshPort];
         settings = {
           PasswordAuthentication = false;
           PermitRootLogin = "no";
@@ -165,7 +167,7 @@
         jails.sshd = {
           settings = {
             enabled = true;
-            port = "6767";
+            port = toString sshPort;
             filter = "sshd";
             maxretry = 5;
             bantime = "1h";
@@ -174,7 +176,7 @@
         };
       };
 
-      networking.firewall.allowedTCPPorts = [6767];
+      networking.firewall.allowedTCPPorts = [sshPort];
     };
   };
 }

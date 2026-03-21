@@ -26,7 +26,7 @@ in {
       self.nixosModules.home-manager
       self.nixosModules.git
       self.nixosModules.secrets
-      self.nixosModules.ssh-minimal
+      self.nixosModules.ssh-debug
       self.nixosModules.shell
       self.nixosModules.bootloader
       self.nixosModules.nix
