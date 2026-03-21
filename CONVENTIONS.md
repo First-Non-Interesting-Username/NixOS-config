@@ -14,6 +14,7 @@ There're 4 types of line: Text, Heading, Code and Mixed.
 - Functions with `WIP` in the description are in work. They are prone to change and can be unstable but they're ready for use.
 - Functions with `TBD` in the description are yet to be ready to be used. Using them is not supported and I won't provide support for them.
 - Functions with `PERSONAL` in the description are meant only for my personal use. They're not supported, unexpected behaviour should be expected (yes, this is a pun).
+- Functions with `IMPERATIVE` in the description require some imperative configuration. The configuration required for them MUST be described above the list of the features of the module.
 - All documents in this repository MUST be written in simple present tense.
 - Sentences MUST be written in active voice.
 - Simple English SHOULD be used. Avoid jargon and complex vocabulary where possible.
@@ -24,3 +25,5 @@ There're 4 types of line: Text, Heading, Code and Mixed.
 - Code MUST be inside code blocks with syntax highlighting corresponding to the language it is written in.
 - Mixed lines MUST follow Heading or Text rules, depending if they start with hashtag or not.
 - Docs MUST be formatted using the Prettier formatter.
+- Features of modules MUST be in bullet lists.
+- Package names MUST start with capital letters.

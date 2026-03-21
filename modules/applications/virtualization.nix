@@ -18,12 +18,10 @@
         imports = lib.optional impermanence {
           environment.persistence."/persist" = {
             directories = [
-              "/var/lib/waydroid"
               "/var/lib/containers"
             ];
             users.${username} = {
               directories = [
-                ".local/share/waydroid"
                 ".local/share/containers"
                 ".config/containers"
                 ".local/share/distrobox"
@@ -32,33 +30,34 @@
           };
         };
 
-        virtualisation.podman = {
-          enable = true;
-          dockerCompat = true;
-          defaultNetwork.settings.dns_enabled = true;
+        virtualisation = {
+          podman = {
+            enable = true;
+            dockerCompat = true;
+            defaultNetwork.settings.dns_enabled = true;
+          };
         };
-        virtualisation.waydroid.enable = true;
         boot.kernelModules = [
           "binder_linux"
           "ashmem_linux"
         ];
-        home-manager.users.${username} = {
-          pkgs,
-          lib,
-          config,
-          ...
-        }: {
-          home.packages = with pkgs; [
-            waydroid-helper
-            distroshelf
-          ];
-          programs = {
-            lazydocker.enable = true;
-            distrobox = {
-              enable = true;
+        home-manager.users.${username} =
+          {
+            pkgs,
+            lib,
+            config,
+            ...
+          }:
+          {
+            home.packages = with pkgs; [
+              distroshelf
+            ];
+            programs = {
+              distrobox = {
+                enable = true;
+              };
             };
           };
-        };
       };
 
     nixosModules.virtualization-server =
@@ -69,6 +68,21 @@
         ...
       }:
       {
+
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
+            directories = [
+              "/var/lib/containers"
+            ];
+            users.${username} = {
+              directories = [
+                ".local/share/containers"
+                ".config/containers"
+                ".local/share/distrobox"
+              ];
+            };
+          };
+        };
         virtualisation = {
           containers.enable = true;
           podman = {
