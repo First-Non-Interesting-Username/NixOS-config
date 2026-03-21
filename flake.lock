@@ -996,6 +996,26 @@
         "type": "github"
       }
     },
+    "nix-vscode-extensions": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774060605,
+        "narHash": "sha256-Cu6MK16Wr03tiX3tLFw/e39l2DSn0khHAd8nC8wz+n0=",
+        "owner": "nix-community",
+        "repo": "nix-vscode-extensions",
+        "rev": "7caa45250be3fcb9b3695522fc2e2156c717569a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-vscode-extensions",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1773533765,
@@ -1333,6 +1353,7 @@
         "nix-index-database": "nix-index-database",
         "nix-mineral": "nix-mineral",
         "nix-podman-stacks": "nix-podman-stacks",
+        "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
         "noctalia": "noctalia",

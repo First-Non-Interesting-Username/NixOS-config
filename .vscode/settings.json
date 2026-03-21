@@ -1,0 +1,10 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.formatterPath": "alejandra"
+}
