@@ -4,14 +4,6 @@
   ...
 }: {
   flake = {
-    nixosModules.kernel-debug = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-    };
     nixosModules.kernel-laptop = {
       pkgs,
       lib,
