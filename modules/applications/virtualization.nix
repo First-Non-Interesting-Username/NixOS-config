@@ -15,11 +15,9 @@
         ...
       }:
       {
-        imports = lib.optional impermanence {
+        config = lib.mkIf impermanence {
           environment.persistence."/persist" = {
-            directories = [
-              "/var/lib/containers"
-            ];
+            directories = [ "/var/lib/containers" ];
             users.${username} = {
               directories = [
                 ".local/share/containers"
@@ -65,6 +63,8 @@
         pkgs,
         lib,
         config,
+        username,
+        impermanence,
         ...
       }:
       {
@@ -78,7 +78,6 @@
               directories = [
                 ".local/share/containers"
                 ".config/containers"
-                ".local/share/distrobox"
               ];
             };
           };
