@@ -2,60 +2,55 @@
   self,
   inputs,
   ...
-}:
-{
+}: {
   flake = {
-    nixosModules.input =
-      {
+    nixosModules.input = {
+      pkgs,
+      lib,
+      config,
+      username,
+      ...
+    }: {
+      console.keyMap = "pl";
+      environment.variables = {
+        XKB_DEFAULT_LAYOUT = "pl";
+        XKB_DEFAULT_VARIANT = "";
+        XKB_DEFAULT_OPTIONS = "caps:escape";
+      };
+      services.xserver.xkb = {
+        layout = "pl";
+        variant = "";
+      };
+      services.libinput = {
+        enable = true;
+
+        touchpad = {
+          naturalScrolling = true;
+          tapping = true;
+          disableWhileTyping = true;
+          clickMethod = "clickfinger";
+          accelSpeed = "0.4";
+        };
+        mouse = {
+          accelProfile = "flat";
+          middleEmulation = true;
+          naturalScrolling = true;
+        };
+      };
+      hardware.steam-hardware.enable = true;
+      services.udev.packages = [pkgs.game-devices-udev-rules];
+      home-manager.users.${username} = {
         pkgs,
         lib,
         config,
-        username,
         ...
-      }:
-      {
-        console.keyMap = "pl";
-        environment.variables = {
-          XKB_DEFAULT_LAYOUT = "pl";
-          XKB_DEFAULT_VARIANT = "";
-          XKB_DEFAULT_OPTIONS = "caps:escape";
-        };
-        services.xserver.xkb = {
+      }: {
+        home.keyboard = {
           layout = "pl";
           variant = "";
+          options = ["caps:escape"];
         };
-        services.libinput = {
-          enable = true;
-
-          touchpad = {
-            naturalScrolling = true;
-            tapping = true;
-            disableWhileTyping = true;
-            clickMethod = "clickfinger";
-            accelSpeed = "0.4";
-          };
-          mouse = {
-            accelProfile = "flat";
-            middleEmulation = true;
-            naturalScrolling = true;
-          };
-        };
-        hardware.steam-hardware.enable = true;
-        services.udev.packages = [ pkgs.game-devices-udev-rules ];
-        home-manager.users.${username} =
-          {
-            pkgs,
-            lib,
-            config,
-            ...
-          }:
-          {
-            home.keyboard = {
-              layout = "pl";
-              variant = "";
-              options = [ "caps:escape" ];
-            };
-          };
       };
+    };
   };
 }

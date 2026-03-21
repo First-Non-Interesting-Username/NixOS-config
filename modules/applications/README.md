@@ -12,7 +12,7 @@ IMPERATIVE:
 
 - Open Floorp.
 - Enable all extensions and log in to Proton Pass.
-  
+
 ###
 
 - Installs Floorp.
@@ -50,6 +50,11 @@ WIP
 
 - Sets up automatic printer discovery.
 - Enables cups with web UI at `http://localhost:631`.
+
+## self.nixosModules.programs
+
+- Installs Obsidian (It will hopefully be replaced by Neovim in some time).
+- Installs KDE Connect.
 
 ## self.nixosModules.sunshine
 

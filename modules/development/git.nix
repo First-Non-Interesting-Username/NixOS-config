@@ -46,8 +46,10 @@
           git = {
             enable = true;
             settings = {
-              user.name = gitName;
-              user.email = gitEmail;
+              user = {
+                name = gitName;
+                email = gitEmail;
+              };
               init.defaultBranch = "main";
               pull.rebase = true;
             };
@@ -55,7 +57,6 @@
           gh = {
             enable = true;
             settings = {
-              # gh ssh-key add ~/.ssh/id_ed25519.pub
               git_protocol = "ssh";
               prompt = "enabled";
             };
