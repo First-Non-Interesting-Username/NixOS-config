@@ -17,9 +17,19 @@ TBD
 
 ### Modules
 
+- [Applications](./modules/applications/README.md)
+- [Desktop](./modules/desktop/README.md)
+- [Development](./modules/development/README.md)
+- [Home](./modules/home/README.md)
+- [Services](./modules/services/README.md)
+- [System](./modules/system/README.md)
+- [User](./modules/user/README.md)
+
+### Installation Guide
+
 TBD
 
-### Install Guide
+### Host creation guide
 
 TBD
 
