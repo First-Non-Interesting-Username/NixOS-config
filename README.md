@@ -1,6 +1,34 @@
+# NixOS Config
+
 ## Table of Contents
 
 TBD
+
+## Hosts Matrix
+
+TBD
+
+## Docs
+
+### Modules
+
+TBD
+
+### Install Guide
+
+TBD
+
+### Hosts
+
+TBD
+
+### Desktop Enviroments
+
+TBD
+
+## Eye candy stuff
+
+### Star History Chart
 
 <a href="https://www.star-history.com/?repos=First-Non-Interesting-Username%2FNixOS-config&type=date&legend=top-left">
  <picture>
@@ -9,6 +37,10 @@ TBD
    <img alt="Star History Chart" src="https://api.star-history.com/image?repos=First-Non-Interesting-Username/NixOS-config&type=date&legend=top-left" />
  </picture>
 </a>
+
+### Screenshots
+
+TBD
 
 ## Footnote
 
