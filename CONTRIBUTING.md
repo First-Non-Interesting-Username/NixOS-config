@@ -277,6 +277,7 @@ A pull request SHOULD remain open for at least 2 hours before merging, to allow 
 - [ ] `nix flake check` passes.
 - [ ] Documentation is updated if needed.
 - [ ] Commit messages follow Conventional Commits.
+- [ ] You added yourself to [CONTRIBUTORS.md](./CONTRIBUTORS.md) (optional).
 ```
 
 ---
