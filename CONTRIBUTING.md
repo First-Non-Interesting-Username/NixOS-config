@@ -376,4 +376,3 @@ This document draws inspiration from the following resources:
 
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 - [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-- [NixOS Module System documentation](https://nixos.org/manual/nixos/stable/#sec-writing-modules).
