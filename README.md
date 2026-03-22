@@ -29,7 +29,7 @@ TBD
 
 Go to the [installation guides overview](./docs/install-guides.md) for the full picture.
 
-Choose the [genral guide](./docs/install-guide-general.md) if you don't know which to choose.
+Choose the [general guide](./docs/install-guide-general.md) if you don't know which to choose.
 
 ### Host creation guide
 
