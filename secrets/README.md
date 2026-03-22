@@ -1,5 +1,4 @@
 > This file was AI generated
-> It is the only file in the entire repo that wasn't written by humans
 
 # Secrets Setup Guide
 
@@ -57,12 +56,11 @@ sops secrets/secrets.yaml
 
 ## Secrets Reference
 
-| Key | Used By | Description |
-| --- | ------- | ----------- |
-
-| `sudo_password` | `user.nix` | User password hash (use `mkpasswd -m sha-512`) |
-| `factorio_token` | `gaming.nix` | Factorio.com auth token for mod downloads |
-| `github_pat` | `git.nix` | GitHub Personal Access Token |
+| Key              | Used By      | Description                                    |
+| ---------------- | ------------ | ---------------------------------------------- |
+| `sudo_password`  | `user.nix`   | User password hash (use `mkpasswd -m sha-512`) |
+| `factorio_token` | `gaming.nix` | Factorio.com auth token for mod downloads      |
+| `github_pat`     | `git.nix`    | GitHub Personal Access Token                   |
 
 ## Generating Required Values
 

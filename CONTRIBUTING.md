@@ -41,6 +41,9 @@ interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
     - [Testing](#testing)
   - [Documentation Standards](#documentation-standards)
   - [Review Process](#review-process)
+  - [Releases](#releases)
+    - [Releasing a new version](#releasing-a-new-version)
+    - [Naming releases](#naming-releases)
   - [Acknowledgements](#acknowledgements)
 
 ---
@@ -370,9 +373,22 @@ A reviewer MUST NOT approve a pull request that:
 
 ---
 
+## Releases
+
+### Releasing a new version
+
+- New version MUST be released after major changes.
+- Each major release MUST contain an installation image build based on that version.
+- Each minor release MUST contain changes from at least one PR.
+
+### Naming releases
+
+- Releases MUST follow [ZeroVer](https://0ver.org/) naming scheme with no letters.
+
 ## Acknowledgements
 
 This document draws inspiration from the following resources:
 
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 - [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
+- [ZeroVer](https://0ver.org/)
