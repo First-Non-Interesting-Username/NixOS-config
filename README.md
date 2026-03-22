@@ -25,9 +25,11 @@ TBD
 - [System](./modules/system/README.md)
 - [User](./modules/user/README.md)
 
-### Installation Guide
+### Installation Guides
 
-TBD
+Go to the [installation guides overview](./docs/install-guides.md) for the full picture.
+
+Choose the [genral guide](./docs/install-guide-general.md) if you don't know which to choose.
 
 ### Host creation guide
 
@@ -68,7 +70,7 @@ TBD
 > Some choices, such as including full [code of conduct](./CODE_OF_CONDUCT.md) or documentation may feel like overkill for this size of a project.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
-### Credits
+### Inspired by:
 
 - [ryan4yin/nix-config](https://github.com/ryan4yin/nix-config) — Helped me a lot in the later stages of the project. Golden standard for NixOS configs.
 - [wimpysworld/nix-config](https://github.com/wimpysworld/nix-config) — Great docs and unique way of enabling modules. Very interesting config.
