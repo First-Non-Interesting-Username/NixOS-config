@@ -13,8 +13,13 @@
     }: {
       users = {
         mutableUsers = false;
+        groups.${username} = {
+          gid = 1000;
+        };
         users.${username} = {
           isNormalUser = true;
+          uid = 1000;
+          group = username;
           home = "/home/${username}";
           description = username;
           extraGroups = [
