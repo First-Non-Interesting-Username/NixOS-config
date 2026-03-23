@@ -31,13 +31,15 @@ Go to the [installation guides overview](./docs/install-guides.md) for the full 
 
 Choose the [general guide](./docs/install-guide-general.md) if you don't know which to choose.
 
+Remember to choose a host before installing.
+
 ### Host creation guide
 
 TBD
 
 ### Hosts
 
-TBD
+[hosts](./docs/hosts.md)
 
 ### Desktop Enviroments
 

@@ -193,6 +193,6 @@ nix --extra-experimental-features "nix-command flakes pipe-operators" shell gith
 
 ## 5. Post Install
 
-Review the `IMPERATIVE` section of your host documentation and apply steps from it.
+Review the `IMPERATIVE` section of your host documentation and apply the steps from it.
 
 # You are done!

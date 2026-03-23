@@ -6,7 +6,7 @@ Thanks to everyone who has contributed to this project!
 
 ## Core Team
 
-- **Your Name** [@First-Non-Interesting-Username](https://github.com/First-Non-Interesting-Username) — Creator & maintainer
+- **First-Non-Interesting-Username** [@First-Non-Interesting-Username](https://github.com/First-Non-Interesting-Username) — Creator & maintainer
 
 ## Contributors
 
