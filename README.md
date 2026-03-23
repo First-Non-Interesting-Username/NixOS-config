@@ -2,7 +2,18 @@
 
 ## Table of Contents
 
-TBD
+- [NixOS Config](#nixos-config)
+- [Hosts Matrix](#hosts-matrix)
+- [Docs](#docs)
+  - [Modules](#modules)
+  - [Installation Guides](#installation-guides)
+  - [Host creation guide](#host-creation-guide)
+  - [Secrets](#secrets)
+- [Eye candy stuff](#eye-candy-stuff)
+  - [Star History Chart](#star-history-chart)
+  - [Screenshots](#screenshots)
+- [Footnote](#footnote)
+  - [Inspired by](#inspired-by)
 
 ## Hosts Matrix
 
@@ -12,6 +23,8 @@ TBD
 | Minimal  | N/A                        | N/A         | N/A     | N/A  | Other                |
 | Server   | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
 | Template | N/A                        | N/A         | N/A     | N/A  | Other                |
+
+For more in depth explanation, visit [hosts](./docs/hosts.md).
 
 ## Docs
 
@@ -34,14 +47,6 @@ Choose the [general guide](./docs/install-guide-general.md) if you don't know wh
 Remember to choose a host before installing.
 
 ### Host creation guide
-
-TBD
-
-### Hosts
-
-[hosts](./docs/hosts.md)
-
-### Desktop Enviroments
 
 TBD
 
