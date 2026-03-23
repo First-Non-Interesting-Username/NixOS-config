@@ -52,5 +52,5 @@ PERSONAL
 
 - Installs Nh and sets up automatic cleaning.
 - Sets up Nh flake to remote of my flake.
-- Enables weekly store optimises.
+- Enables weekly store optimizes.
 - Enables daily automatic updates.

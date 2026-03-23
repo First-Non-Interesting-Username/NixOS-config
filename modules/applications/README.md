@@ -2,7 +2,7 @@
 
 ## self.nixosModules.audio
 
-- Enables pipewire, with few supporting packages and compatiblity layers.
+- Enables pipewire, with few supporting packages and compatibility layers.
 
 ## self.nixosModules.browser
 
@@ -17,14 +17,14 @@ IMPERATIVE:
 
 - Installs Floorp.
 - Sets it as a default browser.
-- Changes few settings to my preffered values.
+- Changes few settings to my preferred values.
 - Adds few extensions.
 - Adds MyNixOS as a search engine.
 - Sets DDG as a default search engine.
 
 ## self.nixosModules.flatpak
 
-- Imports nix-flatpak for convinence and few extra options.
+- Imports nix-flatpak for convenience and few extra options.
 - Enables flatpak service.
 - Makes it so unmanaged flatpaks are automatically uninstalled.
 - Updates all flatpaks on system rebuild.
@@ -38,11 +38,11 @@ WIP
 
 - (Sets up Factorio package with my user token and username so it can be downloaded.)
 - (Enables Steam system package with Proton GE, Gamescope session and open firewall.)
-- Enables Gamemode and Gamescope in a system level, for better performance and simplier gaming.
+- Enables Gamemode and Gamescope in a system level, for better performance and simpler gaming.
 - (Installs Factorio with Space Age DLC.)
-- Installs Prismlauncher
+- Installs PrismLauncher
 - Installs Heroic games launcher and gives it the access to Gamemode, Gamescope and Mangohud.
-- Sets up enviroment variables for AMD and Intel GPUs to explicitly use the Mesa drivers.
+- Sets up environment variables for AMD and Intel GPUs to explicitly use the Mesa drivers.
 - Enables Mangohud.
 - Installs Lutris with Proton GE and everything it needs.
 
@@ -66,7 +66,7 @@ IMPERATIVE:
 ###
 
 - Sets up Sunshine service.
-- Makes fixes neccessary for it to work on Wayland.
+- Makes fixes necessary for it to work on Wayland.
 
 ## self.nixosModules.moonlight
 
@@ -74,8 +74,8 @@ IMPERATIVE:
 
 ## self.nixosModules.virtualization-desktop
 
-- Enables Podman with docker compatiblity and socket.
-- Installs Distrobox with Distroshelf convinience package.
+- Enables Podman with docker compatibility and socket.
+- Installs Distrobox with Distroshelf convenience package.
 
 ## self.nixosModules.virtualization-server
 

@@ -40,9 +40,7 @@ For more in depth explanation, visit [hosts](./docs/hosts.md).
 
 ### Installation Guides
 
-Go to the [installation guides overview](./docs/install-guides.md) for the full picture.
-
-Choose the [general guide](./docs/install-guide-general.md) if you don't know which to choose.
+Go to the [installation guides overview](./docs/install-guides.md) to select the guide that fits your situation best.
 
 Remember to choose a host before installing.
 

@@ -17,6 +17,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
     - [IMPERATIVE Modules](#imperative-modules)
     - [Section Dividers](#section-dividers)
     - [Feature Bullets](#feature-bullets)
+  - [Table of Contents Rules](#table-of-contents-rules)
 
 ---
 
@@ -110,3 +111,19 @@ Use `###` with no text after to separate distinct groups of features within the 
 - Features MUST be in bullet lists using hyphens.
 - Bullets MUST start with a verb in simple present tense.
 - Bullets MUST use active voice.
+
+---
+
+## Table of Contents Rules
+
+All documents with more than 3 sections MUST have a Table of Contents.
+
+The Table of Contents MUST:
+
+- Be placed after the first heading.
+- Use a nested bullet list.
+- Link to all ## headings using anchor links.
+- Use the heading text as the link text.
+- NOT include "You are done!" or similar conclusion sections.
+
+The ## headings in the document MUST NOT include numbering prefixes.

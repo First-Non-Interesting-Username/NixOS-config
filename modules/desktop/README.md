@@ -2,8 +2,8 @@
 
 ## self.nixosModules.input
 
-- Sets polish keyboard layout with capsswap.
-- Sets natural scrooling for both mouse and touchpad.
+- Sets polish keyboard layout with caps swap.
+- Sets natural scrolling for both mouse and touchpad.
 - Enables Steam Controller udev rules.
 
 ## self.nixosModules.theme

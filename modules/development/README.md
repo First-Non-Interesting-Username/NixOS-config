@@ -1,4 +1,4 @@
-# Developement
+# Development
 
 ## self.nixosModules.direnv
 

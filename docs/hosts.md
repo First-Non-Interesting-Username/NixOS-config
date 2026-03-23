@@ -1,10 +1,10 @@
 ## Table of Contents
 
 - [Hosts](#hosts)
-  - [Laptop](##laptop)
-  - [Server](##server)
-  - [Minimal](#minimal)
-  - [Template](##template)
+  - [Laptop](#laptop)
+  - [Server](#server)
+  - [Minimal](minimal)
+  - [Template](#template)
   - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
 # Hosts

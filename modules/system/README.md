@@ -26,7 +26,7 @@
 
 PERSONAL
 
-- Sets up networking for MY server, in MY home network specyfically.
+- Sets up networking for MY server, in MY home network specifically.
 
 ## self.nixosModules.networking-minimal
 

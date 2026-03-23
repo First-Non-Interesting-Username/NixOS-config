@@ -1,5 +1,7 @@
 # Install Guides
 
+WIP
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -18,7 +20,7 @@ Guides are organized by machine type or use case.
 
 ### General Purpose Machines
 
-- [General Install Guide](./install-guide-general.md) — Covers installation using nixos-anywhere for machines on your local network.
+- [General Install Guide](./install-guides/install-guide-general.md) — Covers installation using nixos-anywhere for machines on your local network.
 
 ### Host-Specific Guides
 

@@ -1,0 +1,53 @@
+name: Update Module List
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "modules/**/README.md"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * 5"
+
+jobs:
+  update-list:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate module-list.md
+        run: |
+          READMES=(
+            "modules/applications/README.md"
+            "modules/desktop-enviroment/README.md"
+            "modules/desktop/README.md"
+            "modules/development/README.md"
+            "modules/services/README.md"
+            "modules/system/README.md"
+            "modules/user/README.md"
+          )
+
+          cat /dev/null > docs/module-list.md
+
+          for readme in "${READMES[@]}"; do
+            if [ -f "$readme" ]; then
+              cat "$readme" >> docs/module-list.md
+              echo -e "\n" >> docs/module-list.md
+            fi
+          done
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: update module-list.md"
+          title: "docs: update module-list.md"
+          body: |
+            This is an automated PR to update `docs/module-list.md` based on changes in module READMEs.
+
+            **Reminder:** Remember to update the hardcoded list in [this workflow file](.github/workflows/update-module-list.yaml).
+          branch: auto-update-module-list
+          delete-branch: true
