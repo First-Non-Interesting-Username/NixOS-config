@@ -1,9 +1,9 @@
 # Desktop Environments
 
-## self.nixosModules.plasma
+## nixosModules.plasma
 
 - Enables KDE Plasma DE
 
-## self.nixosModules.hyprland
+## nixosModules.hyprland
 
 - Enables Hyprland.

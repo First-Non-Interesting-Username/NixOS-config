@@ -1,12 +1,12 @@
 # Desktop
 
-## self.nixosModules.input
+## nixosModules.input
 
 - Sets polish keyboard layout with caps swap.
 - Sets natural scrolling for both mouse and touchpad.
 - Enables Steam Controller udev rules.
 
-## self.nixosModules.theme
+## nixosModules.theme
 
 - Enables Qt and sets the theme to breeze.
 - Enables GTK.
@@ -27,7 +27,7 @@
 
 - Disables the following stylix targets: Vscode colors, KDE, QT and Floorp.
 
-## self.nixosModules.wayland
+## nixosModules.wayland
 
 - Enables GPU/graphics drivers, including 32-bit support (needed for things like Steam/Wine).
 - Enables PolicyKit, a system for controlling privileged operations.

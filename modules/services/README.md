@@ -1,6 +1,6 @@
 # Services
 
-## self.nixosModules.nps
+## nixosModules.nps
 
 PERSONAL
 
@@ -13,17 +13,17 @@ IMPERATIVE:
 
 - Sets up services for my home server.
 
-## self.nixosModules.secrets
+## nixosModules.secrets
 
 - Sets up secrets management system with sops.
 - Sets host SSH key as a default key for age, which is used for sops.
 
-## self.nixosModules.secrets-impermanence
+## nixosModules.secrets-impermanence
 
 - Sets up secrets management system with sops.
 - Sets host SSH key with path changed to include persist directory as a default key for age, which is used for sops.
 
-## self.nixosModules.ssh
+## nixosModules.ssh
 
 PERSONAL
 
@@ -31,7 +31,7 @@ PERSONAL
 - Installs Lazyssh.
 - Puts my SSH public and private keys to right directories with sops.
 
-## self.nixosModules.ssh-impermanence
+## nixosModules.ssh-impermanence
 
 PERSONAL
 
@@ -39,16 +39,16 @@ PERSONAL
 - Installs Lazyssh.
 - Puts my SSH public and private keys to right directories (now with persist, so they work with impermanence) with sops.
 
-## self.nixosModules.ssh-debug
+## nixosModules.ssh-debug
 
 - Opens SSH for everyone, with root login.
 
-## self.nixosModules.ssh-server
+## nixosModules.ssh-server
 
 - Sets up SSH server on port 6767 (Yes, this is a 67 joke).
 - Sets fail2ban for SSH.
 
-## self.nixosModules.update
+## nixosModules.update
 
 - Installs Nh and sets up automatic cleaning.
 - Sets up Nh flake to remote of my flake.

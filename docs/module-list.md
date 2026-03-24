@@ -81,7 +81,6 @@ IMPERATIVE:
 
 - Enables Podman with DNS working between containers.
 
-
 # Desktop Environments
 
 ## self.nixosModules.plasma
@@ -91,7 +90,6 @@ IMPERATIVE:
 ## self.nixosModules.hyprland
 
 - Enables Hyprland.
-
 
 # Desktop
 
@@ -129,7 +127,6 @@ IMPERATIVE:
 - Sets system-wide environment variables that tell apps to use Wayland instead of XWayland.
 - Enables D-Bus.
 - Installs core Wayland packages.
-
 
 # Development
 
@@ -198,7 +195,6 @@ WIP
 
 - Installs Foot and Kitty.
 
-
 # Services
 
 ## self.nixosModules.nps
@@ -256,7 +252,6 @@ PERSONAL
 - Enables weekly store optimizes.
 - Enables daily automatic updates.
 
-
 # System
 
 ## self.nixosModules.bootloader
@@ -297,7 +292,6 @@ PERSONAL
 - Enables the UPower daemon, which is a D-Bus service that provides power management info to applications.
 - Enables the Power Profiles Daemon, which exposes three power profiles via D-Bus .
 
-
 # User
 
 ## self.nixosModules.home-manager
@@ -314,5 +308,3 @@ PERSONAL
 ## self.nixosModules.user-debug
 
 - Sets root password to `debug`.
-
-

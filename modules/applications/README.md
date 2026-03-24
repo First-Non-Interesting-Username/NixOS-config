@@ -1,10 +1,10 @@
 # Applications
 
-## self.nixosModules.audio
+## nixosModules.audio
 
 - Enables pipewire, with few supporting packages and compatibility layers.
 
-## self.nixosModules.browser
+## nixosModules.browser
 
 WIP
 
@@ -22,7 +22,7 @@ IMPERATIVE:
 - Adds MyNixOS as a search engine.
 - Sets DDG as a default search engine.
 
-## self.nixosModules.flatpak
+## nixosModules.flatpak
 
 - Imports nix-flatpak for convenience and few extra options.
 - Enables flatpak service.
@@ -32,7 +32,7 @@ IMPERATIVE:
 - Installs Flatseal flatpak for temporary imperative flatpak management.
 - Installs Warehouse, a multitool app for flatpak management.
 
-## self.nixosModules.gaming
+## nixosModules.gaming
 
 WIP
 
@@ -46,17 +46,17 @@ WIP
 - Enables Mangohud.
 - Installs Lutris with Proton GE and everything it needs.
 
-## self.nixosModules.printing
+## nixosModules.printing
 
 - Sets up automatic printer discovery.
 - Enables cups with web UI at `http://localhost:631`.
 
-## self.nixosModules.programs
+## nixosModules.programs
 
 - Installs Obsidian (It will hopefully be replaced by Neovim in some time).
 - Installs KDE Connect.
 
-## self.nixosModules.sunshine
+## nixosModules.sunshine
 
 IMPERATIVE:
 
@@ -68,15 +68,15 @@ IMPERATIVE:
 - Sets up Sunshine service.
 - Makes fixes necessary for it to work on Wayland.
 
-## self.nixosModules.moonlight
+## nixosModules.moonlight
 
 - Installs Moonlight package.
 
-## self.nixosModules.virtualization-desktop
+## nixosModules.virtualization-desktop
 
 - Enables Podman with docker compatibility and socket.
 - Installs Distrobox with Distroshelf convenience package.
 
-## self.nixosModules.virtualization-server
+## nixosModules.virtualization-server
 
 - Enables Podman with DNS working between containers.
