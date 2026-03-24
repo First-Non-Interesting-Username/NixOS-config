@@ -41,10 +41,7 @@ jobs:
           done
 
       - name: Format with Prettier
-        uses: creyom/prettier_action@v4.3
-        with:
-          prettier_options: --write docs/module-list.md
-          only_changed: true
+        run: npx prettier --write docs/module-list.md
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
