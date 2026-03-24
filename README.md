@@ -1,5 +1,9 @@
 # NixOS Config
 
+> [!NOTE]
+> This is a learning project in the first place.
+> Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
+
 ## Table of Contents
 
 - [NixOS Config](#nixos-config)
@@ -46,7 +50,7 @@ Remember to choose a host before installing.
 
 ### Host creation guide
 
-TBD
+Host creation guide is avalible [here](./docs/host-guide.md)
 
 ### Secrets
 
@@ -69,11 +73,6 @@ TBD
 TBD
 
 ## Footnote
-
-> [!NOTE]
-> This is a learning project in the first place.
-> Some choices, such as including full [code of conduct](./CODE_OF_CONDUCT.md) or documentation may feel like overkill for this size of a project.
-> Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
 ### Inspired by:
 
