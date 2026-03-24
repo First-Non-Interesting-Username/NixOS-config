@@ -23,9 +23,9 @@
 
 | Hostname | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
 | -------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
-| Laptop   | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
+| armin    | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
 | Minimal  | N/A                        | N/A         | N/A     | N/A  | Other                |
-| Server   | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
+| iroh     | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
 | Template | N/A                        | N/A         | N/A     | N/A  | Other                |
 
 For more in depth explanation, visit [hosts](./docs/hosts.md).

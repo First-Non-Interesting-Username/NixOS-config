@@ -33,13 +33,25 @@ Full list of modules is avalible [here](./module-list.md).
 
 ## 4. Adjust special args
 
-You need to change the hostname at least.
+You need to at least change the hostname.
 
 The full list of special args and the docs for them can be found [here](./special-args.md).
 
 ---
 
-## 5. Generate the host ssh keys (optional)
+## 5. Generate or adjust hardware config
+
+TBD
+
+---
+
+## 6. Add the host to the docs
+
+TBD
+
+---
+
+## 6. Generate the host ssh keys (optional)
 
 Run:
 
