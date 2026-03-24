@@ -3,15 +3,17 @@
   inputs,
   lib,
   ...
-}: let
-  Hostname = "Server";
+}:
+let
+  Hostname = "iroh";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Domain = "iameasytoremember.duckdns.org";
   Width = 2560;
   Height = 1440;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {

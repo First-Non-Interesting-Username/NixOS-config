@@ -21,12 +21,12 @@
 
 ## Hosts Matrix
 
-| Hostname | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
-| -------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
-| armin    | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
-| Minimal  | N/A                        | N/A         | N/A     | N/A  | Other                |
-| iroh     | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
-| Template | N/A                        | N/A         | N/A     | N/A  | Other                |
+| Hostname                         | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
+| -------------------------------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
+| [armin](./hosts/armin/README.md) | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
+| Minimal                          | N/A                        | N/A         | N/A     | N/A  | Other                |
+| [iroh](./hosts/iroh/README.md)   | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
+| Template                         | N/A                        | N/A         | N/A     | N/A  | Other                |
 
 For more in depth explanation, visit [hosts](./docs/hosts.md).
 
