@@ -29,7 +29,6 @@
     pre-commit.settings.hooks = {
       alejandra.enable = true;
       nil.enable = true;
-      yamllint.enable = true;
     };
   };
 }
