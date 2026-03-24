@@ -21,7 +21,6 @@
       "extensions": [
         "esbenp.prettier-vscode",
         "wakatime.vscode-wakatime",
-        "Google.geminicodeassist",
         "jnoortheen.nix-ide"
       ]
     }
