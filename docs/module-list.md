@@ -1,10 +1,10 @@
 # Applications
 
-## self.nixosModules.audio
+## nixosModules.audio
 
 - Enables pipewire, with few supporting packages and compatibility layers.
 
-## self.nixosModules.browser
+## nixosModules.browser
 
 WIP
 
@@ -22,7 +22,7 @@ IMPERATIVE:
 - Adds MyNixOS as a search engine.
 - Sets DDG as a default search engine.
 
-## self.nixosModules.flatpak
+## nixosModules.flatpak
 
 - Imports nix-flatpak for convenience and few extra options.
 - Enables flatpak service.
@@ -32,7 +32,7 @@ IMPERATIVE:
 - Installs Flatseal flatpak for temporary imperative flatpak management.
 - Installs Warehouse, a multitool app for flatpak management.
 
-## self.nixosModules.gaming
+## nixosModules.gaming
 
 WIP
 
@@ -46,17 +46,17 @@ WIP
 - Enables Mangohud.
 - Installs Lutris with Proton GE and everything it needs.
 
-## self.nixosModules.printing
+## nixosModules.printing
 
 - Sets up automatic printer discovery.
 - Enables cups with web UI at `http://localhost:631`.
 
-## self.nixosModules.programs
+## nixosModules.programs
 
 - Installs Obsidian (It will hopefully be replaced by Neovim in some time).
 - Installs KDE Connect.
 
-## self.nixosModules.sunshine
+## nixosModules.sunshine
 
 IMPERATIVE:
 
@@ -68,38 +68,40 @@ IMPERATIVE:
 - Sets up Sunshine service.
 - Makes fixes necessary for it to work on Wayland.
 
-## self.nixosModules.moonlight
+## nixosModules.moonlight
 
 - Installs Moonlight package.
 
-## self.nixosModules.virtualization-desktop
+## nixosModules.virtualization-desktop
 
 - Enables Podman with docker compatibility and socket.
 - Installs Distrobox with Distroshelf convenience package.
 
-## self.nixosModules.virtualization-server
+## nixosModules.virtualization-server
 
 - Enables Podman with DNS working between containers.
 
+
 # Desktop Environments
 
-## self.nixosModules.plasma
+## nixosModules.plasma
 
 - Enables KDE Plasma DE
 
-## self.nixosModules.hyprland
+## nixosModules.hyprland
 
 - Enables Hyprland.
 
+
 # Desktop
 
-## self.nixosModules.input
+## nixosModules.input
 
 - Sets polish keyboard layout with caps swap.
 - Sets natural scrolling for both mouse and touchpad.
 - Enables Steam Controller udev rules.
 
-## self.nixosModules.theme
+## nixosModules.theme
 
 - Enables Qt and sets the theme to breeze.
 - Enables GTK.
@@ -120,7 +122,7 @@ IMPERATIVE:
 
 - Disables the following stylix targets: Vscode colors, KDE, QT and Floorp.
 
-## self.nixosModules.wayland
+## nixosModules.wayland
 
 - Enables GPU/graphics drivers, including 32-bit support (needed for things like Steam/Wine).
 - Enables PolicyKit, a system for controlling privileged operations.
@@ -128,13 +130,14 @@ IMPERATIVE:
 - Enables D-Bus.
 - Installs core Wayland packages.
 
+
 # Development
 
-## self.nixosModules.direnv
+## nixosModules.direnv
 
 - Installs Direnv with Zsh integration and nix-direnv.
 
-## self.nixosModules.git
+## nixosModules.git
 
 IMPERATIVE:
 
@@ -148,7 +151,7 @@ IMPERATIVE:
 - Sets default branch to main (Why isn't it default?).
 - Sets up GH with default git protocol being SSH and automatically logs you in.
 
-## self.nixosModules.IDE
+## nixosModules.IDE
 
 WIP
 
@@ -158,14 +161,14 @@ WIP
 - Installs Nil and Alejandra.
 - Sets VSCodium as an `EDITOR` and `VISUAL`.
 
-## self.nixosModules.nix
+## nixosModules.nix
 
 - Enables essential experimental nix features.
 - Unlocks the whole CPU for nix builds.
 - Disables channels.
 - Allows unfree packages and disallows broken ones.
 
-## self.nixosModules.shell
+## nixosModules.shell
 
 - Installs Zsh systemwide and sets it up for your user.
 - Enables Zsh for the user with few preferences set how I want them.
@@ -189,15 +192,16 @@ WIP
 - Trash CLI.
 - Ugrep.
 
-## self.nixosModules.terminal
+## nixosModules.terminal
 
 WIP
 
 - Installs Foot and Kitty.
 
+
 # Services
 
-## self.nixosModules.nps
+## nixosModules.nps
 
 PERSONAL
 
@@ -210,17 +214,17 @@ IMPERATIVE:
 
 - Sets up services for my home server.
 
-## self.nixosModules.secrets
+## nixosModules.secrets
 
 - Sets up secrets management system with sops.
 - Sets host SSH key as a default key for age, which is used for sops.
 
-## self.nixosModules.secrets-impermanence
+## nixosModules.secrets-impermanence
 
 - Sets up secrets management system with sops.
 - Sets host SSH key with path changed to include persist directory as a default key for age, which is used for sops.
 
-## self.nixosModules.ssh
+## nixosModules.ssh
 
 PERSONAL
 
@@ -228,7 +232,7 @@ PERSONAL
 - Installs Lazyssh.
 - Puts my SSH public and private keys to right directories with sops.
 
-## self.nixosModules.ssh-impermanence
+## nixosModules.ssh-impermanence
 
 PERSONAL
 
@@ -236,75 +240,79 @@ PERSONAL
 - Installs Lazyssh.
 - Puts my SSH public and private keys to right directories (now with persist, so they work with impermanence) with sops.
 
-## self.nixosModules.ssh-debug
+## nixosModules.ssh-debug
 
 - Opens SSH for everyone, with root login.
 
-## self.nixosModules.ssh-server
+## nixosModules.ssh-server
 
 - Sets up SSH server on port 6767 (Yes, this is a 67 joke).
 - Sets fail2ban for SSH.
 
-## self.nixosModules.update
+## nixosModules.update
 
 - Installs Nh and sets up automatic cleaning.
 - Sets up Nh flake to remote of my flake.
 - Enables weekly store optimizes.
 - Enables daily automatic updates.
 
+
 # System
 
-## self.nixosModules.bootloader
+## nixosModules.bootloader
 
 - Enables Limine bootloader and sets it up according to my preferences.
 
-## self.nixosModules.kernel-laptop
+## nixosModules.kernel-laptop
 
 - Enables Linux Zen kernel and kernel params for small battery life gains.
 
-## self.nixosModules.kernel-desktop
+## nixosModules.kernel-desktop
 
 - Enables CachyOS kernel with bore scheduler and lto for small performance gains.
 
-## self.nixosModules.locale
+## nixosModules.locale
 
 - Sets up polish locale for everything, except language.
 - Sets Europe/Warsaw as a time zone.
 
-## self.nixosModules.networking-desktop
+## nixosModules.networking-desktop
 
 - Sets up networking for a desktop style machine, with firewall and network manager.
 - Sets up Bluetooth.
 
-## self.nixosModules.networking-server
+## nixosModules.networking-server
 
 PERSONAL
 
 - Sets up networking for MY server, in MY home network specifically.
 
-## self.nixosModules.networking-minimal
+## nixosModules.networking-minimal
 
 - Sets up networking for a desktop style machine, with firewall and network manager.
 - Sets up Bluetooth.
 
-## self.nixosModules.power
+## nixosModules.power
 
 - Enables the UPower daemon, which is a D-Bus service that provides power management info to applications.
 - Enables the Power Profiles Daemon, which exposes three power profiles via D-Bus .
 
+
 # User
 
-## self.nixosModules.home-manager
+## nixosModules.home-manager
 
 - Enables Home Manager.
 - Lets Home Manager manage itself.
 
-## self.nixosModules.user
+## nixosModules.user
 
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
 - Sets a password for it.
 
-## self.nixosModules.user-debug
+## nixosModules.user-debug
 
 - Sets root password to `debug`.
+
+
