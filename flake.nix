@@ -91,6 +91,11 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -104,6 +109,7 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./hosts)
         ./devShells
+        inputs.git-hooks-nix.flakeModule
       ];
     };
 }
