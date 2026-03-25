@@ -3,14 +3,16 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   Hostname = "armin";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 1920;
   Height = 1080;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -22,11 +24,12 @@ in {
       impermanence = true;
     };
     modules = [
+      ./hardware.nix
       self.nixosModules.home-manager
       self.nixosModules.flatpak
       self.nixosModules.git
-      self.nixosModules.secrets-impermanence
-      self.nixosModules.ssh-impermanence
+      self.nixosModules.secrets
+      self.nixosModules.ssh
       self.nixosModules.shell
       self.nixosModules.bootloader
       self.nixosModules.update
@@ -35,7 +38,7 @@ in {
       self.nixosModules.input
       self.nixosModules.user
       self.nixosModules.virtualization-desktop
-      # self.nixosModules."hardware-${Hostname}"
+      self.nixosModules.impermanence
       self.nixosModules.networking-desktop
       self.nixosModules.audio
       self.nixosModules.printing

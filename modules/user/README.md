@@ -7,6 +7,8 @@
 
 ## nixosModules.user
 
+Secrets: sudo_password/${hostname}
+
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
 - Sets a password for it.

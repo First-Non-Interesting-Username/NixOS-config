@@ -10,8 +10,16 @@
       config,
       username,
       hostname,
+      impermanence,
       ...
     }: {
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/var/lib/AccountsService"
+          ];
+        };
+      };
       users = {
         mutableUsers = false;
         groups.${username} = {

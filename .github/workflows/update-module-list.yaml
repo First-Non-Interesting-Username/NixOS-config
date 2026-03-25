@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "modules/**/README.md"
+      - "docs/HEADER.md"
   workflow_dispatch:
   schedule:
     - cron: "0 16 * * 5"
@@ -32,6 +33,9 @@ jobs:
           )
 
           cat /dev/null > docs/module-list.md
+
+          cat docs/HEADER.md >> docs/module-list.md
+          echo -e "\n" >> docs/module-list.md
 
           for readme in "${READMES[@]}"; do
             if [ -f "$readme" ]; then

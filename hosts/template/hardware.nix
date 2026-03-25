@@ -3,6 +3,7 @@
   lib,
   config,
   inputs,
+  username,
   ...
 }: {
   zramSwap = {
@@ -16,16 +17,38 @@
     facter = lib.optionalAttrs (builtins.pathExists ./facter.json) {
       reportPath = ./facter.json;
     };
+    enableAllFirmware = lib.mkForce true;
   };
-  hardware.enableAllFirmware = lib.mkForce true;
+
   boot = {
+    # Kernel modules to load at boot
+    # Example: ["nvidia" "nvidia_modeset"] for proprietary GPU drivers
     kernelModules = [];
     initrd = {
+      # Kernel modules to load in initrd (early boot, before root mount)
+      # Example: ["btrfs" "ext4"] if root uses these filesystems
       kernelModules = [];
+      # Additional kernel modules to include in initrd
       availableKernelModules = [];
     };
+    # Filesystems to support
+    # Example: ["btrfs" "ext4" "vfat" "ntfs"] for mounting various partition types
     supportedFilesystems = [];
+    # Kernel command-line parameters
+    # Example: ["quiet" "splash" "loglevel=3"] for boot behavior
     kernelParams = [];
+  };
+
+  system.stateVersion = "26.05";
+
+  home-manager.users.${username} = {
+    pkgs,
+    lib,
+    config,
+    username,
+    ...
+  }: {
+    home.stateVersion = "26.05";
   };
 
   imports = [

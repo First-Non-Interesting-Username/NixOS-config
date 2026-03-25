@@ -6,6 +6,8 @@
 
 ## nixosModules.git
 
+Secrets: github_pat
+
 IMPERATIVE:
 
 - Run `gh ssh-key add ~/.ssh/id_ed25519.pub` to add the SSH key of the machine to github.

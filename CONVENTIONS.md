@@ -13,6 +13,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
   - [Function Tags](#function-tags)
   - [Module Documentation](#module-documentation)
     - [Document Structure](#document-structure)
+    - [Special Args](#special-args)
+    - [Secrets](#secrets)
     - [Status Tags](#status-tags)
     - [IMPERATIVE Modules](#imperative-modules)
     - [Section Dividers](#section-dividers)
@@ -80,6 +82,10 @@ Each NixOS module requires a `README.md` in its directory.
 
 [Status tag]
 
+Special args: username, hostname, ...
+
+Secrets: secret_name, ...
+
 [IMPERATIVE instructions]
 
 ###
@@ -88,6 +94,25 @@ Each NixOS module requires a `README.md` in its directory.
 - Feature bullet 2
 - Feature bullet 3
 ```
+
+#### Special Args
+
+When creating or changing a module, you MUST mention all required special args.
+Special args are passed to the module via the flake and are required for the module to function.
+Common special args include:
+
+- `username` - Required for almost all modules to set up user-specific configuration.
+- `hostname` - Required for modules that need host-specific configuration or secrets.
+- `impermanence` - Optional, enables persistence configuration.
+
+#### Secrets
+
+If a module uses secrets via sops, you MUST document them.
+List all secrets the module requires, for example:
+
+- `github_pat` - GitHub Personal Access Token for GitHub CLI authentication.
+- `ssh_keys/private/${hostname}` - SSH private key for the host.
+- `sudo_password/${hostname}` - Hashed password for sudo access.
 
 ### Status Tags
 

@@ -9,6 +9,8 @@
       lib,
       config,
       hostname,
+      impermanence,
+      username,
       ...
     }: {
       networking = {
@@ -27,6 +29,16 @@
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;
+      };
+
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/etc/NetworkManager"
+            "/var/lib/NetworkManager"
+            "/var/lib/bluetooth"
+          ];
+        };
       };
     };
     nixosModules.networking-server = {
