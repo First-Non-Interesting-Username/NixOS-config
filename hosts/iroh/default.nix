@@ -24,7 +24,6 @@ in {
       impermanence = false;
     };
     modules = [
-      # System modules go here
       self.nixosModules.home-manager
       self.nixosModules.git
       self.nixosModules.secrets

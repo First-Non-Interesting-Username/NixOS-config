@@ -22,7 +22,6 @@ in {
       impermanence = true;
     };
     modules = [
-      # System modules go here
       self.nixosModules.home-manager
       self.nixosModules.flatpak
       self.nixosModules.git
