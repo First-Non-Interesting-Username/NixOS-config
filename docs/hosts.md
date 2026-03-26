@@ -1,15 +1,15 @@
 ## Table of Contents
 
 - [Hosts](#hosts)
-  - [Laptop](#laptop)
-  - [Server](#server)
+  - [Armin](#Armin)
+  - [Iroh](#Iroh)
   - [Minimal](minimal)
   - [Template](#template)
   - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
 # Hosts
 
-## Laptop
+## Armin
 
 This is my main personal laptop.
 New changes are often tested here first, because I usually don't store sensative data on it.
@@ -25,7 +25,9 @@ At this moment, this machine runs Plasma based desktop config.
 
 This host can be used as a template for other configs.
 
-## Server
+The name of this host is based on [Armin Arlert](https://attackontitan.fandom.com/wiki/Armin_Arlert).
+
+## Iroh
 
 This is the main services VM on my Proxmox server.
 I run my services with [Nix-Podman-Stacks](https://github.com/Tarow/nix-podman-stacks).
@@ -41,6 +43,8 @@ Specs:
 
 This host SHOULD NOT be used as a template for other configs.
 
+The name of this host is based on [Uncle Iroh](https://en.wikipedia.org/wiki/Iroh).
+
 ## Minimal
 
 TBD
@@ -55,7 +59,17 @@ This host can be used as a template for other configs.
 This host isn't real.
 The only purpose of it is to have a template for other configs.
 
+Specs:
+
+- CPU
+- GPU
+- RAM
+- DISK(S)
+- OTHER NOTABLE HARDWARE
+
 This host SHOULD be used as a template for other configs.
+
+The name of this host is based on [Character](charcter.wiki.example.com)
 
 # Unused names/names suggestions
 
@@ -69,6 +83,3 @@ There are only few rules regarding naming hosts:
 - The character MUST NOT be a bad person, as defined by my subjective moral standards.
 
 The names:
-
-- "Iroh"
-- "Armin"

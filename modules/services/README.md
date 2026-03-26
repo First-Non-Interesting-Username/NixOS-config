@@ -25,6 +25,8 @@ IMPERATIVE:
 
 ## nixosModules.ssh
 
+Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
+
 PERSONAL
 
 - Sets up SSH with my public keys.
@@ -32,6 +34,8 @@ PERSONAL
 - Puts my SSH public and private keys to right directories with sops.
 
 ## nixosModules.ssh-impermanence
+
+Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
 
 PERSONAL
 

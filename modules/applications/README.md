@@ -34,6 +34,8 @@ IMPERATIVE:
 
 ## nixosModules.gaming
 
+Secrets: factorio_token
+
 WIP
 
 - (Sets up Factorio package with my user token and username so it can be downloaded.)

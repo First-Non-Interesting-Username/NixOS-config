@@ -14,6 +14,10 @@
 
 <!-- How was this change tested? -->
 
+## Fixes
+
+<!-- What issues this changes fixes (numbers) -->
+
 ## Checklist
 
 - [ ] Code follows the style guidelines.

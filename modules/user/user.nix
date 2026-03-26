@@ -9,8 +9,17 @@
       lib,
       config,
       username,
+      hostname,
+      impermanence,
       ...
     }: {
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/var/lib/AccountsService"
+          ];
+        };
+      };
       users = {
         mutableUsers = false;
         groups.${username} = {
@@ -31,7 +40,7 @@
             "gamemode"
             "input"
           ];
-          hashedPasswordFile = config.sops.secrets.sudo_password.path;
+          hashedPasswordFile = config.sops.secrets."sudo_password/${hostname}".path;
           subUidRanges = [
             {
               startUid = 100000;
@@ -47,7 +56,7 @@
           linger = true;
         };
       };
-      sops.secrets.sudo_password = {
+      sops.secrets."sudo_password/${hostname}" = {
         neededForUsers = true;
       };
     };

@@ -8,8 +8,16 @@
       pkgs,
       lib,
       config,
+      impermanence,
       ...
     }: {
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/var/lib/cups"
+          ];
+        };
+      };
       services.avahi = {
         enable = true;
         nssmdns4 = true;

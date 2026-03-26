@@ -8,14 +8,21 @@
       pkgs,
       lib,
       config,
+      impermanence,
       ...
     }: {
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/var/lib/sunshine"
+          ];
+        };
+      };
       services.sunshine = {
         enable = true;
         autoStart = true;
         openFirewall = true;
         capSysAdmin = true;
-        # Port 47990
       };
 
       services.udev.extraRules = ''

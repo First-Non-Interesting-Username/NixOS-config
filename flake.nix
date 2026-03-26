@@ -107,7 +107,7 @@
 
       imports = [
         (inputs.import-tree ./modules)
-        (inputs.import-tree ./hosts)
+        (inputs.import-tree.match ".*/[^/]+/default\.nix" ./hosts)
         ./devShells
         inputs.git-hooks-nix.flakeModule
       ];

@@ -25,5 +25,5 @@
       ]
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y yamllint && nix --extra-experimental-features 'nix-command flakes' profile add nixpkgs#alejandra nixpkgs#nil"
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y yamllint && nix --extra-experimental-features 'nix-command flakes pipe-operators' profile add nixpkgs#alejandra nixpkgs#nil"
 }

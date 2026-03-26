@@ -21,12 +21,12 @@
 
 ## Hosts Matrix
 
-| Hostname | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
-| -------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
-| Laptop   | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
-| Minimal  | N/A                        | N/A         | N/A     | N/A  | Other                |
-| Server   | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
-| Template | N/A                        | N/A         | N/A     | N/A  | Other                |
+| Hostname                               | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
+| -------------------------------------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
+| [armin](./hosts/armin/README.md)       | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
+| Minimal                                | N/A                        | N/A         | N/A     | N/A  | Other                |
+| [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
+| [template](./hosts/template/README.md) | N/A                        | N/A         | N/A     | N/A  | Other                |
 
 For more in depth explanation, visit [hosts](./docs/hosts.md).
 
@@ -42,6 +42,10 @@ For more in depth explanation, visit [hosts](./docs/hosts.md).
 - [System](./modules/system/README.md)
 - [User](./modules/user/README.md)
 
+For the full list, go [here](./docs/module-list.md).
+
+If you want to use those modules in outside repos, go to TBD.
+
 ### Installation Guides
 
 Go to the [installation guides overview](./docs/install-guides.md) to select the guide that fits your situation best.
@@ -54,7 +58,10 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 
 ### Secrets
 
-TBD
+Go [here](./secrets/README.md).
+
+Secrets are meant mostly for me.
+For secretless use of those modules go TBD.
 
 ## Eye candy stuff
 

@@ -20,11 +20,14 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      width = Width;
+      height = Height;
       impermanence = false;
     };
     modules = [
-      # System modules go here
-      self.nixosModules."hardware-${Hostname}"
+      ./hardware.nix
+      # Modules go here, remember to reference them with self. prefix
+
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;

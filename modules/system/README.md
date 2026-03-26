@@ -4,6 +4,12 @@
 
 - Enables Limine bootloader and sets it up according to my preferences.
 
+## nixosModules.impermanence
+
+Special args: impermanence (required for impermanence to function, true/false)
+
+- Enables impermanence. Make sure your system is prepared for it.
+
 ## nixosModules.kernel-laptop
 
 - Enables Linux Zen kernel and kernel params for small battery life gains.
@@ -19,6 +25,8 @@
 
 ## nixosModules.networking-desktop
 
+Special args: hostname
+
 - Sets up networking for a desktop style machine, with firewall and network manager.
 - Sets up Bluetooth.
 
@@ -30,8 +38,9 @@ PERSONAL
 
 ## nixosModules.networking-minimal
 
+Special args: hostname
+
 - Sets up networking for a desktop style machine, with firewall and network manager.
-- Sets up Bluetooth.
 
 ## nixosModules.power
 
