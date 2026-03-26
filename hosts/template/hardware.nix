@@ -41,6 +41,13 @@
 
   system.stateVersion = "26.05";
 
+  imports = [
+    # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+    # Add nixos-hardware modules for your hardware here
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+  ];
+
   home-manager.users.${username} = {
     pkgs,
     lib,
@@ -50,11 +57,4 @@
   }: {
     home.stateVersion = "26.05";
   };
-
-  imports = [
-    # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
-    # Add nixos-hardware modules for your hardware here
-    inputs.disko.nixosModules.disko
-    ./disko.nix
-  ];
 }

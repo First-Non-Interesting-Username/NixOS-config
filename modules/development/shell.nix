@@ -56,9 +56,6 @@
               theme = "";
             };
             initContent = ''
-              if [[ $PWD == $HOME ]]; then
-                  cd ~/Persist
-              fi
               fastfetch
             '';
           };

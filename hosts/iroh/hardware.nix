@@ -52,6 +52,12 @@
 
   system.stateVersion = "26.05";
 
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
+
   home-manager.users.${username} = {
     pkgs,
     lib,
@@ -61,10 +67,4 @@
   }: {
     home.stateVersion = "26.05";
   };
-
-  imports = [
-    inputs.disko.nixosModules.disko
-    ./disko.nix
-    (modulesPath + "/profiles/qemu-guest.nix")
-  ];
 }

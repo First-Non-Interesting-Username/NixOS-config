@@ -31,7 +31,6 @@
         ...
       }: {
         programs = {
-          #TBD
           vscode = {
             enable = true;
             package = pkgs.vscodium;
@@ -52,7 +51,6 @@
           micro = {
             enable = true;
           };
-          #TBD
           zed-editor = {
             enable = true;
             extensions = ["nix"];

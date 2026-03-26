@@ -67,6 +67,18 @@
             neededForBoot = true;
           };
         };
+        home-manager.users.${username} = {
+          pkgs,
+          lib,
+          config,
+          ...
+        }: {
+          programs.zsh.initContent = ''
+            if [[ $PWD == $HOME ]]; then
+                cd ~/Persist
+            fi
+          '';
+        };
       };
     };
   };
