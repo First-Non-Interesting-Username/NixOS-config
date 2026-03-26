@@ -1,3 +1,7 @@
+# Module List
+
+Special args: username (required for all modules)
+
 # Applications
 
 ## nixosModules.audio
@@ -33,6 +37,8 @@ IMPERATIVE:
 - Installs Warehouse, a multitool app for flatpak management.
 
 ## nixosModules.gaming
+
+Secrets: factorio_token
 
 WIP
 
@@ -81,7 +87,6 @@ IMPERATIVE:
 
 - Enables Podman with DNS working between containers.
 
-
 # Desktop Environments
 
 ## nixosModules.plasma
@@ -91,7 +96,6 @@ IMPERATIVE:
 ## nixosModules.hyprland
 
 - Enables Hyprland.
-
 
 # Desktop
 
@@ -130,7 +134,6 @@ IMPERATIVE:
 - Enables D-Bus.
 - Installs core Wayland packages.
 
-
 # Development
 
 ## nixosModules.direnv
@@ -138,6 +141,8 @@ IMPERATIVE:
 - Installs Direnv with Zsh integration and nix-direnv.
 
 ## nixosModules.git
+
+Secrets: github_pat
 
 IMPERATIVE:
 
@@ -198,7 +203,6 @@ WIP
 
 - Installs Foot and Kitty.
 
-
 # Services
 
 ## nixosModules.nps
@@ -226,6 +230,8 @@ IMPERATIVE:
 
 ## nixosModules.ssh
 
+Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
+
 PERSONAL
 
 - Sets up SSH with my public keys.
@@ -233,6 +239,8 @@ PERSONAL
 - Puts my SSH public and private keys to right directories with sops.
 
 ## nixosModules.ssh-impermanence
+
+Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
 
 PERSONAL
 
@@ -256,12 +264,17 @@ PERSONAL
 - Enables weekly store optimizes.
 - Enables daily automatic updates.
 
-
 # System
 
 ## nixosModules.bootloader
 
 - Enables Limine bootloader and sets it up according to my preferences.
+
+## nixosModules.impermanence
+
+Special args: impermanence (required for impermanence to function, true/false)
+
+- Enables impermanence. Make sure your system is prepared for it.
 
 ## nixosModules.kernel-laptop
 
@@ -278,6 +291,8 @@ PERSONAL
 
 ## nixosModules.networking-desktop
 
+Special args: hostname
+
 - Sets up networking for a desktop style machine, with firewall and network manager.
 - Sets up Bluetooth.
 
@@ -289,14 +304,14 @@ PERSONAL
 
 ## nixosModules.networking-minimal
 
+Special args: hostname
+
 - Sets up networking for a desktop style machine, with firewall and network manager.
-- Sets up Bluetooth.
 
 ## nixosModules.power
 
 - Enables the UPower daemon, which is a D-Bus service that provides power management info to applications.
 - Enables the Power Profiles Daemon, which exposes three power profiles via D-Bus .
-
 
 # User
 
@@ -307,6 +322,8 @@ PERSONAL
 
 ## nixosModules.user
 
+Secrets: sudo_password/${hostname}
+
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
 - Sets a password for it.
@@ -314,5 +331,3 @@ PERSONAL
 ## nixosModules.user-debug
 
 - Sets root password to `debug`.
-
-
