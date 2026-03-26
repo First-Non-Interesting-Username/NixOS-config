@@ -24,6 +24,7 @@ in {
       impermanence = false;
     };
     modules = [
+      ./hardware.nix
       self.nixosModules.home-manager
       self.nixosModules.git
       self.nixosModules.secrets
@@ -35,7 +36,6 @@ in {
       self.nixosModules.user
       self.nixosModules.networking-server
       self.nixosModules.locale
-      self.nixosModules."hardware-${Hostname}"
       self.nixosModules.virtualization-server
       self.nixosModules.nps
       self.nixosModules.update
