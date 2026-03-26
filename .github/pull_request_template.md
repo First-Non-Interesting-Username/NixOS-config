@@ -16,7 +16,8 @@
 
 ## Fixes
 
-<!-- What issues this changes fixes (numbers) -->
+- fixes #123
+- fixes #234
 
 ## Checklist
 
