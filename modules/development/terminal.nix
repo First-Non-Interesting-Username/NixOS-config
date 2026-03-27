@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.terminal = {
       lib,
@@ -17,7 +17,7 @@
         };
       };
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         programs = {
           foot = {
             enable = true;

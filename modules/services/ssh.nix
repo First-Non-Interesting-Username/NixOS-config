@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.ssh = {
       lib,
@@ -26,13 +26,13 @@
       };
       sops.secrets."ssh_keys/private/${hostname}" = {
         owner = username;
-        group = config.users.users.${username}.group;
+        inherit (config.users.users.${username}) group;
         mode = "0600";
         path = "${sshDir}${config.users.users.${username}.home}/.ssh/id_ed25519";
       };
       sops.secrets."ssh_keys/public/${hostname}" = {
         owner = username;
-        group = config.users.users.${username}.group;
+        inherit (config.users.users.${username}) group;
         mode = "0644";
         path = "${sshDir}${config.users.users.${username}.home}/.ssh/id_ed25519.pub";
       };
@@ -72,7 +72,7 @@
       };
     };
 
-    nixosModules.ssh-debug = {...}: {
+    nixosModules.ssh-debug = _: {
       services.openssh = {
         enable = true;
         settings = {
@@ -81,7 +81,7 @@
         };
       };
     };
-    nixosModules.ssh-server = {...}: let
+    nixosModules.ssh-server = _: let
       sshPort = 6767;
     in {
       services.openssh = {

@@ -62,7 +62,7 @@
             neededForBoot = true;
           };
         };
-        home-manager.users.${username} = {...}: {
+        home-manager.users.${username} = _: {
           programs.zsh.initContent = ''
             if [[ $PWD == $HOME ]]; then
                 cd ~/Persist

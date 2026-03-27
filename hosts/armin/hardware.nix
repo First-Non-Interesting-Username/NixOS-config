@@ -45,7 +45,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${username} = {...}: {
+  home-manager.users.${username} = _: {
     home.stateVersion = "26.05";
   };
 }

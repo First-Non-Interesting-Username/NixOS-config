@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.hyprland-other = {username, ...}: {
       xdg.portal = {
@@ -7,7 +7,7 @@
       };
       programs.dconf.enable = true;
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         dconf = {
           enable = true;
           #settings = {};

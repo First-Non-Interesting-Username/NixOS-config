@@ -23,7 +23,7 @@
         })
       ];
 
-      shellHook = config.pre-commit.shellHook;
+      inherit (config.pre-commit) shellHook;
     };
 
     pre-commit.settings.hooks = {

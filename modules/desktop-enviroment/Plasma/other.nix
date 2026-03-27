@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.plasma-other = {
       pkgs,
@@ -34,7 +34,7 @@
         ];
       };
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         # Home config goes here
       };
     };
