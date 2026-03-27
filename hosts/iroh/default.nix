@@ -41,17 +41,19 @@ in {
       self.nixosModules.virtualization-server
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit self inputs;
-          username = Username;
-          gitName = GitName;
-          gitEmail = GitEmail;
-          hostname = Hostname;
-          domain = Domain;
-          width = Width;
-          height = Height;
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit self inputs;
+            username = Username;
+            gitName = GitName;
+            gitEmail = GitEmail;
+            hostname = Hostname;
+            domain = Domain;
+            width = Width;
+            height = Height;
+          };
         };
       }
     ];

@@ -53,16 +53,18 @@ in {
       self.nixosModules.wayland
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit self inputs;
-          username = Username;
-          gitName = GitName;
-          gitEmail = GitEmail;
-          width = Width;
-          height = Height;
-          hostname = Hostname;
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit self inputs;
+            username = Username;
+            gitName = GitName;
+            gitEmail = GitEmail;
+            width = Width;
+            height = Height;
+            hostname = Hostname;
+          };
         };
       }
     ];

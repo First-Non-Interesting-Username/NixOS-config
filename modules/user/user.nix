@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.user = {
       lib,
@@ -55,8 +55,10 @@
         neededForUsers = true;
       };
     };
-    nixosModules.user-debug = {...}: {
-      users.users.root.initialPassword = "debug";
+    nixosModules = {
+      user-debug = _: {
+        users.users.root.initialPassword = "debug";
+      };
     };
   };
 }

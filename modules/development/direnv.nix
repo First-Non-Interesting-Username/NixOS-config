@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.direnv = {
       lib,
@@ -16,7 +16,7 @@
         };
       };
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         programs = {
           direnv = {
             enable = true;

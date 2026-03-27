@@ -1,6 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.hyprland-dm = {...}: {
+    nixosModules.hyprland-dm = _: {
       programs.regreet.enable = true;
     };
   };

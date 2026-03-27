@@ -5,10 +5,9 @@
       username,
       impermanence,
       ...
-    }: {
-      imports =
-        []
-        ++ lib.optional impermanence {
+      }: {
+        imports =
+          lib.optional impermanence {
           environment.persistence."/persist" = {
             directories = [
               # System-level dirs to persist
@@ -29,7 +28,7 @@
 
       # System config goes here
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         # Home config goes here
       };
     };

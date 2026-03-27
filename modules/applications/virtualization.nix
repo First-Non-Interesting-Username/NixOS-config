@@ -1,72 +1,74 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.virtualization-desktop = {
-      lib,
-      username,
-      impermanence,
-      ...
-    }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
-          directories = [
-            "/var/lib/containers"
-          ];
-          users.${username} = {
+    nixosModules = {
+      virtualization-desktop = {
+        lib,
+        username,
+        impermanence,
+        ...
+      }: {
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
             directories = [
-              ".local/share/containers"
-              ".config/containers"
-              ".local/share/distrobox"
+              "/var/lib/containers"
             ];
+            users.${username} = {
+              directories = [
+                ".local/share/containers"
+                ".config/containers"
+                ".local/share/distrobox"
+              ];
+            };
           };
         };
-      };
-      virtualisation = {
-        podman = {
-          enable = true;
-          dockerCompat = true;
-          defaultNetwork.settings.dns_enabled = true;
-        };
-      };
-      boot.kernelModules = [
-        "binder_linux"
-        "ashmem_linux"
-      ];
-      home-manager.users.${username} = {pkgs, ...}: {
-        home.packages = with pkgs; [
-          distroshelf
-        ];
-        programs = {
-          distrobox = {
+        virtualisation = {
+          podman = {
             enable = true;
+            dockerCompat = true;
+            defaultNetwork.settings.dns_enabled = true;
           };
         };
-      };
-    };
-
-    nixosModules.virtualization-server = {
-      lib,
-      username,
-      impermanence,
-      ...
-    }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
-          directories = [
-            "/var/lib/containers"
+        boot.kernelModules = [
+          "binder_linux"
+          "ashmem_linux"
+        ];
+        home-manager.users.${username} = {pkgs, ...}: {
+          home.packages = with pkgs; [
+            distroshelf
           ];
-          users.${username} = {
-            directories = [
-              ".local/share/containers"
-              ".config/containers"
-            ];
+          programs = {
+            distrobox = {
+              enable = true;
+            };
           };
         };
       };
-      virtualisation = {
-        containers.enable = true;
-        podman = {
-          enable = true;
-          defaultNetwork.settings.dns_enabled = true;
+
+      virtualization-server = {
+        lib,
+        username,
+        impermanence,
+        ...
+      }: {
+        imports = lib.optional impermanence {
+          environment.persistence."/persist" = {
+            directories = [
+              "/var/lib/containers"
+            ];
+            users.${username} = {
+              directories = [
+                ".local/share/containers"
+                ".config/containers"
+              ];
+            };
+          };
+        };
+        virtualisation = {
+          containers.enable = true;
+          podman = {
+            enable = true;
+            defaultNetwork.settings.dns_enabled = true;
+          };
         };
       };
     };

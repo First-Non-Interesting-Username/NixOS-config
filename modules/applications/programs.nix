@@ -30,7 +30,7 @@
         kdeconnect.enable = true;
       };
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         programs = {
           obsidian = {
             enable = true;
