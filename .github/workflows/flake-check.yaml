@@ -46,27 +46,18 @@ jobs:
         run: |
           nix run nixpkgs#deadnix -- --edit .
           nix run nixpkgs#alejandra -- .
-          git diff --stat
-
-      - name: Check for changes
-        id: git_status
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "changes=false" >> $GITHUB_OUTPUT
-          fi
 
       - name: Create Pull Request for Fixes
-        if: steps.git_status.outputs.changes == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: nix format and dead code cleanup"
-          title: "Nix Maintenance: Alejandra & Deadnix"
-          body: "Automated formatting with Alejandra and unused code removal with Deadnix."
-          branch: nix-maintenance
-          delete-branch: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore: nix format and dead code cleanup"
+        title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
+        body: "Automated formatting fixes for branch \`${{ github.ref_name }}\`."
+        branch: nix-maintenance-${{ github.ref_name }}  # Unique source branch
+        base: ${{ github.ref_name }}                     # Target = triggering branch
+        delete-branch: true
 
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
