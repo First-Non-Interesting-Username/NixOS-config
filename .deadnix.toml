@@ -1,4 +1,4 @@
 exclude = [
   "modules/template.nix",
-  "hosts/template"
+  "hosts/template/*"
 ]
