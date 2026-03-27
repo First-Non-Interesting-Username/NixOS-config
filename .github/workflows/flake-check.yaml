@@ -51,13 +51,13 @@ jobs:
         if: github.event_name == 'push'
         uses: peter-evans/create-pull-request@v6
         with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "chore: nix format and dead code cleanup"
-        title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
-        body: "Automated formatting fixes for branch \`${{ github.ref_name }}\`."
-        branch: nix-maintenance-${{ github.ref_name }}
-        base: ${{ github.ref_name }}
-        delete-branch: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: nix format and dead code cleanup"
+          title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
+          body: "Automated formatting fixes for branch \`${{ github.ref_name }}\`."
+          branch: nix-maintenance-${{ github.ref_name }}
+          base: ${{ github.ref_name }}
+          delete-branch: true
 
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
