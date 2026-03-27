@@ -81,7 +81,7 @@ jobs:
           ref: ${{ inputs.ref || github.ref }}
 
       - name: Enable aarch64 via QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: arm64
 
