@@ -31,8 +31,8 @@ jobs:
 
       - name: Run Nix Fixes and Formatters
         run: |
-          nix run nixpkgs#statix -- fix . --ignore "modules/template.nix" "hosts/template/*"
           nix run nixpkgs#deadnix -- --edit .
+          nix run nixpkgs#statix -- fix . --ignore "modules/template.nix" "hosts/template/*"
           nix run nixpkgs#alejandra -- .
 
       - name: Create Maintenance Pull Request

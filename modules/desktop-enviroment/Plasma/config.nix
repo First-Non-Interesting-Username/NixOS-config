@@ -6,7 +6,7 @@
         desktopManager.plasma6.enable = true;
       };
       home-manager.users.${username} = {config, ...}: let
-        fonts = config.stylix.fonts;
+        inherit (config.stylix) fonts;
       in {
         imports = [
           inputs.plasma-manager.homeModules.plasma-manager
@@ -20,7 +20,7 @@
             wallpaper = toString config.stylix.image;
             cursor = {
               theme = config.stylix.cursor.name;
-              size = config.stylix.cursor.size;
+              inherit (config.stylix.cursor) size;
             };
             lookAndFeel = "org.kde.breezedark.desktop";
             colorScheme = "BreezeDark";

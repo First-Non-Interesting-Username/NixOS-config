@@ -1,6 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.bootloader = {...}: {
+    nixosModules.bootloader = _: {
       boot.loader = {
         efi = {
           canTouchEfiVariables = true;

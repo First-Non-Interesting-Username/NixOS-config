@@ -1,6 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.nix = {...}: {
+    nixosModules.nix = _: {
       nix = {
         settings = {
           experimental-features = [

@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.networking-desktop = {
       lib,

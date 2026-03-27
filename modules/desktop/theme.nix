@@ -8,7 +8,7 @@
         height ? 1080,
         ...
       }: let
-        colors = config.lib.stylix.colors;
+        inherit (config.lib.stylix) colors;
 
         svgContent = ''
           <svg height="2160" viewBox="0 0 3840 2160" width="3840"
