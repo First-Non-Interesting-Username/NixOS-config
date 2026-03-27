@@ -18,6 +18,8 @@ jobs:
       success: ${{ steps.check.outputs.success }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
