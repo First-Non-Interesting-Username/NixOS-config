@@ -168,4 +168,6 @@ jobs:
     steps:
       - name: Check build status
         if: ${{ needs.build.result != 'success' }}
-        run: exit 1
+        run: |
+          echo "Build result was: ${{ needs.build.result }}"
+          exit 1
