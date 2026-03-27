@@ -29,6 +29,18 @@ jobs:
 
       - name: Run Statix
         run: nix run nixpkgs#statix -- check .
+        id: statix_run
+        continue-on-error: true
+
+      - name: Create Issue on Statix Failure
+        if: steps.statix_run.outcome == 'failure'
+        run: |
+          gh issue create \
+            --title "Statix Linting Issues Detected" \
+            --body "The Statix check failed in workflow run $GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
+            --label "statix"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Deadnix and Alejandra
         run: |
