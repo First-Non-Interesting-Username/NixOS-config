@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.hyprland-dm = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.hyprland-dm = {...}: {
       programs.regreet.enable = true;
     };
   };

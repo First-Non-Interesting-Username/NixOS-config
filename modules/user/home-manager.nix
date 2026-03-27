@@ -1,16 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
-    nixosModules.home-manager = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
+    nixosModules.home-manager = {username, ...}: {
       imports = [
         inputs.home-manager.nixosModules.home-manager
       ];
@@ -19,13 +9,7 @@
         useUserPackages = true;
         backupFileExtension = "backup";
       };
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        username,
-        ...
-      }: {
+      home-manager.users.${username} = {username, ...}: {
         programs.home-manager.enable = true;
         home.homeDirectory = "/home/${username}";
       };

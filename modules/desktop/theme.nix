@@ -1,20 +1,8 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
-    nixosModules.theme = {
-      pkgs,
-      lib,
-      config,
-      options,
-      username,
-      ...
-    }: {
+    nixosModules.theme = {username, ...}: {
       home-manager.users.${username} = {
         pkgs,
-        lib,
         config,
         width ? 1920,
         height ? 1080,

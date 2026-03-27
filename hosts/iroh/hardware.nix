@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   inputs,
   username,
   modulesPath,
@@ -58,13 +56,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
-  home-manager.users.${username} = {
-    pkgs,
-    lib,
-    config,
-    username,
-    ...
-  }: {
+  home-manager.users.${username} = {...}: {
     home.stateVersion = "26.05";
   };
 }

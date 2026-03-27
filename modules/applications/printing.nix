@@ -1,13 +1,8 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.printing = {
       pkgs,
       lib,
-      config,
       impermanence,
       ...
     }: {

@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  config,
   inputs,
   username,
   ...
@@ -46,13 +45,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${username} = {
-    pkgs,
-    lib,
-    config,
-    username,
-    ...
-  }: {
+  home-manager.users.${username} = {...}: {
     home.stateVersion = "26.05";
   };
 }

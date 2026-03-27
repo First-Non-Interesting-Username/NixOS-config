@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.audio = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.audio = {...}: {
       services.pulseaudio.enable = false;
 
       security.rtkit.enable = true;

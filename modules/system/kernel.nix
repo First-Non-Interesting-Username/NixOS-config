@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
-    nixosModules.kernel-laptop = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.kernel-laptop = {pkgs, ...}: {
       boot = {
         kernelParams = [
           "amd_pstate=active"
@@ -18,12 +9,7 @@
         kernelPackages = pkgs.linuxPackages_zen;
       };
     };
-    nixosModules.kernel-desktop = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.kernel-desktop = {pkgs, ...}: {
       nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
 
       boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;

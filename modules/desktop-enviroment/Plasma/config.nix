@@ -1,26 +1,11 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
-    nixosModules.plasma-config = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
+    nixosModules.plasma-config = {username, ...}: {
       services = {
         xserver.enable = true;
         desktopManager.plasma6.enable = true;
       };
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: let
+      home-manager.users.${username} = {config, ...}: let
         fonts = config.stylix.fonts;
       in {
         imports = [

@@ -1,11 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.user = {
-      pkgs,
       lib,
       config,
       username,
@@ -60,13 +55,7 @@
         neededForUsers = true;
       };
     };
-    nixosModules.user-debug = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
+    nixosModules.user-debug = {...}: {
       users.users.root.initialPassword = "debug";
     };
   };

@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.bootloader = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.bootloader = {...}: {
       boot.loader = {
         efi = {
           canTouchEfiVariables = true;

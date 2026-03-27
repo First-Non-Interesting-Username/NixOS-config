@@ -7,7 +7,6 @@
     nixosModules.secrets = {
       pkgs,
       lib,
-      config,
       impermanence,
       username,
       ...

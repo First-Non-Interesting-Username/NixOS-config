@@ -1,28 +1,13 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.hyprland-other = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
+    nixosModules.hyprland-other = {username, ...}: {
       xdg.portal = {
         enable = true;
         config.common.default = "*";
       };
       programs.dconf.enable = true;
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         dconf = {
           enable = true;
           #settings = {};

@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.IDE = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -24,12 +18,7 @@
         };
       };
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         programs = {
           vscode = {
             enable = true;

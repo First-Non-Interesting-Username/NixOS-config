@@ -1,11 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.impermanence = {
-      config,
       lib,
       username,
       impermanence,
@@ -67,12 +62,7 @@
             neededForBoot = true;
           };
         };
-        home-manager.users.${username} = {
-          pkgs,
-          lib,
-          config,
-          ...
-        }: {
+        home-manager.users.${username} = {...}: {
           programs.zsh.initContent = ''
             if [[ $PWD == $HOME ]]; then
                 cd ~/Persist
