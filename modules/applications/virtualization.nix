@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.virtualization-desktop = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -37,12 +31,7 @@
         "binder_linux"
         "ashmem_linux"
       ];
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           distroshelf
         ];
@@ -55,9 +44,7 @@
     };
 
     nixosModules.virtualization-server = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...

@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.plasma-apps = {
       pkgs,
-      lib,
-      config,
       username,
       ...
     }: {
@@ -15,12 +9,7 @@
         qtstyleplugin-kvantum
       ];
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs.kdePackages; [
           dolphin
           kate

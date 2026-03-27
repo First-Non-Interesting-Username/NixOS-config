@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.gaming = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -49,12 +43,7 @@
         #  ];
         #};
       };
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           #factorio
           #factorio-space-age

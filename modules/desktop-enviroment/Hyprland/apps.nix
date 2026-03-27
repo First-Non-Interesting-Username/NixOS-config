@@ -6,8 +6,6 @@
   flake = {
     nixosModules.hyprland-apps = {
       pkgs,
-      lib,
-      config,
       username,
       ...
     }: {
@@ -15,12 +13,7 @@
         inputs.hexecute.packages.${pkgs.stdenv.hostPlatform.system}.default
         brightnessctl
       ];
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         imports = [
           self.nixosModules.vicinae
         ];

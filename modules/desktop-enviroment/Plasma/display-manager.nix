@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.plasma-dm = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.plasma-dm = {pkgs, ...}: {
       services.displayManager.sddm = {
         enable = true;
         wayland.enable = true;

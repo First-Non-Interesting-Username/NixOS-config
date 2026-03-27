@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.CHANGEME = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -35,13 +29,7 @@
 
       # System config goes here
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        osConfig,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         # Home config goes here
       };
     };

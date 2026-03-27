@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.wayland = {
       pkgs,
-      lib,
-      config,
       username,
       ...
     }: {
@@ -28,12 +22,7 @@
         wayland-protocols
         wl-clipboard
       ];
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         home.sessionVariables = {
           NIXOS_OZONE_WL = "1";
           SDL_VIDEODRIVER = "wayland";

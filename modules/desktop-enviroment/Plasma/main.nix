@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{self, ...}: {
   flake = {
-    nixosModules.plasma = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.plasma = {...}: {
       imports = [
         self.nixosModules.plasma-apps
         self.nixosModules.plasma-config

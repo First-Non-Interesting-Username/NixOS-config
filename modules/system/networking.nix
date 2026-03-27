@@ -1,16 +1,9 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.networking-desktop = {
-      pkgs,
       lib,
-      config,
       hostname,
       impermanence,
-      username,
       ...
     }: {
       networking = {
@@ -41,13 +34,7 @@
         };
       };
     };
-    nixosModules.networking-server = {
-      pkgs,
-      lib,
-      config,
-      hostname,
-      ...
-    }: {
+    nixosModules.networking-server = {hostname, ...}: {
       networking = {
         hostName = hostname;
         networkmanager.enable = false;
@@ -76,9 +63,7 @@
       };
     };
     nixosModules.networking-minimal = {
-      pkgs,
       lib,
-      config,
       hostname,
       ...
     }: {

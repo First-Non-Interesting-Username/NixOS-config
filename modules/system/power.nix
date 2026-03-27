@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
-    nixosModules.power = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.power = {...}: {
       services = {
         upower.enable = true;
         power-profiles-daemon.enable = true;

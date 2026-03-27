@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.sunshine = {
-      pkgs,
       lib,
-      config,
       impermanence,
       ...
     }: {
@@ -31,20 +25,8 @@
 
       boot.kernelModules = ["uinput"];
     };
-    nixosModules.moonlight = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        osConfig,
-        ...
-      }: {
+    nixosModules.moonlight = {username, ...}: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           moonlight-qt
         ];

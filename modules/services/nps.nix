@@ -1,16 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
-    nixosModules.nps = {
-      pkgs,
-      lib,
-      config,
-      username,
-      ...
-    }: {
+    nixosModules.nps = {username, ...}: {
       boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 53;
       networking.firewall = {
         allowedTCPPorts = [
@@ -51,7 +41,6 @@
         "lldap/user_password".owner = username;
       };
       home-manager.users.${username} = {
-        pkgs,
         lib,
         config,
         osConfig,

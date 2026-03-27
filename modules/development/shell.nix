@@ -1,13 +1,8 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.shell = {
       pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -30,7 +25,6 @@
       programs.zsh.enable = true;
       home-manager.users.${username} = {
         pkgs,
-        lib,
         config,
         ...
       }: {
