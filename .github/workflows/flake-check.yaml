@@ -6,12 +6,14 @@ on:
   workflow_call:
     outputs:
       success:
-        description: "Whether the flake check passed"
         value: ${{ jobs.check.outputs.success }}
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     outputs:
       success: ${{ steps.check.outputs.success }}
     steps:
@@ -27,41 +29,24 @@ jobs:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Run Statix
-        run: nix run nixpkgs#statix -- check .
-        id: statix_run
-        continue-on-error: true
-
-      - name: Create Issue on Statix Failure
-        if: steps.statix_run.outcome == 'failure'
+      - name: Run Nix Fixes and Formatters
         run: |
-          EXISTING_ISSUE=$(gh issue list --label "statix" --state open --json number --jq '.[0].number')
-
-          if [ -z "$EXISTING_ISSUE" ]; then
-            echo "No open Statix issues found. Creating a new one..."
-            gh issue create \
-              --title "Statix Linting Issues Detected" \
-              --body "The Statix check failed in workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
-              --label "statix"
-          else
-            echo "An open Statix issue (#$EXISTING_ISSUE) already exists. Skipping creation."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run Deadnix and Alejandra
-        run: |
+          nix run nixpkgs#statix -- fix . --ignore "modules/template.nix" "hosts/template/*"
           nix run nixpkgs#deadnix -- --edit .
           nix run nixpkgs#alejandra -- .
 
-      - name: Create Pull Request for Fixes
+      - name: Create Maintenance Pull Request
         if: github.event_name == 'push'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: nix format and dead code cleanup"
-          title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
-          body: "Automated formatting fixes for branch `${{ github.ref_name }}`."
+          commit-message: "style: nix maintenance (statix, deadnix, alejandra)"
+          title: "Nix Maintenance: Auto-fixes for ${{ github.ref_name }}"
+          body: |
+            Automated maintenance for branch `${{ github.ref_name }}`:
+            - **Statix**: Fixed linting suggestions.
+            - **Deadnix**: Removed unused code.
+            - **Alejandra**: Applied standard formatting.
           branch: nix-maintenance-${{ github.ref_name }}
           base: ${{ github.ref_name }}
           delete-branch: true
@@ -73,8 +58,7 @@ jobs:
 
       - name: Add aarch64 as extra platform
         run: |
-          echo "extra-platforms = aarch64-linux" | \
-            sudo tee -a /etc/nix/nix.conf
+          echo "extra-platforms = aarch64-linux" | sudo tee -a /etc/nix/nix.conf
           sudo systemctl restart nix-daemon
 
       - name: Check flake
