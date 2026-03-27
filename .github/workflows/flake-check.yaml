@@ -35,10 +35,17 @@ jobs:
       - name: Create Issue on Statix Failure
         if: steps.statix_run.outcome == 'failure'
         run: |
-          gh issue create \
-            --title "Statix Linting Issues Detected" \
-            --body "The Statix check failed in workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
-            --label "statix"
+          EXISTING_ISSUE=$(gh issue list --label "statix" --state open --json number --jq '.[0].number')
+
+          if [ -z "$EXISTING_ISSUE" ]; then
+            echo "No open Statix issues found. Creating a new one..."
+            gh issue create \
+              --title "Statix Linting Issues Detected" \
+              --body "The Statix check failed in workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
+              --label "statix"
+          else
+            echo "An open Statix issue (#$EXISTING_ISSUE) already exists. Skipping creation."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
