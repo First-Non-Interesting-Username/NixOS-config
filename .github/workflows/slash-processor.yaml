@@ -19,6 +19,14 @@ on:
         required: false
         type: boolean
         default: true
+      issue_number:
+        description: "Issue/PR number"
+        required: false
+        type: string
+      comment_id:
+        description: "Comment ID"
+        required: false
+        type: string
 
 jobs:
   acknowledge:
@@ -29,30 +37,49 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          comment-id: ${{ github.event.inputs.comment_id }}
+          comment-id: ${{ inputs.comment_id }}
           reactions: eyes
 
   run-build:
     needs: acknowledge
-    runs-on: ubuntu-latest
     if: ${{ inputs.command == 'test' || inputs.command == 'build' || inputs.command == 'rebuild' }}
+    uses: ./.github/workflows/flake-build.yml
+    with:
+      ref: ${{ inputs.ref || github.ref }}
+      hosts: ${{ inputs.hosts || '[]' }}
+      create-issue-on-failure: ${{ inputs.create-issue-on-failure }}
+    secrets:
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+  run-build-respond:
+    needs: run-build
+    runs-on: ubuntu-latest
+    if: ${{ always() && (inputs.command == 'test' || inputs.command == 'build' || inputs.command == 'rebuild') }}
     steps:
       - name: Update reaction to dispatched
         uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          comment-id: ${{ github.event.inputs.comment_id }}
+          comment-id: ${{ inputs.comment_id }}
           reactions: rocket
           edit-mode: replace
-      - name: Trigger Flake Build
-        uses: ./.github/workflows/flake-build.yml
+      - name: Create URL to run
+        id: vars
+        run: |
+          echo "run-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
+      - name: Comment with result
+        uses: peter-evans/create-or-update-comment@v5
         with:
-          ref: ${{ inputs.ref || github.ref }}
-          hosts: ${{ inputs.hosts || '[]' }}
-          create-issue-on-failure: ${{ inputs.create-issue-on-failure }}
-        secrets:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.event.repository.full_name }}
+          issue-number: ${{ inputs.issue_number }}
+          body: |
+            ### Slash Command Completed
+            **Command:** `${{ inputs.command }}`  
+            **Run:** [View logs](${{ steps.vars.outputs.run-url }})  
+            **Status:** ${{ needs.run-build.result }}
+            > 💡 Tip: Use `/test host=server1` to test a specific host
 
   run-pull:
     needs: acknowledge
@@ -64,14 +91,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          comment-id: ${{ github.event.inputs.comment_id }}
+          comment-id: ${{ inputs.comment_id }}
           reactions: rocket
           edit-mode: replace
       - name: Pull latest changes
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.inputs.issue_number;
+            const prNumber = ${{ inputs.issue_number }};
             const { data: pr } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -88,11 +115,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          issue-number: ${{ github.event.inputs.issue_number }}
+          issue-number: ${{ inputs.issue_number }}
           body: |
             ### Pull Completed
             **Command:** `${{ inputs.command }}`  
-            **Branch:** `${{ github.event.inputs.ref || 'current' }}` updated
+            **Branch:** `${{ inputs.ref || 'current' }}` updated
 
   run-merge:
     needs: acknowledge
@@ -107,14 +134,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          comment-id: ${{ github.event.inputs.comment_id }}
+          comment-id: ${{ inputs.comment_id }}
           reactions: rocket
           edit-mode: replace
       - name: Merge PR
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.inputs.issue_number;
+            const prNumber = ${{ inputs.issue_number }};
             await github.rest.pulls.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -126,12 +153,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          issue-number: ${{ github.event.inputs.issue_number }}
+          issue-number: ${{ inputs.issue_number }}
           body: |
             ### PR Merged
             **Command:** `${{ inputs.command }}`  
             **Method:** merge  
-            **PR:** #${{ github.event.inputs.issue_number }}
+            **PR:** #${{ inputs.issue_number }}
 
   run-close:
     needs: acknowledge
@@ -146,14 +173,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          comment-id: ${{ github.event.inputs.comment_id }}
+          comment-id: ${{ inputs.comment_id }}
           reactions: rocket
           edit-mode: replace
       - name: Close issue or PR
         uses: actions/github-script@v7
         with:
           script: |
-            const issueNumber = context.payload.inputs.issue_number;
+            const issueNumber = ${{ inputs.issue_number }};
             const isPR = context.payload.issue.pull_request !== undefined;
             if (isPR) {
               await github.rest.pulls.update({
@@ -175,31 +202,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
-          issue-number: ${{ github.event.inputs.issue_number }}
+          issue-number: ${{ inputs.issue_number }}
           body: |
             ### Closed
             **Command:** `${{ inputs.command }}`  
             **Type:** ${{ github.event.issue.pull_request && 'Pull Request' || 'Issue' }}  
-            **Number:** #${{ github.event.inputs.issue_number }}
-
-  respond:
-    needs: [run-build, run-pull, run-merge, run-close]
-    runs-on: ubuntu-latest
-    if: ${{ always() && (inputs.command == 'test' || inputs.command == 'build' || inputs.command == 'rebuild') }}
-    steps:
-      - name: Create URL to run
-        id: vars
-        run: |
-          echo "run-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
-      - name: Comment with result
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.event.repository.full_name }}
-          issue-number: ${{ github.event.inputs.issue_number }}
-          body: |
-            ### ✅ Slash Command Completed
-            **Command:** `${{ inputs.command }}`  
-            **Run:** [View logs](${{ steps.vars.outputs.run-url }})  
-            **Status:** ${{ needs.run-build.result }}
-            > Tip: Use `/test host=armin` to test a specific host
+            **Number:** #${{ inputs.issue_number }}
