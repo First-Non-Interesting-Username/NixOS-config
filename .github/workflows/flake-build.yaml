@@ -160,3 +160,12 @@ jobs:
                 labels: ['ci-failure']
               });
             }
+
+  all-systems-passed:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: always()
+    steps:
+      - name: Check build status
+        if: ${{ needs.build.result != 'success' }}
+        run: exit 1
