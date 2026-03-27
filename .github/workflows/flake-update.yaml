@@ -38,7 +38,7 @@ jobs:
 
       - name: Open PR if changed
         if: steps.changes.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore: update flake.lock"
           title: "chore: biweekly flake.lock update"
