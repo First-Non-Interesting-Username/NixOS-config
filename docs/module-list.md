@@ -62,6 +62,10 @@ WIP
 - Installs Obsidian (It will hopefully be replaced by Neovim in some time).
 - Installs KDE Connect.
 
+## nixosModules.vicinae
+
+- Enables vicinae with opinionated config.
+
 ## nixosModules.sunshine
 
 IMPERATIVE:
