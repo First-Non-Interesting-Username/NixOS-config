@@ -37,7 +37,7 @@ jobs:
         run: |
           gh issue create \
             --title "Statix Linting Issues Detected" \
-            --body "The Statix check failed in workflow run $GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
+            --body "The Statix check failed in workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID. Please review the logs and fix the Nix linting errors." \
             --label "statix"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,8 +47,17 @@ jobs:
           nix run nixpkgs#deadnix -- --edit .
           nix run nixpkgs#alejandra -- .
 
+      - name: Check for changes
+        id: git_status
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Pull Request for Fixes
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.git_status.outputs.changes == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
