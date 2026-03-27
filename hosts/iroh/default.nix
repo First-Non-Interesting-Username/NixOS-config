@@ -25,22 +25,22 @@ in {
     };
     modules = [
       ./hardware.nix
-      self.nixosModules.home-manager
-      self.nixosModules.git
-      self.nixosModules.secrets
-      self.nixosModules.ssh-server
-      self.nixosModules.ssh
-      self.nixosModules.shell
       self.nixosModules.bootloader
-      self.nixosModules.nix
-      self.nixosModules.user
-      self.nixosModules.networking-server
-      self.nixosModules.locale
-      self.nixosModules.virtualization-server
-      self.nixosModules.nps
-      self.nixosModules.update
-      self.nixosModules.theme
       self.nixosModules.direnv
+      self.nixosModules.git
+      self.nixosModules.locale
+      self.nixosModules.networking-server
+      self.nixosModules.nix
+      self.nixosModules.nps
+      self.nixosModules.secrets
+      self.nixosModules.shell
+      self.nixosModules.ssh
+      self.nixosModules.ssh-server
+      self.nixosModules.theme
+      self.nixosModules.update
+      self.nixosModules.user
+      self.nixosModules.virtualization-server
+      self.nixosModules.home-manager
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
