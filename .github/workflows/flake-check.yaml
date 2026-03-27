@@ -28,6 +28,25 @@ jobs:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Run Statix
+        run: nix run nixpkgs#statix -- check .
+
+      - name: Run Deadnix and Alejandra
+        run: |
+          nix run nixpkgs#deadnix -- --edit .
+          nix run nixpkgs#alejandra -- .
+
+      - name: Create Pull Request for Fixes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: nix format and dead code cleanup"
+          title: "Nix Maintenance: Alejandra & Deadnix"
+          body: "Automated formatting with Alejandra and unused code removal with Deadnix."
+          branch: nix-maintenance
+          delete-branch: true
+
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
         with:
