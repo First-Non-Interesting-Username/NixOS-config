@@ -42,7 +42,7 @@ on:
 
 jobs:
   check:
-    uses: ./.github/workflows/flake-check.yml
+    uses: ./.github/workflows/flake-check.yaml
 
   hosts:
     runs-on: ubuntu-latest
