@@ -1,0 +1,55 @@
+name: Slash Command Dispatch
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  slashCommandDispatch:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request || github.event.issue.number }}
+    steps:
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v5
+        with:
+          token: ${{ secrets.PAT }}
+          reaction-token: ${{ secrets.GITHUB_TOKEN }}
+          reactions: true
+          commands: |
+            test
+            build
+            rebuild
+            pull
+            merge
+            close
+          permission: write
+          issue-type: pull-request
+          dispatch-type: workflow
+          config: >
+            [
+              {
+                "command": "test",
+                "static_args": ["create-issue-on-failure=false"],
+                "dispatch_type": "workflow"
+              },
+              {
+                "command": "build",
+                "dispatch_type": "workflow"
+              },
+              {
+                "command": "rebuild",
+                "static_args": ["create-issue-on-failure=true"],
+                "dispatch_type": "workflow"
+              },
+              {
+                "command": "pull",
+                "dispatch_type": "workflow"
+              },
+              {
+                "command": "merge",
+                "dispatch_type": "workflow"
+              },
+              {
+                "command": "close",
+                "dispatch_type": "workflow"
+              }
+            ]
