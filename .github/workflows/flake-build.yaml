@@ -119,7 +119,7 @@ jobs:
       issues: write
     steps:
       - name: Report failures to issue
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
