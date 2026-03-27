@@ -54,7 +54,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: nix format and dead code cleanup"
           title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
-          body: "Automated formatting fixes for branch \`${{ github.ref_name }}\`."
+          body: "Automated formatting fixes for branch `${{ github.ref_name }}`."
           branch: nix-maintenance-${{ github.ref_name }}
           base: ${{ github.ref_name }}
           delete-branch: true
