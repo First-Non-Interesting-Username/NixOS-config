@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.input = {
       pkgs,
-      lib,
-      config,
       username,
       ...
     }: {
@@ -39,12 +33,7 @@
       };
       hardware.steam-hardware.enable = true;
       services.udev.packages = [pkgs.game-devices-udev-rules];
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         home.keyboard = {
           layout = "pl";
           variant = "";

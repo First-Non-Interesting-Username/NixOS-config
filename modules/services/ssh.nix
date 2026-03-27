@@ -1,11 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.ssh = {
-      pkgs,
       lib,
       config,
       username,
@@ -55,12 +50,7 @@
         };
       };
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           lazyssh
         ];
@@ -82,12 +72,7 @@
       };
     };
 
-    nixosModules.ssh-debug = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.ssh-debug = {...}: {
       services.openssh = {
         enable = true;
         settings = {
@@ -96,12 +81,7 @@
         };
       };
     };
-    nixosModules.ssh-server = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: let
+    nixosModules.ssh-server = {...}: let
       sshPort = 6767;
     in {
       services.openssh = {

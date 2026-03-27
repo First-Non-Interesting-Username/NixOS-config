@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.programs-desktop = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -36,12 +30,7 @@
         kdeconnect.enable = true;
       };
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         programs = {
           obsidian = {
             enable = true;

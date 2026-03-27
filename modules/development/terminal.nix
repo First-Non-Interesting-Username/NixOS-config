@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.terminal = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -23,12 +17,7 @@
         };
       };
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {...}: {
         programs = {
           foot = {
             enable = true;

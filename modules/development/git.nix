@@ -1,13 +1,8 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{...}: {
   flake = {
     nixosModules.git = {
       pkgs,
       lib,
-      config,
       username,
       impermanence,
       gitName,
@@ -36,8 +31,6 @@
       };
       home-manager.users.${username} = {
         pkgs,
-        lib,
-        config,
         osConfig,
         ...
       }: {

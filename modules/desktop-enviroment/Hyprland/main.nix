@@ -1,15 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{self, ...}: {
   flake = {
-    nixosModules.hyprland = {
-      pkgs,
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.hyprland = {...}: {
       nix.settings = {
         extra-substituters = ["https://hyprland.cachix.org"];
         extra-trusted-public-keys = [

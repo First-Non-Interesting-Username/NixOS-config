@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.vicinae = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -32,8 +26,6 @@
       home-manager.users.${username} = {
         pkgs,
         lib,
-        config,
-        osConfig,
         ...
       }: {
         services = {

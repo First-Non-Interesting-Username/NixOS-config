@@ -1,13 +1,8 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.flatpak = {
       pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -32,12 +27,7 @@
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
         config.common.default = "*";
       };
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         imports = [
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ];

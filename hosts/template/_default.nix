@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  lib,
   ...
 }: let
   Hostname = "YOUR_HOSTNAME";

@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.browser = {
-      pkgs,
       lib,
-      config,
       username,
       impermanence,
       ...
@@ -22,12 +16,7 @@
         };
       };
 
-      home-manager.users.${username} = {
-        pkgs,
-        lib,
-        config,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         stylix.targets.floorp = {
           enable = false;
         };

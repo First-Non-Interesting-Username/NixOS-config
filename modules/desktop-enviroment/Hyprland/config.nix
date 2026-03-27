@@ -1,13 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake = {
     nixosModules.hyprland-config = {
       pkgs,
-      lib,
-      config,
       username,
       ...
     }: {
