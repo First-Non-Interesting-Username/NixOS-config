@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
@@ -55,8 +55,8 @@ jobs:
         commit-message: "chore: nix format and dead code cleanup"
         title: "Nix Maintenance: Alejandra & Deadnix for ${{ github.ref_name }}"
         body: "Automated formatting fixes for branch \`${{ github.ref_name }}\`."
-        branch: nix-maintenance-${{ github.ref_name }}  # Unique source branch
-        base: ${{ github.ref_name }}                     # Target = triggering branch
+        branch: nix-maintenance-${{ github.ref_name }}
+        base: ${{ github.ref_name }}
         delete-branch: true
 
       - name: Enable aarch64 via QEMU
