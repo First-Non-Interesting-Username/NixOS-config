@@ -38,21 +38,29 @@ jobs:
       - uses: wimpysworld/nothing-but-nix@main
         with:
           hatchet-protocol: cleave
+
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
             build-dir = /nix/build
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - uses: cachix/cachix-action@v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
+
       - name: Add aarch64 as extra platform
         run: |
           echo "extra-platforms = aarch64-linux" | \
             sudo tee -a /etc/nix/nix.conf
           sudo systemctl restart nix-daemon
+
       - name: Build ${{ matrix.host }}
         id: build
         run: |
