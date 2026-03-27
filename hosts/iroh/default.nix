@@ -26,8 +26,8 @@ in {
     modules = [
       ./hardware.nix
       self.nixosModules.bootloader
-      self.nixosModules.direnv
       self.nixosModules.git
+      self.nixosModules.home-manager
       self.nixosModules.locale
       self.nixosModules.networking-server
       self.nixosModules.nix
@@ -40,7 +40,6 @@ in {
       self.nixosModules.update
       self.nixosModules.user
       self.nixosModules.virtualization-server
-      self.nixosModules.home-manager
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;

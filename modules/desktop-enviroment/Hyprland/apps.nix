@@ -22,7 +22,7 @@
         ...
       }: {
         imports = [
-          inputs.vicinae.homeManagerModules.default
+          self.nixosModules.vicinae
         ];
 
         home.packages = with pkgs; [

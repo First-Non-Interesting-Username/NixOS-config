@@ -30,6 +30,7 @@ in {
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git
+      self.nixosModules.home-manager
       self.nixosModules.IDE
       self.nixosModules.impermanence
       self.nixosModules.input
@@ -42,6 +43,7 @@ in {
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop
+      self.nixosModules.secrets
       self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.terminal
@@ -50,7 +52,6 @@ in {
       self.nixosModules.user
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland
-      self.nixosModules.home-manager
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
