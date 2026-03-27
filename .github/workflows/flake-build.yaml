@@ -3,8 +3,42 @@ on:
   schedule:
     - cron: "0 8 * * 4"
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to checkout"
+        required: false
+        type: string
+      create-issue-on-failure:
+        description: "Create issue on failure"
+        required: false
+        type: boolean
+        default: true
   pull_request:
     branches: ["main"]
+  workflow_call:
+    inputs:
+      ref:
+        description: "Git ref to checkout"
+        required: false
+        type: string
+        default: ""
+      create-issue-on-failure:
+        description: "Create issue on failure"
+        required: false
+        type: boolean
+        default: true
+      hosts:
+        description: "JSON array of hosts to build"
+        required: false
+        type: string
+        default: "[]"
+    secrets:
+      CACHIX_AUTH_TOKEN:
+        required: false
+    outputs:
+      built-hosts:
+        description: "JSON list of hosts attempted"
+        value: ${{ jobs.hosts.outputs.matrix }}
 
 jobs:
   check:
@@ -17,15 +51,21 @@ jobs:
       matrix: ${{ steps.list.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
-            build-dir = /nix/build             # ← use the big BTRFS volume for builds
+            build-dir = /nix/build
       - name: List nixosConfigurations
         id: list
         run: |
           MATRIX=$(nix eval .#nixosConfigurations --apply 'x: builtins.attrNames x' --json)
+          FILTER='${{ inputs.hosts }}'
+          if [ "$FILTER" != "[]" ] && [ -n "$FILTER" ]; then
+            MATRIX=$(echo "$MATRIX" | jq --argjson hosts "$FILTER" '[.[] | select(. as $h | $hosts | index($h))]')
+          fi
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
 
   build:
@@ -37,6 +77,8 @@ jobs:
         host: ${{ fromJson(needs.hosts.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: wimpysworld/nothing-but-nix@main
         with:
           hatchet-protocol: cleave
@@ -71,7 +113,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     needs: build
-    if: failure()
+    if: failure() && (inputs.create-issue-on-failure == true || inputs.create-issue-on-failure == '')
     permissions:
       issues: write
     steps:
