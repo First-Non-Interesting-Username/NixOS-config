@@ -189,7 +189,9 @@ jobs:
     if: always()
     steps:
       - name: Check build status
-        if: ${{ needs.build.result != 'success' && needs.build.result != 'skipped' }}
+        if: >-
+          needs.build.result != 'success' && 
+          needs.build.result != 'skipped'
         run: |
           echo "Build result was: ${{ needs.build.result }}"
           exit 1
