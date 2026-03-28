@@ -65,17 +65,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland";
-      submodules = true;
-    };
-
-    Hyprspace = {
-      url = "github:KZDKM/Hyprspace";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     nix-podman-stacks = {
@@ -108,6 +97,7 @@
       imports = [
         (inputs.import-tree ./modules)
         (inputs.import-tree.match ".*/[^/]+/default\.nix" ./hosts)
+        (inputs.import-tree.match ".*/[^/]+/default\.nix" ./desktop-enviroment)
         ./devShells
         inputs.git-hooks-nix.flakeModule
       ];

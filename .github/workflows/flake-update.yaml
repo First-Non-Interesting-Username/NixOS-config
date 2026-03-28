@@ -48,7 +48,7 @@ jobs:
           body: |
             Automated `flake.lock` update via `nix flake update`.
             Please review input changes before merging.
-          branch: "bot/flake-lock-update"
+          branch: "chore/flake-lock-update"
           delete-branch: true
           labels: dependencies
 

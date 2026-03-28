@@ -48,7 +48,7 @@ jobs:
             - **Statix**: Fixed linting suggestions.
             - **Deadnix**: Removed unused code.
             - **Alejandra**: Applied standard formatting.
-          branch: nix-maintenance-${{ github.ref_name }}
+          branch: chore/nix-maintenance-${{ github.ref_name }}
           base: ${{ github.ref_name }}
           delete-branch: true
 
