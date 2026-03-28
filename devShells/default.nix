@@ -15,7 +15,6 @@
         (pkgs.vscode-with-extensions.override {
           vscode = pkgs.vscodium;
           vscodeExtensions = with extensions.vscode-marketplace; [
-            bbenoist.nix
             esbenp.prettier-vscode
             wakatime.vscode-wakatime
             jnoortheen.nix-ide
