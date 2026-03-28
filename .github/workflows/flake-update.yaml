@@ -17,6 +17,8 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.PAT }}
 
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
@@ -40,6 +42,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ secrets.PAT }}
           commit-message: "chore: update flake.lock"
           title: "chore: biweekly flake.lock update"
           body: |
