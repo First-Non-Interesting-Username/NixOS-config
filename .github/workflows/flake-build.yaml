@@ -18,8 +18,7 @@ on:
     paths:
       - "flake.nix"
       - "flake.lock"
-      - "hosts/**"
-      - "modules/**"
+      - "**/*.nix"
   workflow_call:
     inputs:
       ref:
