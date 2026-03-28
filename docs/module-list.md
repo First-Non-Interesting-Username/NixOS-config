@@ -95,46 +95,93 @@ IMPERATIVE:
 
 ## nixosModules.plasma
 
-- Enables KDE Plasma DE
+Enables KDE Plasma 6 desktop environment with the following components:
+
+- **plasma-config**: Configures X server, Plasma 6, and home-manager plasma-manager.
+- **plasma-dm**: Sets up SDDM display manager.
+- **plasma-apps**: Installs default KDE applications.
+- **plasma-other**: Handles XDG portal configuration and impermanence persistence.
+
+### Key Features
+
+- Polish keyboard layout with caps/escape swap.
+- Breeze Dark look and feel with Gruvbox-inspired color scheme.
+- Custom keyboard shortcuts (Meta+Q close, Meta+F fullscreen, etc.).
+- KRunner centered with Meta+D and Meta+Space launchers.
+- Dolphin (Meta+E), Kitty (Meta+Return), and Spectacle (Shift+Print) integrations.
 
 ## nixosModules.hyprland
 
-- Enables Hyprland.
+Enables Hyprland Wayland compositor with the following components:
+
+- **hyprland-config**: Configures Hyprland with home-manager.
+- **hyprland-dm**: Sets up SDDM display manager.
+- **hyprland-apps**: Installs default Wayland applications.
+- **hyprland-other**: Handles XDG portal configuration and impermanence.
+- **noctalia**: Custom shell integration for IPC commands.
+
+### Key Features
+
+- Uses Hyprland from flake input with cachix.
+- XWayland enabled for X11 compatibility.
+- Custom keybindings (Super+Return terminal, Super+D menu, Super+E file manager).
+- Workspace management with 10 persistent workspaces.
+- Magic special workspace for floating windows.
+- Smooth animations and window transitions.
+- Volume and brightness control via media keys.
+- Grimblast screenshot integration (Shift+Print).
+- Hyprspace plugin for workspace isolation.
+- Vicinae application launcher.
+
+## nixosModules.noctalia
+
+Custom shell environment for Hyprland with the following features:
+
+- **Bar**: Top-positioned simple bar with launcher, clock, system monitor, active window, media mini, workspace, tray, notifications, battery, volume, brightness, and control center.
+- **Control Center**: Network, Bluetooth, wallpaper selector, notifications, power profile, keep awake, night light shortcuts.
+- **App Launcher**: Clipboard history, terminal integration, searchable settings and windows.
+- **Dock**: Bottom-positioned auto-hide dock with pinned apps.
+- **Notifications**: Top-right notifications with history.
+- **Session Menu**: Lock, suspend, hibernate, logout, reboot, shutdown options.
+- **System Monitor**: CPU, memory, disk, network monitoring with configurable thresholds.
+- **Lock Screen**: Compact lock screen with session buttons.
+- **Weather**: Location-based weather display (Kielce default).
 
 # Desktop
 
 ## nixosModules.input
 
-- Sets polish keyboard layout with caps swap.
+- Sets Polish keyboard layout with caps/escape swap.
 - Sets natural scrolling for both mouse and touchpad.
 - Enables Steam Controller udev rules.
 
 ## nixosModules.theme
 
-- Enables Qt and sets the theme to breeze.
-- Enables GTK.
-- Enables Stylix.
+- Enables Qt with Breeze theme.
+- Enables GTK theming.
+- Enables Stylix for comprehensive theming.
 
-###
+### Theme Configuration
 
-- Sets:
-- Theme to Gruvbox Dark.
-- Cursor to Bibata Modern Ice.
-- Icon theme to Papirus.
-- Monospace font to JetBrains Mono Nerd Font.
-- Sans Serif font to DejaVu Sans.
-- Serif font to DejaVu Serif.
-- Emoji font to Noto Color Emoji.
+- **Base16 Scheme**: Gruvbox Dark.
+- **Cursor**: Bibata Modern Ice (24px).
+- **Icon Theme**: Papirus (Dark/Light variants).
+- **Fonts**:
+  - Monospace: JetBrains Mono Nerd Font.
+  - Sans Serif: DejaVu Sans.
+  - Serif: DejaVu Serif.
+  - Emoji: Noto Color Emoji.
+- **Wallpaper**: Custom SVG-based Gruvbox-inspired wallpaper.
 
-###
+### Disabled Targets
 
-- Disables the following stylix targets: Vscode colors, KDE, QT and Floorp.
+Disables Stylix targets for: VSCode colors, KDE, Qt, and Floorp.
 
 ## nixosModules.wayland
 
-- Enables GPU/graphics drivers, including 32-bit support (needed for things like Steam/Wine).
-- Enables PolicyKit, a system for controlling privileged operations.
-- Sets system-wide environment variables that tell apps to use Wayland instead of XWayland.
+- Enables GPU/graphics drivers with 32-bit support (Steam/Wine compatibility).
+- Enables PolicyKit for privileged operations.
+- Sets Wayland system environment variables.
 - Enables D-Bus.
 - Installs core Wayland packages.
 
