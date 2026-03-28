@@ -183,7 +183,7 @@ sops secrets/secrets.yaml
 
 ## Commit Message Format
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
+AI agents (including opencode GitHub Actions) MUST follow [Conventional Commits](https://www.conventionalcommits.org/) when creating commits:
 
 ```
 <type>(<scope>): <short description>
@@ -211,4 +211,4 @@ Description rules:
 
 ---
 
-Last modified by MiniMax M2.5, 22.03.2026
+Last modified by MiniMax M2.5, 28.03.2026
