@@ -1,5 +1,7 @@
 # Desktop Environments
 
+Keyboard shortcuts for all Desktop Enviroments are avalible in the dedicated [keybinds docs file](./keybinds.md)
+
 ## nixosModules.plasma
 
 Enables KDE Plasma 6 desktop environment with the following components:
@@ -13,6 +15,5 @@ Enables KDE Plasma 6 desktop environment with the following components:
 
 - Polish keyboard layout with caps/escape swap.
 - Breeze Dark look and feel with Gruvbox-inspired color scheme.
-- Custom keyboard shortcuts (Meta+Q close, Meta+F fullscreen, etc.).
-- KRunner centered with Meta+D and Meta+Space launchers.
-- Dolphin (Meta+E), Kitty (Meta+Return), and Spectacle (Shift+Print) integrations.
+- KRunner launcher.
+- Dolphin, Kitty, and Spectacle integrations.
