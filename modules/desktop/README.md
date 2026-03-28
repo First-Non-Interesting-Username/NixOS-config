@@ -6,6 +6,20 @@
 - Sets natural scrolling for both mouse and touchpad.
 - Enables Steam Controller udev rules.
 
+## nixosModules.noctalia
+
+Custom shell environment for Hyprland with the following features:
+
+- Bar: Top-positioned simple bar with launcher, clock, system monitor, active window, media mini, workspace, tray, notifications, battery, volume, brightness, and control center.
+- Control Center: Network, Bluetooth, wallpaper selector, notifications, power profile, keep awake, night light shortcuts.
+- App Launcher: Clipboard history, terminal integration, searchable settings and windows.
+- Dock: Bottom-positioned auto-hide dock with pinned apps.
+- Notifications: Top-right notifications with history.
+- Session Menu: Lock, suspend, hibernate, logout, reboot, shutdown options.
+- System Monitor: CPU, memory, disk, network monitoring with configurable thresholds.
+- Lock Screen: Compact lock screen with session buttons.
+- Weather: Location-based weather display (Kielce default).
+
 ## nixosModules.theme
 
 - Enables Qt with Breeze theme.
@@ -14,15 +28,15 @@
 
 ### Theme Configuration
 
-- **Base16 Scheme**: Gruvbox Dark.
-- **Cursor**: Bibata Modern Ice (24px).
-- **Icon Theme**: Papirus (Dark/Light variants).
-- **Fonts**:
+- Base16 Scheme: Gruvbox Dark.
+- Cursor: Bibata Modern Ice (24px).
+- Icon Theme: Papirus (Dark/Light variants).
+- Fonts:
   - Monospace: JetBrains Mono Nerd Font.
   - Sans Serif: DejaVu Sans.
   - Serif: DejaVu Serif.
   - Emoji: Noto Color Emoji.
-- **Wallpaper**: Custom SVG-based Gruvbox-inspired wallpaper.
+- Wallpaper: Custom SVG-based Gruvbox-inspired wallpaper.
 
 ### Disabled Targets
 
