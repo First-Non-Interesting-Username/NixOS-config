@@ -15,10 +15,6 @@ on:
         default: true
   pull_request:
     branches: ["main"]
-    paths:
-      - "flake.nix"
-      - "flake.lock"
-      - "**/*.nix"
   workflow_call:
     inputs:
       ref:
@@ -48,17 +44,18 @@ jobs:
   check-changed-files:
     runs-on: ubuntu-latest
     outputs:
-      has-changes: ${{ steps.filter.outputs.nix }}
+      has-changes: ${{ steps.filter.outputs.nix || github.event_name != 'pull_request' }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
       - uses: dorny/paths-filter@v3
         id: filter
+        if: github.event_name == 'pull_request'
         with:
           filters: |
             nix:
-              - added|modified:|
+              - added|modified:
                 - "flake.nix"
                 - "flake.lock"
                 - "**/*.nix"
@@ -192,7 +189,9 @@ jobs:
     if: always()
     steps:
       - name: Check build status
-        if: ${{ needs.build.result != 'success' && needs.build.result != 'skipped' }}
+        if: >-
+          needs.build.result != 'success' && 
+          needs.build.result != 'skipped'
         run: |
           echo "Build result was: ${{ needs.build.result }}"
           exit 1
