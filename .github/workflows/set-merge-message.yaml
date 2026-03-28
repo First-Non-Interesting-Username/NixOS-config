@@ -1,0 +1,36 @@
+name: Set Merge Commit Message from Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  set-pr-title:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Extract conventional commit message from branch name
+        id: parse
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          if [[ "$BRANCH" =~ ^([a-z]+)/(.+)$ ]]; then
+            TYPE="${BASH_REMATCH[1]}"
+            DESC="${BASH_REMATCH[2]//[-_]/ }"
+            echo "title=${TYPE}: ${DESC}" >> $GITHUB_OUTPUT
+          else
+            echo "Branch doesn't match expected format"
+            exit 1
+          fi
+
+      - name: Update PR title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              title: "${{ steps.parse.outputs.title }}"
+            });
