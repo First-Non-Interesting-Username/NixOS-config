@@ -5,7 +5,6 @@
       lib,
       username,
       impermanence,
-      config,
       ...
     }: {
       imports = lib.optional impermanence {
