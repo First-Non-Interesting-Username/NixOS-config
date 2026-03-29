@@ -7,9 +7,7 @@
       ...
     }: {
       imports =
-        [
-          inputs.vicinae.homeManagerModules.default
-        ]
+        []
         ++ lib.optionals impermanence [
           {
             environment.persistence."/persist" = {
@@ -28,6 +26,9 @@
         lib,
         ...
       }: {
+        imports = [
+          inputs.vicinae.homeManagerModules.default
+        ];
         services = {
           vicinae = {
             enable = true;
