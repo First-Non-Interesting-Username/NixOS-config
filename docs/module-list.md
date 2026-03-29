@@ -101,7 +101,7 @@ IMPERATIVE:
 
 ## nixosModules.noctalia
 
-Custom shell environment for Hyprland with the following features:
+Custom shell environment for Hyprland or Niri with the following features:
 
 - Bar: Top-positioned simple bar with launcher, clock, system monitor, active window, media mini, workspace, tray, notifications, battery, volume, brightness, and control center.
 - Control Center: Network, Bluetooth, wallpaper selector, notifications, power profile, keep awake, night light shortcuts.
@@ -164,6 +164,13 @@ IMPERATIVE:
 - Sets up Git with username and email provided by the user.
 - Sets default branch to main (Why isn't it default?).
 - Sets up GH with default git protocol being SSH and automatically logs you in.
+
+## nixosModules.secretless-git
+
+- Installs Git and GH.
+- Installs Onefetch, for Fastfetch like overviews of Git repos.
+- Sets up Git with username and email provided by the user.
+- Sets default branch to main (Why isn't it default?).
 
 ## nixosModules.IDE
 
@@ -337,7 +344,7 @@ DON'T USE ON PRODUCTION MACHINES
 
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
-- Sets a password for it (`1234`).
+- Sets a password for it (`nixos`).
 
 ## nixosModules.user-debug
 
