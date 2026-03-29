@@ -1,8 +1,12 @@
 _: {
   flake = {
-    nixosModules.iso-graphical = {pkgs, ...}: {
+    nixosModules.iso-graphical = {
+      pkgs,
+      modulesPath,
+      ...
+    }: {
       imports = [
-        "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
+        (modulesPath + "/installer/cd-dvd/installation-cd-graphical-base.nix")
       ];
 
       services.spice-vdagentd.enable = true;
@@ -24,7 +28,6 @@ _: {
         lshw
         dmidecode
         mesa-demos
-        photorec
         cryptsetup
         vlc
       ];

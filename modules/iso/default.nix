@@ -4,10 +4,12 @@ _: {
       lib,
       config,
       pkgs,
+      modulesPath,
+      username,
       ...
     }: {
       imports = [
-        "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+        (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
       ];
 
       hardware.enableAllHardware = true;
@@ -25,10 +27,17 @@ _: {
         rsync
         nano
         netcat
-        smartctl
       ];
 
       system.stateVersion = lib.mkDefault lib.trivial.release;
+
+      home-manager.users.${username} = {
+        osConfig,
+        lib,
+        ...
+      }: {
+        home.stateVersion = lib.mkForce osConfig.system.stateVersion;
+      };
     };
   };
 }
