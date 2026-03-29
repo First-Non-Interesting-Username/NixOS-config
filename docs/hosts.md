@@ -3,7 +3,7 @@
 - [Hosts](#hosts)
   - [Armin](#Armin)
   - [Iroh](#Iroh)
-  - [Minimal](#minimal)
+  - [John](#john)
   - [Template](#template)
   - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
@@ -45,14 +45,14 @@ This host SHOULD NOT be used as a template for other configs.
 
 The name of this host is based on [Uncle Iroh](https://en.wikipedia.org/wiki/Iroh).
 
-## Minimal
+## John
 
-TBD
+This is the official ISO of the project.
+It should be used as an ISO for all graphical installations of the system, on machines that support Vulkan.
 
-This is the host I plan to use in an ISO.
-It's in TBD state now.
+This host can be used as a template for other configs, especially other ISOs.
 
-This host can be used as a template for other configs.
+The name of this host is based on [John the Character](https://john-the-character.fandom.com/wiki/John)
 
 ## Template
 

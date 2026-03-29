@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake = {
     nixosModules.plasma = {
       pkgs,
@@ -7,20 +11,24 @@
       impermanence,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
-          directories = [
-            "/var/lib/sddm"
-          ];
-          users.${username} = {
+      imports =
+        [
+          self.nixosModules.wayland
+        ]
+        ++ lib.optional impermanence {
+          environment.persistence."/persist" = {
             directories = [
-              ".local/share/kactivitymanagerd"
-              ".local/share/kscreen"
-              ".local/share/kwalletd"
+              "/var/lib/sddm"
             ];
+            users.${username} = {
+              directories = [
+                ".local/share/kactivitymanagerd"
+                ".local/share/kscreen"
+                ".local/share/kwalletd"
+              ];
+            };
           };
         };
-      };
 
       services = {
         xserver.enable = true;

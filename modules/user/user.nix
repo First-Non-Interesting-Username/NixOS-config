@@ -88,8 +88,8 @@ _: {
             "gamemode"
             "input"
           ];
-          # password is `1234`
-          hashedPassword = "$y$j9T$ZsgrMRgvApvOV20RDbqB/1$DFNUwdqXzkAKADHKlgxx0zNwenuh8162XSPfzFu7Nf7";
+          # password is `nixos`
+          hashedPassword = "$y$j9T$e3RBMYwLteags209/SMBP0$f4bZILjV/MjNCquJFQmxL55.q6SdtN.gbATDv7Mds50";
           subUidRanges = [
             {
               startUid = 100000;
@@ -106,8 +106,11 @@ _: {
         };
       };
     };
-    nixosModules.user-debug = _: {
-      users.users.root.initialPassword = "debug";
+    nixosModules.user-debug = {lib, ...}: {
+      users.users.root = {
+        initialPassword = "debug";
+        hashedPassword = lib.mkForce null;
+      };
     };
   };
 }

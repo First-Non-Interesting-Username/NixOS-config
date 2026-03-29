@@ -3,36 +3,39 @@
   inputs,
   ...
 }: let
-  Hostname = "Minimal";
+  Hostname = "john";
   Username = "nixi";
-  GitName = "First-Non-Interesting-Username";
-  GitEmail = "janekmusin@proton.me";
-  Width = 2560;
-  Height = 1440;
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
+      inherit Username Hostname;
       username = Username;
-      gitName = GitName;
-      gitEmail = GitEmail;
       hostname = Hostname;
+      gitName = "ISO-User";
+      gitEmail = "iso@nixos.local";
       impermanence = false;
     };
     modules = [
-      # System modules go here
+      self.nixosModules.audio
       self.nixosModules.bootloader
-      self.nixosModules.git
+      self.nixosModules.browser
+      self.nixosModules.input
+      self.nixosModules.iso
+      self.nixosModules.iso-graphical
+      self.nixosModules.GNOME
+      self.nixosModules.home-manager
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
-      self.nixosModules.secrets
+      self.nixosModules.power
+      self.nixosModules.theme
+      self.nixosModules.secretless-git
+      self.nixosModules.secretless-user
       self.nixosModules.shell
       self.nixosModules.ssh-debug
-      self.nixosModules.theme
-      self.nixosModules.user
-      self.nixosModules.home-manager
+      self.nixosModules.user-debug
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -40,13 +43,15 @@ in {
         home-manager.extraSpecialArgs = {
           inherit self inputs;
           username = Username;
-          gitName = GitName;
-          gitEmail = GitEmail;
+
           hostname = Hostname;
-          width = Width;
-          height = Height;
+          width = 1920;
+          height = 1080;
         };
       }
     ];
   };
+
+  flake.packages.x86_64-linux.${Hostname} =
+    self.nixosConfigurations.${Hostname}.config.system.build.isoImage;
 }

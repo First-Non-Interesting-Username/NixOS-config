@@ -10,6 +10,7 @@
       imports =
         [
           self.nixosModules.vicinae
+          self.nixosModules.wayland
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {

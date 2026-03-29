@@ -20,6 +20,13 @@ IMPERATIVE:
 - Sets default branch to main (Why isn't it default?).
 - Sets up GH with default git protocol being SSH and automatically logs you in.
 
+## nixosModules.secretless-git
+
+- Installs Git and GH.
+- Installs Onefetch, for Fastfetch like overviews of Git repos.
+- Sets up Git with username and email provided by the user.
+- Sets default branch to main (Why isn't it default?).
+
 ## nixosModules.IDE
 
 WIP
