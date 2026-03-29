@@ -42,7 +42,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "style: nix maintenance (statix, deadnix, alejandra)"
-          title: "Nix Maintenance: Auto-fixes for ${{ github.ref_name }}"
+          title: "style: Auto-fixes for ${{ github.ref_name }}"
           body: |
             Automated maintenance for branch `${{ github.ref_name }}`:
             - **Statix**: Fixed linting suggestions.
