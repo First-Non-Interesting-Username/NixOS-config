@@ -19,7 +19,6 @@ in {
     };
     modules = [
       self.nixosModules.audio
-      self.nixosModules.bootloader
       self.nixosModules.browser
       self.nixosModules.input
       self.nixosModules.iso
