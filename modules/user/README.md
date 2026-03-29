@@ -11,7 +11,15 @@ Secrets: sudo_password/${hostname}
 
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
-- Sets a password for it.
+- Sets a password for it with the passed secret.
+
+## nixosModules.secretless-user
+
+DON'T USE ON PRODUCTION MACHINES
+
+- Creates a user with username passed via special arg.
+- Adds it to various groups.
+- Sets a password for it (`1234`).
 
 ## nixosModules.user-debug
 
