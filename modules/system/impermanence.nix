@@ -44,6 +44,7 @@
               "Downloads"
               ".local/state"
               ".cache/fontconfig"
+              ".cache/mesa_shader_cache"
             ];
 
             files = [

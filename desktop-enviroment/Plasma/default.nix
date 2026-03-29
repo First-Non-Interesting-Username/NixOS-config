@@ -12,14 +12,12 @@
           directories = [
             "/var/lib/sddm"
           ];
-          files = [];
           users.${username} = {
             directories = [
               ".local/share/kactivitymanagerd"
               ".local/share/kscreen"
               ".local/share/kwalletd"
             ];
-            files = [];
           };
         };
       };
