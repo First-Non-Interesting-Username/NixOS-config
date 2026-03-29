@@ -8,6 +8,7 @@ If unspecified, all shortcuts are with super key.
 
 | Action                     | Shortcut                      |
 | -------------------------- | ----------------------------- |
+| Open Workspace Overview    | Just Super                    |
 | Terminal                   | Return                        |
 | App Launcher               | Space                         |
 | File Manager               | E                             |
