@@ -91,6 +91,27 @@
           gtk.colors.enable = false;
         };
 
+        programs = {
+          gnome-shell = {
+            enable = true;
+
+            extensions = with pkgs.gnomeExtensions; [
+              appindicator
+              blur-my-shell
+              clipboard-indicator
+              forge
+              just-perfection
+              caffeine
+              dash-to-dock
+              gsconnect
+              launch-new-instance
+              logo-menu
+              search-light
+              vitals
+            ];
+          };
+        };
+
         dconf = {
           settings = {
             "org/gnome/desktop/input-sources" = {
@@ -537,24 +558,6 @@
               ];
             };
           };
-        };
-        gnome-shell = {
-          enable = true;
-
-          extensions = with pkgs.gnomeExtensions; [
-            appindicator
-            blur-my-shell
-            clipboard-indicator
-            forge
-            just-perfection
-            caffeine
-            dash-to-dock
-            gsconnect
-            launch-new-instance
-            logo-menu
-            search-light
-            vitals
-          ];
         };
       };
     };
