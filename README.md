@@ -62,8 +62,10 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 
 Go [here](./secrets/README.md).
 
-Secrets are meant mostly for me.
-For secretless use of those modules go TBD.
+Secrets are a feature meant mostly for me.
+For secretless use of those modules replace `nixosModules.user` with `nixosModules.secretless-user` and do the same for `nixosModules.ssh`.
+Secretless use is NOT reccommended NOR supported.
+I reccommend creating your own modules over using `secretless-*` from my config.
 
 ## Eye candy stuff
 
