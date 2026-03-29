@@ -252,7 +252,7 @@
                 preferred-monitor = 0;
                 scale-height = 0.15;
                 scale-width = 0.1;
-                shortcut-search = ["<Super>space"];
+                shortcut-search = ["<Alt>space"];
                 show-panel-icon = true;
               };
               "org/gnome/shell/weather" = {
@@ -498,6 +498,11 @@
                   command = "wmctrl -r :ACTIVE: -t 9";
                   name = "Move to Workspace 10";
                 };
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/" = {
+                  binding = "<Super>space";
+                  command = "vicinae";
+                  name = "Vicinae";
+                };
               };
               "org/gnome/settings-daemon/plugins/media-keys" = {
                 custom-keybindings = [
@@ -527,6 +532,7 @@
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws8/"
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws9/"
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws10/"
+                  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
                 ];
               };
             };
