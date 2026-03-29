@@ -38,7 +38,7 @@ in {
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop
       self.nixosModules.nix
-      self.nixosModules.plasma
+      self.nixosModules.GNOME
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop

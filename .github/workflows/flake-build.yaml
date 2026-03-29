@@ -60,11 +60,6 @@ jobs:
                 - "flake.lock"
                 - "**/*.nix"
 
-  check:
-    needs: check-changed-files
-    if: needs.check-changed-files.outputs.has-changes == 'true'
-    uses: ./.github/workflows/flake-check.yaml
-
   hosts:
     runs-on: ubuntu-latest
     needs: check-changed-files
@@ -159,7 +154,7 @@ jobs:
               labels: 'ci-failure',
               state: 'open'
             });
-            const title = '❌ Flake build failures';
+            const title = 'Flake build failures';
             const existing = issues.find(i => i.title === title);
             const body = `## Flake Build Failures\n\n` +
               `**Workflow:** ${context.workflow}\n` +
@@ -185,13 +180,14 @@ jobs:
 
   all-systems-passed:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [check-changed-files, build]
     if: always()
     steps:
       - name: Check build status
         if: >-
-          needs.build.result != 'success' && 
-          needs.build.result != 'skipped'
+          needs.check-changed-files.result == 'failure' ||
+          (needs.build.result != 'success' && needs.build.result != 'skipped')
         run: |
+          echo "check-changed-files: ${{ needs.check-changed-files.result }}"
           echo "Build result was: ${{ needs.build.result }}"
           exit 1
