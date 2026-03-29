@@ -1,14 +1,16 @@
-{self, ...}: {
+{ self, ... }:
+{
   flake = {
-    nixosModules.GNOME = {
-      lib,
-      username,
-      impermanence,
-      pkgs,
-      ...
-    }: {
-      imports =
-        [
+    nixosModules.GNOME =
+      {
+        lib,
+        username,
+        impermanence,
+        pkgs,
+        ...
+      }:
+      {
+        imports = [
           self.nixosModules.vicinae
         ]
         ++ lib.optional impermanence {
@@ -32,64 +34,65 @@
           };
         };
 
-      services = {
-        xserver.enable = true;
-        desktopManager.gnome.enable = true;
-        displayManager.gdm = {
+        services = {
+          xserver.enable = true;
+          desktopManager.gnome.enable = true;
+          displayManager.gdm = {
+            enable = true;
+            wayland.enable = true;
+          };
+        };
+        environment.gnome.excludePackages = with pkgs; [
+          gnome-tour
+          orca
+          snapshot
+          yelp
+          gnome-software
+          aisleriot
+          atomix
+          five-or-more
+          four-in-a-row
+          gnome-2048
+          gnome-klotski
+          gnome-mahjongg
+          gnome-nibbles
+          gnome-robots
+          gnome-sudoku
+          gnome-taquin
+          gnome-tetravex
+          hitori
+          iagno
+          lightsoff
+          quadrapassel
+          swell-foop
+          tali
+          dconf-editor
+          devhelp
+          d-spy
+          gnome-builder
+          sysprof
+          gnome-user-docs
+          epiphany
+        ];
+
+        xdg.portal = {
           enable = true;
-          wayland.enable = true;
+          extraPortals = [
+            pkgs.xdg-desktop-portal-gnome
+          ];
         };
-      };
-      environment.gnome.excludePackages = with pkgs; [
-        gnome-tour
-        orca
-        snapshot
-        yelp
-        gnome-software
-        aisleriot
-        atomix
-        five-or-more
-        four-in-a-row
-        gnome-2048
-        gnome-klotski
-        gnome-mahjongg
-        gnome-nibbles
-        gnome-robots
-        gnome-sudoku
-        gnome-taquin
-        gnome-tetravex
-        hitori
-        iagno
-        lightsoff
-        quadrapassel
-        swell-foop
-        tali
-        dconf-editor
-        devhelp
-        d-spy
-        gnome-builder
-        sysprof
-        gnome-user-docs
-        epiphany
-      ];
 
-      xdg.portal = {
-        enable = true;
-        extraPortals = [
-          pkgs.xdg-desktop-portal-gnome
-        ];
-      };
+        home-manager.users.${username} = _: {
+          home.packages = with pkgs; [
+            mission-center
+            wmctrl
+          ];
 
-      home-manager.users.${username} = _: {
-        home.packages = with pkgs; [
-          mission-center
-          wmctrl
-        ];
-        stylix.targets = {
-          gnome.colors.enable = false;
-          gtk.colors.enable = false;
-        };
-        programs = {
+          stylix.targets = {
+            gnome.colors.enable = false;
+            gtk.colors.enable = false;
+          };
+
           dconf = {
             settings = {
               "org/gnome/desktop/input-sources" = {
@@ -100,7 +103,7 @@
                     "pl"
                   ]
                 ];
-                xkb-options = ["caps:swapescape"];
+                xkb-options = [ "caps:swapescape" ];
               };
               "org/gnome/desktop/interface" = {
                 clock-format = "24h";
@@ -137,11 +140,11 @@
                 overlay-key = "Super_L";
               };
               "org/gnome/mutter/keybindings" = {
-                toggle-tiled-left = [];
-                toggle-tiled-right = [];
+                toggle-tiled-left = [ ];
+                toggle-tiled-right = [ ];
               };
               "org/gnome/mutter/wayland/keybindings" = {
-                restore-shortcuts = [];
+                restore-shortcuts = [ ];
               };
               "org/gnome/nautilus/preferences" = {
                 default-folder-viewer = "icon-view";
@@ -223,7 +226,7 @@
                 window-gap-size-increment = 1;
               };
               "org/gnome/shell/extensions/gsconnect" = {
-                devices = [];
+                devices = [ ];
                 enabled = true;
                 missing-openssl = false;
               };
@@ -252,15 +255,15 @@
                 preferred-monitor = 0;
                 scale-height = 0.15;
                 scale-width = 0.1;
-                shortcut-search = ["<Alt>space"];
+                shortcut-search = [ "<Alt>space" ];
                 show-panel-icon = true;
               };
               "org/gnome/shell/weather" = {
                 automatic-location = true;
-                locations = [];
+                locations = [ ];
               };
               "org/gnome/shell/world-clocks" = {
-                locations = [];
+                locations = [ ];
               };
               "org/gnome/system/location" = {
                 enabled = true;
@@ -302,7 +305,7 @@
                 type-format = "category";
               };
               "org/gnome/shell/extensions/forge/keybindings" = {
-                focus-center = [];
+                focus-center = [ ];
                 focus-down = [
                   "<Super>j"
                   "<Super>Down"
@@ -351,20 +354,20 @@
                   "<Super><Shift>k"
                   "<Super><Shift>Up"
                 ];
-                toggle-maximize = ["<Super>g"];
-                toggle-fullscreen = ["<Super>f"];
-                close = ["<Super>q"];
-                snap-down = [];
-                snap-left = [];
-                snap-right = [];
-                snap-up = [];
-                tile-down = [];
-                tile-left = [];
-                tile-right = [];
-                tile-up = [];
-                promote = [];
-                promote-all = [];
-                restart = [];
+                toggle-maximize = [ "<Super>g" ];
+                toggle-fullscreen = [ "<Super>f" ];
+                close = [ "<Super>q" ];
+                snap-down = [ ];
+                snap-left = [ ];
+                snap-right = [ ];
+                snap-up = [ ];
+                tile-down = [ ];
+                tile-left = [ ];
+                tile-right = [ ];
+                tile-up = [ ];
+                promote = [ ];
+                promote-all = [ ];
+                restart = [ ];
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings" = {
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/" = {
@@ -557,6 +560,5 @@
           };
         };
       };
-    };
   };
 }
