@@ -72,18 +72,18 @@
           qtstyleplugin-kvantum
         ];
 
-programs = {
-  kate.enable = true;
-  konsole.enable = true;
-  okular.enable = true;
-  elisa.enable = true;
-  plasma = {
-    enable = true;
-    favoriteApps = [
-      "floorp.desktop"
-      "foot.desktop"
-      "org.kde.dolphin.desktop"
-    ];
+        programs = {
+          kate.enable = true;
+          konsole.enable = true;
+          okular.enable = true;
+          elisa.enable = true;
+          plasma = {
+            enable = true;
+            favoriteApps = [
+              "floorp.desktop"
+              "foot.desktop"
+              "org.kde.dolphin.desktop"
+            ];
 
             workspace = {
               iconTheme = config.stylix.icons.dark;
