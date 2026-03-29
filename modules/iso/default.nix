@@ -1,10 +1,9 @@
-{self, ...}: {
+_: {
   flake = {
     nixosModules.iso = {
       lib,
       config,
       pkgs,
-      username,
       ...
     }: {
       imports = [

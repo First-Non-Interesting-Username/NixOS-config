@@ -1,11 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.iso-graphical = {
-      lib,
-      pkgs,
-      username,
-      ...
-    }: {
+    nixosModules.iso-graphical = {pkgs, ...}: {
       imports = [
         "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
       ];
