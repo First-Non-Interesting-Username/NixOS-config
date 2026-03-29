@@ -1,75 +1,79 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   flake = {
-    nixosModules.impermanence = {
-      lib,
-      username,
-      impermanence,
-      ...
-    }: {
-      imports = lib.optional impermanence {
-        imports = [
-          inputs.impermanence.nixosModules.impermanence
-        ];
-
-        boot = {
-          initrd.systemd.enable = true;
-          tmp.cleanOnBoot = true;
-        };
-
-        systemd.tmpfiles.rules = [
-          "d /persist/home/${username} 0700 ${username} users -"
-        ];
-
-        environment.persistence."/persist" = {
-          hideMounts = true;
-
-          directories = [
-            "/var/lib/nixos"
-            "/var/lib/systemd"
-            "/var/log"
-            "/etc/ssh"
-            "/tmp"
-            "/etc/nixos"
+    nixosModules.impermanence =
+      {
+        lib,
+        username,
+        impermanence,
+        ...
+      }:
+      {
+        imports = lib.optional impermanence {
+          imports = [
+            inputs.impermanence.nixosModules.impermanence
           ];
 
-          files = [
-            "/etc/adjtime"
+          boot = {
+            initrd.systemd.enable = true;
+            tmp.cleanOnBoot = true;
+          };
+
+          systemd.tmpfiles.rules = [
+            "d /persist/home/${username} 0700 ${username} users -"
           ];
 
-          users.${username} = {
+          environment.persistence."/persist" = {
+            hideMounts = true;
+
             directories = [
-              "Projects"
-              "Persist"
-              "Games"
-              "Downloads"
-              ".local/state"
-              ".cache/fontconfig"
+              "/var/lib/nixos"
+              "/var/lib/systemd"
+              "/var/log"
+              "/etc/ssh"
+              "/tmp"
+              "/etc/nixos"
             ];
 
             files = [
+              "/etc/adjtime"
             ];
-          };
-        };
 
-        fileSystems = {
-          "/" = {
-            neededForBoot = true;
+            users.${username} = {
+              directories = [
+                "Projects"
+                "Persist"
+                "Games"
+                "Downloads"
+                ".local/state"
+                ".cache/fontconfig"
+                ".cache/mesa_shader_cache"
+              ];
+
+              files = [
+              ];
+            };
           };
-          "/nix" = {
-            neededForBoot = true;
+
+          fileSystems = {
+            "/" = {
+              neededForBoot = true;
+            };
+            "/nix" = {
+              neededForBoot = true;
+            };
+            "/persist" = {
+              neededForBoot = true;
+            };
           };
-          "/persist" = {
-            neededForBoot = true;
+          home-manager.users.${username} = _: {
+            programs.zsh.initContent = ''
+              if [[ $PWD == $HOME ]]; then
+                  cd ~/Persist
+              fi
+            '';
           };
-        };
-        home-manager.users.${username} = _: {
-          programs.zsh.initContent = ''
-            if [[ $PWD == $HOME ]]; then
-                cd ~/Persist
-            fi
-          '';
         };
       };
-    };
   };
 }
