@@ -3,7 +3,7 @@
 - [Hosts](#hosts)
   - [Armin](#Armin)
   - [Iroh](#Iroh)
-  - [Minimal](#minimal)
+  - [John](#john)
   - [Template](#template)
   - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
