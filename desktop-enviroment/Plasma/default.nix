@@ -79,11 +79,6 @@
           elisa.enable = true;
           plasma = {
             enable = true;
-            favoriteApps = [
-              "floorp.desktop"
-              "foot.desktop"
-              "org.kde.dolphin.desktop"
-            ];
 
             workspace = {
               iconTheme = config.stylix.icons.dark;
