@@ -6,20 +6,18 @@
       impermanence,
       ...
     }: {
-      imports =
-        []
-        ++ lib.optionals impermanence [
-          {
-            environment.persistence."/persist" = {
-              users.${username} = {
-                directories = [
-                  ".local/share/vicinae"
-                  ".config/vicinae"
-                ];
-              };
+      imports = lib.optionals impermanence [
+        {
+          environment.persistence."/persist" = {
+            users.${username} = {
+              directories = [
+                ".local/share/vicinae"
+                ".config/vicinae"
+              ];
             };
-          }
-        ];
+          };
+        }
+      ];
 
       home-manager.users.${username} = {
         pkgs,
