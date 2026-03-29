@@ -106,8 +106,11 @@ _: {
         };
       };
     };
-    nixosModules.user-debug = _: {
-      users.users.root.initialPassword = "debug";
+    nixosModules.user-debug = {lib, ...}: {
+      users.users.root = {
+        initialPassword = "debug";
+        hashedPassword = lib.mkForce null;
+      };
     };
   };
 }
