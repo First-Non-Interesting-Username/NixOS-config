@@ -159,7 +159,7 @@ jobs:
               labels: 'ci-failure',
               state: 'open'
             });
-            const title = '❌ Flake build failures';
+            const title = 'Flake build failures';
             const existing = issues.find(i => i.title === title);
             const body = `## Flake Build Failures\n\n` +
               `**Workflow:** ${context.workflow}\n` +
