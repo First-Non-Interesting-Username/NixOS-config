@@ -1,5 +1,7 @@
 # NixOS Config
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/First-Non-Interesting-Username/NixOS-config)
+
 > [!NOTE]
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
@@ -60,8 +62,10 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 
 Go [here](./secrets/README.md).
 
-Secrets are meant mostly for me.
-For secretless use of those modules go TBD.
+Secrets are a feature meant mostly for me.
+For secretless use of those modules replace `nixosModules.user` with `nixosModules.secretless-user` and do the same for `nixosModules.ssh`.
+Secretless use is NOT reccommended NOR supported.
+I reccommend creating your own modules over using `secretless-*` from my config.
 
 ## Eye candy stuff
 

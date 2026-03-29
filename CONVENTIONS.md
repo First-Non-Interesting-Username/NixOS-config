@@ -97,7 +97,7 @@ Secrets: secret_name, ...
 
 #### Special Args
 
-When creating or changing a module, you MUST mention all required special args.
+When creating or changing a module, you MUST mention all required special args, except for `username` and `impermanence`.
 Special args are passed to the module via the flake and are required for the module to function.
 Common special args include:
 
@@ -145,7 +145,7 @@ All documents with more than 3 sections MUST have a Table of Contents.
 
 The Table of Contents MUST:
 
-- Be placed after the first heading.
+- Be placed before the first heading.
 - Use a nested bullet list.
 - Link to all ## headings using anchor links.
 - Use the heading text as the link text.

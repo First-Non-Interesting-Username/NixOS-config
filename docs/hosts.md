@@ -3,7 +3,7 @@
 - [Hosts](#hosts)
   - [Armin](#Armin)
   - [Iroh](#Iroh)
-  - [Minimal](minimal)
+  - [Minimal](#minimal)
   - [Template](#template)
   - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
@@ -69,7 +69,7 @@ Specs:
 
 This host SHOULD be used as a template for other configs.
 
-The name of this host is based on [Character](charcter.wiki.example.com)
+The name of this host is based on [Character](character.wiki.example.com)
 
 # Unused names/names suggestions
 
