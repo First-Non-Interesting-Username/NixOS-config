@@ -2,12 +2,10 @@
   self,
   inputs,
   ...
-}:
-let
+}: let
   Hostname = "john";
   Username = "nixi";
-in
-{
+in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
