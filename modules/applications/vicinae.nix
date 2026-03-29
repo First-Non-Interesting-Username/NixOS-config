@@ -6,28 +6,28 @@
       impermanence,
       ...
     }: {
-      imports =
-        [
-          inputs.vicinae.homeManagerModules.default
-        ]
-        ++ lib.optionals impermanence [
-          {
-            environment.persistence."/persist" = {
-              users.${username} = {
-                directories = [
-                  ".local/share/vicinae"
-                  ".config/vicinae"
-                ];
-              };
+      imports = lib.optionals impermanence [
+        {
+          environment.persistence."/persist" = {
+            users.${username} = {
+              directories = [
+                ".local/share/vicinae"
+                ".config/vicinae"
+              ];
             };
-          }
-        ];
+          };
+        }
+      ];
 
       home-manager.users.${username} = {
         pkgs,
         lib,
         ...
       }: {
+        imports = [
+          inputs.vicinae.homeManagerModules.default
+        ];
+
         services = {
           vicinae = {
             enable = true;
