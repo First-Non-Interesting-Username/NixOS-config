@@ -8,7 +8,7 @@
 
 ## nixosModules.noctalia
 
-Custom shell environment for Hyprland with the following features:
+Custom shell environment for Hyprland or Niri with the following features:
 
 - Bar: Top-positioned simple bar with launcher, clock, system monitor, active window, media mini, workspace, tray, notifications, battery, volume, brightness, and control center.
 - Control Center: Network, Bluetooth, wallpaper selector, notifications, power profile, keep awake, night light shortcuts.

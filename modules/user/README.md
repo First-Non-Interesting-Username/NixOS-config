@@ -19,7 +19,7 @@ DON'T USE ON PRODUCTION MACHINES
 
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
-- Sets a password for it (`1234`).
+- Sets a password for it (`nixos`).
 
 ## nixosModules.user-debug
 
