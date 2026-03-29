@@ -57,9 +57,7 @@ _: {
     };
     nixosModules.secretless-user = {
       lib,
-      config,
       username,
-      hostname,
       impermanence,
       ...
     }: {
