@@ -21,12 +21,12 @@ _: {
         };
       };
 
-    #nixpkgs.config.factorio = {
-    # username = "Asmusin";
-    # token = config.sops.secrets.factorio_token;
-    #};
+      #nixpkgs.config.factorio = {
+      # username = "Asmusin";
+      # token = config.sops.secrets.factorio_token;
+      #};
 
-    programs = {
+      programs = {
         gamescope.enable = true;
         gamemode.enable = true;
         # TBD

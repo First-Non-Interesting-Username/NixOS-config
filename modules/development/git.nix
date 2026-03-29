@@ -26,10 +26,7 @@ _: {
         git
         gh
       ];
-      home-manager.users.${username} = {
-        pkgs,
-        ...
-      }: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [onefetch];
         programs = {
           git = {

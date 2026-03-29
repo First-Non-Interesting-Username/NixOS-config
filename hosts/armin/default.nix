@@ -42,13 +42,13 @@ in {
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop
-    self.nixosModules.secretless-ssh
-    self.nixosModules.secretless-user
-    self.nixosModules.shell
-    self.nixosModules.terminal
-    self.nixosModules.theme
-    self.nixosModules.update
-    self.nixosModules.virtualization-desktop
+      self.nixosModules.secretless-ssh
+      self.nixosModules.secretless-user
+      self.nixosModules.shell
+      self.nixosModules.terminal
+      self.nixosModules.theme
+      self.nixosModules.update
+      self.nixosModules.virtualization-desktop
       self.nixosModules.wayland
       inputs.home-manager.nixosModules.home-manager
       {
