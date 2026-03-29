@@ -56,9 +56,9 @@
           };
           icons = {
             enable = true;
-            package = pkgs.papirus-icon-theme;
-            dark = "Papirus-Dark";
-            light = "Papirus-Light";
+            package = pkgs.morewaita-icon-theme;
+            dark = "MoreWaita";
+            light = "MoreWaita";
           };
           fonts = {
             monospace = {
