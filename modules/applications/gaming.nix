@@ -21,12 +21,14 @@ _: {
         };
       };
 
-    #nixpkgs.config.factorio = {
-    # username = "Asmusin";
-    # token = config.sops.secrets.factorio_token;
-    #};
+      #nixpkgs.config.factorio = {
+      #  username = "Asmusin";
+      #  token = config.sops.secrets.factorio_token;
+      #};
 
-    programs = {
+      sops.secrets.factorio_token = {};
+
+      programs = {
         gamescope.enable = true;
         gamemode.enable = true;
         # TBD
@@ -41,6 +43,7 @@ _: {
         #  ];
         #};
       };
+
       home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           #factorio
