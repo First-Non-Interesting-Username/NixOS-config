@@ -48,7 +48,7 @@ The name of this host is based on [Uncle Iroh](https://en.wikipedia.org/wiki/Iro
 ## John
 
 This is the official ISO of the project.
-It should be used as an ISO for all graphical installations of the system, on machines that support Vulcan.
+It should be used as an ISO for all graphical installations of the system, on machines that support Vulkan.
 
 This host can be used as a template for other configs, especially other ISOs.
 
