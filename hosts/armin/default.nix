@@ -1,4 +1,8 @@
-{ self, inputs, ... }: let
+{
+  self,
+  inputs,
+  ...
+}: let
   Hostname = "armin";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";

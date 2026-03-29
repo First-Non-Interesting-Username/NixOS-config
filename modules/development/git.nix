@@ -31,7 +31,11 @@ _: {
         owner = username;
       };
 
-      home-manager.users.${username} = {pkgs, osConfig, ...}: {
+      home-manager.users.${username} = {
+        pkgs,
+        osConfig,
+        ...
+      }: {
         home.packages = with pkgs; [onefetch];
         programs = {
           git = {
