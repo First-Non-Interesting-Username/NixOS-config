@@ -10,10 +10,6 @@
 
 - <!-- List the changes made -->
 
-## Testing
-
-<!-- How was this change tested? -->
-
 ## Fixes
 
 - fixes #123
