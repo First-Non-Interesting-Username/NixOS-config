@@ -52,7 +52,7 @@ It should be used as an ISO for all graphical installations of the system, on ma
 
 This host can be used as a template for other configs, especially other ISOs.
 
-The name of this host is based on [John the Character]()
+The name of this host is based on [John the Character](https://john-the-character.fandom.com/wiki/John)
 
 ## Template
 
