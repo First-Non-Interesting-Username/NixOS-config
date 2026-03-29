@@ -149,7 +149,14 @@
                 search-filter-time-type = "last_modified";
                 show-create-link = true;
               };
-              "org/gnome/shell/extensions/Logo-menu" = {
+              "org/gnome/shell" = {
+  favorite-apps = [
+    "floorp.desktop"
+    "foot.desktop"
+    "org.gnome.Nautilus.desktop"
+  ];
+};
+"org/gnome/shell/extensions/Logo-menu" = {
                 hide-forcequit = true;
                 menu-button-icon-image = 30;
                 menu-button-icon-size = 20;
