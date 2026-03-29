@@ -232,11 +232,6 @@ IMPERATIVE:
 - Sets up secrets management system with sops.
 - Sets host SSH key as a default key for age, which is used for sops.
 
-## nixosModules.secrets-impermanence
-
-- Sets up secrets management system with sops.
-- Sets host SSH key with path changed to include persist directory as a default key for age, which is used for sops.
-
 ## nixosModules.ssh
 
 Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
@@ -247,15 +242,14 @@ PERSONAL
 - Installs Lazyssh.
 - Puts my SSH public and private keys to right directories with sops.
 
-## nixosModules.ssh-impermanence
-
-Secrets: ssh_keys/private/${hostname}, ssh_keys/public/${hostname}
+## nixosModules.secretless-ssh
 
 PERSONAL
+DON'T USE ON PRODUCTION MACHINES
 
 - Sets up SSH with my public keys.
 - Installs Lazyssh.
-- Puts my SSH public and private keys to right directories (now with persist, so they work with impermanence) with sops.
+- Puts publically available SSH public and private keys to right directories (now with persist, so they work with impermanence) with sops.
 
 ## nixosModules.ssh-debug
 
@@ -335,7 +329,15 @@ Secrets: sudo_password/${hostname}
 
 - Creates a user with username passed via special arg.
 - Adds it to various groups.
-- Sets a password for it.
+- Sets a password for it with the passed secret.
+
+## nixosModules.secretless-user
+
+DON'T USE ON PRODUCTION MACHINES
+
+- Creates a user with username passed via special arg.
+- Adds it to various groups.
+- Sets a password for it (`1234`).
 
 ## nixosModules.user-debug
 

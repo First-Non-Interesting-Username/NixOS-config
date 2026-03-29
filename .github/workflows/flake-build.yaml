@@ -185,13 +185,14 @@ jobs:
 
   all-systems-passed:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [check-changed-files, build]
     if: always()
     steps:
       - name: Check build status
         if: >-
-          needs.build.result != 'success' && 
-          needs.build.result != 'skipped'
+          needs.check-changed-files.result == 'failure' ||
+          (needs.build.result != 'success' && needs.build.result != 'skipped')
         run: |
+          echo "check-changed-files: ${{ needs.check-changed-files.result }}"
           echo "Build result was: ${{ needs.build.result }}"
           exit 1
