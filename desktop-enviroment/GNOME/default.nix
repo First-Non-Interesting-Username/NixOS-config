@@ -80,7 +80,7 @@
         ];
       };
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${username} = _: {
         home.packages = with pkgs; [
           mission-center
           wmctrl
@@ -150,13 +150,13 @@
                 show-create-link = true;
               };
               "org/gnome/shell" = {
-  favorite-apps = [
-    "floorp.desktop"
-    "foot.desktop"
-    "org.gnome.Nautilus.desktop"
-  ];
-};
-"org/gnome/shell/extensions/Logo-menu" = {
+                favorite-apps = [
+                  "floorp.desktop"
+                  "foot.desktop"
+                  "org.gnome.Nautilus.desktop"
+                ];
+              };
+              "org/gnome/shell/extensions/Logo-menu" = {
                 hide-forcequit = true;
                 menu-button-icon-image = 30;
                 menu-button-icon-size = 20;
