@@ -76,7 +76,6 @@ _: {
       lib,
       config,
       username,
-      hostname,
       impermanence,
       ...
     }: let
