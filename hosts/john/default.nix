@@ -19,7 +19,7 @@ in {
       self.nixosModules.audio
       self.nixosModules.bootloader
       self.nixosModules.browser
-      self.nixsoModules.input
+      self.nixosModules.input
       self.nixosModules.iso
       self.nixosModules.iso-graphical
       self.nixosModules.GNOME
