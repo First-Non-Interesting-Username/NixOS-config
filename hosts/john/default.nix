@@ -21,7 +21,6 @@ in {
       self.nixosModules.audio
       self.nixosModules.browser
       self.nixosModules.input
-      self.nixosModules.iso
       self.nixosModules.iso-graphical
       self.nixosModules.GNOME
       self.nixosModules.home-manager
