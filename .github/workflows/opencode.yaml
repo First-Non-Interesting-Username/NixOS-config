@@ -35,4 +35,4 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          model: nvidia/z-ai/glm5
+          model: nvidia/moonshotai/kimi-k2.5
