@@ -3,3 +3,4 @@ _tmp-*/
 .pre-commit-config.yaml
 result/
 nixos-*.iso
+result
