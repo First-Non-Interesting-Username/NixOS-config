@@ -83,3 +83,6 @@ There are only few rules regarding naming hosts:
 - The character MUST NOT be a bad person, as defined by my subjective moral standards.
 
 The names:
+
+- Wall-E.
+- Annabeth.
