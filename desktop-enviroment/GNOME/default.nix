@@ -169,6 +169,7 @@
               move-to-workspace-3 = ["<Super><Shift>3"];
               move-to-workspace-4 = ["<Super><Shift>4"];
               show-desktop = ["<Super>d"];
+              close-window = ["<Super>q"];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
@@ -200,7 +201,7 @@
             };
             "org/gnome/shell/extensions/Logo-menu" = {
               hide-forcequit = true;
-              menu-button-icon-image = 30;
+              menu-button-icon-image = 23;
               menu-button-icon-size = 20;
               menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
               menu-button-terminal = "xdg-terminal-exec";
@@ -211,6 +212,7 @@
               show-power-options = true;
               symbolic-icon = true;
               use-custom-icon = false;
+              show-software-center = false;
             };
             "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
               brightness = 0.6;
@@ -260,7 +262,7 @@
               focus-on-hover-enabled = true;
               move-pointer-focus-enabled = true;
               preview-hint-enabled = true;
-              tiling-mode-enabled = false;
+              tiling-mode-enabled = true;
               window-gap-hidden-on-single = true;
               window-gap-size-increment = 1;
             };
@@ -412,7 +414,7 @@
               name = "Screenshot (area)";
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock" = {
-              binding = "<Super>l";
+              binding = "<Super><Shift>l";
               command = "loginctl lock-session";
               name = "Lock";
             };
