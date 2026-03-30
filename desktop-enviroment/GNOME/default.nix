@@ -82,7 +82,7 @@
         ];
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           mission-center
           wmctrl
@@ -111,13 +111,13 @@
                 logo-menu
                 search-light
                 vitals
-                launch-new-instance
               ]
             );
           };
         };
 
         dconf = {
+          enable = true;
           settings = {
             "org/gnome/desktop/input-sources" = {
               current = 0;
