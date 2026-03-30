@@ -28,6 +28,6 @@ If unspecified, all shortcuts are with super key.
 | Toggle Special Workspace   | S                             |
 | Move to Special Workspace  | Shift + S                     |
 | Move to Special Silently   | Ctrl + S                      |
-| Lock                       | L                             |
+| Lock                       | Shift L                       |
 
 Besides that, I also have standard audio/brightness keybinds.
