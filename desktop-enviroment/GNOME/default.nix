@@ -111,6 +111,7 @@
                 logo-menu
                 search-light
                 vitals
+                launch-new-instance
               ]
             );
           };

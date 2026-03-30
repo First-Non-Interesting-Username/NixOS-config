@@ -1,3 +1,5 @@
 _tmp-*/
 **/ssh/*
 .pre-commit-config.yaml
+result/
+nixos-*.iso
