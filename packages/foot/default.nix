@@ -1,28 +1,33 @@
-_: {
-  perSystem = {pkgs, ...}: {
-    wrappers.pkgs = pkgs;
-    wrappers.packages.foot = true;
-    wrappers.control_type = "build";
-  };
+{ ... }:
+{
+  perSystem =
+    { pkgs, ... }:
+    {
+      wrappers.pkgs = pkgs;
+      wrappers.packages.foot = true;
+      wrappers.control_type = "build";
+    };
 
-  flake.wrappers.foot = {
-    pkgs,
-    wlib,
-    ...
-  }: {
-    imports = [wlib.wrapperModules.foot];
+  flake.wrappers.foot =
+    {
+      pkgs,
+      wlib,
+      ...
+    }:
+    {
+      imports = [ wlib.wrapperModules.foot ];
 
-    extraPackages = [pkgs.nerd-fonts.jetbrains-mono];
+      extraPackages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
-    settings = {
-      main = {
-        include = "${pkgs.foot.themes}/share/foot/themes/gruvbox-dark";
+      settings = {
+        main = {
+          include = "${pkgs.foot.themes}/share/foot/themes/gruvbox-dark";
 
-        font = "JetBrainsMono Nerd Font:size=12";
-      };
+          font = "JetBrainsMono Nerd Font:size=12";
+        };
 
-      colors = {
+        colors = {
+        };
       };
     };
-  };
 }

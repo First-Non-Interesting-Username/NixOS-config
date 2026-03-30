@@ -87,9 +87,9 @@ jobs:
       - name: Generate build matrix
         id: list
         run: |
-          HOSTS=$(nix eval .#nixosConfigurations --apply 'n: builtins.map (name: {inherit name; type: "host"}) (builtins.attrNames n)' --json)
+          HOSTS=$(nix eval .#nixosConfigurations --apply 'n: builtins.map (name: { inherit name; type = "host"; }) (builtins.attrNames n)' --json)
 
-          PKGS=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.map (name: {inherit name; type: "pkg"}) (builtins.attrNames n)' --json)
+          PKGS=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.map (name: { inherit name; type = "pkg"; }) (builtins.attrNames n)' --json)
 
           H_FILTER='${{ inputs.hosts }}'
           if [ "$H_FILTER" != "[]" ] && [ -n "$H_FILTER" ]; then
