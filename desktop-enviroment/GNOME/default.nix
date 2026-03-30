@@ -140,6 +140,7 @@
               enable-hot-corners = true;
               gtk-enable-primary-paste = false;
               gtk-key-theme = "Default";
+              accent-color = "slate";
             };
             "org/gnome/desktop/peripherals/keyboard" = {
               numlock-state = false;
@@ -190,7 +191,7 @@
               hide-forcequit = true;
               menu-button-icon-image = 30;
               menu-button-icon-size = 20;
-              menu-button-system-monitor = "/usr/bin/missioncenter-helper";
+              menu-button-system-monitor = "${pkgs.missioncenter}/bin/missioncenter";
               menu-button-terminal = "xdg-terminal-exec";
               show-activities-button = true;
               show-gamemode = true;
