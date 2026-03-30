@@ -202,7 +202,7 @@
               hide-forcequit = true;
               menu-button-icon-image = 30;
               menu-button-icon-size = 20;
-              menu-button-system-monitor = "${pkgs.missioncenter}/bin/missioncenter";
+              menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
               menu-button-terminal = "xdg-terminal-exec";
               show-activities-button = true;
               show-gamemode = true;
