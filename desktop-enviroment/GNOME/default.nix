@@ -114,6 +114,7 @@
                 logo-menu
                 search-light
                 vitals
+                vicinae
               ]
             );
           };
