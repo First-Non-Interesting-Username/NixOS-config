@@ -82,7 +82,7 @@
         ];
       };
 
-      home-manager.users.${username} = _: {
+        home-manager.users.${username} = { pkgs, ... }: {
         home.packages = with pkgs; [
           mission-center
           wmctrl
@@ -98,27 +98,27 @@
             enable = true;
 
             extensions = map (pkg: {package = pkg;}) (
-              with pkgs.gnomeExtensions; [
-                appindicator
-                blur-my-shell
-                clipboard-indicator
-                forge
-                just-perfection
-                caffeine
-                dash-to-dock
-                gsconnect
-                launch-new-instance
-                logo-menu
-                search-light
-                vitals
-                launch-new-instance
-              ]
+          with pkgs.gnomeExtensions; [
+            appindicator
+            blur-my-shell
+            clipboard-indicator
+            forge
+            just-perfection
+            caffeine
+            dash-to-dock
+            gsconnect
+            launch-new-instance
+            logo-menu
+            search-light
+            vitals
+          ]
             );
           };
         };
 
-        dconf = {
-          settings = {
+          dconf = {
+            enable = true;
+            settings = {
             "org/gnome/desktop/input-sources" = {
               current = 0;
               sources = [
