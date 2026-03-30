@@ -32,7 +32,10 @@
           };
         };
 
-      programs.ssh.startAgent = lib.mkForce false;
+      programs = {
+        ssh.startAgent = lib.mkForce false;
+        dconf.enable = true;
+      };
 
       services = {
         xserver.enable = true;
@@ -85,7 +88,6 @@
       home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           mission-center
-          wmctrl
         ];
 
         stylix.targets = {
@@ -111,6 +113,7 @@
                 logo-menu
                 search-light
                 vitals
+                vicinae
               ]
             );
           };
@@ -137,6 +140,7 @@
               enable-hot-corners = true;
               gtk-enable-primary-paste = false;
               gtk-key-theme = "Default";
+              accent-color = "slate";
             };
             "org/gnome/desktop/peripherals/keyboard" = {
               numlock-state = false;
@@ -154,6 +158,17 @@
             "org/gnome/desktop/wm/preferences" = {
               button-layout = "appmenu:minimize,maximize,close";
               resize-with-right-button = true;
+            };
+            "org/gnome/desktop/wm/keybindings" = {
+              switch-to-workspace-1 = ["<Super>1"];
+              switch-to-workspace-2 = ["<Super>2"];
+              switch-to-workspace-3 = ["<Super>3"];
+              switch-to-workspace-4 = ["<Super>4"];
+              move-to-workspace-1 = ["<Super><Shift>1"];
+              move-to-workspace-2 = ["<Super><Shift>2"];
+              move-to-workspace-3 = ["<Super><Shift>3"];
+              move-to-workspace-4 = ["<Super><Shift>4"];
+              show-desktop = ["<Super>d"];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
@@ -187,7 +202,7 @@
               hide-forcequit = true;
               menu-button-icon-image = 30;
               menu-button-icon-size = 20;
-              menu-button-system-monitor = "/usr/bin/missioncenter-helper";
+              menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
               menu-button-terminal = "xdg-terminal-exec";
               show-activities-button = true;
               show-gamemode = true;
@@ -295,23 +310,6 @@
             "org/gnome/tweaks" = {
               show-extensions-notice = false;
             };
-            "org/gtk/gtk4/settings/color-chooser" = {
-              custom-colors = [
-                [
-                  1.0
-                  1.0
-                  1.0
-                  0.0
-                ]
-              ];
-              selected-color = [
-                true
-                1.0
-                1.0
-                1.0
-                0.0
-              ];
-            };
             "org/gtk/gtk4/settings/file-chooser" = {
               show-hidden = true;
               sort-directories-first = true;
@@ -413,115 +411,10 @@
               command = "gnome-screenshot -a";
               name = "Screenshot (area)";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/show-desktop" = {
-              binding = "<Super>d";
-              command = "wmctrl -k on";
-              name = "Show Desktop";
-            };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock" = {
               binding = "<Super>l";
               command = "loginctl lock-session";
               name = "Lock";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws1" = {
-              binding = "<Super>1";
-              command = "wmctrl -s 0";
-              name = "Workspace 1";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws2" = {
-              binding = "<Super>2";
-              command = "wmctrl -s 1";
-              name = "Workspace 2";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws3" = {
-              binding = "<Super>3";
-              command = "wmctrl -s 2";
-              name = "Workspace 3";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws4" = {
-              binding = "<Super>4";
-              command = "wmctrl -s 3";
-              name = "Workspace 4";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws5" = {
-              binding = "<Super>5";
-              command = "wmctrl -s 4";
-              name = "Workspace 5";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws6" = {
-              binding = "<Super>6";
-              command = "wmctrl -s 5";
-              name = "Workspace 6";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws7" = {
-              binding = "<Super>7";
-              command = "wmctrl -s 6";
-              name = "Workspace 7";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws8" = {
-              binding = "<Super>8";
-              command = "wmctrl -s 7";
-              name = "Workspace 8";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws9" = {
-              binding = "<Super>9";
-              command = "wmctrl -s 8";
-              name = "Workspace 9";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws10" = {
-              binding = "<Super>0";
-              command = "wmctrl -s 9";
-              name = "Workspace 10";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws1" = {
-              binding = "<Super><Shift>1";
-              command = "wmctrl -r :ACTIVE: -t 0";
-              name = "Move to Workspace 1";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws2" = {
-              binding = "<Super><Shift>2";
-              command = "wmctrl -r :ACTIVE: -t 1";
-              name = "Move to Workspace 2";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws3" = {
-              binding = "<Super><Shift>3";
-              command = "wmctrl -r :ACTIVE: -t 2";
-              name = "Move to Workspace 3";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws4" = {
-              binding = "<Super><Shift>4";
-              command = "wmctrl -r :ACTIVE: -t 3";
-              name = "Move to Workspace 4";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws5" = {
-              binding = "<Super><Shift>5";
-              command = "wmctrl -r :ACTIVE: -t 4";
-              name = "Move to Workspace 5";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws6" = {
-              binding = "<Super><Shift>6";
-              command = "wmctrl -r :ACTIVE: -t 5";
-              name = "Move to Workspace 6";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws7" = {
-              binding = "<Super><Shift>7";
-              command = "wmctrl -r :ACTIVE: -t 6";
-              name = "Move to Workspace 7";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws8" = {
-              binding = "<Super><Shift>8";
-              command = "wmctrl -r :ACTIVE: -t 7";
-              name = "Move to Workspace 8";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws9" = {
-              binding = "<Super><Shift>9";
-              command = "wmctrl -r :ACTIVE: -t 8";
-              name = "Move to Workspace 9";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws10" = {
-              binding = "<Super><Shift>0";
-              command = "wmctrl -r :ACTIVE: -t 9";
-              name = "Move to Workspace 10";
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae" = {
               binding = "<Super>space";
@@ -534,28 +427,7 @@
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/clipboard/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/show-desktop/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws1/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws2/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws3/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws4/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws5/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws6/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws7/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws8/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws9/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ws10/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws1/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws2/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws3/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws4/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws5/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws6/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws7/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws8/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws9/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/move-ws10/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
               ];
             };
