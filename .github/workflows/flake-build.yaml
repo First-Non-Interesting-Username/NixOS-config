@@ -13,6 +13,11 @@ on:
         required: false
         type: boolean
         default: true
+      packages:
+        description: "JSON array of packages to build"
+        required: false
+        type: string
+        default: "[]"
   pull_request:
     branches: ["main"]
   workflow_call:
@@ -32,13 +37,18 @@ on:
         required: false
         type: string
         default: "[]"
+      packages:
+        description: "JSON array of packages to build"
+        required: false
+        type: string
+        default: "[]"
     secrets:
       CACHIX_AUTH_TOKEN:
         required: false
     outputs:
-      built-hosts:
-        description: "JSON list of hosts attempted"
-        value: ${{ jobs.hosts.outputs.matrix }}
+      built-targets:
+        description: "JSON list of targets attempted"
+        value: ${{ jobs.discover.outputs.matrix }}
 
 jobs:
   check-changed-files:
@@ -60,7 +70,7 @@ jobs:
                 - "flake.lock"
                 - "**/*.nix"
 
-  hosts:
+  discover:
     runs-on: ubuntu-latest
     needs: check-changed-files
     if: needs.check-changed-files.outputs.has-changes == 'true'
@@ -74,24 +84,33 @@ jobs:
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
-            build-dir = /nix/build
-      - name: List nixosConfigurations
+      - name: Generate build matrix
         id: list
         run: |
-          MATRIX=$(nix eval .#nixosConfigurations --apply 'x: builtins.attrNames x' --json)
-          FILTER='${{ inputs.hosts }}'
-          if [ "$FILTER" != "[]" ] && [ -n "$FILTER" ]; then
-            MATRIX=$(echo "$MATRIX" | jq --argjson hosts "$FILTER" '[.[] | select(. as $h | $hosts | index($h))]')
+          HOSTS=$(nix eval .#nixosConfigurations --apply 'n: builtins.map (name: {inherit name; type: "host"}) (builtins.attrNames n)' --json)
+
+          PKGS=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.map (name: {inherit name; type: "pkg"}) (builtins.attrNames n)' --json)
+
+          H_FILTER='${{ inputs.hosts }}'
+          if [ "$H_FILTER" != "[]" ] && [ -n "$H_FILTER" ]; then
+            HOSTS=$(echo "$HOSTS" | jq --argjson filter "$H_FILTER" '[.[] | select(.name as $n | $filter | index($n))]')
           fi
+
+          P_FILTER='${{ inputs.packages }}'
+          if [ "$P_FILTER" != "[]" ] && [ -n "$P_FILTER" ]; then
+            PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" '[.[] | select(.name as $n | $filter | index($n))]')
+          fi
+
+          MATRIX=$(jq -n --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
-    needs: hosts
+    needs: discover
     strategy:
       fail-fast: false
       matrix:
-        host: ${{ fromJson(needs.hosts.outputs.matrix) }}
+        target: ${{ fromJson(needs.discover.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -117,16 +136,13 @@ jobs:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Add aarch64 as extra platform
+      - name: Build ${{ matrix.target.type }}:${{ matrix.target.name }}
         run: |
-          echo "extra-platforms = aarch64-linux" | \
-            sudo tee -a /etc/nix/nix.conf
-          sudo systemctl restart nix-daemon
-
-      - name: Build ${{ matrix.host }}
-        id: build
-        run: |
-          nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+          if [ "${{ matrix.target.type }}" = "host" ]; then
+            nix build .#nixosConfigurations.${{ matrix.target.name }}.config.system.build.toplevel
+          else
+            nix build .#${{ matrix.target.name }}
+          fi
 
   report:
     runs-on: ubuntu-latest
@@ -145,7 +161,7 @@ jobs:
               run_id: context.runId
             });
             const failed = jobs.jobs
-              .filter(j => j.conclusion === 'failure' && j.name.startsWith('build'))
+              .filter(j => j.conclusion === 'failure' && (j.name.includes('host') || j.name.includes('pkg')))
               .map(j => `- \`${j.name}\` — [logs](${j.html_url})`)
               .join('\n');
             const { data: issues } = await github.rest.issues.listForRepo({
@@ -155,12 +171,12 @@ jobs:
               state: 'open'
             });
             const title = 'Flake build failures';
-            const existing = issues.find(i => i.title === title);
             const body = `## Flake Build Failures\n\n` +
               `**Workflow:** ${context.workflow}\n` +
-              `**Run:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n` +
-              `**Date:** ${new Date().toUTCString()}\n\n` +
-              `### Failed hosts\n${failed || 'Unknown — check run logs'}`;
+              `**Run:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n\n` +
+              `### Failed targets\n${failed || 'Unknown — check run logs'}`;
+
+            const existing = issues.find(i => i.title === title);
             if (existing) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -187,7 +203,4 @@ jobs:
         if: >-
           needs.check-changed-files.result == 'failure' ||
           (needs.build.result != 'success' && needs.build.result != 'skipped')
-        run: |
-          echo "check-changed-files: ${{ needs.check-changed-files.result }}"
-          echo "Build result was: ${{ needs.build.result }}"
-          exit 1
+        run: exit 1
