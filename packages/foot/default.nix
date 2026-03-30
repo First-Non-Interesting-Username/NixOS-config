@@ -1,5 +1,5 @@
 _: {
-  perSystem = {pkgs, ...}: {
+  perSystem = _: {
     wrappers.packages.foot = true;
     wrappers.control_type = "build";
   };
