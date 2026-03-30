@@ -300,23 +300,6 @@
             "org/gnome/tweaks" = {
               show-extensions-notice = false;
             };
-            "org/gtk/gtk4/settings/color-chooser" = {
-              custom-colors = [
-                [
-                  1.0
-                  1.0
-                  1.0
-                  0.0
-                ]
-              ];
-              selected-color = [
-                true
-                1.0
-                1.0
-                1.0
-                0.0
-              ];
-            };
             "org/gtk/gtk4/settings/file-chooser" = {
               show-hidden = true;
               sort-directories-first = true;
