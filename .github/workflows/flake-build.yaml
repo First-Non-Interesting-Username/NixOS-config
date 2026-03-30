@@ -101,7 +101,7 @@ jobs:
             PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" '[.[] | select(.name as $n | $filter | index($n))]')
           fi
 
-          MATRIX=$(jq -n --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
+          MATRIX=$(jq -cn --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
 
   build:
