@@ -1,8 +1,6 @@
 _: {
   flake = {
     nixosModules.iso = {
-      lib,
-      config,
       pkgs,
       modulesPath,
       username,
