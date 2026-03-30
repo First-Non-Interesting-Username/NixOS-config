@@ -82,7 +82,7 @@
         ];
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
           mission-center
           wmctrl
