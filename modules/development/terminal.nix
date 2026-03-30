@@ -1,4 +1,8 @@
-_: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake = {
     nixosModules.terminal = {
       lib,
@@ -17,13 +21,10 @@ _: {
         };
       };
 
-      home-manager.users.${username} = _: {
-        programs = {
-          foot = {
-            enable = true;
-            server.enable = true;
-          };
+      home-manager.users.${username} = {pkgs, ...}: {
+        home.packages = [self.packages.${pkgs.system}.foot];
 
+        programs = {
           kitty = {
             enable = true;
             enableGitIntegration = true;

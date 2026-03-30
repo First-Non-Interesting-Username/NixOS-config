@@ -85,6 +85,11 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -96,10 +101,12 @@
 
       imports = [
         (inputs.import-tree ./modules)
-        (inputs.import-tree.match ".*/[^/]+/default\.nix" ./hosts)
-        (inputs.import-tree.match ".*/[^/]+/default\.nix" ./desktop-enviroment)
+        (inputs.import-tree ./packages)
+        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
+        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-enviroment)
         ./devShells
         inputs.git-hooks-nix.flakeModule
+        inputs.nix-wrapper-modules.flakeModules.wrappers
       ];
     };
 }
