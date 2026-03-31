@@ -2,14 +2,16 @@
   self,
   inputs,
   ...
-}: let
+}:
+let
   Hostname = "armin";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 1920;
   Height = 1080;
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -29,6 +31,7 @@ in {
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git
+      self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.IDE
       self.nixosModules.impermanence
@@ -38,7 +41,7 @@ in {
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop
       self.nixosModules.nix
-      self.nixosModules.GNOME
+      self.nixosModules.opencode
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop

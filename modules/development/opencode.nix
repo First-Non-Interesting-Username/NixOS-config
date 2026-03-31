@@ -1,7 +1,7 @@
 { self, ... }:
 {
   flake = {
-    nixosModules.CHANGEME =
+    nixosModules.opencode =
       {
         lib,
         username,
