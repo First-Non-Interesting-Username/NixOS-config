@@ -6,18 +6,16 @@
       impermanence,
       ...
     }: {
-      imports =
-        []
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            users.${username} = {
-              directories = [
-                ".config/opencode"
-                ".local/share/opencode"
-              ];
-            };
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          users.${username} = {
+            directories = [
+              ".config/opencode"
+              ".local/share/opencode"
+            ];
           };
         };
+      };
 
       sops.secrets = {
         "LLM_keys/NVIDIA".owner = username;
@@ -27,11 +25,7 @@
         "LLM_keys/openrouter".owner = username;
         "LLM_keys/together".owner = username;
       };
-      home-manager.users.${username} = {
-        osConfig,
-        pkgs,
-        ...
-      }: {
+      home-manager.users.${username} = {osConfig, ...}: {
         imports = [
           self.homeModules.free-coding-models
         ];
