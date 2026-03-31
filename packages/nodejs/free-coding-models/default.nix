@@ -88,9 +88,9 @@
           // lib.optionalAttrs (cfg.cloudflare.account-id-path != null) {
             CLOUDFLARE_ACCOUNT_ID = builtins.readFile cfg.cloudflare.account-id-path;
           }
-          // lib.optionalAttrs (cfg.replicate-api-token-path != null) {
-            REPLICATE_API_TOKEN = builtins.readFile cfg.replicate-api-token-path;
-          };
+ // lib.optionalAttrs (cfg.replicate-api-key-path != null) {
+ REPLICATE_API_TOKEN = builtins.readFile cfg.replicate-api-key-path;
+ };
       };
     };
   };
