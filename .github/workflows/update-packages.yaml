@@ -1,7 +1,7 @@
-name: Update flake.lock
+name: Update packages
 on:
   schedule:
-    - cron: "0 6 * * 3,6"
+    - cron: "0 2 * * 1,4"
   workflow_dispatch:
 
 jobs:
@@ -10,7 +10,6 @@ jobs:
 
   update:
     runs-on: ubuntu-latest
-    needs: check
     permissions:
       contents: write
       pull-requests: write
@@ -30,27 +29,13 @@ jobs:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Update flake.lock
-        run: nix flake update
-
-      - name: Check for changes
-        id: changes
-        run: |
-          git diff --exit-code flake.lock || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: Open PR if changed
-        if: steps.changes.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v8
+      - name: Update flake packages
+        id: update
+        uses: selfuryon/nix-update-action@v1
         with:
           token: ${{ secrets.PAT }}
-          commit-message: "chore: update flake.lock"
-          title: "chore: biweekly flake.lock update"
-          body: |
-            Automated `flake.lock` update via `nix flake update`.
-            Please review input changes before merging.
-          branch: "chore/flake-lock-update"
-          delete-branch: true
-          labels: dependencies
+          pr-title: "chore: biweekly package update"
+          pr-labels: dependencies
 
       - name: Report failure
         if: failure()
@@ -63,16 +48,14 @@ jobs:
               labels: 'ci-failure',
               state: 'open'
             });
-
-            const title = 'flake.lock update failed';
+            const title = 'Package update failed';
             const existing = issues.find(i => i.title === title);
-            const body = `## flake.lock Update Failure\n\n` +
+            const body = `## Package Update Failure\n\n` +
               `**Workflow:** ${context.workflow}\n` +
               `**Run:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n` +
               `**Triggered by:** \`${context.eventName}\`\n` +
               `**Date:** ${new Date().toUTCString()}\n\n` +
-              `The flake check or update process failed. Check the run logs above for details.`;
-
+              `The package update process failed. Check the run logs above for details.`;
             if (existing) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
