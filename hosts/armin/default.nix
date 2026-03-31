@@ -29,6 +29,7 @@ in {
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git
+      self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.IDE
       self.nixosModules.impermanence
@@ -38,7 +39,7 @@ in {
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop
       self.nixosModules.nix
-      self.nixosModules.GNOME
+      self.nixosModules.opencode
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop

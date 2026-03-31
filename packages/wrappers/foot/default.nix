@@ -1,7 +1,6 @@
 _: {
   perSystem = _: {
     wrappers.packages.foot = true;
-    wrappers.control_type = "build";
   };
 
   flake.wrappers.foot = {
@@ -18,9 +17,6 @@ _: {
         include = "${pkgs.foot.themes}/share/foot/themes/gruvbox-dark";
 
         font = "JetBrainsMono Nerd Font:size=12";
-      };
-
-      colors = {
       };
     };
   };
