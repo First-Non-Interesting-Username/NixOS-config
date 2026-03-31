@@ -233,12 +233,16 @@
               brightness = 0.6;
               sigma = 30;
             };
-            "org/gnome/shell/extensions/caffeine" = {
-              indicator-position-max = 2;
-            };
-            "org/gnome/shell/extensions/clipboard-indicator" = {
-              history-size = 200;
-            };
+"org/gnome/shell/extensions/caffeine" = {
+        indicator-position-max = 2;
+      };
+      "org/gnome/shell/extensions/vitals" = {
+        position-in-panel = 0;
+      };
+"org/gnome/shell/extensions/clipboard-indicator" = {
+        history-size = 200;
+        toggle-menu = ["<Super>b"];
+      };
             "org/gnome/shell/extensions/dash-to-dock" = {
               background-opacity = 0.8;
               click-action = "launch";
@@ -403,11 +407,7 @@
               command = "xdg-open .";
               name = "File Manager";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/clipboard" = {
-              binding = "<Super>b";
-              command = "clipboard-indicator";
-              name = "Clipboard Manager";
-            };
+
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
               binding = "Shift+Print";
               command = "gnome-screenshot -a";
@@ -424,14 +424,13 @@
               name = "Vicinae";
             };
             "org/gnome/settings-daemon/plugins/media-keys" = {
-              custom-keybindings = [
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/clipboard/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
-              ];
+custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
+        ];
             };
           };
         };
