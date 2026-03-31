@@ -18,7 +18,7 @@
       };
 
       home-manager.users.${username} = {pkgs, ...}: {
-        home.packages = [self.packages.${pkgs.system}.foot];
+        home.packages = [self.packages.${pkgs.stdenv.hostPlatform.system}.foot];
 
         programs = {
           kitty = {
