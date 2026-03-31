@@ -39,6 +39,7 @@
         "google"
         "siliconflow"
         "perplexity"
+        "replicate"
       ];
     in {
       options.programs.free-coding-models =
