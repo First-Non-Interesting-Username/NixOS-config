@@ -301,7 +301,25 @@ Special args: impermanence (required for impermanence to function, true/false)
 
 ## nixosModules.networking-desktop
 
+PERSONAL
+
+Secrets: wifi_password
+
 Special args: hostname
+
+- Sets up networking for a desktop style machine, with firewall and network manager.
+- Sets up Bluetooth.
+- Logs in to my home wifi network.
+
+## nixosModules.secretless-networking-desktop
+
+Special args: hostname
+
+IMPERATIVE:
+
+- Log in to your wifi
+
+###
 
 - Sets up networking for a desktop style machine, with firewall and network manager.
 - Sets up Bluetooth.
