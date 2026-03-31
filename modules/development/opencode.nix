@@ -13,18 +13,10 @@
           [ ]
           ++ lib.optional impermanence {
             environment.persistence."/persist" = {
-              directories = [
-                # System-level dirs to persist
-              ];
-              files = [
-                # System-level files to persist
-              ];
               users.${username} = {
                 directories = [
-                  # User-level dirs to persist (relative to $HOME)
-                ];
-                files = [
-                  # User-level files to persist (relative to $HOME)
+                  ".config/opencode"
+                  ".local/share/opencode"
                 ];
               };
             };
