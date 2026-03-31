@@ -1,7 +1,6 @@
 _: {
   perSystem = _: {
     wrappers.packages.foot = true;
-    wrappers.control_type = "build";
   };
 
   flake.wrappers.foot = {
