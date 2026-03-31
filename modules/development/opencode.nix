@@ -46,6 +46,9 @@
             openrouter-api-key-path = osConfig.sops.secrets."LLM_keys/openrouter".path;
             together-api-key-path = osConfig.sops.secrets."LLM_keys/together".path;
           };
+          opencode = {
+            enable = true;
+          };
         };
       };
     };
