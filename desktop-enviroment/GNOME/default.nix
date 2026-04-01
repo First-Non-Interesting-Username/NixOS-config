@@ -397,27 +397,27 @@
               promote-all = [];
               restart = [];
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/" = {
               binding = "<Super>Return";
               command = "xdg-terminal-exec";
               name = "Terminal";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/" = {
               binding = "<Super>e";
               command = "xdg-open .";
               name = "File Manager";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/" = {
               binding = "Shift+Print";
               command = "gnome-screenshot -a";
               name = "Screenshot (area)";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock" = {
-              binding = "<Super><Shift>l";
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/" = {
+              binding = "<Super>p";
               command = "loginctl lock-session";
               name = "Lock";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae" = {
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/" = {
               binding = "<Super>space";
               command = "vicinae";
               name = "Vicinae";
