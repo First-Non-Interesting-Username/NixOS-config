@@ -424,11 +424,11 @@
             };
             "org/gnome/settings-daemon/plugins/media-keys" = {
               custom-keybindings = [
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
               ];
             };
           };

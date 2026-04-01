@@ -19,7 +19,7 @@ _: {
         font = "JetBrainsMono Nerd Font:size=12";
       };
       csd = {
-        preferred = "none";
+        enabled = false;
       };
     };
   };
