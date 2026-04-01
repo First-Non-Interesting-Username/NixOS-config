@@ -236,12 +236,12 @@
             "org/gnome/shell/extensions/caffeine" = {
               indicator-position-max = 2;
             };
-            "org/gnome/shell/extensions/vitals" = {
-              position-in-panel = 0;
-            };
+            #"org/gnome/shell/extensions/vitals" = {
+            #  position-in-panel = 0;
+            #};
             "org/gnome/shell/extensions/clipboard-indicator" = {
               history-size = 200;
-              toggle-menu = ["<Super>b"];
+              #  toggle-menu = ["<Super>b"];
             };
             "org/gnome/shell/extensions/dash-to-dock" = {
               background-opacity = 0.8;
