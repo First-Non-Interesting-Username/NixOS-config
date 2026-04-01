@@ -4,3 +4,4 @@ _tmp-*/
 result/
 nixos-*.iso
 result
+.direnv/
