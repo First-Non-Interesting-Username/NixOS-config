@@ -54,10 +54,10 @@
                   theme = {
                     light = {
                       name = "stylix";
-                    }; # Fallback if system switches
+                    };
                     dark = {
                       name = "stylix";
-                    }; # This is what you want for dark mode
+                    };
                   };
                 };
                 extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
