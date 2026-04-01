@@ -18,6 +18,9 @@ _: {
 
         font = "JetBrainsMono Nerd Font:size=12";
       };
+      csd = {
+        size = 0;
+      };
     };
   };
 }
