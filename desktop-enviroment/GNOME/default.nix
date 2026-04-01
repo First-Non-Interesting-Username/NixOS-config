@@ -141,6 +141,7 @@
               gtk-enable-primary-paste = false;
               gtk-key-theme = "Default";
               accent-color = "slate";
+              show-battery-percentage = "true";
             };
             "org/gnome/desktop/peripherals/keyboard" = {
               numlock-state = false;
@@ -169,7 +170,10 @@
               move-to-workspace-3 = ["<Super><Shift>3"];
               move-to-workspace-4 = ["<Super><Shift>4"];
               show-desktop = ["<Super>d"];
-              close-window = ["<Super>q"];
+              close = ["<Super>q"];
+              switch-input-source = [];
+              switch-input-source-backward = [];
+              activate-window-menu = ["<Alt><Super>space"];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
@@ -204,7 +208,7 @@
               menu-button-icon-image = 23;
               menu-button-icon-size = 20;
               menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
-              menu-button-terminal = "xdg-terminal-exec";
+              menu-button-terminal = "${self.packages.${pkgs.system}.foot}/bin/foot";
               show-activities-button = true;
               show-gamemode = true;
               show-lockscreen = true;
@@ -212,7 +216,7 @@
               show-power-options = true;
               symbolic-icon = true;
               use-custom-icon = false;
-              show-software-center = false;
+              hide-softwarecentre = false;
             };
             "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
               brightness = 0.6;
@@ -238,6 +242,10 @@
             };
             "org/gnome/shell/extensions/clipboard-indicator" = {
               history-size = 200;
+              toggle-menu = ["<Super>b"];
+            };
+            "org/gnome/shell/extensions/vitals" = {
+              position-in-panel = 0;
             };
             "org/gnome/shell/extensions/dash-to-dock" = {
               background-opacity = 0.8;
@@ -258,7 +266,7 @@
             };
             "org/gnome/shell/extensions/forge" = {
               css-last-update = 37;
-              focus-border-toggle = false;
+              focus-border-toggle = true;
               focus-on-hover-enabled = true;
               move-pointer-focus-enabled = true;
               preview-hint-enabled = true;
@@ -283,9 +291,9 @@
               blur-brightness = 0.6;
               blur-sigma = 30.0;
               border-color = [
-                0.23
-                0.23
-                0.23
+                0.0
+                0.0
+                0.0
                 1.0
               ];
               border-radius = 1.65;
@@ -327,6 +335,13 @@
               sort-directories-first = true;
               sort-order = "ascending";
               type-format = "category";
+            };
+            "org/gnome/shell/keybindings" = {
+              screenshot = [];
+              show-screenshot-ui = ["<Shift>Print"];
+            };
+            "org/gnome/settings-daemon/plugins/media-keys" = {
+              screensaver = ["<Super>p"];
             };
             "org/gnome/shell/extensions/forge/keybindings" = {
               focus-center = [];
@@ -395,7 +410,7 @@
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
               binding = "<Super>Return";
-              command = "xdg-terminal-exec";
+              command = "${self.packages.${pkgs.system}.foot}/bin/foot";
               name = "Terminal";
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {
@@ -403,33 +418,15 @@
               command = "xdg-open .";
               name = "File Manager";
             };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/clipboard" = {
-              binding = "<Super>b";
-              command = "clipboard-indicator";
-              name = "Clipboard Manager";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
-              binding = "Shift+Print";
-              command = "gnome-screenshot -a";
-              name = "Screenshot (area)";
-            };
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock" = {
-              binding = "<Super><Shift>l";
-              command = "loginctl lock-session";
-              name = "Lock";
-            };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae" = {
               binding = "<Super>space";
-              command = "vicinae";
+              command = "vicinae toggle";
               name = "Vicinae";
             };
             "org/gnome/settings-daemon/plugins/media-keys" = {
               custom-keybindings = [
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/clipboard/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/lock/"
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
               ];
             };
