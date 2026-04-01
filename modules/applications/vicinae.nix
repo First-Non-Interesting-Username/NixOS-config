@@ -46,14 +46,6 @@
               launcher_window = {
                 opacity = lib.mkForce 0.98;
               };
-              theme = {
-                light = {
-                  name = "stylix";
-                };
-                dark = {
-                  name = "stylix";
-                };
-              };
             };
             extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
               bluetooth
