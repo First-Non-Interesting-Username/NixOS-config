@@ -10,43 +10,43 @@
         environment.persistence."/persist" = {
           users.${username} = {
             directories = [
-              ".floorp"
+              ".mozilla"
             ];
           };
         };
       };
 
       home-manager.users.${username} = {pkgs, ...}: {
-        stylix.targets.floorp = {
+        stylix.targets.firefox = {
           enable = false;
         };
 
         xdg.mimeApps = {
           enable = true;
           defaultApplications = {
-            "text/html" = "floorp.desktop";
-            "text/xml" = "floorp.desktop";
-            "application/xhtml+xml" = "floorp.desktop";
-            "application/xml" = "floorp.desktop";
-            "application/vnd.mozilla.xul+xml" = "floorp.desktop";
-            "x-scheme-handler/http" = "floorp.desktop";
-            "x-scheme-handler/https" = "floorp.desktop";
-            "x-scheme-handler/ftp" = "floorp.desktop";
-            "x-scheme-handler/chrome" = "floorp.desktop";
-            "x-scheme-handler/about" = "floorp.desktop";
-            "x-scheme-handler/unknown" = "floorp.desktop";
+            "text/html" = "firefox.desktop";
+            "text/xml" = "firefox.desktop";
+            "application/xhtml+xml" = "firefox.desktop";
+            "application/xml" = "firefox.desktop";
+            "application/vnd.mozilla.xul+xml" = "firefox.desktop";
+            "x-scheme-handler/http" = "firefox.desktop";
+            "x-scheme-handler/https" = "firefox.desktop";
+            "x-scheme-handler/ftp" = "firefox.desktop";
+            "x-scheme-handler/chrome" = "firefox.desktop";
+            "x-scheme-handler/about" = "firefox.desktop";
+            "x-scheme-handler/unknown" = "firefox.desktop";
           };
         };
 
         home.sessionVariables = {
-          BROWSER = "floorp";
-          DEFAULT_BROWSER = "floorp";
+          BROWSER = "firefox";
+          DEFAULT_BROWSER = "firefox";
         };
 
         xdg.configFile."mimeapps.list".force = true;
 
         programs = {
-          floorp = {
+          firefox = {
             enable = true;
 
             languagePacks = [
@@ -65,7 +65,7 @@
                 "browser.download.useDownloadDir" = true;
                 "browser.download.alwaysOpenPanel" = false;
                 "browser.tabs.warnOnClose" = false;
-                "browser.tabs.closeWindowWithLastTab" = false;
+                "browser.tabs.closeWindowWithLastTab" = true;
                 "browser.startup.page" = 3;
                 "browser.urlbar.speculativeConnect.enabled" = false;
                 "network.http.max-persistent-connections-per-server" = 10;
@@ -75,6 +75,9 @@
                 "browser.urlbar.suggest.searches" = true;
                 "media.autoplay.default" = 0;
                 "media.autoplay.blocking_policy" = 0;
+                "browser.tabs.unloadOnLowMemory" = true;
+                "permissions.default.desktop-notification" = 2;
+                "sidebar.revamp" = true;
               };
             };
 
@@ -112,11 +115,20 @@
 
               settings = {
                 "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-
                 "general.smoothScroll" = true;
-
                 "datareporting.healthreport.uploadEnabled" = true;
                 "toolkit.telemetry.enabled" = true;
+                "sidebar.verticalTabs" = true;
+                "browser.sidebar.show" = true;
+                "browser.newtabpage.activity-stream.feeds.topsites" = false;
+                "browser.newtabpage.activity-stream.showSearchShortcuts" = false;
+                "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+                "browser.newtabpage.activity-stream.feeds.discoverystreams" = false;
+                "browser.newtabpage.activity-stream.showSponsored" = false;
+                "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+                "browser.ctrlTab.sortByRecentlyUsed" = true;
+                "signon.rememberSignons" = false;
+                "signon.autofillForms" = false;
               };
             };
           };
