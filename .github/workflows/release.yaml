@@ -118,32 +118,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    reminder:
-      runs-on: ubuntu-latest
-      needs: release
-      permissions:
-        issues: write
-      steps:
-        - name: Create maintenance reminder
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            EXISTING_ISSUE=$(gh issue list --search "SourceForge Cleanup" --state open --json number --jq '.[0].number')
+  reminder:
+    runs-on: ubuntu-latest
+    needs: release
+    permissions:
+      issues: write
+    steps:
+      - name: Create maintenance reminder
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXISTING_ISSUE=$(gh issue list --search "SourceForge Cleanup" --state open --json number --jq '.[0].number')
 
-            if [ -z "$EXISTING_ISSUE" ]; then
-              gh issue create \
-                --title "Manual SourceForge Cleanup Required" \
-                --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. 
-              
-                  SourceForge doesn't allow (?) for automated pruning.
-                  Please manually remove ISOs older than the last 5 versions.
-              
-                  **Steps:**
-                  1. Go to https://sourceforge.net/projects/nixos-config/
-                  2. Click files.
-                  3. Remove ISOs older than 5 releases ago.
+          if [ -z "$EXISTING_ISSUE" ]; then
+            gh issue create \
+              --title "Manual SourceForge Cleanup Required" \
+              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. 
+            
+                SourceForge doesn't have (?) automated pruning, so you have to do that yourself.
+                Please manually remove ISOs older than the last 5 versions.
+            
+                **Steps:**
+                1. Go to https://sourceforge.net/projects/nixos-config/
+                2. Click files.
+                3. Remove ISOs older than 5 releases ago.
 
-                  If you know how to automate that, please let me know.
-            else
-              gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to clean up old ISOs."
-            fi
+                If you know how to automate that, please let me know.
+          else
+            gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to clean up old ISOs."
+          fi
