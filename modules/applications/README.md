@@ -6,8 +6,6 @@
 
 ## nixosModules.browser
 
-WIP
-
 IMPERATIVE:
 
 - Open Firefox.
