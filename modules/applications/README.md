@@ -10,12 +10,12 @@ WIP
 
 IMPERATIVE:
 
-- Open Floorp.
+- Open Firefox.
 - Enable all extensions and log in to Proton Pass.
 
 ###
 
-- Installs Floorp.
+- Installs Firefox.
 - Sets it as a default browser.
 - Changes few settings to my preferred values.
 - Adds few extensions.
