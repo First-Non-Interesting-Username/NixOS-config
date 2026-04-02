@@ -29,13 +29,29 @@ jobs:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Install nix-update
+        run: nix profile install nixpkgs#nix-update
+
       - name: Update flake packages
         id: update
-        uses: selfuryon/nix-update-action@v1
+        run: |
+          PACKAGES=$(nix flake show --json | jq -r '.packages."x86_64-linux" | keys[]')
+          for pkg in $PACKAGES; do
+            echo "Updating $pkg..."
+            nix-update --flake "$pkg" || echo "No update needed for $pkg"
+          done
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
-          pr-title: "chore: biweekly package update"
-          pr-labels: dependencies
+          branch: chore/nix-update
+          delete-branch: true
+          title: "chore: biweekly package update"
+          labels: dependencies
+          commit-message: "chore(pkgs): update packages"
+          body: |
+            Automated package updates via nix-update.
 
       - name: Report failure
         if: failure()
