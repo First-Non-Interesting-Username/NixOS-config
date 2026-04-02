@@ -37,8 +37,13 @@ jobs:
         run: |
           PACKAGES=$(nix flake show --json | jq -r '.packages."x86_64-linux" | keys[]')
           for pkg in $PACKAGES; do
-            echo "Updating $pkg..."
-            nix-update --flake "$pkg" || echo "No update needed for $pkg"
+            STRATEGY=$(nix eval --raw .#packages.x86_64-linux.$pkg.passthru.updateScript 2>/dev/null)
+            if [ -n "$STRATEGY" ]; then
+              echo "Updating $pkg with strategy: $STRATEGY"
+              nix-update --flake --version "$STRATEGY" "$pkg" || echo "Failed to update $pkg"
+            else
+              echo "Skipping $pkg (no updateScript defined)"
+            fi
           done
 
       - name: Create Pull Request

@@ -18,6 +18,8 @@ buildNpmPackage {
 
   npmDepsHash = "sha256-9yQLGKitdMDVCWncYHvvj8fb1FCS5KtQ9+OKcViGApM=";
 
+  passthru.updateScript = "branch";
+
   meta = {
     description = "Find the fastest free coding LLM models in seconds";
     homepage = "https://github.com/vava-nessa/free-coding-models";
