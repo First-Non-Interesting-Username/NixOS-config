@@ -23,17 +23,19 @@
 
         xdg.mimeApps = {
           enable = true;
-          "text/html" = "firefox.desktop";
-          "text/xml" = "firefox.desktop";
-          "application/xhtml+xml" = "firefox.desktop";
-          "application/xml" = "firefox.desktop";
-          "application/vnd.mozilla.xul+xml" = "firefox.desktop";
-          "x-scheme-handler/http" = "firefox.desktop";
-          "x-scheme-handler/https" = "firefox.desktop";
-          "x-scheme-handler/ftp" = "firefox.desktop";
-          "x-scheme-handler/chrome" = "firefox.desktop";
-          "x-scheme-handler/about" = "firefox.desktop";
-          "x-scheme-handler/unknown" = "firefox.desktop";
+          defaultApplications = {
+            "text/html" = "firefox.desktop";
+            "text/xml" = "firefox.desktop";
+            "application/xhtml+xml" = "firefox.desktop";
+            "application/xml" = "firefox.desktop";
+            "application/vnd.mozilla.xul+xml" = "firefox.desktop";
+            "x-scheme-handler/http" = "firefox.desktop";
+            "x-scheme-handler/https" = "firefox.desktop";
+            "x-scheme-handler/ftp" = "firefox.desktop";
+            "x-scheme-handler/chrome" = "firefox.desktop";
+            "x-scheme-handler/about" = "firefox.desktop";
+            "x-scheme-handler/unknown" = "firefox.desktop";
+          };
         };
 
         home.sessionVariables = {
