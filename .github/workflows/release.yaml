@@ -1,0 +1,119 @@
+name: Build ISOs and create release
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Version tag using 0ver (e.g., v0.1.0)"
+        required: true
+        type: string
+      issue_numbers:
+        description: "Comma-separated PR/Issue numbers (e.g., 12,446,266)"
+        required: true
+        type: string
+      description:
+        description: "Optional description for the release"
+        required: false
+        type: string
+
+jobs:
+  check:
+    uses: ./.github/workflows/flake-check.yaml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: check
+    outputs:
+      formatted_issues: ${{ steps.format_issues.outputs.LIST }}
+      sha256: ${{ steps.checksum.outputs.hash }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.PAT }}
+
+      - uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes pipe-operators
+
+      - uses: cachix/cachix-action@v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build
+        run: nix build .#john
+
+      - name: Prepare ISO and Generate Checksum
+        id: checksum
+        run: |
+          mkdir -p upload_stage
+          ISO_NAME="${{ github.event.inputs.tag_name }}.iso"
+          cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
+
+          # Generate checksum file
+          cd upload_stage
+          sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
+
+          # Save hash to variable for the release body
+          HASH=$(awk '{ print $1 }' "${ISO_NAME}.sha256")
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Copy file via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: frs.sourceforge.net
+          username: ${{ secrets.SF_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE }}
+          port: 22
+          source: "upload_stage/${{ github.event.inputs.tag_name }}.iso,upload_stage/${{ github.event.inputs.tag_name }}.iso.sha256"
+          target: "/home/frs/project/nixos-config/"
+          strip_components: 1
+
+      - name: Format Issue List
+        id: format_issues
+        run: |
+          RAW="${{ github.event.inputs.issue_numbers }}"
+          FORMATTED=$(echo "$RAW" | sed 's/ //g; s/^/- #/; s/,/\n- #/g')
+
+          {
+            echo "LIST<<EOF"
+            echo "$FORMATTED"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload Checksum Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: checksum-file
+          path: upload_stage/${{ github.event.inputs.tag_name }}.iso.sha256
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Download Checksum Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: checksum-file
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag_name }}
+          name: "Release ${{ github.event.inputs.tag_name }}"
+          files: "${{ github.event.inputs.tag_name }}.iso.sha256"
+          body: |
+            # NixOS Configuration Release
+            ${{ github.event.inputs.description }}
+
+            ## Downloads
+            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ github.event.inputs.tag_name }}.iso/download)**
+            * **SHA256 Checksum:** `${{ needs.build.outputs.sha256 }}`
+
+            Notable changes:
+
+            ${{ needs.build.outputs.formatted_issues }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
