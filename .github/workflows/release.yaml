@@ -1,4 +1,5 @@
 name: Build ISOs and create release
+
 on:
   workflow_dispatch:
     inputs:
