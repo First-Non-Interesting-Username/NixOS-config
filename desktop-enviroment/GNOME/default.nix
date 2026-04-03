@@ -198,7 +198,7 @@
             };
             "org/gnome/shell" = {
               favorite-apps = [
-                "floorp.desktop"
+                "firefox.desktop"
                 "foot.desktop"
                 "org.gnome.Nautilus.desktop"
               ];
