@@ -203,7 +203,7 @@
           tp = "trash-put";
           tl = "trash-list";
           te = "trash-empty";
-          tb = "nc termbin.com 9999";
+          bin = "nc termbin.com 9999";
         };
       };
     };
