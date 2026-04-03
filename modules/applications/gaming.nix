@@ -4,6 +4,7 @@ _: {
       lib,
       username,
       impermanence,
+      pkgs,
       ...
     }: {
       imports = lib.optional impermanence {
@@ -31,17 +32,16 @@ _: {
       programs = {
         gamescope.enable = true;
         gamemode.enable = true;
-        # TBD
-        #steam = {
-        #  enable = true;
-        #  gamescopeSession.enable = true;
-        #  remotePlay.openFirewall = true;
-        #  dedicatedServer.openFirewall = true;
-        #  localNetworkGameTransfers.openFirewall = true;
-        #  extraCompatPackages = with pkgs; [
-        #    proton-ge-bin
-        #  ];
-        #};
+        steam = {
+          enable = true;
+          gamescopeSession.enable = true;
+          remotePlay.openFirewall = true;
+          dedicatedServer.openFirewall = true;
+          localNetworkGameTransfers.openFirewall = true;
+          extraCompatPackages = with pkgs; [
+            proton-ge-bin
+          ];
+        };
       };
       home-manager.users.${username} = {pkgs, ...}: {
         home.packages = with pkgs; [
