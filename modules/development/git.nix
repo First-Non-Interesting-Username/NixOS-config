@@ -62,6 +62,10 @@ _: {
         programs.zsh.initContent = ''
           export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
         '';
+
+        home.shellAliases = {
+          commit = "git add . && git commit -m";
+        };
       };
     };
     nixosModules.secretless-git = {
@@ -115,6 +119,9 @@ _: {
               prompt = "enabled";
             };
           };
+        };
+        home.shellAliases = {
+          commit = "git add . && git commit -m";
         };
       };
     };
