@@ -4,7 +4,7 @@
   ...
 }: let
   Hostname = "john";
-  Username = "nixi";
+  Username = "nixos";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -28,6 +28,7 @@ in {
       self.nixosModules.networking-minimal
       self.nixosModules.nix
       self.nixosModules.power
+      self.nixosModules.terminal
       self.nixosModules.theme
       self.nixosModules.secretless-git
       self.nixosModules.secretless-user

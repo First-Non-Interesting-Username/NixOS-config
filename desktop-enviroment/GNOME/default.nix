@@ -174,6 +174,7 @@
               switch-input-source = [];
               switch-input-source-backward = [];
               activate-window-menu = ["<Alt><Super>space"];
+              minimize = ["<Super>g"];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
@@ -198,7 +199,7 @@
             };
             "org/gnome/shell" = {
               favorite-apps = [
-                "floorp.desktop"
+                "firefox.desktop"
                 "foot.desktop"
                 "org.gnome.Nautilus.desktop"
               ];
@@ -342,6 +343,9 @@
             };
             "org/gnome/settings-daemon/plugins/media-keys" = {
               screensaver = ["<Super>p"];
+            };
+            "org/gnome/shell/extensions/just-perfection" = {
+              support-notifier-type = 0;
             };
             "org/gnome/shell/extensions/forge/keybindings" = {
               focus-center = [];
