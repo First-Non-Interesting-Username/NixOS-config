@@ -78,6 +78,7 @@
                 "browser.tabs.unloadOnLowMemory" = true;
                 "permissions.default.desktop-notification" = 2;
                 "sidebar.revamp" = true;
+                "browser.toolbar.bookmarks.visibility" = "never";
               };
             };
 
