@@ -14,11 +14,6 @@ on:
         required: false
         type: boolean
         default: true
-      packages:
-        description: "JSON array of packages to build"
-        required: false
-        type: string
-        default: "[]"
   pull_request:
     branches: ["main"]
   workflow_call:
@@ -33,16 +28,6 @@ on:
         required: false
         type: boolean
         default: true
-      hosts:
-        description: "JSON array of hosts to build"
-        required: false
-        type: string
-        default: "[]"
-      packages:
-        description: "JSON array of packages to build"
-        required: false
-        type: string
-        default: "[]"
     secrets:
       CACHIX_AUTH_TOKEN:
         required: false
