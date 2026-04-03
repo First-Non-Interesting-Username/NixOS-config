@@ -86,7 +86,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Upload Checksum Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: checksum-file
           path: upload_stage/${{ needs.build.outputs.safe_name }}.iso.sha256
