@@ -26,6 +26,7 @@ jobs:
     outputs:
       formatted_issues: ${{ steps.format_issues.outputs.LIST }}
       sha256: ${{ steps.checksum.outputs.hash }}
+      safe_name: ${{ steps.checksum.outputs.safe_name }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -52,14 +53,13 @@ jobs:
         id: checksum
         run: |
           mkdir -p upload_stage
-          ISO_NAME="${{ github.event.inputs.tag_name }}.iso"
+          SAFE_NAME="${{ github.event.inputs.tag_name }}"
+          SAFE_NAME="${SAFE_NAME//./\-}"
+          ISO_NAME="${SAFE_NAME}.iso"
+          echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
           cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
-
-          # Generate checksum file
           cd upload_stage
           sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
-
-          # Save hash to variable for the release body
           HASH=$(awk '{ print $1 }' "${ISO_NAME}.sha256")
           echo "hash=$HASH" >> "$GITHUB_OUTPUT"
 
@@ -70,7 +70,7 @@ jobs:
           username: ${{ secrets.SF_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE }}
           port: 22
-          source: "upload_stage/${{ github.event.inputs.tag_name }}.iso,upload_stage/${{ github.event.inputs.tag_name }}.iso.sha256"
+          source: "upload_stage/${{ needs.build.outputs.safe_name }}.iso,upload_stage/${{ needs.build.outputs.safe_name }}.iso.sha256"
           target: "/home/frs/project/nixos-config/"
           strip_components: 1
 
@@ -79,7 +79,6 @@ jobs:
         run: |
           RAW="${{ github.event.inputs.issue_numbers }}"
           FORMATTED=$(echo "$RAW" | sed 's/ //g; s/^/- #/; s/,/\n- #/g')
-
           {
             echo "LIST<<EOF"
             echo "$FORMATTED"
@@ -90,7 +89,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: checksum-file
-          path: upload_stage/${{ github.event.inputs.tag_name }}.iso.sha256
+          path: upload_stage/${{ needs.build.outputs.safe_name }}.iso.sha256
 
   release:
     runs-on: ubuntu-latest
@@ -106,13 +105,13 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.tag_name }}
           name: "Release ${{ github.event.inputs.tag_name }}"
-          files: "${{ github.event.inputs.tag_name }}.iso.sha256"
+          files: "${{ needs.build.outputs.safe_name }}.iso.sha256"
           body: |
             # NixOS Configuration Release
             ${{ github.event.inputs.description }}
 
             ## Downloads
-            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ github.event.inputs.tag_name }}.iso/download)**
+            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}.iso/download)**
             * **SHA256 Checksum:** `${{ needs.build.outputs.sha256 }}`
 
             Notable changes:
@@ -125,7 +124,7 @@ jobs:
 
   reminder:
     runs-on: ubuntu-latest
-    needs: release
+    needs: [release, build]
     permissions:
       issues: write
     steps:
@@ -138,17 +137,17 @@ jobs:
           if [ -z "$EXISTING_ISSUE" ]; then
             gh issue create \
               --title "Manual SourceForge Cleanup Required" \
-              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. 
-            
-                SourceForge doesn't have (?) automated pruning, so you have to do that yourself.
-                Please manually remove ISOs older than the last 5 versions.
-            
-                **Steps:**
-                1. Go to https://sourceforge.net/projects/nixos-config/
-                2. Click files.
-                3. Remove ISOs older than 5 releases ago.
+              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded.
 
-                If you know how to automate that, please let me know.
+            SourceForge doesn't have (?) automated pruning, so you have to do that yourself.
+            Please manually remove ISOs older than the last 5 versions.
+
+            **Steps:**
+            1. Go to https://sourceforge.net/projects/nixos-config/
+            2. Click files.
+            3. Remove ISOs older than 5 releases ago.
+
+            If you know how to automate that, please let me know."
           else
             gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to clean up old ISOs."
           fi
