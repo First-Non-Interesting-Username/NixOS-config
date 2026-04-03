@@ -162,6 +162,7 @@ IMPERATIVE:
 - Sets up Git with username and email provided by the user.
 - Sets default branch to main (Why isn't it default?).
 - Sets up GH with default git protocol being SSH and automatically logs you in.
+- Creates `commit` alias for faster commit creation (aliased to `git add . && git commit -m`).
 
 ## nixosModules.secretless-git
 
@@ -169,6 +170,7 @@ IMPERATIVE:
 - Installs Onefetch, for Fastfetch like overviews of Git repos.
 - Sets up Git with username and email provided by the user.
 - Sets default branch to main (Why isn't it default?).
+- Creates `commit` alias for faster commit creation (aliased to `git add . && git commit -m`).
 
 ## nixosModules.IDE
 
