@@ -174,6 +174,7 @@
               switch-input-source = [];
               switch-input-source-backward = [];
               activate-window-menu = ["<Alt><Super>space"];
+              minimize = ["<Super>g"];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
