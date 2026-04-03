@@ -343,6 +343,9 @@
             "org/gnome/settings-daemon/plugins/media-keys" = {
               screensaver = ["<Super>p"];
             };
+            "org/gnome/shell/extensions/just-perfection" = {
+              support-notifier-type = 0;
+            };
             "org/gnome/shell/extensions/forge/keybindings" = {
               focus-center = [];
               focus-down = [
