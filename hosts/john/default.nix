@@ -4,7 +4,7 @@
   ...
 }: let
   Hostname = "john";
-  Username = "nixi";
+  Username = "nixos";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
