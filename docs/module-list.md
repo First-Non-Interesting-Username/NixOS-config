@@ -41,7 +41,7 @@ Secrets: factorio_token
 WIP
 
 - (Sets up Factorio package with my user token and username so it can be downloaded.)
-- (Enables Steam system package with Proton GE, Gamescope session and open firewall.)
+- Enables Steam system package with Proton GE, Gamescope session and open firewall.
 - Enables Gamemode and Gamescope in a system level, for better performance and simpler gaming.
 - (Installs Factorio with Space Age DLC.)
 - Installs PrismLauncher
