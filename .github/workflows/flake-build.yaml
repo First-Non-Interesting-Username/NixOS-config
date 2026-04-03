@@ -46,10 +46,6 @@ on:
     secrets:
       CACHIX_AUTH_TOKEN:
         required: false
-    outputs:
-      built-targets:
-        description: "JSON list of targets attempted"
-        value: ${{ jobs.discover.outputs.matrix }}
 
 jobs:
   check-changed-files:
@@ -73,8 +69,8 @@ jobs:
 
   build-x86:
     runs-on: ubuntu-latest
-    needs: discover
-    if: needs.discover.result == 'success'
+    needs: check-changed-files
+    if: needs.check-changed-files.outputs.has-changes == 'true'
     steps:
       - uses: actions/checkout@v6
         with:
@@ -108,8 +104,8 @@ jobs:
 
   build-arm:
     runs-on: ubuntu-latest
-    needs: discover
-    if: needs.discover.result == 'success' && github.event_name != 'pull_request'
+    needs: check-changed-files
+    if: needs.check-changed-files.outputs.has-changes == 'true'
     steps:
       - uses: actions/checkout@v6
         with:
