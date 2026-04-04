@@ -14,17 +14,18 @@ WIP
 
 Install guides cover the process of installing NixOS using this configuration.
 
-Guides are organized by machine type or use case.
+Guides are organized by machine type or installation method.
 
 ## Guides
 
-### General Purpose Machines
+### General Purpose Guides
 
-- [General Install Guide](./install-guides/install-guide-general.md) — Covers installation using nixos-anywhere for machines on your local network.
+- [NixOS-Anywhere based install guide](./install-guides/install-guide-nixos-anywhere.md) — Covers installation using nixos-anywhere for machines on your local network.
+- [Disko-install based install guide](./install-guides/install-guide-disko-install.md) - Covers intallation using disko install for single machine setups.
 
 ### Host-Specific Guides
 
-TBD
+None of the current hosts require dedicated installation guides.
 
 ## Prerequisites
 

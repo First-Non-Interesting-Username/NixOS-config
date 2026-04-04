@@ -1,5 +1,5 @@
 > [!CAUTION]
-> **Outsider Warning**: This process assumes you're me, but all kinds of installations are supported. Proceed with caution. Create an issue if you have any problems.
+> **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
 
 > [!NOTE]
@@ -29,7 +29,7 @@
 2. **Internet Connection**: Ensure you have internet access on both machines.
 3. **Secure Boot**: Disable Secure Boot in UEFI.
 4. **Chosen host**: Choose one of the hosts from [hosts](./hosts.md). If you don't have a host chosen or prepared head to [Host creation guide](./host-guide.md).
-5. **Second PC with Nix installed**: It needs to be a different physical machine, this guide doesn't support other installers than [nixos-anywhere](https://github.com/nix-community/nixos-anywhere).
+5. **Second PC with Nix installed**: It needs to be a different physical machine. This can be any machine booted with one of my ISOs.
 6. **SSH access**: You need SSH access from the second PC to the host. Most live ISOs include the SSH server.
 
 From this point I will refer to the machine you are installing to as `Target` and the machine you are installing from as `Source`.
@@ -176,7 +176,8 @@ With impermanence
 No impermanence:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes pipe-operators" shell github:nix-community/nixos-anywhere --command nixos-anywhere \
+nix --extra-experimental-features "nix-command flakes pipe-operators" \
+  run github:nix-community/nixos-anywhere -- \
   --flake "github:First-Non-Interesting-Username/NixOS-config#HOSTNAME" \
   --extra-files ./tmp \
   --target-host "root@IP"
@@ -185,9 +186,10 @@ nix --extra-experimental-features "nix-command flakes pipe-operators" shell gith
 With impermanence:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes pipe-operators" shell github:nix-community/nixos-anywhere --command nixos-anywhere \
+nix --extra-experimental-features "nix-command flakes pipe-operators" \
+  run github:nix-community/nixos-anywhere -- \
   --flake "github:First-Non-Interesting-Username/NixOS-config#HOSTNAME" \
-  --extra-files ./tmp \
+  --extra-files ./tmp-persist \
   --target-host "root@IP"
 ```
 

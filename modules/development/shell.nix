@@ -194,6 +194,7 @@
         home.packages = with pkgs; [
           trash-cli
           ugrep
+          ripgrep
         ];
 
         home.shellAliases = {
