@@ -1,18 +1,28 @@
-_: {
+{self, ...}: {
   flake = {
     nixosModules.iso = {
-      pkgs,
-      modulesPath,
       username,
+      pkgs,
       ...
     }: {
-      imports = [
-        (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
-      ];
-
       environment.defaultPackages = with pkgs; [
         nano
         netcat
+        disko
+        nixos-anywhere
+        micro
+      ];
+
+      isoImage.contents = [
+        {
+          source = self.outPath;
+          target = "/flake-source";
+        }
+      ];
+
+      systemd.tmpfiles.rules = [
+        "C /etc/nixos - - - - /flake-source"
+        "Z /etc/nixos 0777 ${username} ${username} -"
       ];
 
       home-manager.users.${username} = {
