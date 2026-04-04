@@ -16,7 +16,6 @@ _: {
       main = {
         include = "${pkgs.foot.themes}/share/foot/themes/gruvbox-dark";
         font = "JetBrainsMono Nerd Font:size=12";
-        scroll-lines = 10000;
       };
       csd = {
         size = 0;
