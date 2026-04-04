@@ -111,6 +111,7 @@ jobs:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
             build-dir = /nix/build
+            extra-platforms = aarch64-linux
 
       - name: Install nix-fast-build
         run: nix profile add github:Mic92/nix-fast-build
