@@ -78,6 +78,7 @@ jobs:
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile install nixpkgs#cachix"
 
       - name: Build x86
         run: |
@@ -112,12 +113,13 @@ jobs:
             build-dir = /nix/build
 
       - name: Install nix-fast-build
-        run: nix profile install github:Mic92/nix-fast-build
+        run: nix profile add github:Mic92/nix-fast-build
 
       - uses: cachix/cachix-action@v17
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile install nixpkgs#cachix"
 
       - name: Build ARM
         run: |
