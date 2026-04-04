@@ -84,7 +84,8 @@ sudo nix --extra-experimental-features "nix-command flakes pipe-operators" \
   run github:nix-community/disko/latest#disko-install -- \
   --flake "github:First-Non-Interesting-Username/NixOS-config#HOSTNAME" \
   --extra-files ./ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key \
-  --extra-files ./ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub
+  --extra-files ./ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub \
+  --write-efi-boot-entries
 ```
 
 With impermanence:
@@ -94,7 +95,8 @@ sudo nix --extra-experimental-features "nix-command flakes pipe-operators" \
   run github:nix-community/disko/latest#disko-install -- \
   --flake "github:First-Non-Interesting-Username/NixOS-config#HOSTNAME" \
   --extra-files ./ssh_host_ed25519_key /persist/etc/ssh/ssh_host_ed25519_key \
-  --extra-files ./ssh_host_ed25519_key.pub /persist/etc/ssh/ssh_host_ed25519_key.pub
+  --extra-files ./ssh_host_ed25519_key.pub /persist/etc/ssh/ssh_host_ed25519_key.pub \
+  --write-efi-boot-entries
 ```
 
 ## 4. Post Install
