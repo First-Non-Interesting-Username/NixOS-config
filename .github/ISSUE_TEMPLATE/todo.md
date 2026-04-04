@@ -19,12 +19,16 @@ List any relevant files or NixOS modules.
 
 ## Subtasks
 
-- [ ]
-- [ ]
-- [ ]
+-
+-
+-
 
 ## Priority
 
+- [ ] Do when you have time
+- [ ] Very low
 - [ ] Low
 - [ ] Medium
+- [ ] Medium high
 - [ ] High
+- [ ] ASAP
