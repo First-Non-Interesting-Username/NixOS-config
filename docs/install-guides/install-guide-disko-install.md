@@ -10,18 +10,14 @@
 
 - [Prerequisites](#prerequisites)
 - [Steps](#steps)
-  - [Get the SSH host keys](#1-get-the-ssh-host-keys)
-    - [Generate the SSH keys](#11-generate-the-ssh-keys)
-    - [Add the encryption keys to .sops.yaml](#12-add-the-encryption-keys-to-sopsyaml)
-  - [Boot the ISO on the target machine](#2-boot-the-iso-on-the-target-machine)
-    - [Elevate your permissions](#20-elevate-your-permissions)
-    - [Open SSH](#21-open-ssh)
-    - [Set the password](#22-set-the-password)
-    - [Log in to wifi (If applicable)](#23-log-in-to-wifi-if-applicable)
-  - [Prepare the environment](#3-prepare-the-environment)
-    - [Assign correct ownership and permissions to the keys](#31-assign-correct-ownership-and-permissions-to-the-keys)
-  - [Install the system](#4-install-the-system)
-  - [Post Install](#5-post-install)
+  - [1. Boot the ISO](#1-boot-the-iso)
+    - [1.0 Elevate your permissions](#10-elevate-your-permissions)
+    - [1.1 Log in to wifi (If applicable)](#11-log-in-to-wifi-if-applicable)
+  - [2. Prepare the ssh host keys](#2-prepare-the-ssh-host-keys)
+    - [2.1 Copy over your host ssh public keys](#21-copy-over-your-host-ssh-public-keys)
+    - [2.2 Assign correct permissions and ownerships to the keys](#22-assign-correct-permissions-and-ownerships-to-the-keys)
+  - [3. Install the system](#3-install-the-system)
+  - [4. Post Install](#4-post-install)
 
 # Prerequisites
 
