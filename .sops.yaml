@@ -11,8 +11,8 @@
 keys:
   # System age key (derived from SSH host private key)
   - &bluefin age18nl2k827fm6esp56a7vadd2lln3uww2j9vaaa2ads7z2zntppecqnpe92j
-  - &laptop age1lxeguqlvkd75um6yd2hsum269p2zly6g7tgdeqxm602ujjurjyvqe9g24u
-  - &server age1x6pwl6gwnrfmnjzu2kk9ave86tx9jur5yh870jzw94f8km7nm93shgfmqa
+  - &armin age1lxeguqlvkd75um6yd2hsum269p2zly6g7tgdeqxm602ujjurjyvqe9g24u
+  - &iroh age1x6pwl6gwnrfmnjzu2kk9ave86tx9jur5yh870jzw94f8km7nm93shgfmqa
   - &desktop age15tmwsj524vlg5ppfx66zqf2jux5zk3sdw50jv708v7qzfr3vsq8q6f2ta3
 
   # Optional: Personal age key for editing secrets from any machine
@@ -24,6 +24,6 @@ creation_rules:
     key_groups:
       - age:
           - *bluefin
-          - *laptop
-          - *server
+          - *armin
+          - *iroh
           - *desktop
