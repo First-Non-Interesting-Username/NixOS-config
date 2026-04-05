@@ -92,8 +92,9 @@
     };
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -103,7 +104,7 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
-        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-enviroment)
+        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-environment)
         ./devShells
         inputs.git-hooks-nix.flakeModule
         inputs.nix-wrapper-modules.flakeModules.wrappers
