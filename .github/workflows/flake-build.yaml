@@ -90,12 +90,16 @@ jobs:
       - name: Generate build matrix
         id: list
         run: |
-          # Get all hosts and filter out ISO hosts on PRs
+          # Get all hosts
           HOSTS=$(nix eval .#nixosConfigurations --apply 'n: builtins.map (name: { inherit name; type = "host"; }) (builtins.attrNames n)' --json)
 
-          # Skip ISO hosts (like 'john') on pull requests
+          # Get list of ISO hosts by checking which hosts produce ISO images
+          # A host is an ISO host if its name matches a package that is an ISO image
+          PKG_NAMES=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.attrNames n' --json 2>/dev/null || echo "[]")
+
+          # Skip ISO hosts on pull requests (hosts that have packages with the same name)
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            HOSTS=$(echo "$HOSTS" | jq '[.[] | select(.name != "john")]')
+            HOSTS=$(echo "$HOSTS" | jq --argjson pkgs "$PKG_NAMES" '[.[] | select(.name as $n | $pkgs | index($n) | not)]')
           fi
 
           # Apply host filter if provided
@@ -107,9 +111,10 @@ jobs:
           # Get all packages and filter out ISO packages on PRs
           PKGS=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.map (name: { inherit name; type = "pkg"; }) (builtins.attrNames n)' --json)
 
-          # Skip ISO packages (matching host names) on pull requests
+          # Skip ISO packages on pull requests (packages that match host names)
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            PKGS=$(echo "$PKGS" | jq '[.[] | select(.name != "john")]')
+            HOST_NAMES=$(echo "$HOSTS" | jq '[.[].name]')
+            PKGS=$(echo "$PKGS" | jq --argjson hosts "$HOST_NAMES" '[.[] | select(.name as $n | $hosts | index($n) | not)]')
           fi
 
           # Apply package filter if provided
