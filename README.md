@@ -62,10 +62,8 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 
 Go [here](./secrets/README.md).
 
-Secrets are a feature meant mostly for me.
-For secretless use of those modules replace `nixosModules.user` with `nixosModules.secretless-user` and do the same for `nixosModules.ssh`.
-Secretless use is NOT reccommended NOR supported.
-I reccommend creating your own modules over using `secretless-*` from my config.
+Be aware that you need to add your own keys and replace the secrets with yours.
+This is not a trivial task, I reccomend using secretless modules.
 
 ## Eye candy stuff
 
@@ -86,8 +84,6 @@ Armin:
 
 Iroh:
 <img width="1332" height="927" alt="image" src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
-
-
 
 ## Footnote
 
