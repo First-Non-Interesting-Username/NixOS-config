@@ -5,17 +5,23 @@
 - [Adding new secrets](#adding-new-secrets)
 - [Adding new age keys to `.sops.yaml`](#adding-new-age-keys-to-sopsyaml)
 - [Referencing secrets in modules](#referencing-secrets-in-modules)
-- [Referencing secrets in home manager modules](#referencing-secrets-in-home-manager-modules)
+  - [Referencing secrets in home manager modules](#referencing-secrets-in-home-manager-modules)
 
 # Secrets Reference Table
 
-| Key                  | Used in               | Description                                            |
-| -------------------- | --------------------- | ------------------------------------------------------ |
-| `sudo_password`      | `nixosModules.user`   | User password hash (use `mkpasswd -m yescrypt`)        |
-| `factorio_token`     | `nixosModules.gaming` | Factorio.com auth token for downloading factorio (TBD) |
-| `github_pat`         | `nixosModules.git`    | GitHub Personal Access Token                           |
-| `ssh_keys/public/*`  | `nixosModules.ssh`    | SSH public keys for hosts                              |
-| `ssh_keys/private/*` | `nixosModules.ssh`    | SSH private keys for hosts                             |
+| Key                  | Used in                           | Description                                            |
+| -------------------- | --------------------------------- | ------------------------------------------------------ |
+| `sudo_password`      | `nixosModules.user`               | User password hash (use `mkpasswd -m yescrypt`)        |
+| `factorio_token`     | `nixosModules.gaming`             | Factorio.com auth token for downloading factorio (TBD) |
+| `github_pat`         | `nixosModules.git`                | GitHub Personal Access Token                           |
+| `ssh_keys/public/*`  | `nixosModules.ssh`                | SSH public keys for hosts                              |
+| `ssh_keys/private/*` | `nixosModules.ssh`                | SSH private keys for hosts                             |
+| `LLM_keys/*`         | `nixosModules.opencode`           | LLM api keys for \*                                    |
+| `wifi_password`      | `nixosModules.networking-destkop` | MY PERSONAL wifi password                              |
+
+There're also few secrets related to nps, nps module is meant only for my private use and I don't feel like explaining those.
+
+The `host_keys/*` secrets are related to my ssh host keys. I find it convinient to keep those in the secrets file.
 
 # Adding new secrets
 
