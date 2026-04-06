@@ -22,7 +22,6 @@ in {
       self.nixosModules.browser
       self.nixosModules.input
       self.nixosModules.iso-graphical
-      self.nixosModules.secretless-git
       self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.locale
