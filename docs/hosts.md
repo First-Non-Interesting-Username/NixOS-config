@@ -5,7 +5,7 @@
   - [Iroh](#Iroh)
   - [John](#john)
   - [Template](#template)
-  - [Unused names/names suggestions](#unused-namesnames-suggestions)
+- [Unused names/names suggestions](#unused-namesnames-suggestions)
 
 # Hosts
 
@@ -21,7 +21,7 @@ Specs:
 - 32GB of RAM 3200MT/s DDR4
 - 512GB NVMe SSD
 
-At this moment, this machine runs Plasma based desktop config.
+At this moment, this machine runs GNOME based desktop config.
 
 This host can be used as a template for other configs.
 
@@ -47,12 +47,21 @@ The name of this host is based on [Uncle Iroh](https://en.wikipedia.org/wiki/Iro
 
 ## John
 
-This is the official ISO of the project.
+This is the official graphical ISO of the project.
 It should be used as an ISO for all graphical installations of the system, on machines that support Vulkan.
 
 This host can be used as a template for other configs, especially other ISOs.
 
 The name of this host is based on [John the Character](https://john-the-character.fandom.com/wiki/John)
+
+## Wall-E
+
+This is the official CLI ISO of the project.
+It should be used as an ISO for all non graphical installations of the system, that includes machines that doesn't support Vulkan.
+
+This host can be used as a template for other configs, especially other ISOs.
+
+The name of this host is based on [Wall-E](<https://en.wikipedia.org/wiki/WALL-E_(character)>)
 
 ## Template
 
@@ -84,5 +93,4 @@ There are only few rules regarding naming hosts:
 
 The names:
 
-- Wall-E.
 - Annabeth.
