@@ -23,9 +23,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: check
+    strategy:
+      matrix:
+        host: [john, wall-e]
     outputs:
       formatted_issues: ${{ steps.format_issues.outputs.LIST }}
-      sha256: ${{ steps.checksum.outputs.hash }}
+      sha256_john: ${{ steps.checksum.outputs.sha256_john }}
+      sha256_wall-e: ${{ steps.checksum.outputs.sha256_wall-e }}
       safe_name: ${{ steps.checksum.outputs.safe_name }}
     steps:
       - uses: actions/checkout@v6
@@ -48,7 +52,7 @@ jobs:
           installCommand: "nix profile install nixpkgs#cachix"
 
       - name: Build
-        run: nix build .#john
+        run: nix build .#${{ matrix.host }}
 
       - name: Prepare ISO and Generate Checksum
         id: checksum
@@ -56,13 +60,13 @@ jobs:
           mkdir -p upload_stage
           SAFE_NAME="${{ github.event.inputs.tag_name }}"
           SAFE_NAME="${SAFE_NAME//./\-}"
-          ISO_NAME="${SAFE_NAME}.iso"
+          ISO_NAME="${SAFE_NAME}-${{ matrix.host }}.iso"
           echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
           cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
           cd upload_stage
           sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
           HASH=$(awk '{ print $1 }' "${ISO_NAME}.sha256")
-          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+          echo "sha256_${{ matrix.host }}=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Copy file via SSH
         uses: appleboy/scp-action@v0.1.7
@@ -71,7 +75,7 @@ jobs:
           username: ${{ secrets.SF_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE }}
           port: 22
-          source: "upload_stage/${{ needs.build.outputs.safe_name }}.iso,upload_stage/${{ needs.build.outputs.safe_name }}.iso.sha256"
+          source: "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso,upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256"
           target: "/home/frs/project/nixos-config/"
           strip_components: 1
 
@@ -89,31 +93,51 @@ jobs:
       - name: Upload Checksum Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: checksum-file
-          path: upload_stage/${{ needs.build.outputs.safe_name }}.iso.sha256
+          name: checksum-${{ matrix.host }}
+          path: upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256
 
   release:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Download Checksum Artifact
+      - name: Download Checksum Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: checksum-file
+          pattern: checksum-*
+          merge-multiple: true
+
+      - name: Extract Checksums
+        id: extract-checksums
+        run: |
+          for file in *.sha256; do
+            if [[ "$file" == *"-john.iso.sha256" ]]; then
+              HASH=$(awk '{ print $1 }' "$file")
+              echo "sha256_john=$HASH" >> "$GITHUB_OUTPUT"
+            elif [[ "$file" == *"-wall-e.iso.sha256" ]]; then
+              HASH=$(awk '{ print $1 }' "$file")
+              echo "sha256_wall_e=$HASH" >> "$GITHUB_OUTPUT"
+            fi
+          done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag_name }}
           name: "Release ${{ github.event.inputs.tag_name }}"
-          files: "${{ needs.build.outputs.safe_name }}.iso.sha256"
+          files: "*.sha256"
           body: |
             # NixOS Configuration Release
             ${{ github.event.inputs.description }}
 
             ## Downloads
-            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}.iso/download)**
-            * **SHA256 Checksum:** `${{ needs.build.outputs.sha256 }}`
+
+            ### John (Graphical)
+            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}-john.iso/download)**
+            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_john }}`
+
+            ### Wall-E (Non-Graphical)
+            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}-wall-e.iso/download)**
+            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_wall_e }}`
 
             Notable changes:
 

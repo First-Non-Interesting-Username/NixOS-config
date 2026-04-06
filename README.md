@@ -27,6 +27,7 @@
 | -------------------------------------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
 | [armin](./hosts/armin/README.md)       | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
 | [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A     | N/A  | Installation ISO     |
+| [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A     | N/A  | Installation ISO     |
 | [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
 | [template](./hosts/template/README.md) | N/A                        | N/A         | N/A     | N/A  | Other                |
 
@@ -62,10 +63,8 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 
 Go [here](./secrets/README.md).
 
-Secrets are a feature meant mostly for me.
-For secretless use of those modules replace `nixosModules.user` with `nixosModules.secretless-user` and do the same for `nixosModules.ssh`.
-Secretless use is NOT reccommended NOR supported.
-I reccommend creating your own modules over using `secretless-*` from my config.
+Be aware that you need to add your own keys and replace the secrets with yours.
+This is not a trivial task, I recommend using secretless modules.
 
 ## Eye candy stuff
 
@@ -82,12 +81,10 @@ I reccommend creating your own modules over using `secretless-*` from my config.
 ### Screenshots
 
 Armin:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/28443716-6298-4538-929d-ccd03d0ed6a4" />
+<img width="1920" height="1080" alt="Screenshot from GNOME desktop" src="https://github.com/user-attachments/assets/28443716-6298-4538-929d-ccd03d0ed6a4" />
 
 Iroh:
-<img width="1332" height="927" alt="image" src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
-
-
+<img width="1332" height="927" alt="Screenshot of a NoVNC console " src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
 
 ## Footnote
 

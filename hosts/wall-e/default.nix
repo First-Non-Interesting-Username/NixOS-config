@@ -3,7 +3,7 @@
   inputs,
   ...
 }: let
-  Hostname = "john";
+  Hostname = "wall-e";
   Username = "nixos";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
@@ -18,17 +18,13 @@ in {
       impermanence = false;
     };
     modules = [
-      self.nixosModules.audio
-      self.nixosModules.browser
       self.nixosModules.input
-      self.nixosModules.iso-graphical
-      self.nixosModules.GNOME
+      self.nixosModules.iso-terminal
       self.nixosModules.home-manager
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
       self.nixosModules.power
-      self.nixosModules.terminal
       self.nixosModules.theme
       self.nixosModules.secretless-git
       self.nixosModules.secretless-user
@@ -42,7 +38,6 @@ in {
         home-manager.extraSpecialArgs = {
           inherit self inputs;
           username = Username;
-
           hostname = Hostname;
           width = 1920;
           height = 1080;

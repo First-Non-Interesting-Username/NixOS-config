@@ -103,7 +103,7 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
-        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-enviroment)
+        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-environment)
         ./devShells
         inputs.git-hooks-nix.flakeModule
         inputs.nix-wrapper-modules.flakeModules.wrappers
