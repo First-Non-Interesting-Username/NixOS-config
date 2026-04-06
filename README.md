@@ -64,7 +64,7 @@ Host creation guide is avalible [here](./docs/host-guide.md)
 Go [here](./secrets/README.md).
 
 Be aware that you need to add your own keys and replace the secrets with yours.
-This is not a trivial task, I reccomend using secretless modules.
+This is not a trivial task, I recommend using secretless modules.
 
 ## Eye candy stuff
 

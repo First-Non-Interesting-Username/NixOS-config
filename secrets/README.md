@@ -17,7 +17,7 @@
 | `ssh_keys/public/*`  | `nixosModules.ssh`                | SSH public keys for hosts                              |
 | `ssh_keys/private/*` | `nixosModules.ssh`                | SSH private keys for hosts                             |
 | `LLM_keys/*`         | `nixosModules.opencode`           | LLM api keys for \*                                    |
-| `wifi_password`      | `nixosModules.networking-destkop` | MY PERSONAL wifi password                              |
+| `wifi_password`      | `nixosModules.networking-desktop` | MY PERSONAL wifi password                              |
 
 There are also a few secrets related to NPS. The NPS module is for private use, so this README does not document them in detail.
 
