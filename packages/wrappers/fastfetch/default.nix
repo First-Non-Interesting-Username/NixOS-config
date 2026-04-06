@@ -5,11 +5,7 @@ in {
     wrappers.packages.${name} = true;
   };
 
-  flake.wrappers.${name} = {
-    pkgs,
-    wlib,
-    ...
-  }: {
+  flake.wrappers.${name} = {wlib, ...}: {
     imports = [wlib.wrapperModules.${name}];
     settings = {
       display = {
