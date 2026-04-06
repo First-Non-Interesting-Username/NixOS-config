@@ -14,6 +14,9 @@ _: {
               ".config/zed"
               ".vscode-oss"
             ];
+            files = [
+              ".wakatime.cfg"
+            ];
           };
         };
       };
