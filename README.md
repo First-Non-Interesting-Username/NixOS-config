@@ -80,10 +80,10 @@ This is not a trivial task, I reccomend using secretless modules.
 ### Screenshots
 
 Armin:
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/28443716-6298-4538-929d-ccd03d0ed6a4" />
+<img width="1920" height="1080" alt="Screenshot from GNOME desktop" src="https://github.com/user-attachments/assets/28443716-6298-4538-929d-ccd03d0ed6a4" />
 
 Iroh:
-<img width="1332" height="927" alt="image" src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
+<img width="1332" height="927" alt="Screenshot of NoVNC console " src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
 
 ## Footnote
 

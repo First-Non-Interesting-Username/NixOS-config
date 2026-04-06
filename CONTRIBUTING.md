@@ -90,6 +90,8 @@ nix develop
 direnv allow
 ```
 
+3c. If for some reason you are on machine without nix, you can open the devcontainer in VSCode.
+
 ---
 
 ## How to Contribute
@@ -265,14 +267,14 @@ The following rules apply to all `.nix` files in this repository.
 
 Formatting:
 
-- All `.nix` files MUST be formatted with `alejandra`. If you use devshell, it will be done automatically.
+- All `.nix` files MUST be formatted with `alejandra`.
 - Lines SHOULD NOT exceed 100 characters.
 
 Naming:
 
-- Attribute names MUST use `camelCase`.
-- File names MUST use `kebab-case`.
-- Module option names MUST use `camelCase`.
+- Attribute names SHOULD use `camelCase`.
+- File names SHOULD use `kebab-case`.
+- Module option names SHOULD use `camelCase`
 
 Imports:
 
@@ -297,8 +299,6 @@ Changes that affect a host configuration SHOULD be verified with a local build:
 ```bash
 nixos-rebuild build --flake .#<hostname>
 ```
-
-Changes that add new modules SHOULD include an example configuration in a comment or in the module's `meta.doc` if applicable.
 
 ---
 
