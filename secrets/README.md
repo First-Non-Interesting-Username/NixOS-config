@@ -19,9 +19,9 @@
 | `LLM_keys/*`         | `nixosModules.opencode`           | LLM api keys for \*                                    |
 | `wifi_password`      | `nixosModules.networking-destkop` | MY PERSONAL wifi password                              |
 
-There're also few secrets related to nps, nps module is meant only for my private use and I don't feel like explaining those.
+There are also a few secrets related to NPS. The NPS module is for private use, so this README does not document them in detail.
 
-The `host_keys/*` secrets are related to my ssh host keys. I find it convinient to keep those in the secrets file.
+The `host_keys/*` secrets store my SSH host keys. I find it convenient to keep them in the secrets file.
 
 # Adding new secrets
 

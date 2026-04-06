@@ -106,6 +106,19 @@ jobs:
           pattern: checksum-*
           merge-multiple: true
 
+      - name: Extract Checksums
+        id: extract-checksums
+        run: |
+          for file in *.sha256; do
+            if [[ "$file" == *"-john.iso.sha256" ]]; then
+              HASH=$(awk '{ print $1 }' "$file")
+              echo "sha256_john=$HASH" >> "$GITHUB_OUTPUT"
+            elif [[ "$file" == *"-wall-e.iso.sha256" ]]; then
+              HASH=$(awk '{ print $1 }' "$file")
+              echo "sha256_wall_e=$HASH" >> "$GITHUB_OUTPUT"
+            fi
+          done
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -120,11 +133,11 @@ jobs:
 
             ### John (Graphical)
             * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}-john.iso/download)**
-            * **SHA256:** `${{ needs.build.outputs.sha256_john }}`
+            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_john }}`
 
             ### Wall-E (Non-Graphical)
             * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ needs.build.outputs.safe_name }}-wall-e.iso/download)**
-            * **SHA256:** `${{ needs.build.outputs.sha256_wall-e }}`
+            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_wall_e }}`
 
             Notable changes:
 

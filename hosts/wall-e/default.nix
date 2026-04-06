@@ -2,10 +2,12 @@
   self,
   inputs,
   ...
-}: let
+}:
+let
   Hostname = "wall-e";
   Username = "nixos";
-in {
+in
+{
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
@@ -38,7 +40,6 @@ in {
         home-manager.extraSpecialArgs = {
           inherit self inputs;
           username = Username;
-
           hostname = Hostname;
           width = 1920;
           height = 1080;

@@ -90,7 +90,7 @@ nix develop
 direnv allow
 ```
 
-3c. If for some reason you are on machine without nix, you can open the devcontainer in VSCode.
+3c. If you are on a machine without Nix, you can open the devcontainer in VS Code.
 
 ---
 

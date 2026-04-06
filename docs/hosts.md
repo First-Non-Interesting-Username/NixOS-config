@@ -4,6 +4,7 @@
   - [Armin](#Armin)
   - [Iroh](#Iroh)
   - [John](#john)
+  - [Wall-E](`#wall-e`)
   - [Template](#template)
 - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
@@ -57,7 +58,7 @@ The name of this host is based on [John the Character](https://john-the-characte
 ## Wall-E
 
 This is the official CLI ISO of the project.
-It should be used as an ISO for all non graphical installations of the system, that includes machines that doesn't support Vulkan.
+It should be used as an ISO for all non-graphical installations of the system, including machines that do not support Vulkan.
 
 This host can be used as a template for other configs, especially other ISOs.
 
