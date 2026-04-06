@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake = {
     nixosModules.shell = {
       pkgs,
@@ -103,8 +107,6 @@
             enableZshIntegration = true;
           };
 
-          btop.enable = true;
-
           bat.enable = true;
 
           fd.enable = true;
@@ -115,6 +117,7 @@
           ugrep
           ripgrep
           self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
+          self.packages.${pkgs.stdenv.hostPlatform.system}.btop
         ];
 
         home.shellAliases = {

@@ -1,14 +1,16 @@
-_: {
+_: let
+  name = "fastfetch";
+in {
   perSystem = _: {
-    wrappers.packages.fastfetch = true;
+    wrappers.packages.${name} = true;
   };
 
-  flake.wrappers.fastfetch = {
+  flake.wrappers.${name} = {
     pkgs,
     wlib,
     ...
   }: {
-    imports = [wlib.wrapperModules.fastfetch];
+    imports = [wlib.wrapperModules.${name}];
     settings = {
       display = {
         separator = "  ";

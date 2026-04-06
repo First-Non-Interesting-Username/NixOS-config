@@ -1,14 +1,16 @@
-_: {
+_: let
+  name = "foot";
+in {
   perSystem = _: {
-    wrappers.packages.foot = true;
+    wrappers.packages.${name} = true;
   };
 
-  flake.wrappers.foot = {
+  flake.wrappers.${name} = {
     pkgs,
     wlib,
     ...
   }: {
-    imports = [wlib.wrapperModules.foot];
+    imports = [wlib.wrapperModules.${name}];
 
     extraPackages = [pkgs.nerd-fonts.jetbrains-mono];
 
