@@ -69,7 +69,7 @@ jobs:
           echo "sha256_${{ matrix.host }}=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Copy file via SSH
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: frs.sourceforge.net
           username: ${{ secrets.SF_USERNAME }}
