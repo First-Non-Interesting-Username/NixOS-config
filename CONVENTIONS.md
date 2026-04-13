@@ -149,6 +149,3 @@ The Table of Contents MUST:
 - Use a nested bullet list.
 - Link to all ## headings using anchor links.
 - Use the heading text as the link text.
-- NOT include "You are done!" or similar conclusion sections.
-
-The ## headings in the document MUST NOT include numbering prefixes.

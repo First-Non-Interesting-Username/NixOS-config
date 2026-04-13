@@ -2,15 +2,8 @@
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
 
 > [!NOTE]
-> This is a FILL.
-> You can find all guides in [this file](../install-guides.md).
-
-> [!IMPORTANT]  
-> Assumptpions:
->
-> 1.
-> 2.
-> 3.
+> This is a template for creating new installation guides.
+> You can find the list of all guides in [this file](../install-guides.md).
 
 ## Table of Contents
 
@@ -20,37 +13,38 @@
 
 # Prerequisites
 
-1. **Something**:
-2. **Somthing else**:
-3. **Something else too**:
+1. **Requirement 1**: Description.
+2. **Requirement 2**: Description.
 
 ## Definitions
 
-In this file I will use some terminology to make it easier for you to understand what I'm refering to.
-
-- X - Y
-- X - Y
-- X - Y
-
----
-
-> [!NOTE]
-> SOME_NOTE
+- **Term A**: Definition.
+- **Term B**: Definition.
 
 ---
 
 # Steps
 
-## 1.
+## 1. Preparation
 
-### 1.1
+### 1.1 Step description
 
-### 1.2
+Command:
+
+```bash
+# command here
+```
 
 ---
 
-## 2.
+## 2. Execution
 
-### 2.1
+### 2.1 Step description
+
+Command:
+
+```bash
+# command here
+```
 
 # You are done!
