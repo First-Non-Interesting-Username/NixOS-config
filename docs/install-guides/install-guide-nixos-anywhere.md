@@ -33,7 +33,7 @@ In this guide, the following terms are used:
 
 # Prerequisites
 
-1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases).
+1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases, [iso docs](../iso.md) for more informations).
 2.  **Source**: A machine with Nix installed and network access to the Target.
 3.  **Network**: Both machines must be on the same network.
 4.  **SSH**: The Source must be able to SSH into the Target as `root`.

@@ -40,7 +40,7 @@ Full list of modules is avalible [here](./module-list.md).
 
 ## 4. Adjust special args
 
-You need to at least change the hostname.
+You need to change the hostname at least, else you will get build errors.
 
 The full list of special args and the docs for them can be found [here](./special-args.md).
 

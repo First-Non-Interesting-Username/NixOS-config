@@ -25,10 +25,11 @@ List any relevant files or NixOS modules.
 
 ## Priority
 
-- [ ] Do when you have time
+- [ ] Do it when you have time. A lot of time
 - [ ] Very low
 - [ ] Low
 - [ ] Medium
 - [ ] Medium high
 - [ ] High
 - [ ] ASAP
+- [ ] ASAP for real

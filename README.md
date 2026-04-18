@@ -8,7 +8,6 @@
 
 ## Table of Contents
 
-- [NixOS Config](#nixos-config)
 - [Hosts Matrix](#hosts-matrix)
 - [Docs](#docs)
   - [Modules](#modules)

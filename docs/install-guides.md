@@ -1,7 +1,5 @@
 # Install Guides
 
-WIP
-
 ## Table of Contents
 
 - [Overview](#overview)

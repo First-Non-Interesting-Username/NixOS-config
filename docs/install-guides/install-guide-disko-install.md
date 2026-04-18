@@ -19,7 +19,7 @@
 
 # Prerequisites
 
-1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases.
+1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases, [iso docs](../iso.md) for more informations.
 2. **Internet Connection**: Ethernet or Wi-Fi access.
 3. **Secure Boot**: Must be disabled in UEFI.
 4. **Host Configuration**: A host defined in `hosts/`. See [Host creation guide](../host-guide.md).

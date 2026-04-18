@@ -1,14 +1,13 @@
+# Special args
+
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Special args](#special-args)
   - [`username`](#username)
   - [`hostname`](#hostname)
   - [`gitName` & `gitEmail`](#gitname--gitemail)
   - [`width` & `height`](#width--height)
   - [`impermanence`](#impermanence)
-
-# Special args
 
 ## `username`
 
