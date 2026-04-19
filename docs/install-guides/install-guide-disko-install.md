@@ -6,6 +6,9 @@
 > This guide is for a single-machine installation where you boot the target machine from a live ISO and perform the installation directly on it.
 > You can find the list of all guides in [this file](../install-guides.md).
 
+> [!WARNING]
+> BROKEN FOR NOW, DON'T USE
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
