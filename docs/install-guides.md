@@ -25,9 +25,9 @@ flowchart TD
   if_host --> |Yes| is_host([Use that guide])
   if_host --> |No| if_two{Do you have a second PC you can use for the installation?}
   if_two --> |No| disko_install([Use disko install based guide])
-  if_two --> |Yes| convenience_or_stability{What do you care more about: <br/> convenience or stability?}
-  convenience_or_stability --> |convenience| disko_install
-  convenience_or_stability --> |stability| nixos_anywhere([Use nixos anywhere based guide])
+  if_two --> |Yes| convenience_or_maturity{What do you care more about: <br/> convenience or maturity?}
+  convenience_or_maturity --> |convenience| disko_install
+  convenience_or_maturity --> |maturity| nixos_anywhere([Use nixos anywhere based guide])
 ```
 
 ## Guides
