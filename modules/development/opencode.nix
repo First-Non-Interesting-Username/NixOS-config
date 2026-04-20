@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   flake = {
     nixosModules.opencode = {
       lib,
@@ -25,7 +25,7 @@
         "LLM_keys/openrouter".owner = username;
         "LLM_keys/together".owner = username;
       };
-      home-manager.users.${username} = {osConfig, ...}: {
+      home-manager.users.${username} = {...}: {
         imports = [
         ];
 
