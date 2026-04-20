@@ -19,6 +19,10 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
     - [IMPERATIVE Modules](#imperative-modules)
     - [Section Dividers](#section-dividers)
     - [Feature Bullets](#feature-bullets)
+  - [Package Documentation](#package-documentation)
+    - [Document Structure](#document-structure-1)
+    - [Status Tags](#status-tags-1)
+    - [Feature Bullets](#feature-bullets-1)
   - [Table of Contents Rules](#table-of-contents-rules)
 
 ---
@@ -130,6 +134,40 @@ When `IMPERATIVE:` is used, the required manual steps MUST be listed after the t
 ### Section Dividers
 
 Use `###` with no text after to separate distinct groups of features within the same module.
+
+### Feature Bullets
+
+- Features MUST be in bullet lists using hyphens.
+- Bullets MUST start with a verb in simple present tense.
+- Bullets MUST use active voice.
+
+---
+
+## Package Documentation
+
+Each custom package or package wrapper requires a `README.md` in its directory.
+
+### Document Structure
+
+```md
+## packages.PACKAGE_NAME
+
+[Status tag]
+
+[Description]
+
+- Feature bullet 1
+- Feature bullet 2
+- Feature bullet 3
+```
+
+### Status Tags
+
+Status tags MUST appear before the feature list:
+
+- `WIP` - Work in progress, prone to change.
+- `TBD` - Yet to be ready to be used.
+- `PERSONAL` - Personal use only.
 
 ### Feature Bullets
 

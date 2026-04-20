@@ -25,10 +25,6 @@ _: {
         "LLM_keys/openrouter".owner = username;
         "LLM_keys/together".owner = username;
       };
-      home-manager.users.${username} = {...}: {
-        imports = [
-        ];
-
         programs = {
           opencode = {
             enable = true;
