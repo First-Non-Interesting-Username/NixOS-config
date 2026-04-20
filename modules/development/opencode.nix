@@ -27,19 +27,9 @@
       };
       home-manager.users.${username} = {osConfig, ...}: {
         imports = [
-          self.homeModules.free-coding-models
         ];
 
         programs = {
-          free-coding-models = {
-            enable = true;
-            nvidia-api-key-path = osConfig.sops.secrets."LLM_keys/NVIDIA".path;
-            zai-api-key-path = osConfig.sops.secrets."LLM_keys/ZAI".path;
-            groq-api-key-path = osConfig.sops.secrets."LLM_keys/groq".path;
-            cerebras-api-key-path = osConfig.sops.secrets."LLM_keys/cerebras".path;
-            openrouter-api-key-path = osConfig.sops.secrets."LLM_keys/openrouter".path;
-            together-api-key-path = osConfig.sops.secrets."LLM_keys/together".path;
-          };
           opencode = {
             enable = true;
           };
