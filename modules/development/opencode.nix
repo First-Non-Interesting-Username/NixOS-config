@@ -26,9 +26,6 @@
         "LLM_keys/together".owner = username;
       };
       home-manager.users.${username} = {osConfig, ...}: {
-        imports = [
-        ];
-
         programs = {
           opencode = {
             enable = true;

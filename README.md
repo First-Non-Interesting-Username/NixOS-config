@@ -11,6 +11,7 @@
 - [Hosts Matrix](#hosts-matrix)
 - [Docs](#docs)
   - [Modules](#modules)
+  - [Packages](#packages)
   - [Installation Guides](#installation-guides)
   - [Host creation guide](#host-creation-guide)
   - [Secrets](#secrets)
@@ -46,7 +47,13 @@ For more in depth explanation, visit [hosts](./docs/hosts.md).
 
 For the full list, go [here](./docs/module-list.md).
 
-If you want to use those modules in outside repos, go to TBD.
+If you want to use those modules outside this flake, go to TBD.
+
+### Packages
+
+For the list of the packages go [here](./docs/package-list.md).
+
+If you want to use those packages outside this flake, go to TBD.
 
 ### Installation Guides
 
