@@ -23,6 +23,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
     - [Document Structure](#document-structure-1)
     - [Status Tags](#status-tags-1)
     - [Feature Bullets](#feature-bullets-1)
+  - [Maintenance](#maintenance)
   - [Table of Contents Rules](#table-of-contents-rules)
 
 ---
@@ -174,6 +175,15 @@ Status tags MUST appear before the feature list:
 - Features MUST be in bullet lists using hyphens.
 - Bullets MUST start with a verb in simple present tense.
 - Bullets MUST use active voice.
+
+---
+
+## Maintenance
+
+When adding a new NixOS module or package that includes a `README.md`, you MUST update the corresponding GitHub workflow file to ensure it is included in the automatically generated documentation:
+
+- For NixOS modules: Update the `READMES` list in `.github/workflows/update-module-list.yaml`.
+- For packages: Update the `READMES` list in `.github/workflows/update-package-list.yaml`.
 
 ---
 
