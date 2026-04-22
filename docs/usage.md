@@ -1,6 +1,6 @@
 # Usage Guide
 
-This guide explains how to use the NixOS modules and packages provided by this configuration, both internally (within this repository) and externally (as a flake input in another project).
+This guide explains how to use the NixOS modules and packages provided by this configuration, both internally (within this flake) and externally (as a flake input in another project).
 
 ## Important: Special Arguments
 
@@ -11,6 +11,8 @@ Key `specialArgs` used across modules:
 - `username`: The primary user's name (required for almost all modules).
 - `hostname`: The name of the host (used for networking and secrets).
 - `impermanence`: A boolean flag to enable/disable persistence logic.
+
+Refer to [special args docs](./special-args.md) for more informations.
 
 Ensure these are passed in your `nixosSystem` configuration:
 
@@ -32,7 +34,7 @@ modules = [
 
 Within this repository, modules and packages are exposed via the `self` argument.
 
-### Using Modules
+### Using Configuration Modules
 
 To use a module in a host configuration (e.g., in `hosts/armin/default.nix`), add it to the `modules` list:
 
@@ -52,7 +54,7 @@ To use a module in a host configuration (e.g., in `hosts/armin/default.nix`), ad
 
 ### Using Packages
 
-Custom packages (wrapped versions of tools) are available under `self.packages.${pkgs.system}`. You can use them in your configuration like this:
+Custom packages are available under `self.packages.${pkgs.system}`. You can use them in your configuration like this:
 
 ```nix
 { self, pkgs, ... }: {
@@ -62,6 +64,8 @@ Custom packages (wrapped versions of tools) are available under `self.packages.$
   ];
 }
 ```
+
+You can install them with home manager too, they're normal packages with all the functionality.
 
 ---
 
