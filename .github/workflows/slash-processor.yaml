@@ -79,7 +79,7 @@ jobs:
             **Command:** `${{ inputs.command }}`  
             **Run:** [View logs](${{ steps.vars.outputs.run-url }})  
             **Status:** ${{ needs.run-build.result }}
-            > 💡 Tip: Use `/test host=server1` to test a specific host
+            > Tip: Use `/test host=server1` to test a specific host
 
   run-pull:
     needs: acknowledge

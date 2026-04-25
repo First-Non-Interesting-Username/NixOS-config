@@ -35,5 +35,5 @@ You can omit them if you want, this way the generated wallpaper will be generate
 ## `impermanence`
 
 This special arg will enable impermanence when set to true.
-You have to import the `nixosModules.impermanence` for it to work.
+You have to import `nixosModules.impermanence` for it to work.
 All the files you may want to persist, will be automatically added by each module you import.

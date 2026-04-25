@@ -9,7 +9,7 @@ on:
       - "docs/PACKAGE_HEADER.md"
   workflow_dispatch:
   schedule:
-    - cron: "0 16 * * 5"
+    - cron: "0 16 * * 4"
 
 jobs:
   update-list:
