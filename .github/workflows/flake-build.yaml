@@ -79,8 +79,6 @@ jobs:
     if: needs.check-changed-files.outputs.has-changes == 'true'
     outputs:
       matrix: ${{ steps.list.outputs.matrix }}
-      host-names: ${{ steps.list.outputs.host-names }}
-      pkg-names: ${{ steps.list.outputs.pkg-names }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -102,8 +100,16 @@ jobs:
             }) (builtins.attrNames n)' \
             --json)
 
-          PKGS=$(nix eval .#packages.x86_64-linux \
-            --apply 'n: builtins.map (name: { inherit name; type = "pkg"; }) (builtins.attrNames n)' \
+          PKGS=$(nix eval .#packages \
+            --apply 'p: 
+              builtins.concatLists (
+                builtins.map (system: 
+                  builtins.map (name: { 
+                    inherit name system; 
+                    type = "pkg"; 
+                  }) (builtins.attrNames p.${system})
+                ) (builtins.attrNames p)
+              )' \
             --json)
 
           H_FILTER='${{ inputs.hosts }}'
@@ -120,11 +126,6 @@ jobs:
 
           MATRIX=$(jq -cn --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-
-          HOST_NAMES=$(echo "$HOSTS" | jq -r '[.[].name] | join(" ")')
-          PKG_NAMES=$(echo "$PKGS"   | jq -r '[.[].name] | join(" ")')
-          echo "host-names=$HOST_NAMES" >> $GITHUB_OUTPUT
-          echo "pkg-names=$PKG_NAMES"   >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
@@ -156,7 +157,7 @@ jobs:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
             build-dir = /nix/build
-            extra-platforms = aarch64-linux
+            ${{ matrix.system == 'aarch64-linux' && 'extra-platforms = aarch64-linux' || '' }}
 
       - uses: cachix/cachix-action@v17
         with:
@@ -183,14 +184,26 @@ jobs:
           done
 
       - name: Build packages (${{ matrix.system }})
-        if: needs.discover.outputs.pkg-names != ''
+        if: needs.discover.outputs.matrix != '[]'
+        env:
+          MATRIX_CONTEXT: ${{ needs.discover.outputs.matrix }}
         run: |
-          nix run github:Mic92/nix-fast-build -- \
-            --systems "${{ matrix.system }}" \
-            --no-nom \
-            --skip-cached \
-            --cachix-cache matrix \
-            --flake ".#packages.${{ matrix.system }}"
+          PKGS=$(echo "$MATRIX_CONTEXT" | jq -r --arg sys "${{ matrix.system }}" \
+            '.[] | select(.type == "pkg" and .system == $sys) | .name')
+
+          if [ -n "$PKGS" ]; then
+            ARGS=""
+            for pkg in $PKGS; do
+              ARGS="$ARGS --flake .#packages.${{ matrix.system }}.${pkg}"
+            done
+
+            nix run github:Mic92/nix-fast-build -- \
+              --systems "${{ matrix.system }}" \
+              --no-nom \
+              --skip-cached \
+              --cachix-cache matrix \
+              $ARGS
+          fi
 
   report:
     runs-on: ubuntu-latest
