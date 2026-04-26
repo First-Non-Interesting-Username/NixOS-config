@@ -26,6 +26,7 @@ UEFI is required too.
 The main difference between the two ISOs is the environment they provide:
 
 - **[John (Graphical)](hosts.md#john)**: This version includes a full GNOME desktop environment. It's the recommended choice for most users, providing a more intuitive interface and including graphical tools like a web browser for easier troubleshooting or manual configuration. It requires a system that supports Vulkan.
+  - **Note**: This configuration utilizes a tiling Window Manager extension (Forge). If you're not familiar with tiling WMs, you might want to check the [keybinds](../desktop-environment/keybinds.md).
 - **[Wall-E (CLI)](hosts.md#wall-e)**: This is a minimal, terminal-only version. It's ideal for systems with limited resources, servers, or older hardware that doesn't support modern graphical standards like Vulkan. It's faster to download and boot but requires more familiarity with the command line.
 
 ## Usage
