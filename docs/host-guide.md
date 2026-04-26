@@ -58,11 +58,14 @@ The full list of special args and the docs for them can be found [here](./specia
 
 ## 5. Generate and adjust hardware config
 
-Get the nixos-facter result (`sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json`) and put the generated file in the host root.
+1. Get the nixos-facter result (`sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json`) and put the generated file in the host root.
 
-Adjust nixos-hardware modules in `/hosts/{host}/hardware.nix`. [This](https://github.com/NixOS/nixos-hardware?tab=readme-ov-file#list-of-profiles) is the full list of those modules.
+2. Adjust nixos-hardware modules in `/hosts/{host}/hardware.nix`. [This](https://github.com/NixOS/nixos-hardware?tab=readme-ov-file#list-of-profiles) is the full list of those modules.
 
-Add disko config in `/hosts/{host}/disko.nix`. Visit [disko github](https://github.com/nix-community/disko) for more informations and help with configuration.
+3. Add disko config in `/hosts/{host}/disko.nix`.
+   - **IMPORTANT:** Use `/dev/disk/by-id/` instead of `/dev/sdX` or `/dev/nvmeX` for the `device` attribute to ensure persistent disk naming.
+   - You can find your disk ID by running `ls -l /dev/disk/by-id/` on the target machine.
+   - Visit [disko github](https://github.com/nix-community/disko) for more informations and help with configuration.
 
 ---
 
