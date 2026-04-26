@@ -57,6 +57,9 @@ This step is mandatory if your host uses secrets (SOPS).
 
 Replace `HOSTNAME` with your chosen host from the `hosts/` directory.
 
+> [!TIP]
+> **Overriding the Disk**: If your `disko.nix` uses a placeholder or you want to target a different drive than what is defined in the config, you can append `--disk <name> /dev/disk/by-id/your-id` to the command. `<name>` is the name given to the disk in your Nix configuration (usually `main`, `root`, etc.).
+
 ### For hosts WITHOUT impermanence
 
 ```bash
