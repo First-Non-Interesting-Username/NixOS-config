@@ -16,7 +16,8 @@ This document dives into the Nix-specific implementation details and the infrast
   - [CI/CD](#cicd)
   - [Docs](#docs)
   - [\*.md stack](#md-stack)
-  - [Other](#other)
+  - [Other files](`#other-files`)
+  - [Not in the repo](#not-in-the-repo)
 
 ## Nix and configuration model
 
@@ -226,7 +227,7 @@ If you are particularly perceptive or you wandered around the repo before readin
 - `README.md`. If you only know one of these files, it's this one. README is what is shown to everyone going on your repo; they're the main doc.
 - `SECURITY.md`. GitHub wanted me to setup that, so I did. It's a security policy if I even can name it like that; it barely contains anything.
 
-### Other
+### Other files
 
 There're also other files in the repo root I want to touch on:
 
@@ -235,6 +236,12 @@ There're also other files in the repo root I want to touch on:
 - `.sops.yaml` sets the keys for secrets, so I can use them.
 - `.vscode/` contains the vscode settings for working with the project.
 
+### Not in the repo
+
+I also maintain [a public cache](https://app.cachix.org/cache/matrix), so big builds do not rebuild on each host. CI/CD builds everything and uploads it to the cache.
+
+There is also [a fandom wiki](https://john-the-character.fandom.com/wiki/John_the_Character_Wiki) associated with this config. I name hosts after fictional characters. I ask in `#flavortown` on Slack for name ideas.
+One person answers with `john`, so I get a little creative and create john and the wiki so that name serves as a hostname for my ISO.
 ---
 
 [**Back to Quickstart**](./README.md) | [**On to Conclusion**](./conclusion.md)

@@ -83,25 +83,45 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
+
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
-      - name: Generate build matrix
+
+      - name: Generate build matrix & target lists
         id: list
         run: |
-          HOSTS=$(nix eval .#nixosConfigurations --apply 'n: builtins.map (name: { inherit name; type = "host"; }) (builtins.attrNames n)' --json)
+          HOSTS=$(nix eval .#nixosConfigurations \
+            --apply 'n: builtins.map (name: { 
+            inherit name; 
+            type = "host"; 
+            system = n.${name}.config.nixpkgs.system; 
+            }) (builtins.attrNames n)' \
+            --json)
 
-          PKGS=$(nix eval .#packages.x86_64-linux --apply 'n: builtins.map (name: { inherit name; type = "pkg"; }) (builtins.attrNames n)' --json)
+          PKGS=$(nix eval .#packages \
+            --apply 'p: 
+              builtins.concatLists (
+                builtins.map (system: 
+                  builtins.map (name: { 
+                    inherit name system; 
+                    type = "pkg"; 
+                  }) (builtins.attrNames p.${system})
+                ) (builtins.attrNames p)
+              )' \
+            --json)
 
           H_FILTER='${{ inputs.hosts }}'
           if [ "$H_FILTER" != "[]" ] && [ -n "$H_FILTER" ]; then
-            HOSTS=$(echo "$HOSTS" | jq --argjson filter "$H_FILTER" '[.[] | select(.name as $n | $filter | index($n))]')
+            HOSTS=$(echo "$HOSTS" | jq --argjson filter "$H_FILTER" \
+              '[.[] | select(.name as $n | $filter | index($n))]')
           fi
 
           P_FILTER='${{ inputs.packages }}'
           if [ "$P_FILTER" != "[]" ] && [ -n "$P_FILTER" ]; then
-            PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" '[.[] | select(.name as $n | $filter | index($n))]')
+            PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" \
+              '[.[] | select(.name as $n | $filter | index($n))]')
           fi
 
           MATRIX=$(jq -cn --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
@@ -113,26 +133,31 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ${{ fromJson(needs.discover.outputs.matrix) }}
+        system: [x86_64-linux, aarch64-linux]
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
 
-      - name: Enable aarch64 via QEMU
-        uses: docker/setup-qemu-action@v4
-        with:
-          platforms: arm64
-
       - uses: wimpysworld/nothing-but-nix@v10
         with:
           hatchet-protocol: cleave
+
+      - name: Enable aarch64 via QEMU binfmt
+        if: matrix.system == 'aarch64-linux'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
 
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
             build-dir = /nix/build
+            ${{ matrix.system == 'aarch64-linux' && 'extra-platforms = aarch64-linux' || '' }}
 
       - uses: cachix/cachix-action@v17
         with:
@@ -140,12 +165,43 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile install nixpkgs#cachix"
 
-      - name: Build ${{ matrix.target.type }}:${{ matrix.target.name }}
+      - name: Build NixOS configurations
+        if: needs.discover.outputs.matrix != '[]'
+        env:
+          MATRIX_CONTEXT: ${{ needs.discover.outputs.matrix }}
         run: |
-          if [ "${{ matrix.target.type }}" = "host" ]; then
-            nix build .#nixosConfigurations.${{ matrix.target.name }}.config.system.build.toplevel
-          else
-            nix build .#${{ matrix.target.name }}
+          HOSTS=$(echo "$MATRIX_CONTEXT" | jq -r --arg sys "${{ matrix.system }}" \
+          '.[] | select(.type == "host" and .system == $sys) | .name')
+
+          for host in $HOSTS; do
+            echo "::group::Building NixOS config: $host (${{ matrix.system }})"
+            nix run github:Mic92/nix-fast-build -- \
+              --no-nom \
+              --skip-cached \
+              --cachix-cache matrix \
+              --flake ".#nixosConfigurations.${host}.config.system.build.toplevel"
+            echo "::endgroup::"
+          done
+
+      - name: Build packages (${{ matrix.system }})
+        if: needs.discover.outputs.matrix != '[]'
+        env:
+          MATRIX_CONTEXT: ${{ needs.discover.outputs.matrix }}
+        run: |
+          PKGS=$(echo "$MATRIX_CONTEXT" | jq -r --arg sys "${{ matrix.system }}" \
+            '.[] | select(.type == "pkg" and .system == $sys) | .name')
+
+          if [ -n "$PKGS" ]; then
+            for pkg in $PKGS; do
+              echo "::group::Building package: $pkg (${{ matrix.system }})"
+              nix run github:Mic92/nix-fast-build -- \
+                --systems "${{ matrix.system }}" \
+                --no-nom \
+                --skip-cached \
+                --cachix-cache matrix \
+                --flake ".#packages.${{ matrix.system }}.${pkg}"
+              echo "::endgroup::"
+            done
           fi
 
   report:
@@ -165,21 +221,25 @@ jobs:
               repo: context.repo.repo,
               run_id: context.runId
             });
+
             const failed = jobs.jobs
-              .filter(j => j.conclusion === 'failure' && (j.name.includes('host') || j.name.includes('pkg')))
+              .filter(j => j.conclusion === 'failure' && j.name.startsWith('build'))
               .map(j => `- \`${j.name}\` — [logs](${j.html_url})`)
               .join('\n');
+
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: 'ci-failure',
               state: 'open'
             });
+
             const title = 'Flake build failures';
-            const body = `## Flake Build Failures\n\n` +
+            const body =
+              `## Flake Build Failures\n\n` +
               `**Workflow:** ${context.workflow}\n` +
               `**Run:** [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n\n` +
-              `### Failed targets\n${failed || 'Unknown — check run logs'}`;
+              `### Failed steps\n${failed || 'Unknown — check run logs'}`;
 
             const existing = issues.find(i => i.title === title);
             if (existing) {

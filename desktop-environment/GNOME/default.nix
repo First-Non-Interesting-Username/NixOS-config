@@ -159,6 +159,8 @@
             "org/gnome/desktop/wm/preferences" = {
               button-layout = "appmenu:minimize,maximize,close";
               resize-with-right-button = true;
+              focus-mode = "sloppy";
+              auto-raise = false;
             };
             "org/gnome/desktop/wm/keybindings" = {
               switch-to-workspace-1 = ["<Super>1"];
@@ -175,6 +177,12 @@
               switch-input-source-backward = [];
               activate-window-menu = ["<Alt><Super>space"];
               minimize = ["<Super>g"];
+              move-to-workspace-left = [];
+              move-to-workspace-right = [];
+              move-to-monitor-left = [];
+              move-to-monitor-right = [];
+              move-to-monitor-up = [];
+              move-to-monitor-down = [];
             };
             "org/gnome/login-screen" = {
               enable-fingerprint-authentication = true;
@@ -209,7 +217,7 @@
               menu-button-icon-image = 23;
               menu-button-icon-size = 20;
               menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
-              menu-button-terminal = "${self.packages.${pkgs.system}.foot}/bin/foot";
+              menu-button-terminal = "${self.packages.${pkgs.stdenv.hostPlatform.system}.foot}/bin/foot";
               show-activities-button = true;
               show-gamemode = true;
               show-lockscreen = true;
@@ -268,12 +276,15 @@
             "org/gnome/shell/extensions/forge" = {
               css-last-update = 37;
               focus-border-toggle = true;
-              focus-on-hover-enabled = true;
+              focus-on-hover-enabled = false;
               move-pointer-focus-enabled = true;
               preview-hint-enabled = true;
               tiling-mode-enabled = true;
               window-gap-hidden-on-single = true;
               window-gap-size-increment = 1;
+              dnd-center-layout = "swap";
+              stacked-tiling-mode-enabled = false;
+              tabbed-tiling-mode-enabled = false;
             };
             "org/gnome/shell/extensions/gsconnect" = {
               devices = [];
@@ -349,72 +360,103 @@
             };
             "org/gnome/shell/extensions/forge/keybindings" = {
               focus-center = [];
-              focus-down = [
-                "<Super>j"
-                "<Super>Down"
-              ];
-              focus-left = [
+              window-focus-left = [
                 "<Super>h"
                 "<Super>Left"
               ];
-              focus-right = [
-                "<Super>l"
-                "<Super>Right"
+              window-focus-down = [
+                "<Super>j"
+                "<Super>Down"
               ];
-              focus-up = [
+              window-focus-up = [
                 "<Super>k"
                 "<Super>Up"
               ];
-              swap-down = [
-                "<Super><Ctrl>j"
-                "<Super><Ctrl>Down"
+              window-focus-right = [
+                "<Super>l"
+                "<Super>Right"
               ];
-              swap-left = [
-                "<Super><Ctrl>h"
-                "<Super><Ctrl>Left"
+
+              window-swap-left = [
+                "<Super><Control>h"
+                "<Super><Control>Left"
               ];
-              swap-right = [
-                "<Super><Ctrl>l"
-                "<Super><Ctrl>Right"
+              window-swap-down = [
+                "<Super><Control>j"
+                "<Super><Control>Down"
               ];
-              swap-up = [
-                "<Super><Ctrl>k"
-                "<Super><Ctrl>Up"
+              window-swap-up = [
+                "<Super><Control>k"
+                "<Super><Control>Up"
               ];
-              resize-down = [
-                "<Super><Shift>j"
-                "<Super><Shift>Down"
+              window-swap-right = [
+                "<Super><Control>l"
+                "<Super><Control>Right"
               ];
-              resize-left = [
-                "<Super><Shift>h"
+              window-resize-left-increase = [
                 "<Super><Shift>Left"
+                "<Super><Shift>h"
               ];
-              resize-right = [
-                "<Super><Shift>l"
+              window-resize-left-decrease = [
+                "<Super><Shift><Control>Right"
+                "<Super><Shift><Control>l"
+              ];
+
+              window-resize-right-increase = [
                 "<Super><Shift>Right"
+                "<Super><Shift>l"
               ];
-              resize-up = [
-                "<Super><Shift>k"
+              window-resize-right-decrease = [
+                "<Super><Shift><Control>Left"
+                "<Super><Shift><Control>h"
+              ];
+
+              window-resize-top-increase = [
                 "<Super><Shift>Up"
+                "<Super><Shift>k"
               ];
-              toggle-maximize = ["<Super>g"];
-              toggle-fullscreen = ["<Super>f"];
-              close = ["<Super>q"];
-              snap-down = [];
-              snap-left = [];
-              snap-right = [];
-              snap-up = [];
-              tile-down = [];
-              tile-left = [];
-              tile-right = [];
-              tile-up = [];
-              promote = [];
-              promote-all = [];
-              restart = [];
+              window-resize-top-decrease = [
+                "<Super><Shift><Control>Down"
+                "<Super><Shift><Control>j"
+              ];
+
+              window-resize-bottom-increase = [
+                "<Super><Shift>Down"
+                "<Super><Shift>j"
+              ];
+              window-resize-bottom-decrease = [
+                "<Super><Shift><Control>Up"
+                "<Super><Shift><Control>k"
+              ];
+
+              workspace-active-tile-toggle = [];
+
+              con-split-horizontal = [];
+              con-split-layout-toggle = [];
+              con-split-vertical = [];
+              con-stacked-layout-toggle = [];
+              con-tabbed-layout-toggle = [];
+              con-tabbed-showtab-decoration-toggle = [];
+
+              window-snap-center = [];
+              window-snap-one-third-left = [];
+              window-snap-one-third-right = [];
+              window-snap-two-third-left = [];
+              window-snap-two-third-right = [];
+
+              window-swap-last-active = [
+                "<Super><Shift>Return"
+              ];
+
+              window-toggle-always-float = [];
+
+              window-toggle-float = [
+                "<Super>c"
+              ];
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
               binding = "<Super>Return";
-              command = "${self.packages.${pkgs.system}.foot}/bin/foot";
+              command = "${self.packages.${pkgs.stdenv.hostPlatform.system}.foot}/bin/foot";
               name = "Terminal";
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {
