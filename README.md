@@ -6,12 +6,16 @@
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
+> [!TIP]
+> If you are coming from Flavortown, check [this docs page](./docs/flavortown/README.md).
+> You are free to do whatever you want.
+
 ## Table of Contents
 
-- [NixOS Config](#nixos-config)
 - [Hosts Matrix](#hosts-matrix)
 - [Docs](#docs)
   - [Modules](#modules)
+  - [Packages](#packages)
   - [Installation Guides](#installation-guides)
   - [Host creation guide](#host-creation-guide)
   - [Secrets](#secrets)
@@ -33,6 +37,26 @@
 
 For more in depth explanation, visit [hosts](./docs/hosts.md).
 
+## Quickstart
+
+To use modules or packages from this flake in your own configuration, add it as an input:
+
+```nix
+inputs.nixos-config.url = "github:First-Non-Interesting-Username/NixOS-config";
+```
+
+Then, include the desired modules in your `nixosSystem`:
+
+```nix
+modules = [
+  inputs.nixos-config.nixosModules.audio
+  # Note: Many modules require specialArgs like 'username'
+  # This is described in the module docs
+];
+```
+
+For detailed instructions on internal and external usage, see the [Usage Guide](./docs/usage.md).
+
 ## Docs
 
 ### Modules
@@ -47,7 +71,13 @@ For more in depth explanation, visit [hosts](./docs/hosts.md).
 
 For the full list, go [here](./docs/module-list.md).
 
-If you want to use those modules in outside repos, go to TBD.
+If you want to use those modules outside this flake, go to [Usage Guide](./docs/usage.md).
+
+### Packages
+
+For the list of the packages go [here](./docs/package-list.md).
+
+If you want to use those packages outside this flake, go to [Usage Guide](./docs/usage.md).
 
 ### Installation Guides
 

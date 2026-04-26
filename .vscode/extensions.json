@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "bbenoist.nix",
+    "jnoortheen.nix-ide",
+    "esbenp.prettier-vscode",
+    "wakatime.vscode-wakatime"
+  ]
+}

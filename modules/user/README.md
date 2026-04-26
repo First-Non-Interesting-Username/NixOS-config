@@ -23,4 +23,4 @@ DON'T USE ON PRODUCTION MACHINES
 
 ## nixosModules.user-debug
 
-- Sets root password to `debug`.
+- Sets root password to `nixos`.

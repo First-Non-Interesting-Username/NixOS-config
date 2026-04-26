@@ -108,7 +108,7 @@ _: {
     };
     nixosModules.user-debug = {lib, ...}: {
       users.users.root = {
-        initialPassword = "debug";
+        initialPassword = "nixos";
         hashedPassword = lib.mkForce null;
       };
     };

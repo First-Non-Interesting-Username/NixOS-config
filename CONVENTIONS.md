@@ -19,6 +19,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
     - [IMPERATIVE Modules](#imperative-modules)
     - [Section Dividers](#section-dividers)
     - [Feature Bullets](#feature-bullets)
+  - [Package Documentation](#package-documentation)
+    - [Document Structure](#document-structure-1)
+    - [Status Tags](#status-tags-1)
+    - [Feature Bullets](#feature-bullets-1)
+  - [Maintenance](#maintenance)
   - [Table of Contents Rules](#table-of-contents-rules)
 
 ---
@@ -139,6 +144,49 @@ Use `###` with no text after to separate distinct groups of features within the 
 
 ---
 
+## Package Documentation
+
+Each custom package or package wrapper requires a `README.md` in its directory.
+
+### Document Structure
+
+```md
+## packages.PACKAGE_NAME
+
+[Status tag]
+
+[Description]
+
+- Feature bullet 1
+- Feature bullet 2
+- Feature bullet 3
+```
+
+### Status Tags
+
+Status tags MUST appear before the feature list:
+
+- `WIP` - Work in progress, prone to change.
+- `TBD` - Yet to be ready to be used.
+- `PERSONAL` - Personal use only.
+
+### Feature Bullets
+
+- Features MUST be in bullet lists using hyphens.
+- Bullets MUST start with a verb in simple present tense.
+- Bullets MUST use active voice.
+
+---
+
+## Maintenance
+
+When adding a new NixOS module or package that includes a `README.md`, you MUST update the corresponding GitHub workflow file to ensure it is included in the automatically generated documentation:
+
+- For NixOS modules: Update the `READMES` list in `.github/workflows/update-module-list.yaml`.
+- For packages: Update the `READMES` list in `.github/workflows/update-package-list.yaml`.
+
+---
+
 ## Table of Contents Rules
 
 All documents with more than 3 sections MUST have a Table of Contents.
@@ -149,6 +197,3 @@ The Table of Contents MUST:
 - Use a nested bullet list.
 - Link to all ## headings using anchor links.
 - Use the heading text as the link text.
-- NOT include "You are done!" or similar conclusion sections.
-
-The ## headings in the document MUST NOT include numbering prefixes.
