@@ -189,6 +189,10 @@ WIP
 - Disables channels.
 - Allows unfree packages and disallows broken ones.
 
+## nixosModules.opencode
+
+- Installs Opencode.
+
 ## nixosModules.shell
 
 - Installs Zsh systemwide and sets it up for your user.
@@ -196,28 +200,46 @@ WIP
 
 ###
 
-- Enables and sets up:
-- Nix-index.
-- Starship prompt.
-- Atuin.
-- Eza.
-- Zoxide.
-- Tealdeer.
+Enables and sets up:
+
+- Nix-index
+- Starship prompt
+- Atuin
+- Eza
+- Zoxide
+- Tealdeer
 - Television
-- Pay-respects.
+- Pay-respects
 - Lazygit
-- Btop.
-- Bat.
-- Fd.
-- Fastfetch.
-- Trash CLI.
-- Ugrep.
+- Btop
+- Bat
+- Fd
+- Fastfetch
+- Trash CLI
+- Ugrep
 
 ## nixosModules.terminal
 
 WIP
 
 - Installs Foot and Kitty.
+
+# ISO
+
+## nixosModules.iso
+
+- Installs few basic packages: text editors, installers.
+- Embedds my flake into the ISO.
+
+## nixosModules.iso-graphical
+
+- Imports the graphical installation CD module from Nixpkgs.
+- Adds few additiond packages.
+
+## nixosModules.iso-terminal
+
+- Imports the base installation CD module from Nixpkgs.
+- Includes everything in the base iso module.
 
 # Services
 
@@ -366,4 +388,4 @@ DON'T USE ON PRODUCTION MACHINES
 
 ## nixosModules.user-debug
 
-- Sets root password to `debug`.
+- Sets root password to `nixos`.
