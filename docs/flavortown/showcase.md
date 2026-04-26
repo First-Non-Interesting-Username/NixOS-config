@@ -213,7 +213,7 @@ You're free to discover the docs yourself. All the READMEs explaining modules ar
 
 ### \*.md stack
 
-If you are particularly perceptive or you wandered around the repo before reading this project, you may have noticed that I have a _few_ markdown files in the root of the repo.
+If you are particularly perceptive or you wandered around the repo before reading this document, you may have noticed that I have a _few_ markdown files in the root of the repo.
 
 - `AGENTS.md` is the documentation for AI AGENTS. I like to keep it, even if I don't utilize AI that much.
 - `CLA.md` is my way of adding [contributor license agreements](https://en.wikipedia.org/wiki/Contributor_license_agreement) to the project. I know CLAs are controversial, but I think I will want to make this project private some time in the future, so I need to be prepared.

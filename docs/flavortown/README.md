@@ -7,9 +7,9 @@ Welcome to the Flavortown showcase! This guide will help you quickly explore the
 - [Introduction](#introduction)
 - [Decision Tree](#decision-tree)
 - [Setup Instructions](#setup-instructions)
-    - [ISO](#iso)
-    - [Packages](#packages)
-    - [Code](#code)
+  - [ISO](#iso)
+  - [Packages](#packages)
+  - [Code](#code)
 - [Detailed Sections](#detailed-sections)
 
 ## Introduction
@@ -40,13 +40,13 @@ graph TD
     Choice -- "Check out packages" --> RunPkg[Run packages with 'nix run']
     Choice -- "Explore the code" --> Code[Browse 'hosts/', 'modules/', 'packages/']
     Choice -- "See the infrastructure" --> Infra[Check '.github/workflows/' and 'docs/']
-    
+
     ISO --> ISOType{Which ISO?}
     ISOType -- "Graphical (GNOME)" --> John[John]
     ISOType -- "CLI / Minimal" --> WallE[Wall-E]
-    
+
     RunPkg --> PkgList[Check 'docs/package-list.md' for available wrappers]
-    
+
     Code --> NixDocs[Read 'docs/module-list.md']
     Infra --> WorkflowDocs[Read 'docs/github-workflows.md']
 ```
@@ -59,9 +59,9 @@ The easiest way to see the system in action is to boot one of the provided ISOs.
 
 - **[John (Graphical)](../hosts.md#john)**: Includes a full GNOME desktop environment. Recommended for most users. Requires Vulkan support.
 - **[Wall-E (CLI)](../hosts.md#wall-e)**: Minimal, terminal-only version for low-resource systems.
-- **Credentials**: 
-    - Username: `nixos`
-    - Password: `nixos` (also for `sudo`)
+- **Credentials**:
+  - Username: `nixos`
+  - Password: `nixos` (also for `sudo`)
 
 For more details, see the [ISO guide](../iso.md).
 
@@ -70,7 +70,7 @@ For more details, see the [ISO guide](../iso.md).
 You don't need to install the whole system to try my custom package wrappers. If you have Nix installed, you can run them directly:
 
 ```bash
-# Run btop with my custom theme/config
+# Run btop with my custom config
 nix run github:First-Non-Interesting-Username/NixOS-config#btop
 
 # Run fastfetch with my custom configuration
@@ -80,7 +80,7 @@ nix run github:First-Non-Interesting-Username/NixOS-config#fastfetch
 nix run github:First-Non-Interesting-Username/NixOS-config#foot
 ```
 
-Check the [Package List](../package-list.md) for more information.
+Check the [Package List](../package-list.md) for explanation of the packages.
 
 ### Code
 
@@ -96,5 +96,5 @@ If you want to dive into the Nix code itself:
 
 Once you've tried the system, you can read more about the technical details:
 
-- [**Technical Showcase**](./showcase.md): Deep dive into the Nix code and my favorite snippets.
-- [**Conclusion**](./conclusion.md): Final thoughts and appreciation.
+- **[Technical Showcase](./showcase.md)**: Deep dive into the Nix code and my favorite snippets.
+- **[Conclusion](./conclusion.md)**: Final thoughts and appreciation.
