@@ -11,6 +11,9 @@ on:
   schedule:
     - cron: "0 16 * * 5"
 
+permissions:
+  contents: read
+
 jobs:
   update-list:
     runs-on: ubuntu-latest

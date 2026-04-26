@@ -50,6 +50,9 @@ on:
         description: "JSON list of targets attempted"
         value: ${{ jobs.discover.outputs.matrix }}
 
+permissions:
+  contents: read
+
 jobs:
   check-changed-files:
     runs-on: ubuntu-latest
@@ -150,6 +153,7 @@ jobs:
     needs: build
     if: failure() && (inputs.create-issue-on-failure == true || inputs.create-issue-on-failure == '')
     permissions:
+      contents: read
       issues: write
     steps:
       - name: Report failures to issue

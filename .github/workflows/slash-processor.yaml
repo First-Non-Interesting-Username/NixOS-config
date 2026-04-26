@@ -28,9 +28,15 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   acknowledge:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - name: Add reaction
         uses: peter-evans/create-or-update-comment@v5
@@ -55,6 +61,9 @@ jobs:
     needs: run-build
     runs-on: ubuntu-latest
     if: ${{ always() && (inputs.command == 'test' || inputs.command == 'build' || inputs.command == 'rebuild') }}
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - name: Update reaction to dispatched
         uses: peter-evans/create-or-update-comment@v5
@@ -85,6 +94,10 @@ jobs:
     needs: acknowledge
     runs-on: ubuntu-latest
     if: ${{ inputs.command == 'pull' }}
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Update reaction to dispatched
         uses: peter-evans/create-or-update-comment@v5
