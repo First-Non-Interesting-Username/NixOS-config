@@ -16,7 +16,7 @@ This document dives into the Nix-specific implementation details and the infrast
   - [CI/CD](#cicd)
   - [Docs](#docs)
   - [\*.md stack](#md-stack)
-  - [Other Files](#other-files)
+  - [Other files](`#other-files`)
   - [Not in the repo](#not-in-the-repo)
 
 ## Nix and configuration model
