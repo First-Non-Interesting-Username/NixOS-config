@@ -209,7 +209,7 @@
               menu-button-icon-image = 23;
               menu-button-icon-size = 20;
               menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
-              menu-button-terminal = "${self.packages.${pkgs.system}.foot}/bin/foot";
+              menu-button-terminal = "${self.packages.${pkgs.stdenv.hostPlatform.system}.foot}/bin/foot";
               show-activities-button = true;
               show-gamemode = true;
               show-lockscreen = true;
@@ -414,7 +414,7 @@
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
               binding = "<Super>Return";
-              command = "${self.packages.${pkgs.system}.foot}/bin/foot";
+              command = "${self.packages.${pkgs.stdenv.hostPlatform.system}.foot}/bin/foot";
               name = "Terminal";
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {

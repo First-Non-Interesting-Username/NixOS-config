@@ -54,13 +54,13 @@ To use a module in a host configuration (e.g., in `hosts/armin/default.nix`), ad
 
 ### Using Packages
 
-Custom packages are available under `self.packages.${pkgs.system}`. You can use them in your configuration like this:
+Custom packages are available under `self.packages.${pkgs.stdenv.hostPlatform.system}`. You can use them in your configuration like this:
 
 ```nix
 { self, pkgs, ... }: {
   environment.systemPackages = [
-    self.packages.${pkgs.system}.foot
-    self.packages.${pkgs.system}.btop
+    self.packages.${pkgs.stdenv.hostPlatform.system}.foot
+    self.packages.${pkgs.stdenv.hostPlatform.system}.btop
   ];
 }
 ```
