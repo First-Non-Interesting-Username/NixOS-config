@@ -4,11 +4,15 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions:
+  contents: read
+
 jobs:
   set-pr-title:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: read
 
     steps:
       - name: Extract conventional commit message from branch name

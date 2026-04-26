@@ -6,6 +6,9 @@ on:
   pull_request_review_comment:
     types: [created]
 
+permissions:
+  contents: read
+
 jobs:
   opencode:
     if: >
