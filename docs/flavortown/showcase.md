@@ -238,11 +238,10 @@ There're also other files in the repo root I want to touch on:
 
 ### Not in the repo
 
-I've also set up [a public cache](https://app.cachix.org/cache/matrix), so if I build something big, I don't have to rebuild on each host. Everything is built by CI/CD and uploaded to the cache.
+I also maintain [a public cache](https://app.cachix.org/cache/matrix), so big builds do not rebuild on each host. CI/CD builds everything and uploads it to the cache.
 
-There's also [fandom wiki](https://john-the-character.fandom.com/wiki/John_the_Character_Wiki) associated with this config. I name my hosts after fictional characters. I asked on #flavortown on slack if anyone has any ideas.
-The only person who answed said just `john` so I got little creative and created john and the wiki specifically for that name to be used as a hostname for my ISO.
-
+There is also [a fandom wiki](https://john-the-character.fandom.com/wiki/John_the_Character_Wiki) associated with this config. I name hosts after fictional characters. I ask in `#flavortown` on Slack for name ideas.
+One person answers with `john`, so I get a little creative and create john and the wiki so that name serves as a hostname for my ISO.
 ---
 
 [**Back to Quickstart**](./README.md) | [**On to Conclusion**](./conclusion.md)
