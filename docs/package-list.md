@@ -1,13 +1,11 @@
 # Package List
 
-
 ## packages.btop
 
 Btop wrapped with nix-wrapper-modules.
 
 - Gruvbox Dark theme
 - Vim keys by default
-
 
 ## packages.fastfetch
 
@@ -17,7 +15,6 @@ Fastfetch wrapped with nix-wrapper-modules.
 - Replaces text labels with Nerd Font icons and a blue color scheme.
 - Simplifies Memory and Disk readouts to show used vs. total capacity.
 
-
 ## packages.foot
 
 Foot wrapped with nix-wrapper-modules.
@@ -25,5 +22,3 @@ Foot wrapped with nix-wrapper-modules.
 - Gruvbox Dark theme
 - JetBrainsMono Nerd font
 - Disabled bell and CSDs
-
-
