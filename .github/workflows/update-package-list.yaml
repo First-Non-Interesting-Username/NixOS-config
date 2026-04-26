@@ -1,0 +1,56 @@
+name: Update Package List
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/**/README.md"
+      - "docs/PACKAGE_HEADER.md"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * 4"
+
+jobs:
+  update-list:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate package-list.md
+        run: |
+          READMES=(
+            "packages/wrappers/btop/README.md"
+            "packages/wrappers/fastfetch/README.md"
+            "packages/wrappers/foot/README.md"
+          )
+
+          cat /dev/null > docs/package-list.md
+
+          cat docs/PACKAGE_HEADER.md >> docs/package-list.md
+          echo -e "\n" >> docs/package-list.md
+
+          for readme in "${READMES[@]}"; do
+            if [ -f "$readme" ]; then
+              cat "$readme" >> docs/package-list.md
+              echo -e "\n" >> docs/package-list.md
+            fi
+          done
+
+      - name: Format with Prettier
+        run: npx prettier --write docs/package-list.md
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "docs: update package-list.md"
+          title: "docs: update package-list.md"
+          body: |
+            This is an automated PR to update `docs/package-list.md` based on changes in package READMEs.
+
+            **Reminder:** Remember to update the hardcoded list in [this workflow file](.github/workflows/update-package-list.yaml).
+          branch: auto-update-package-list
+          delete-branch: true

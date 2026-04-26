@@ -46,6 +46,10 @@ WIP
 - Disables channels.
 - Allows unfree packages and disallows broken ones.
 
+## nixosModules.opencode
+
+- Installs Opencode.
+
 ## nixosModules.shell
 
 - Installs Zsh systemwide and sets it up for your user.
@@ -53,22 +57,23 @@ WIP
 
 ###
 
-- Enables and sets up:
-- Nix-index.
-- Starship prompt.
-- Atuin.
-- Eza.
-- Zoxide.
-- Tealdeer.
+Enables and sets up:
+
+- Nix-index
+- Starship prompt
+- Atuin
+- Eza
+- Zoxide
+- Tealdeer
 - Television
-- Pay-respects.
+- Pay-respects
 - Lazygit
-- Btop.
-- Bat.
-- Fd.
-- Fastfetch.
-- Trash CLI.
-- Ugrep.
+- Btop
+- Bat
+- Fd
+- Fastfetch
+- Trash CLI
+- Ugrep
 
 ## nixosModules.terminal
 

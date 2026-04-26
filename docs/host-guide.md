@@ -14,13 +14,23 @@
 
 # Steps
 
+> [!IMPORTANT]
+> DO NOT REUSE HOSTS
+> I follow `one host = one computer` rule, therefore hosts are purpose made for the hardware of each machine.
+
 ## 1. Find a host that you want to base the new host on
 
-The list of all hosts is avalible at [hosts.md](./hosts.md).
+Use the decision tree if you are not sure which one to use.
 
-Select the one you want to base your host on.
-
-The [template host](./hosts.md#template) is suggested in all cases.
+```mermaid
+flowchart TD
+  start([Start here]) --> guide{Does your host need <br/> a specific installation guide?}
+  guide --> |Yes| see_guides([Use the host mentioned <br/> in that guide])
+  guide --> |No| host_type{What is the <br/> type of the host?}
+  host_type --> |ISO| wall_e([Use Wall-E as a template])
+  host_type --> |Desktop| armin([Use Armin as a template])
+  host_type --> |Server / Other| template([Use Template as a template])
+```
 
 ---
 
@@ -40,7 +50,7 @@ Full list of modules is avalible [here](./module-list.md).
 
 ## 4. Adjust special args
 
-You need to at least change the hostname.
+You need to change the hostname at least, else you will get build errors.
 
 The full list of special args and the docs for them can be found [here](./special-args.md).
 

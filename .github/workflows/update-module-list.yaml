@@ -22,11 +22,12 @@ jobs:
 
       - name: Generate module-list.md
         run: |
+          # IMPORTANT: Update this list whenever a new module README is added
           READMES=(
             "modules/applications/README.md"
-            "modules/desktop-enviroment/README.md"
             "modules/desktop/README.md"
             "modules/development/README.md"
+            "modules/iso/README.md"
             "modules/services/README.md"
             "modules/system/README.md"
             "modules/user/README.md"

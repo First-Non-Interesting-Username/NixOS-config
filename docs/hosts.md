@@ -4,8 +4,7 @@
   - [Armin](#Armin)
   - [Iroh](#Iroh)
   - [John](#john)
-  - [Wall-E](`#wall-e`)
-  - [Template](#template)
+  - [Wall-E](#wall-e)
 - [Unused names/names suggestions](#unused-namesnames-suggestions)
 
 # Hosts
@@ -24,7 +23,7 @@ Specs:
 
 At this moment, this machine runs GNOME based desktop config.
 
-This host can be used as a template for other configs.
+This host can be installed with every standard installation method.
 
 The name of this host is based on [Armin Arlert](https://attackontitan.fandom.com/wiki/Armin_Arlert).
 
@@ -44,26 +43,31 @@ Specs:
 
 This host SHOULD NOT be used as a template for other configs.
 
+This host can be installed with every standard installation method.
+
 The name of this host is based on [Uncle Iroh](https://en.wikipedia.org/wiki/Iroh).
 
 ## John
 
-This is the official graphical ISO of the project.
+This is the official graphical [ISO](./iso.md) of the project.
 It should be used as an ISO for all graphical installations of the system, on machines that support Vulkan.
 
-This host can be used as a template for other configs, especially other ISOs.
+This host can't be installed.
 
 The name of this host is based on [John the Character](https://john-the-character.fandom.com/wiki/John)
 
 ## Wall-E
 
-This is the official CLI ISO of the project.
+This is the official CLI [ISO](./iso.md) of the project.
 It should be used as an ISO for all non-graphical installations of the system, including machines that do not support Vulkan.
+
+This host can't be installed.
 
 This host can be used as a template for other configs, especially other ISOs.
 
 The name of this host is based on [Wall-E](<https://en.wikipedia.org/wiki/WALL-E_(character)>)
 
+<!--
 ## Template
 
 This host isn't real.
@@ -77,9 +81,10 @@ Specs:
 - DISK(S)
 - OTHER NOTABLE HARDWARE
 
-This host SHOULD be used as a template for other configs.
+This host (INSTALLATION REQUIREMENTS).
 
 The name of this host is based on [Character](character.wiki.example.com)
+-->
 
 # Unused names/names suggestions
 
@@ -92,6 +97,6 @@ There are only few rules regarding naming hosts:
 - Creator or author of the work the character comes from MUST NOT be a bad person, as defined by my subjective moral standards.
 - The character MUST NOT be a bad person, as defined by my subjective moral standards.
 
-The names:
+Names:
 
 - Annabeth.

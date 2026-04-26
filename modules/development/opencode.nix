@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   flake = {
     nixosModules.opencode = {
       lib,
@@ -25,21 +25,8 @@
         "LLM_keys/openrouter".owner = username;
         "LLM_keys/together".owner = username;
       };
-      home-manager.users.${username} = {osConfig, ...}: {
-        imports = [
-          self.homeModules.free-coding-models
-        ];
-
+      home-manager.users.${username} = _: {
         programs = {
-          free-coding-models = {
-            enable = true;
-            nvidia-api-key-path = osConfig.sops.secrets."LLM_keys/NVIDIA".path;
-            zai-api-key-path = osConfig.sops.secrets."LLM_keys/ZAI".path;
-            groq-api-key-path = osConfig.sops.secrets."LLM_keys/groq".path;
-            cerebras-api-key-path = osConfig.sops.secrets."LLM_keys/cerebras".path;
-            openrouter-api-key-path = osConfig.sops.secrets."LLM_keys/openrouter".path;
-            together-api-key-path = osConfig.sops.secrets."LLM_keys/together".path;
-          };
           opencode = {
             enable = true;
           };
