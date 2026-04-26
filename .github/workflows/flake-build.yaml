@@ -192,17 +192,16 @@ jobs:
             '.[] | select(.type == "pkg" and .system == $sys) | .name')
 
           if [ -n "$PKGS" ]; then
-            ARGS=""
             for pkg in $PKGS; do
-              ARGS="$ARGS --flake .#packages.${{ matrix.system }}.${pkg}"
+              echo "::group::Building package: $pkg (${{ matrix.system }})"
+              nix run github:Mic92/nix-fast-build -- \
+                --systems "${{ matrix.system }}" \
+                --no-nom \
+                --skip-cached \
+                --cachix-cache matrix \
+                --flake ".#packages.${{ matrix.system }}.${pkg}"
+              echo "::endgroup::"
             done
-
-            nix run github:Mic92/nix-fast-build -- \
-              --systems "${{ matrix.system }}" \
-              --no-nom \
-              --skip-cached \
-              --cachix-cache matrix \
-              $ARGS
           fi
 
   report:
