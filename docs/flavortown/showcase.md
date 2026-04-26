@@ -116,6 +116,7 @@ Source: [theme.nix](../../modules/desktop/theme.nix), lines 15-35
 
 This is technically just regex, but the bar for interesting code snippet is just that low.
 Normally import-tree imports every `*.nix` file in the selected directory recursively, except for files starting with `_`.
+
 This makes it so only files named `default.nix` that are one level deep in the directory tree are imported.
 
 Source: [flake.nix](../../flake.nix), lines 104-105
@@ -176,7 +177,7 @@ My devshell is integrated with direnv, so it automatically loads when I enter th
 As I said before, I don't feel the need for packaging anything not available in nixpkgs. That repository is insane; you can find almost anything there.
 
 I use some [wrapper packages](https://github.com/BirdeeHub/nix-wrapper-modules). They work by bundling an existing package with config files and everything they need.
-They're not a huge game-changer, but they're useful anyway. The main benefit of that, IMO, is the fact wrappers allow for better portability across Home Manager, the system side, and standalone Nix.
+They're not a huge game-changer, but they're useful anyway. The main benefit of that, is the fact wrappers allow for better portability across Home Manager, the system side, and standalone Nix.
 
 ---
 
