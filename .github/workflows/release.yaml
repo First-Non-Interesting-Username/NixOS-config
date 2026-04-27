@@ -25,10 +25,6 @@ jobs:
     needs: check
     permissions:
       contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        host: [john, wall-e]
     steps:
       - uses: actions/checkout@v6
         with:
@@ -45,8 +41,8 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile install nixpkgs#cachix"
 
-      - name: Build
-        run: nix build .#${{ matrix.host }}
+      - name: Build John
+        run: nix build .#john
 
       - name: Prepare ISO and Generate Checksum
         id: checksum
@@ -54,7 +50,7 @@ jobs:
           mkdir -p upload_stage
           SAFE_NAME="${{ github.event.inputs.tag_name }}"
           SAFE_NAME="${SAFE_NAME//./-}"
-          ISO_NAME="${SAFE_NAME}-${{ matrix.host }}.iso"
+          ISO_NAME="${SAFE_NAME}-john.iso"
           echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
           cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
           cd upload_stage
@@ -70,15 +66,15 @@ jobs:
           scp -v -P 22 \
             -i ~/.ssh/id_ed25519 \
             -o IdentitiesOnly=yes \
-            "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso" \
-            "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256" \
+            "upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso" \
+            "upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso.sha256" \
             "${{ secrets.SF_USERNAME }}@frs.sourceforge.net:/home/frs/project/nixos-config/"
 
       - name: Upload Checksum Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: checksum-${{ matrix.host }}
-          path: upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256
+          name: checksum-john
+          path: upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso.sha256
 
   release:
     runs-on: ubuntu-latest
@@ -95,15 +91,8 @@ jobs:
       - name: Extract Checksums
         id: extract-checksums
         run: |
-          for file in *.sha256; do
-            if [[ "$file" == *"-john.iso.sha256" ]]; then
-              HASH=$(awk '{ print $1 }' "$file")
-              echo "sha256_john=$HASH" >> "$GITHUB_OUTPUT"
-            elif [[ "$file" == *"-wall-e.iso.sha256" ]]; then
-              HASH=$(awk '{ print $1 }' "$file")
-              echo "sha256_wall_e=$HASH" >> "$GITHUB_OUTPUT"
-            fi
-          done
+          HASH=$(awk '{ print $1 }' *-john.iso.sha256)
+          echo "sha256_john=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Create safe name
         id: safe_name
@@ -139,10 +128,6 @@ jobs:
             * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ steps.safe_name.outputs.safe_name }}-john.iso/download)**
             * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_john }}`
 
-            ### Wall-E (Non-Graphical)
-            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ steps.safe_name.outputs.safe_name }}-wall-e.iso/download)**
-            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_wall_e }}`
-
             Notable changes:
 
             ${{ steps.format_issues.outputs.LIST }}
@@ -167,7 +152,7 @@ jobs:
           if [ -z "$EXISTING_ISSUE" ]; then
             gh issue create \
               --title "Manual SourceForge Cleanup Required" \
-              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. SourceForge does not have automated pruning, so please manually remove ISOs older than 5 releases ago. Steps: 1) Go to https://sourceforge.net/projects/nixos-config/ 2) Click files 3) Remove old ISOs"
+              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. SourceForge does not have automated pruning, and only the latest ISO should be available at a time. Please manually remove all older ISOs. Steps: 1) Go to https://sourceforge.net/projects/nixos-config/ 2) Click files 3) Remove old ISOs"
           else
             gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to clean up old ISOs."
           fi
