@@ -33,14 +33,14 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: cleave
+
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
-
-      - uses: wimpysworld/nothing-but-nix@v10
-        with:
-          hatchet-protocol: cleave
 
       - uses: cachix/cachix-action@v17
         with:
