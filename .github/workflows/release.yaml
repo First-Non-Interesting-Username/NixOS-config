@@ -34,16 +34,6 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      - name: debug
-        run: df -h
-
-      #- uses: wimpysworld/nothing-but-nix@v10
-      #  with:
-      #    hatchet-protocol: cleave
-
-      - name: debug
-        run: df -h
-
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
@@ -55,14 +45,8 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile install nixpkgs#cachix"
 
-      - name: debug
-        run: df -h
-
       - name: Build
         run: nix build .#${{ matrix.host }}
-
-      - name: debug
-        run: df -h
 
       - name: Prepare ISO and Generate Checksum
         id: checksum
@@ -77,15 +61,18 @@ jobs:
           sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
 
       - name: Copy file via SSH
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: frs.sourceforge.net
-          username: ${{ secrets.SF_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE }}
-          port: 22
-          source: "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso,upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256"
-          target: "/home/frs/project/nixos-config/"
-          strip_components: 1
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 22 frs.sourceforge.net >> ~/.ssh/known_hosts
+
+          scp -v -P 22 \
+            -i ~/.ssh/id_ed25519 \
+            -o IdentitiesOnly=yes \
+            "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso" \
+            "upload_stage/${{ steps.checksum.outputs.safe_name }}-${{ matrix.host }}.iso.sha256" \
+            "${{ secrets.SF_USERNAME }}@frs.sourceforge.net:/home/frs/project/nixos-config/"
 
       - name: Upload Checksum Artifact
         uses: actions/upload-artifact@v7
