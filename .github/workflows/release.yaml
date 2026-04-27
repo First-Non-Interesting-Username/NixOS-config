@@ -16,13 +16,15 @@ on:
         required: false
         type: string
 
-
 jobs:
   check:
     uses: ./.github/workflows/flake-check.yaml
 
   build:
-    runs-on: ubuntu-latest    needs: check
+    runs-on: ubuntu-latest
+    needs: check
+    permissions:
+      contents: read
     strategy:
       matrix:
         host: [john, wall-e]
