@@ -55,15 +55,15 @@ graph TD
 
 ### ISO
 
-The easiest way to see the system in action is to boot one of the provided ISOs. You can download them from the [Releases](https://github.com/First-Non-Interesting-Username/NixOS-config/releases) page.
+The easiest way to see the system in action is to boot one of the provided ISOs.
 
-- **[John (Graphical)](../hosts.md#john)**: Includes a full GNOME desktop environment. Recommended for most users. Requires Vulkan support.
-- **[Wall-E (CLI)](../hosts.md#wall-e)**: Minimal, terminal-only version for low-resource systems.
+- **[John (Graphical)](../hosts.md#john)**: Includes a full GNOME desktop environment. Recommended for most users. Requires Vulkan support. You can download the latest version from the [Releases](https://github.com/First-Non-Interesting-Username/NixOS-config/releases) page.
+- **[Wall-E (CLI)](../hosts.md#wall-e)**: Minimal, terminal-only version for low-resource systems. **Note: This ISO is not available for download.** You can build it yourself using `nix build .#wall-e`.
 - **Credentials**:
   - Username: `nixos`
   - Password: `nixos` (also for `sudo`)
 
-For more details, see the [ISO guide](../iso.md).
+For more details and build instructions, see the [ISO guide](../iso.md).
 
 ### Packages
 

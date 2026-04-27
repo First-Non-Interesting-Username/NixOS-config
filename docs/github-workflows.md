@@ -56,7 +56,7 @@ This workflow is responsible for ensuring that all NixOS configurations and pack
 
 ### Release (`release.yaml`)
 
-Used to create a new release of the NixOS configuration. It builds ISO images for specific hosts (`john` and `wall-e`), generates SHA256 checksums, and uploads the ISOs to SourceForge. It then creates a GitHub release containing the checksums and links to the SourceForge downloads.
+Used to create a new release of the NixOS configuration. It builds ISO images for specific hosts (`john` and `wall-e`), generates SHA256 checksums, and uploads the John ISO to SourceForge. It then creates a GitHub release containing the checksums and links to the SourceForge downloads.
 
 ### Update Packages (`update-packages.yaml`)
 
