@@ -49,6 +49,9 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile install nixpkgs#cachix"
 
+      - name: debug
+        run: df -h
+
       - name: Build
         run: nix build .#${{ matrix.host }}
 
@@ -60,8 +63,6 @@ jobs:
           SAFE_NAME="${SAFE_NAME//./-}"
           ISO_NAME="${SAFE_NAME}-${{ matrix.host }}.iso"
           echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
-          # debug
-          df -h
           mv -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
           cd upload_stage
           sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
