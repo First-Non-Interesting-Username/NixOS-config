@@ -16,15 +16,13 @@ on:
         required: false
         type: string
 
+
 jobs:
   check:
     uses: ./.github/workflows/flake-check.yaml
 
   build:
-    runs-on: ubuntu-latest
-    needs: check
-    permissions:
-      contents: read
+    runs-on: ubuntu-latest    needs: check
     strategy:
       matrix:
         host: [john, wall-e]
@@ -56,14 +54,12 @@ jobs:
         run: |
           mkdir -p upload_stage
           SAFE_NAME="${{ github.event.inputs.tag_name }}"
-          SAFE_NAME="${SAFE_NAME//./\-}"
+          SAFE_NAME="${SAFE_NAME//./-}"
           ISO_NAME="${SAFE_NAME}-${{ matrix.host }}.iso"
           echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
           cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
           cd upload_stage
           sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
-          HASH=$(awk '{ print $1 }' "${ISO_NAME}.sha256")
-          echo "sha256_${{ matrix.host }}=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Copy file via SSH
         uses: appleboy/scp-action@v1.0.0
