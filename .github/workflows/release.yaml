@@ -34,9 +34,15 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - name: debug
+        run: df -h
+
       - uses: wimpysworld/nothing-but-nix@v10
         with:
           hatchet-protocol: cleave
+
+      - name: debug
+        run: df -h
 
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
@@ -54,6 +60,9 @@ jobs:
 
       - name: Build
         run: nix build .#${{ matrix.host }}
+
+      - name: debug
+        run: df -h
 
       - name: Prepare ISO and Generate Checksum
         id: checksum
