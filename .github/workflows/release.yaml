@@ -146,6 +146,7 @@ jobs:
       - name: Create maintenance reminder
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }
         run: |
           set -e
           EXISTING_ISSUE=$(gh issue list --search "SourceForge Cleanup" --state open --json number --jq '.[0].number')
