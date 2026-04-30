@@ -1,5 +1,7 @@
 # NixOS Config
 
+A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
+
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/First-Non-Interesting-Username/NixOS-config)
 
 > [!NOTE]
