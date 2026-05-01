@@ -117,6 +117,11 @@ Custom shell environment for Hyprland or Niri with the following features:
 - Enables GTK theming.
 - Enables Stylix for comprehensive theming.
 
+NixOS Logo designed by Tim Cuthbertson (@timbertson).
+
+The NixOS logo is licensed under the [Creative Commons Attribution 4.0
+International License](http://creativecommons.org/licenses/by/4.0/).
+
 ### Theme Configuration
 
 - Base16 Scheme: Gruvbox Dark.
