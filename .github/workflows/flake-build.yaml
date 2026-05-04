@@ -148,7 +148,7 @@ jobs:
 
       - name: Enable aarch64 via QEMU binfmt
         if: matrix.system == 'aarch64-linux'
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: arm64
 
