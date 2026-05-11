@@ -191,6 +191,7 @@
             "org/gnome/mutter" = {
               edge-tiling = false;
               overlay-key = "Super_L";
+              experimental-features = ["scale-monitor-framebuffer"];
             };
             "org/gnome/mutter/keybindings" = {
               toggle-tiled-left = [];
