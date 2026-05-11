@@ -2,16 +2,14 @@
   self,
   inputs,
   ...
-}:
-let
+}: let
   Hostname = "armin";
   Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Width = 2256;
   Height = 1504;
-in
-{
+in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {

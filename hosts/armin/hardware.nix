@@ -4,14 +4,13 @@
   inputs,
   username,
   ...
-}:
-{
+}: {
   zramSwap = {
     enable = true;
   };
 
   hardware = {
-    firmware = [ pkgs.linux-firmware ];
+    firmware = [pkgs.linux-firmware];
     cpu.amd.updateMicrocode = true;
     facter = lib.optionalAttrs (builtins.pathExists ./facter.json) {
       reportPath = ./facter.json;
@@ -20,7 +19,8 @@
   };
 
   boot = {
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = ["btrfs"];
+    kernelParams = ["nohibernate"];
   };
 
   system.stateVersion = "26.05";
