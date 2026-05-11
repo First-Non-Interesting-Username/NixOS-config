@@ -93,7 +93,7 @@ _: {
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/mnt/data";
+                mountpoint = "/var/lib";
                 mountOptions = [
                   "noatime"
                   "errors=remount-ro"
