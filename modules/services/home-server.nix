@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake = {
     nixosModules.home-server-iroh =
@@ -17,6 +17,7 @@
       {
         imports = [
           inputs.nixflix.nixosModules.default
+          self.nixosModules.litellm
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
@@ -28,12 +29,21 @@
           "nixflix/sonarr/api-key" = {
             owner = "sonarr";
           };
+          "nixflix/sonarr/password" = {
+            owner = "sonarr";
+          };
 
           "nixflix/radarr/api-key" = {
             owner = "radarr";
           };
+          "nixflix/radarr/password" = {
+            owner = "radarr";
+          };
 
           "nixflix/prowlarr/api-key" = {
+            owner = "prowlarr";
+          };
+          "nixflix/prowlarr/password" = {
             owner = "prowlarr";
           };
 
@@ -134,13 +144,16 @@
               groups.admins = {
                 name = "admins";
               };
-              users.alice = {
+              users.admin = {
                 email = email;
                 passwordFile = config.sops.secrets."routing/users/admin-user-password".path;
                 displayName = "Admin";
                 firstName = "Admin";
                 lastName = "Admin";
-                groups = [ "admins" ];
+                groups = [
+                  "admins"
+                  "searx-users"
+                ];
               };
             };
           };
@@ -213,8 +226,8 @@
               auth = null;
             };
 
-            qbittorrent = {
-              subdomain = "qbittorrent";
+            qbittorrent-nixflix = {
+              subdomain = "qbittorrent-nixflix";
               port = 8282;
               host = "127.0.0.1";
               public = false;
@@ -224,12 +237,13 @@
         };
 
         services = {
-
-          redis.servers.searxng = {
-            enable = true;
-            package = pkgs.valkey;
-            bind = "127.0.0.1";
-            port = 6380;
+          redis.servers = {
+            searxng = {
+              enable = true;
+              package = pkgs.valkey;
+              bind = "127.0.0.1";
+              port = 6380;
+            };
           };
 
           searx = {
@@ -242,14 +256,14 @@
                 public_instance = false;
                 image_proxy = true;
                 base_url = "search.${domain}";
-                default_http_headers = {
-                  "X-Content-Type-Options" = "nosniff";
-                  "X-Download-Options" = "noopen";
-                  "X-Robots-Tag" = "noindex, nofollow";
-                  "Referrer-Policy" = "no-referrer";
-                };
               };
-              search.safe_search = 0;
+              search = {
+                safe_search = 0;
+                formats = [
+                  "html"
+                  "json"
+                ];
+              };
               valkey = {
                 url = "valkey://127.0.0.1:6380/0";
               };
@@ -267,7 +281,6 @@
               };
             };
           };
-
         };
 
         nixflix = {
@@ -287,44 +300,77 @@
 
           sonarr = {
             enable = true;
-            openFirewall = false;
+            openFirewall = true;
 
             config.apiKey = {
               _secret = config.sops.secrets."nixflix/sonarr/api-key".path;
+            };
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/sonarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
             };
           };
 
           radarr = {
             enable = true;
-            openFirewall = false;
+            openFirewall = true;
 
             config.apiKey = {
               _secret = config.sops.secrets."nixflix/radarr/api-key".path;
+            };
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/radarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
             };
           };
 
           prowlarr = {
             enable = true;
-            openFirewall = false;
+            openFirewall = true;
 
             config = {
               apiKey = {
                 _secret = config.sops.secrets."nixflix/prowlarr/api-key".path;
               };
               indexers = [
-                { name = "1337x"; }
+                {
+                  name = "1337x";
+                  tags = [ "flaresolverr" ];
+                }
                 { name = "Nyaa"; }
-                { name = "TorrentGalaxy"; }
-                { name = "The Pirate Bay"; }
+                {
+                  name = "TorrentGalaxy";
+                  tags = [ "flaresolverr" ];
+                }
+                {
+                  name = "The Pirate Bay";
+                  tags = [ "flaresolverr" ];
+                }
                 { name = "EZTV"; }
                 { name = "LimeTorrents"; }
               ];
+            };
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/prowlarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
             };
           };
 
           jellyfin = {
             enable = true;
-            openFirewall = false;
+            openFirewall = true;
 
             apiKey = {
               _secret = config.sops.secrets."nixflix/jellyfin/api-key".path;
@@ -408,7 +454,6 @@
                 enable = true;
                 config.ExtractionDuringLibraryScan = true;
               };
-
             };
 
             users = {
@@ -462,7 +507,7 @@
 
           seerr = {
             enable = true;
-            openFirewall = false;
+            openFirewall = true;
             port = 5055;
 
             apiKey = {
@@ -520,12 +565,6 @@
           before = [ "jellyfin.service" ];
           wantedBy = [ "multi-user.target" ];
         };
-
-        home-manager.users.${username} =
-          { ... }:
-          {
-            # Home config goes here
-          };
       };
   };
 }
