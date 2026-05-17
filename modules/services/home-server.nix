@@ -1,4 +1,8 @@
-{ inputs, self, ... }:
+{
+  inputs,
+  self,
+  ...
+}:
 {
   flake = {
     nixosModules.home-server-iroh =
@@ -127,6 +131,14 @@
           "searx/env" = {
             owner = "searx";
           };
+
+          "freshrss/oidc-client-secret" = {
+            owner = "traefik";
+          };
+          "freshrss/oidc-client-secret-hash" = {
+            owner = "authelia-main";
+          };
+          "freshrss/oidc-env" = { };
         };
 
         custom.web-expose = {
@@ -233,7 +245,48 @@
               public = false;
               auth = null;
             };
+
+            freshrss = {
+              subdomain = "rss";
+              port = 8035;
+              public = true;
+              auth = null;
+
+              oidc = {
+                client_id = "freshrss";
+                client_secret_hash_file = config.sops.secrets."freshrss/oidc-client-secret-hash".path;
+                redirect_uris = [ "https://rss.${domain}:443/i/oidc/" ];
+                scopes = [
+                  "openid"
+                  "profile"
+                ];
+              };
+            };
           };
+        };
+
+        virtualisation.oci-containers.containers.freshrss = {
+          image = "freshrss/freshrss:edge";
+
+          environment = {
+            TZ = "Europe/Warsaw";
+            CRON_MIN = "1,31";
+            OIDC_ENABLED = "1";
+            OIDC_PROVIDER_METADATA_URL = "https://auth.${domain}/.well-known/openid-configuration";
+            OIDC_CLIENT_ID = "freshrss";
+            OIDC_SCOPES = "openid profile";
+            OIDC_REMOTE_USER_CLAIM = "preferred_username";
+            OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Host X-Forwarded-Port X-Forwarded-Proto";
+          };
+
+          environmentFiles = [ config.sops.secrets."freshrss/oidc-env".path ];
+
+          volumes = [
+            "/var/lib/freshrss/data:/var/www/FreshRSS/data"
+            "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions"
+          ];
+
+          ports = [ "127.0.0.1:8035:80" ];
         };
 
         services = {
@@ -557,13 +610,40 @@
           "render"
         ];
 
-        systemd.mounts."var-cache-jellyfin" = {
-          what = "tmpfs";
-          where = "/var/cache/jellyfin";
-          type = "tmpfs";
-          options = "size=4G,mode=0755,uid=146,gid=146";
-          before = [ "jellyfin.service" ];
-          wantedBy = [ "multi-user.target" ];
+        systemd = {
+          tmpfiles.rules = [
+            "d /var/lib/freshrss/data       0750 root root -"
+            "d /var/lib/freshrss/extensions 0750 root root -"
+          ];
+          mounts."var-cache-jellyfin" = {
+            what = "tmpfs";
+            where = "/var/cache/jellyfin";
+            type = "tmpfs";
+            options = "size=4G,mode=0755,uid=146,gid=146";
+            before = [ "jellyfin.service" ];
+            wantedBy = [ "multi-user.target" ];
+          };
+          services.duckdns-updater = {
+            description = "Update DuckDNS IP";
+            path = [ pkgs.curl ];
+
+            serviceConfig = {
+              Type = "oneshot";
+              EnvironmentFile = config.sops.secrets."routing/traefik/env".path;
+            };
+
+            script = ''
+              curl -s "https://www.duckdns.org/update?domains=${domain}&token=$DUCKDNS_TOKEN"
+            '';
+          };
+          timers.duckdns-updater = {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+              OnBootSec = "1m";
+              OnUnitActiveSec = "15m";
+              RandomizedDelaySec = "1m";
+            };
+          };
         };
       };
   };
