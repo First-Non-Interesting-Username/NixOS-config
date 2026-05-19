@@ -759,7 +759,7 @@
                     "public-ratelimit"
                     "security-headers"
                   ];
-                }
+
                   authelia = {
                     forwardAuth = {
                       address = "http://127.0.0.1:9091/api/authz/forward-auth?authelia_url=https%3A%2F%2F${cfg.authelia.subdomain}.${cfg.domain}%2F";
@@ -969,14 +969,15 @@
                     policy = "bypass";
                     networks = cfg.privateNetworkRanges;
                   }) (lib.filterAttrs (_: r: r.public && r.auth != null && r.auth != "bypass") effectiveRouters))
-                  ++ (lib.concatMap (r:
-                    map (path: {
-                      domain = ["${r.subdomain}.${cfg.domain}"];
-                      policy = "bypass";
-                      resources = [path];
-                    })
-                    r.bypassPaths)
-                  (lib.attrValues authRouters))
+                  ++ (lib.concatMap (
+                    r:
+                      map (path: {
+                        domain = ["${r.subdomain}.${cfg.domain}"];
+                        policy = "bypass";
+                        resources = [path];
+                      })
+                      r.bypassPaths
+                  ) (lib.attrValues authRouters))
                   ++ (lib.mapAttrsToList (_: r: {
                       domain = ["${r.subdomain}.${cfg.domain}"];
                       policy = r.auth;
