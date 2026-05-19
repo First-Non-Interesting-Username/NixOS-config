@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "docker:enableMajor"],
+  "timezone": "Europe/Berlin",
+
+  "nix": {
+    "enabled": false
+  },
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update OCI container images in .nix files",
+      "managerFilePatterns": ["/.*\\.nix$/"],
+      "matchStrings": [
+        "(?:# renovate: (?:versioning=(?<<versioning>[^\\s]+)\\s+)?(?:extractVersion=(?<<extractVersion>[^\\s]+)\\s*)?)?image\\s*=\\s*\"(?<<depName>[^:\"]+):(?<<currentValue>[^\"\\s]+)\"\\s*;"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}docker{{/if}}",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{/if}}"
+    }
+  ],
+
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchCurrentVersion": "!/^v?0\\./",
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["/postgres/", "/mysql/", "/redis/"],
+      "automerge": false
+    }
+  ]
+}

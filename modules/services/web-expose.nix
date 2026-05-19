@@ -684,7 +684,10 @@
                       scheme = "https";
                     };
                   };
-                  websecure.address = ":443";
+                  websecure = {
+                    address = ":443";
+                    http.middlewares = ["forwarded-proto"];
+                  };
                 };
                 certificatesResolvers.letsencrypt.acme = {
                   email = cfg.email;
@@ -749,12 +752,14 @@
                       server = "";
                     };
                   };
+                  forwarded-proto.headers.customRequestHeaders = {
+                    "X-Forwarded-Proto" = "https";
+                  };
                   public.chain.middlewares = [
                     "public-ratelimit"
                     "security-headers"
                   ];
                 }
-                // lib.optionalAttrs anyAuth {
                   authelia = {
                     forwardAuth = {
                       address = "http://127.0.0.1:9091/api/authz/forward-auth?authelia_url=https%3A%2F%2F${cfg.authelia.subdomain}.${cfg.domain}%2F";

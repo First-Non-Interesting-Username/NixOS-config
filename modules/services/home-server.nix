@@ -156,6 +156,9 @@
               groups.admins = {
                 name = "admins";
               };
+              groups.service-users = {
+                name = "service-users";
+              };
               users.admin = {
                 email = email;
                 passwordFile = config.sops.secrets."routing/users/admin-user-password".path;
@@ -164,7 +167,7 @@
                 lastName = "Admin";
                 groups = [
                   "admins"
-                  "searx-users"
+                  "service-users"
                 ];
               };
             };
@@ -195,7 +198,7 @@
               host = "127.0.0.1";
               public = true;
               auth = "two_factor";
-              subjects = [ "group:searx-users" ];
+              subjects = [ "group:service-users" ];
             };
 
             jellyfin = {
@@ -262,11 +265,26 @@
                 ];
               };
             };
+
+            cockpit = {
+              subdomain = "cockpit";
+              port = 9090;
+              public = true;
+              auth = null;
+            };
+
+            netdata = {
+              subdomain = "netdata";
+              port = 19999;
+              public = true;
+              auth = "two_factor";
+              subjects = [ "group:service-users" ];
+            };
           };
         };
 
         virtualisation.oci-containers.containers.freshrss = {
-          image = "freshrss/freshrss:edge";
+          image = "ghcr.io/freshrss/freshrss:1.29.0";
 
           environment = {
             TZ = "Europe/Warsaw";
@@ -301,6 +319,7 @@
 
           searx = {
             enable = true;
+            openFirewall = true;
             settings = {
               server = {
                 bind_address = "127.0.0.1";
@@ -331,6 +350,39 @@
                 ip_lists = {
                   pass_searxng_org = true;
                 };
+              };
+            };
+          };
+
+          netdata = {
+            enable = true;
+
+            config = {
+              global = {
+                "memory mode" = "dbengine";
+                "history" = "14";
+                "debug log" = "none";
+                "access log" = "none";
+                "error log" = "syslog";
+              };
+
+              web = {
+                "bind to" = "localhost";
+                "default port" = "19999";
+              };
+            };
+          };
+
+          cockpit = {
+            enable = true;
+            port = 9090;
+            openFirewall = false;
+
+            plugins = [ pkgs.cockpit-files ];
+
+            settings = {
+              WebService = {
+                Origins = "https://cockpit.${domain}";
               };
             };
           };
