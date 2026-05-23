@@ -1,6 +1,6 @@
 {...}: {
   flake = {
-    nixosModules.litellm = {
+    nixosModules.ai-services = {
       lib,
       username,
       impermanence,
@@ -89,6 +89,20 @@
             client_secret_hash_file = config.sops.secrets."litellm/oidc-client-secret-hash".path;
           };
         };
+        librechat = {
+          subdomain = "chat";
+          port = 3080;
+          host = "127.0.0.1";
+          public = true;
+          auth = "bypass";
+          oidc = {
+            client_id = "librechat";
+            redirect_uris = [
+              "https://chat.${domain}/oauth/openid/callback"
+            ];
+            client_secret_hash_file = config.sops.secrets."librechat/oidc-client-secret-hash".path;
+          };
+        };
       };
 
       sops.secrets = {
@@ -101,6 +115,19 @@
         "litellm/oidc-client-secret-hash" = {
           owner = "authelia-main";
           group = "authelia-main";
+        };
+
+        "librechat/env" = {
+          owner = "librechat";
+        };
+
+        "librechat/oidc-client-secret-hash" = {
+          owner = "authelia-main";
+          group = "authelia-main";
+        };
+
+        "librechat/meili-master-key" = {
+          owner = "meilisearch";
         };
       };
 
@@ -1287,6 +1314,72 @@
               };
             }
           ];
+        };
+
+        meilisearch.masterKeyFile = config.sops.secrets."librechat/meili-master-key".path;
+
+        librechat = {
+          enable = true;
+          enableLocalDB = true;
+          meilisearch.enable = true;
+
+          credentialsFile = config.sops.secrets."librechat/env".path;
+
+          env = {
+            HOST = "127.0.0.1";
+            PORT = 3080;
+
+            ALLOW_REGISTRATION = true;
+            ALLOW_EMAIL_LOGIN = false;
+            ALLOW_SOCIAL_LOGIN = true;
+            OPENID_ISSUER = "https://auth.${domain}";
+            OPENID_CLIENT_ID = "librechat";
+            OPENID_CALLBACK_URL = "https://chat.${domain}/oauth/openid/callback";
+            OPENID_SCOPE = "openid profile email";
+            OPENID_BUTTON_LABEL = "Login with Authelia";
+
+            LITELLM_BASE_URL = "http://127.0.0.1:4000";
+          };
+
+          settings = {
+            version = "1.3.11";
+            cache = true;
+
+            search = {
+              enabled = true;
+              provider = "searxng";
+              searchQuery = {
+                url = "http://127.0.0.1:8889";
+              };
+            };
+
+            endpoints = {
+              custom = [
+                {
+                  name = "LiteLLM";
+                  apiKey = "\${LITELLM_API_KEY}";
+                  baseURL = "http://127.0.0.1:4000/v1";
+                  models = {
+                    default = [
+                      "general"
+                      "fast"
+                      "code"
+                      "Polski"
+                      "auto-router"
+                    ];
+                    fetch = true;
+                  };
+                  titleConvo = true;
+                  titleModel = "general";
+                  dropParams = ["stop"];
+                  modelDisplayLabel = "LiteLLM";
+                }
+              ];
+            };
+
+            interface = {
+            };
+          };
         };
       };
     };

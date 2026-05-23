@@ -19,7 +19,7 @@
       imports =
         [
           inputs.nixflix.nixosModules.default
-          self.nixosModules.litellm
+          self.nixosModules.ai-services
           inputs.headplane.nixosModules.headplane
         ]
         ++ lib.optional impermanence {

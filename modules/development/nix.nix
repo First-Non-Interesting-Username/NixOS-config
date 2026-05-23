@@ -1,11 +1,9 @@
-_:
-let
+_: let
   myConfig = builtins.fetchGit {
     url = "https://github.com/First-Non-Interesting-Username/NixOS-config.git";
     ref = "main";
   };
-in
-{
+in {
   flake = {
     nixosModules.nix = _: {
       nix = {
