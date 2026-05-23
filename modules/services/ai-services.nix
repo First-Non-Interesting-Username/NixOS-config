@@ -103,6 +103,14 @@
             client_secret_hash_file = config.sops.secrets."librechat/oidc-client-secret-hash".path;
           };
         };
+        vane = {
+          subdomain = "search-ai";
+          port = 5555;
+          host = "127.0.0.1";
+          public = true;
+          auth = "two_factor";
+          subjects = ["group:service-users"];
+        };
       };
 
       sops.secrets = {
@@ -1381,6 +1389,27 @@
             };
           };
         };
+      };
+      systemd = {
+        services.librechat = {
+          after = ["mongodb.service"];
+          wants = ["mongodb.service"];
+        };
+        tmpfiles.rules = ["d /var/lib/vane 0755 root root -"];
+      };
+
+      # add LiteLLM as an OpenAI-compatible provider:
+      #   API URL: http://host.containers.internal:4000
+      #   API Key: LITELLM_MASTER_KEY
+      virtualisation.oci-containers.containers.vane = {
+        # renovate: versioning=docker
+        image = "itzcrazykns1337/vane:slim-1.12.2";
+        ports = ["127.0.0.1:5555:3000"];
+        volumes = ["/var/lib/vane:/home/vane/data"];
+        environment = {
+          SEARXNG_API_URL = "http://host.containers.internal:8889";
+        };
+        extraOptions = ["--add-host=host.containers.internal:host-gateway"];
       };
     };
   };

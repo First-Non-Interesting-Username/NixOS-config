@@ -119,6 +119,7 @@
             ripgrep
             self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
             self.packages.${pkgs.stdenv.hostPlatform.system}.btop
+            shell-gpt
           ];
           shellAliases = {
             cat = "bat --style=plain --pager=never";

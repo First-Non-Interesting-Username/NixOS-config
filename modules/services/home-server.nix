@@ -372,64 +372,69 @@
         };
       };
 
-      virtualisation.oci-containers.containers = {
-        freshrss = {
-          image = "ghcr.io/freshrss/freshrss:1.29.0";
+      virtualisation.oci-containers = {
+        backend = "podman";
+        containers = {
+          freshrss = {
+            image = "ghcr.io/freshrss/freshrss:1.29.0";
 
-          environment = {
-            TZ = "Europe/Warsaw";
-            CRON_MIN = "1,31";
-            OIDC_ENABLED = "1";
-            OIDC_PROVIDER_METADATA_URL = "https://auth.${domain}/.well-known/openid-configuration";
-            OIDC_CLIENT_ID = "freshrss";
-            OIDC_SCOPES = "openid profile";
-            OIDC_REMOTE_USER_CLAIM = "preferred_username";
-            OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Host X-Forwarded-Port X-Forwarded-Proto";
+            environment = {
+              TZ = "Europe/Warsaw";
+              CRON_MIN = "1,31";
+              OIDC_ENABLED = "1";
+              OIDC_PROVIDER_METADATA_URL = "https://auth.${domain}/.well-known/openid-configuration";
+              OIDC_CLIENT_ID = "freshrss";
+              OIDC_SCOPES = "openid profile";
+              OIDC_REMOTE_USER_CLAIM = "preferred_username";
+              OIDC_X_FORWARDED_HEADERS = "X-Forwarded-Host X-Forwarded-Port X-Forwarded-Proto";
+            };
+
+            environmentFiles = [config.sops.secrets."freshrss/oidc-env".path];
+
+            volumes = [
+              "/var/lib/freshrss/data:/var/www/FreshRSS/data"
+              "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions"
+            ];
+
+            ports = ["127.0.0.1:8035:80"];
           };
 
-          environmentFiles = [config.sops.secrets."freshrss/oidc-env".path];
+          filebrowser = {
+            # renovate: versioning=docker
+            image = "ghcr.io/gtsteffaniak/filebrowser:1.3.3-stable";
 
-          volumes = [
-            "/var/lib/freshrss/data:/var/www/FreshRSS/data"
-            "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions"
-          ];
+            environment = {
+              TZ = "Europe/Warsaw";
+            };
+            environmentFiles = [
+              config.sops.secrets.filebrowser/env.path
+            ];
 
-          ports = ["127.0.0.1:8035:80"];
-        };
-        filebrowser = {
-          # renovate: versioning=docker
-          image = "ghcr.io/gtsteffaniak/filebrowser:1.3.3-stable";
+            ports = ["127.0.0.1:7070:80"];
 
-          environment = {
-            TZ = "Europe/Warsaw";
-          };
-          environmentFiles = [
-            config.sops.secrets.filebrowser/env.path
-          ];
-
-          ports = ["127.0.0.1:7070:80"];
-
-          volumes = [
-            "${filebrowserStateDir}:/home/filebrowser/data"
-            "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro"
-            "/mnt/data:/sources/mnt-data:ro"
-            "/var/lib:/sources/var-lib:ro"
-          ];
-        };
-        up-snap = {
-          image = "ghcr.io/seriousm4x/upsnap:5.3.5";
-          environment = {
-            TZ = "Europe/Warsaw";
-            UPSNAP_PING_PRIVILEGED = "true";
-            UPSNAP_HTTP_LISTEN = "127.0.0.1:8090";
+            volumes = [
+              "${filebrowserStateDir}:/home/filebrowser/data"
+              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro"
+              "/mnt/data:/sources/mnt-data:ro"
+              "/var/lib:/sources/var-lib:ro"
+            ];
           };
 
-          volumes = ["/var/lib/up-snap:/app/pb_data"];
+          up-snap = {
+            image = "ghcr.io/seriousm4x/upsnap:5.3.5";
+            environment = {
+              TZ = "Europe/Warsaw";
+              UPSNAP_PING_PRIVILEGED = "true";
+              UPSNAP_HTTP_LISTEN = "127.0.0.1:8090";
+            };
 
-          extraOptions = [
-            "--network=host"
-            "--cap-add=NET_RAW"
-          ];
+            volumes = ["/var/lib/up-snap:/app/pb_data"];
+
+            extraOptions = [
+              "--network=host"
+              "--cap-add=NET_RAW"
+            ];
+          };
         };
       };
 
@@ -465,6 +470,22 @@
             valkey = {
               url = "valkey://127.0.0.1:6380/0";
             };
+            engines = [
+              {
+                name = "wolframalpha";
+                engine = "wolframalpha_noapi";
+                shortcut = "wa";
+                categories = "general";
+                disabled = false;
+              }
+              {
+                name = "internet archive";
+                engine = "internet_archive";
+                shortcut = "ia";
+                categories = "files";
+                disabled = false;
+              }
+            ];
           };
           environmentFile = config.sops.secrets."searx/env".path;
           limiterSettings = {
