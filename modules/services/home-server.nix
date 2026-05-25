@@ -443,7 +443,7 @@
           };
 
           qbittorrent = {
-            # renovate: versioning=loose
+            # renovate: extractVersion=^(?<version>\d+\.\d+\.\d+_v\d+\.\d+\.\d+-ls\d+)$
             image = "lscr.io/linuxserver/qbittorrent:5.2.0_v2.0.12-ls458";
             autoStart = true;
 
