@@ -1,4 +1,4 @@
-{...}: {
+{self, ...}: {
   flake = {
     nixosModules.ai-services = {
       lib,
@@ -74,6 +74,8 @@
       );
       domain = "iameasytoremember.duckdns.org";
     in {
+      imports = [self.nixosModules.web-expose];
+
       custom.web-expose.routers = {
         litellm = {
           subdomain = "ai-api";

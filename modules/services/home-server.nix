@@ -18,6 +18,7 @@
     in {
       imports =
         [
+          self.nixosModules.web-expose
           inputs.nixflix.nixosModules.default
           self.nixosModules.ai-services
           inputs.headplane.nixosModules.headplane
