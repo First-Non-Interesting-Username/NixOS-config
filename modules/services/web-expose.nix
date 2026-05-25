@@ -29,11 +29,25 @@
     anyOidc = oidcRouters != {};
     anyOidcPlugin = oidcPluginRouters != {};
 
-    lldapBootstrap = pkgs.writeShellScript "lldap-bootstrap" ''
+    lldapBootstrap = let
+      configHash = builtins.hashString "sha256" (builtins.toJSON {
+        groups = cfg.lldap.bootstrap.groups;
+        users = cfg.lldap.bootstrap.users;
+      });
+    in pkgs.writeShellScript "lldap-bootstrap" ''
       set -euo pipefail
+      MARKER="/var/lib/lldap/bootstrapped"
+      CURRENT_HASH="${configHash}"
+
+      if [ -f "$MARKER" ] && [ "$(cat "$MARKER")" = "$CURRENT_HASH" ]; then
+        echo "LLDAP already bootstrapped with current configuration. Skipping."
+        exit 0
+      fi
+
       API="http://127.0.0.1:17170/graphql"
       ADMIN_USER="${cfg.lldap.adminUsername}"
       ADMIN_PASS="$(${pkgs.coreutils}/bin/cat "${cfg.lldap.adminPasswordFile}")"
+
       for i in $(seq 1 60); do
         if ${pkgs.curl}/bin/curl -sf "$API" -X POST \
           -H "Content-Type: application/json" \
@@ -42,74 +56,145 @@
         fi
         ${pkgs.coreutils}/bin/sleep 1
       done
-      TOKEN=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
+
+      TOKEN_RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
         -H "Content-Type: application/json" \
         -d "$(${pkgs.jq}/bin/jq -n \
           --arg username "$ADMIN_USER" \
           --arg password "$ADMIN_PASS" \
-          '{query: "mutation { bind(input: {username: \($username | @json), password: \($password | @json)}) { ok token } }"}')" \
-        | ${pkgs.jq}/bin/jq -r '.data.bind.token')
-      ${lib.concatMapStrings (g: ''
-        ${pkgs.curl}/bin/curl -sf -X POST "$API" \
+          '{query: "mutation { bind(input: {username: \($username | @json), password: \($password | @json)}) { ok token } }"}')")
+      if echo "$TOKEN_RESP" | ${pkgs.jq}/bin/jq -e '.errors' >/dev/null; then
+        echo "Login failed: $(echo "$TOKEN_RESP" | ${pkgs.jq}/bin/jq -c '.errors')" >&2
+        exit 1
+      fi
+      TOKEN=$(echo "$TOKEN_RESP" | ${pkgs.jq}/bin/jq -r '.data.bind.token')
+
+      refresh_groups() {
+        GROUPS_JSON=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
-          -d "$(${pkgs.jq}/bin/jq -n \
-            --arg name "${g.name}" \
-            '{query: "mutation CreateGroup($name: String!) { createGroup(name: $name) { ok } }", variables: {name: $name}}')" \
-          || { echo "Failed to create group ${g.name}"; exit 1; }
-      '') (lib.attrValues cfg.lldap.bootstrap.groups)}
-      GROUPS_JSON=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $TOKEN" \
-        -d "$(${pkgs.jq}/bin/jq -n '{query: "query { groups { id name } }"}')")
+          -d "$(${pkgs.jq}/bin/jq -n '{query: "query { groups { id name } }"}')")
+        if echo "$GROUPS_JSON" | ${pkgs.jq}/bin/jq -e '.errors' >/dev/null; then
+          echo "Failed to fetch groups: $GROUPS_JSON" >&2
+          exit 1
+        fi
+      }
       get_group_id() {
         echo "$GROUPS_JSON" | ${pkgs.jq}/bin/jq -r --arg name "$1" '.data.groups[] | select(.name == $name) | .id'
       }
+
+      refresh_groups
+
+      ${lib.concatMapStrings (g: ''
+        GID=$(get_group_id "${g.name}")
+        if [ -z "$GID" ]; then
+          echo "Creating group ${g.name}..."
+          RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -d "$(${pkgs.jq}/bin/jq -n \
+              --arg name "${g.name}" \
+              '{query: "mutation CreateGroup($name: String!) { createGroup(name: $name) { ok } }", variables: {name: $name}}')")
+          if echo "$RESP" | ${pkgs.jq}/bin/jq -e '.errors or (.data.createGroup.ok | not)' >/dev/null; then
+            echo "Failed to create group ${g.name}: $RESP" >&2
+            exit 1
+          fi
+          refresh_groups
+        fi
+      '') (lib.attrValues cfg.lldap.bootstrap.groups)}
+
       ${lib.concatMapStrings (u: ''
         ${lib.optionalString (u.passwordFile != null) ''
           USER_PASS=$(${pkgs.coreutils}/bin/cat "${toString u.passwordFile}")
         ''}
-        USER_VARS=$(${pkgs.jq}/bin/jq -n \
-          --arg id "${u.id}" \
-          --arg email "${u.email}" \
-          ${lib.optionalString (u.displayName != null) ''--arg displayName "${u.displayName}"''} \
-          ${lib.optionalString (u.firstName != null) ''--arg firstName "${u.firstName}"''} \
-          ${lib.optionalString (u.lastName != null) ''--arg lastName "${u.lastName}"''} \
-          ${lib.optionalString (u.passwordFile != null) ''--arg password "$USER_PASS"''} \
-          '{
-            id: $id,
-            email: $email
-            ${lib.optionalString (u.displayName != null) ", displayName: $displayName"}
-            ${lib.optionalString (u.firstName != null) ", firstName: $firstName"}
-            ${lib.optionalString (u.lastName != null) ", lastName: $lastName"}
-            ${lib.optionalString (u.passwordFile != null) ", password: $password"}
-          }')
-        ${pkgs.curl}/bin/curl -sf -X POST "$API" \
+        
+        # Check if user exists
+        USER_EXISTS_RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
           -d "$(${pkgs.jq}/bin/jq -n \
-            --arg query 'mutation CreateUser($user: CreateUserInput!) { createUser(user: $user) { ok } }' \
-            --argjson user "$USER_VARS" \
-            '{query: $query, variables: {user: $user}}')" \
-          || { echo "Failed to create user ${u.id}"; exit 1; }
+            --arg id "${u.id}" \
+            '{query: "query GetUser($id: String!) { user(userId: $id) { id } }", variables: {id: $id}}')")
+        
+        if echo "$USER_EXISTS_RESP" | ${pkgs.jq}/bin/jq -e '.errors' >/dev/null; then
+          echo "Failed to check user existence for ${u.id}: $USER_EXISTS_RESP" >&2
+          exit 1
+        fi
+
+        USER_EXISTS=$(echo "$USER_EXISTS_RESP" | ${pkgs.jq}/bin/jq -r '.data.user.id // empty')
+
+        if [ -z "$USER_EXISTS" ]; then
+          echo "Creating user ${u.id}..."
+          USER_VARS=$(${pkgs.jq}/bin/jq -n \
+            --arg id "${u.id}" \
+            --arg email "${u.email}" \
+            ${lib.optionalString (u.displayName != null) ''--arg displayName "${u.displayName}"''} \
+            ${lib.optionalString (u.firstName != null) ''--arg firstName "${u.firstName}"''} \
+            ${lib.optionalString (u.lastName != null) ''--arg lastName "${u.lastName}"''} \
+            ${lib.optionalString (u.passwordFile != null) ''--arg password "$USER_PASS"''} \
+            '{
+              id: $id,
+              email: $email
+              ${lib.optionalString (u.displayName != null) ", displayName: $displayName"}
+              ${lib.optionalString (u.firstName != null) ", firstName: $firstName"}
+              ${lib.optionalString (u.lastName != null) ", lastName: $lastName"}
+              ${lib.optionalString (u.passwordFile != null) ", password: $password"}
+            }')
+          
+          RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -d "$(${pkgs.jq}/bin/jq -n \
+              --arg query 'mutation CreateUser($user: CreateUserInput!) { createUser(user: $user) { ok } }' \
+              --argjson user "$USER_VARS" \
+              '{query: $query, variables: {user: $user}}')")
+          
+          if echo "$RESP" | ${pkgs.jq}/bin/jq -e '.errors or (.data.createUser.ok | not)' >/dev/null; then
+            echo "Failed to create user ${u.id}: $RESP" >&2
+            exit 1
+          fi
+        fi
+
+        # Get current user groups to avoid duplicate additions
+        CURRENT_USER_GROUPS_RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+          -d "$(${pkgs.jq}/bin/jq -n \
+            --arg id "${u.id}" \
+            '{query: "query GetUserGroups($id: String!) { user(userId: $id) { groups { name } } }", variables: {id: $id}}')")
+        
+        if echo "$CURRENT_USER_GROUPS_RESP" | ${pkgs.jq}/bin/jq -e '.errors' >/dev/null; then
+          echo "Failed to fetch groups for user ${u.id}: $CURRENT_USER_GROUPS_RESP" >&2
+          exit 1
+        fi
+        
+        CURRENT_USER_GROUPS=$(echo "$CURRENT_USER_GROUPS_RESP" | ${pkgs.jq}/bin/jq -r '.data.user.groups[].name')
+
         ${lib.concatMapStrings (g: ''
+          if ! echo "$CURRENT_USER_GROUPS" | grep -qxw "${g}" >/dev/null; then
             GID=$(get_group_id "${g}")
             if [ -n "$GID" ]; then
-              ${pkgs.curl}/bin/curl -sf -X POST "$API" \
+              echo "Adding user ${u.id} to group ${g}..."
+              ADD_RESP=$(${pkgs.curl}/bin/curl -sf -X POST "$API" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -d "$(${pkgs.jq}/bin/jq -n \
                   --arg query 'mutation AddUserToGroup($userId: String!, $groupId: Int!) { addUserToGroup(userId: $userId, groupId: $groupId) { ok } }' \
                   --arg userId "${u.id}" \
                   --argjson groupId "$GID" \
-                  '{query: $query, variables: {userId: $userId, groupId: $groupId}}')" \
-                || { echo "Failed to add ${u.id} to group ${g}"; exit 1; }
+                  '{query: $query, variables: {userId: $userId, groupId: $groupId}}')")
+              if echo "$ADD_RESP" | ${pkgs.jq}/bin/jq -e '.errors or (.data.addUserToGroup.ok | not)' >/dev/null; then
+                echo "Failed to add ${u.id} to group ${g}: $ADD_RESP" >&2
+                exit 1
+              fi
             else
               echo "Warning: group ${g} not found for user ${u.id}" >&2
             fi
-          '')
-          u.groups}
+          fi
+        '') u.groups}
       '') (lib.attrValues cfg.lldap.bootstrap.users)}
+
+      echo "$CURRENT_HASH" > "$MARKER"
     '';
 
     oidcClientsTemplate = pkgs.writeText "oidc-clients-template.json" (
