@@ -57,7 +57,7 @@ jobs:
   check-changed-files:
     runs-on: ubuntu-latest
     outputs:
-      has-changes: ${{ steps.filter.outputs.nix || github.event_name != 'pull_request' }}
+      has-changes: ${{ steps.filter.outputs.nix == 'true' || github.event_name != 'pull_request' }}
     steps:
       - uses: actions/checkout@v6
         with:

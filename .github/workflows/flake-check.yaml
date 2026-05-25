@@ -39,24 +39,8 @@ jobs:
           nix run nixpkgs#deadnix -- --edit .
           nix run nixpkgs#statix -- fix . \
             --ignore "modules/template.nix" \
-            -ignore "hosts/template"
+            --ignore "hosts/template"
           nix run nixpkgs#alejandra -- .
-
-      - name: Create Maintenance Pull Request
-        if: github.event_name == 'push'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "style: nix maintenance (statix, deadnix, alejandra)"
-          title: "style: Auto-fixes for ${{ github.ref_name }}"
-          body: |
-            Automated maintenance for branch `${{ github.ref_name }}`:
-            - **Statix**: Fixed linting suggestions.
-            - **Deadnix**: Removed unused code.
-            - **Alejandra**: Applied standard formatting.
-          branch: chore/nix-maintenance-${{ github.ref_name }}
-          base: ${{ github.ref_name }}
-          delete-branch: true
 
       - name: Enable aarch64 via QEMU
         uses: docker/setup-qemu-action@v4
@@ -72,3 +56,25 @@ jobs:
         id: check
         run: |
           nix flake check && echo "success=true" >> $GITHUB_OUTPUT
+
+      - name: Check for formatter changes
+        id: changes
+        if: github.event_name == 'push' && github.ref_name != github.event.repository.default_branch
+        run: |
+          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Create Maintenance Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "style: nix maintenance (statix, deadnix, alejandra)"
+          title: "style: Auto-fixes for ${{ github.ref_name }}"
+          body: |
+            Automated maintenance for branch `${{ github.ref_name }}`:
+            - **Statix**: Fixed linting suggestions.
+            - **Deadnix**: Removed unused code.
+            - **Alejandra**: Applied standard formatting.
+          branch: chore/nix-maintenance-${{ github.ref_name }}
+          base: ${{ github.ref_name }}
+          delete-branch: true
