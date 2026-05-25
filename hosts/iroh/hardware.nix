@@ -33,7 +33,6 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /mnt/data    0755 ${username} users -"
     "d /mnt/storage 0755 ${username} users -"
   ];
 
