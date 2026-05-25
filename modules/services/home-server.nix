@@ -14,7 +14,7 @@
     }: let
       domain = "iameasytoremember.duckdns.org";
       email = "janekmusin@proton.me";
-      filebrowserStateDir = "${config.users.users.${username}.home}/.config/filebrowser";
+      filebrowserStateDir = "/var/lib/filebrowser";
     in {
       imports =
         [
@@ -156,6 +156,10 @@
         };
         "headscale/api-key" = {
           owner = "headplane";
+        };
+
+        "aria2/rpc-token" = {
+          owner = "aria2";
         };
       };
 
@@ -329,7 +333,7 @@
 
           headscale = {
             subdomain = "tailscale";
-            port = 9090;
+            port = 9091;
             host = "127.0.0.1";
             public = true;
             auth = null;
@@ -355,16 +359,18 @@
             };
           };
 
-          aria2 = {
-            subdomain = "aria2";
-            port = 6800;
-            host = "127.0.0.1";
-            public = true;
-            auth = null;
-          };
           ariang = {
             subdomain = "ariang";
             port = 1357;
+            public = true;
+            auth = "two_factor";
+            subjects = ["group:service-users"];
+          };
+
+          qbittorrent = {
+            subdomain = "qbittorrent";
+            port = 8585;
+            host = "127.0.0.1";
             public = true;
             auth = "two_factor";
             subjects = ["group:service-users"];
@@ -407,7 +413,7 @@
               TZ = "Europe/Warsaw";
             };
             environmentFiles = [
-              config.sops.secrets.filebrowser/env.path
+              config.sops.secrets."filebrowser/env".path
             ];
 
             ports = ["127.0.0.1:7070:80"];
@@ -433,6 +439,30 @@
             extraOptions = [
               "--network=host"
               "--cap-add=NET_RAW"
+            ];
+          };
+
+          qbittorrent = {
+            # renovate: versioning=loose
+            image = "lscr.io/linuxserver/qbittorrent:5.2.0_v2.0.12-ls458";
+            autoStart = true;
+
+            ports = [
+              "8585:8585"
+              "6881:6881"
+              "6881:6881/udp"
+            ];
+
+            environment = {
+              PUID = "1000";
+              PGID = "1000";
+              TZ = "Europe/Warsaw";
+              WEBUI_PORT = "8585";
+            };
+
+            volumes = [
+              "/var/lib/qbittorrent/config:/config"
+              "/mnt/storage/qbittorrent/downloads:/downloads"
             ];
           };
         };
@@ -537,7 +567,7 @@
         headscale = {
           enable = true;
           address = "127.0.0.1";
-          port = 9090;
+          port = 9091;
           settings = {
             server_url = "https://tailscale.${domain}";
             dns.base_domain = "ts.${domain}";
@@ -600,7 +630,7 @@
         };
         nginx = {
           enable = true;
-          virtualHosts."localhost:" = {
+          virtualHosts."localhost" = {
             root = "${pkgs.ariang}/share/ariang";
           };
         };
@@ -886,6 +916,7 @@
           "d /var/lib/headplane 0750 headplane headplane -"
           "d /mnt/storage/aria2 0755 aria2 aria2 - -"
           "d /mnt/storage/aria2/downloads 0755 aria2 aria2 - -"
+          "d /var/lib/qbittorrent/config 0755 1000 1000 -"
         ];
         mounts."var-cache-jellyfin" = {
           what = "tmpfs";
@@ -905,7 +936,7 @@
           };
 
           script = ''
-            curl -s "https://www.duckdns.org/update?domains=${domain}&token=$DUCKDNS_TOKEN"
+            curl -s "https://www.duckdns.org/update" --url-query "domains=${domain}" --url-query "token=$DUCKDNS_TOKEN"
           '';
         };
         timers.duckdns-updater = {
@@ -944,7 +975,11 @@
       };
 
       networking.firewall = {
-        allowedUDPPorts = [41641];
+        allowedTCPPorts = [6881];
+        allowedUDPPorts = [
+          41641
+          6881
+        ];
         trustedInterfaces = ["tailscale0"];
       };
     };
