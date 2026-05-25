@@ -3,7 +3,7 @@ _: {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-KBG40ZNS512G_NVMe_KIOXIA_512GB_Z9IPD6W7PTML";
+        device = "/dev/disk/by-id/nvme-Patriot_M.2_P320_512GB_P320HHBB250927017499";
         content = {
           type = "gpt";
           partitions = {
@@ -71,7 +71,7 @@ _: {
         fsType = "tmpfs";
         mountOptions = [
           "defaults"
-          "size=8G"
+          "size=4G"
           "mode=755"
         ];
       };

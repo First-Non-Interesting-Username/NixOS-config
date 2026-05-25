@@ -27,6 +27,16 @@
 
       users.users.${username}.shell = pkgs.zsh;
       programs.zsh.enable = true;
+
+      security.polkit.extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          if (subject.isInGroup("wheel")) {
+            if (action.id.indexOf("org.nixos.") == 0 || action.id.indexOf("org.freedesktop.systemd1.") == 0) {
+              return polkit.Result.AUTH_ADMIN_KEEP;
+            }
+          }
+        });
+      '';
       home-manager.users.${username} = {
         pkgs,
         config,
@@ -112,22 +122,24 @@
           fd.enable = true;
         };
 
-        home.packages = with pkgs; [
-          trash-cli
-          ugrep
-          ripgrep
-          self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
-          self.packages.${pkgs.stdenv.hostPlatform.system}.btop
-        ];
-
-        home.shellAliases = {
-          cat = "bat --style=plain --pager=never";
-          igrep = "ug -t";
-          rm = "trash-put";
-          tp = "trash-put";
-          tl = "trash-list";
-          te = "trash-empty";
-          bin = "nc termbin.com 9999";
+        home = {
+          packages = with pkgs; [
+            trash-cli
+            ugrep
+            ripgrep
+            self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
+            self.packages.${pkgs.stdenv.hostPlatform.system}.btop
+            shell-gpt
+          ];
+          shellAliases = {
+            cat = "bat --style=plain --pager=never";
+            igrep = "ug -t";
+            rm = "trash-put";
+            tp = "trash-put";
+            tl = "trash-list";
+            te = "trash-empty";
+            bin = "nc termbin.com 9999";
+          };
         };
       };
     };

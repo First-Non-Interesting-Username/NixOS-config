@@ -45,6 +45,7 @@ WIP
 - Unlocks the whole CPU for nix builds.
 - Disables channels.
 - Allows unfree packages and disallows broken ones.
+- Installs this configuration in `/etc/nixos` in read-only mode.
 
 ## nixosModules.opencode
 

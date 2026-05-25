@@ -135,7 +135,7 @@ Replace `HOSTNAME` with your target host name and `IP` with the IP address noted
 
 ```bash
 nix run github:nix-community/nixos-anywhere -- \
-  --flake ".#HOSTNAME" \
+  --flake "github:First-Non-Interesting-Username/NixOS-config#HOSTNAME" \
   --extra-files ./tmp \
   --target-host "root@IP"
 ```

@@ -43,23 +43,31 @@ _: {
         };
       };
       home-manager.users.${username} = {pkgs, ...}: {
-        home.packages = with pkgs; [
-          #factorio
-          #factorio-space-age
-          prismlauncher
-          (pkgs.heroic.override {
-            extraPkgs = pkgs: [
-              pkgs.gamemode
-              pkgs.gamescope
-              pkgs.mangohud
-            ];
-          })
-        ];
+        home = {
+          packages = with pkgs; [
+            #factorio
+            #factorio-space-age
+            prismlauncher
+            protonplus
+            (pkgs.heroic.override {
+              extraPkgs = pkgs: [
+                pkgs.gamemode
+                pkgs.gamescope
+                pkgs.mangohud
+              ];
+            })
+          ];
 
-        home.sessionVariables = {
-          AMD_VULKAN_ICD = "RADV";
-          RADV_PERFTEST = "gpl";
-          INTEL_VULKAN_ICD = "ANV";
+          sessionVariables = {
+            AMD_VULKAN_ICD = "RADV";
+            RADV_PERFTEST = "gpl";
+            INTEL_VULKAN_ICD = "ANV";
+          };
+        };
+        services.flatpak = {
+          packages = [
+            "com.github.unknownskl.greenlight"
+          ];
         };
 
         programs = {

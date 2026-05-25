@@ -1,4 +1,9 @@
-_: {
+_: let
+  myConfig = builtins.fetchGit {
+    url = "https://github.com/First-Non-Interesting-Username/NixOS-config.git";
+    ref = "main";
+  };
+in {
   flake = {
     nixosModules.nix = _: {
       nix = {
@@ -39,6 +44,8 @@ _: {
       };
 
       programs.nix-ld.enable = true;
+
+      environment.etc."nixos".source = myConfig;
     };
   };
 }
