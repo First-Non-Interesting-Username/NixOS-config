@@ -444,7 +444,7 @@
 
           qbittorrent = {
             # renovate: versioning=loose
-            image = "lscr.io/linuxserver/qbittorrent:5.2.0_v2.0.12-ls458";
+            image = "lscr.io/linuxserver/qbittorrent:5.2.0";
             autoStart = true;
 
             ports = [
