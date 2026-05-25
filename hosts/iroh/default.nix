@@ -27,10 +27,10 @@ in {
       self.nixosModules.bootloader
       self.nixosModules.git
       self.nixosModules.home-manager
+      self.nixosModules.home-server-iroh
       self.nixosModules.locale
       self.nixosModules.networking-server
       self.nixosModules.nix
-      self.nixosModules.nps
       self.nixosModules.secrets
       self.nixosModules.shell
       self.nixosModules.ssh
