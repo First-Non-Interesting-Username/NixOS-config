@@ -382,7 +382,7 @@
         backend = "podman";
         containers = {
           freshrss = {
-            image = "ghcr.io/freshrss/freshrss:1.29.0";
+            image = "ghcr.io/freshrss/freshrss:1.29.1";
 
             environment = {
               TZ = "Europe/Warsaw";
