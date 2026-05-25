@@ -19,20 +19,6 @@
   };
 
   boot = {
-    kernelModules = [
-      "mt7921e"
-      "kvm-amd"
-    ];
-    initrd = {
-      kernelModules = ["amdgpu"];
-      availableKernelModules = [
-        "nvme"
-        "xhci_pci"
-        "usb_storage"
-        "sd_mod"
-        "rtsx_pci_sdmmc"
-      ];
-    };
     supportedFilesystems = ["btrfs"];
     kernelParams = ["nohibernate"];
   };
@@ -40,7 +26,7 @@
   system.stateVersion = "26.05";
 
   imports = [
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-amd
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     inputs.disko.nixosModules.disko
     ./disko.nix
   ];

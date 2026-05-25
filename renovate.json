@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+<<<<<<< HEAD
   "extends": ["config:recommended", "docker:enableMajor"],
   "timezone": "Europe/Berlin",
 
@@ -33,5 +34,9 @@
       "matchPackageNames": ["/postgres/", "/mysql/", "/redis/"],
       "automerge": false
     }
+=======
+  "extends": [
+    "config:recommended"
+>>>>>>> 5076afab042b54e7dae4175d932e70e100bffd3d
   ]
 }

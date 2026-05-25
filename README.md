@@ -29,13 +29,13 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 ## Hosts Matrix
 
-| Hostname                               | Motherboard / Laptop Model | CPU         | GPU     | RAM  | Primary Purpose      |
-| -------------------------------------- | -------------------------- | ----------- | ------- | ---- | -------------------- |
-| [armin](./hosts/armin/README.md)       | Thinkpad L14 G4            | Ryzen 7330U | Vega 7  | 32GB | Desktop (Plasma)     |
-| [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A     | N/A  | Installation ISO     |
-| [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A     | N/A  | Installation ISO     |
-| [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630 | 24GB | Local Server in a VM |
-| [template](./hosts/template/README.md) | N/A                        | N/A         | N/A     | N/A  | Other                |
+| Hostname                               | Motherboard / Laptop Model | CPU         | GPU         | RAM  | Primary Purpose      |
+| -------------------------------------- | -------------------------- | ----------- | ----------- | ---- | -------------------- |
+| [armin](./hosts/armin/README.md)       | Framework 13               | Ryzen 7640U | Radeon 760M | 16GB | Desktop (GNOME)      |
+| [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A         | N/A  | Installation ISO     |
+| [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A         | N/A  | Installation ISO     |
+| [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T 4c | UHD 630     | 24GB | Local Server in a VM |
+| [template](./hosts/template/README.md) | N/A                        | N/A         | N/A         | N/A  | Other                |
 
 For more in depth explanation, visit [hosts](./docs/hosts.md).
 

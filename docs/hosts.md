@@ -16,9 +16,9 @@ New changes are often tested here first, because I usually don't store sensative
 
 Specs:
 
-- Ryzen 3 Pro 7330U
-- Vega 7
-- 32GB of RAM 3200MT/s DDR4
+- Ryzen 5 7640U
+- Radeon 760M
+- 16GB of RAM 5600MT/s DDR5
 - 512GB NVMe SSD
 
 At this moment, this machine runs GNOME based desktop config.
