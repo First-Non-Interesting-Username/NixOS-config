@@ -99,6 +99,11 @@
       url = "github:tale/headplane";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-config = {
+      url = "github:First-Non-Interesting-Username/NixOS-config/main";
+      flake = false;
+    };
   };
 
   outputs = inputs:

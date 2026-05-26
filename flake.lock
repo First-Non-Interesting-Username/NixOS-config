@@ -796,6 +796,23 @@
         "type": "github"
       }
     },
+    "nixos-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779731482,
+        "narHash": "sha256-lHg16USx5Ir4NlA/UqGfF7M0yBj6T0itdzVdGte2AhU=",
+        "owner": "First-Non-Interesting-Username",
+        "repo": "NixOS-config",
+        "rev": "85a7fb38631b4eaf7cf6ef001d7029cc1ef1c7a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "First-Non-Interesting-Username",
+        "ref": "main",
+        "repo": "NixOS-config",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1776830795,
@@ -1081,6 +1098,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixflix": "nixflix",
+        "nixos-config": "nixos-config",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
         "noctalia": "noctalia",

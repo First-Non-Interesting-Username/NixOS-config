@@ -30,10 +30,12 @@
     anyOidcPlugin = oidcPluginRouters != {};
 
     lldapBootstrap = let
-      configHash = builtins.hashString "sha256" (builtins.toJSON {
-        groups = cfg.lldap.bootstrap.groups;
-        users = cfg.lldap.bootstrap.users;
-      });
+      configHash = builtins.hashString "sha256" (
+        builtins.toJSON {
+          groups = cfg.lldap.bootstrap.groups;
+          users = cfg.lldap.bootstrap.users;
+        }
+      );
     in
       pkgs.writeShellScript "lldap-bootstrap" ''
         set -euo pipefail
@@ -999,7 +1001,7 @@
 
         (lib.mkIf (cfg.authelia.enable && cfg.authelia.sessionProvider == "valkey") {
           services.redis = {
-            package = pkgs.valkey;
+            package = lib.mkForce pkgs.valkey;
             servers.authelia = {
               enable = true;
               bind = "127.0.0.1";
@@ -1113,44 +1115,43 @@
               StateDirectory = "authelia-main";
               StateDirectoryMode = "0750";
             };
-            preStart = lib.mkIf anyOidc (
-              pkgs.writeShellScript "authelia-oidc-setup" ''
-                set -euo pipefail
-                OUT="/var/lib/authelia-main/oidc-overlay.json"
-                install -m 600 /dev/null "$OUT"
-                CLIENTS=$(${pkgs.coreutils}/bin/cat ${oidcClientsTemplate})
-                ${lib.concatMapStrings (
-                  r: let
-                    o = r.oidc;
-                  in ''
-                    HASH=$(${pkgs.coreutils}/bin/cat "${o.client_secret_hash_file}")
-                    CLIENTS=$(echo "$CLIENTS" | ${pkgs.jq}/bin/jq \
-                      --arg id "${o.client_id}" \
-                      --arg hash "$HASH" \
-                      'map(if .client_id == $id then . + {client_secret: $hash} else . end)')
-                  ''
-                ) (lib.attrValues oidcRouters)}
-                ${pkgs.jq}/bin/jq -n \
-                  --arg hmac "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.hmacSecretFile})" \
-                  --arg key "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.jwksRsaKeyFile})" \
-                  --argjson clients "$CLIENTS" \
-                  '{
-                    identity_providers: {
-                      oidc: {
-                        hmac_secret: $hmac,
-                        jwks: [{ algorithm: "RS256", use: "sig", key: $key }],
-                        lifespans: {
-                          access_token: "1h",
-                          authorize_code: "1m",
-                          id_token: "1h",
-                          refresh_token: "90m"
-                        },
-                        clients: $clients
-                      }
+            # Wrap the pkgs.writeShellScript block inside string interpolation "${ ... }"
+            preStart = lib.mkIf anyOidc "${pkgs.writeShellScript "authelia-oidc-setup" ''
+              set -euo pipefail
+              OUT="/var/lib/authelia-main/oidc-overlay.json"
+              install -m 600 /dev/null "$OUT"
+              CLIENTS=$(${pkgs.coreutils}/bin/cat ${oidcClientsTemplate})
+              ${lib.concatMapStrings (
+                r: let
+                  o = r.oidc;
+                in ''
+                  HASH=$(${pkgs.coreutils}/bin/cat "${o.client_secret_hash_file}")
+                  CLIENTS=$(echo "$CLIENTS" | ${pkgs.jq}/bin/jq \
+                    --arg id "${o.client_id}" \
+                    --arg hash "$HASH" \
+                    'map(if .client_id == $id then . + {client_secret: $hash} else . end)')
+                ''
+              ) (lib.attrValues oidcRouters)}
+              ${pkgs.jq}/bin/jq -n \
+                --arg hmac "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.hmacSecretFile})" \
+                --arg key "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.jwksRsaKeyFile})" \
+                --argjson clients "$CLIENTS" \
+                '{
+                  identity_providers: {
+                    oidc: {
+                      hmac_secret: $hmac,
+                      jwks: [{ algorithm: "RS256", use: "sig", key: $key }],
+                      lifespans: {
+                        access_token: "1h",
+                        authorize_code: "1m",
+                        id_token: "1h",
+                        refresh_token: "90m"
+                      },
+                      clients: $clients
                     }
-                  }' > "$OUT"
-              ''
-            );
+                  }
+                }' > "$OUT"
+            ''}";
           };
         })
       ]

@@ -575,7 +575,7 @@
             server_url = "https://tailscale.${domain}";
             dns.base_domain = "ts.${domain}";
             dns.magic_dns = true;
-            nameservers.global = [
+            dns.nameservers.global = [
               "1.1.1.1"
               "8.8.8.8"
             ];
@@ -790,7 +790,6 @@
             };
           in {
             Shows = subtitleSettings;
-            Anime = subtitleSettings;
             Movies = subtitleSettings;
           };
 
@@ -935,14 +934,16 @@
           "d /mnt/storage/aria2/downloads 0755 aria2 aria2 - -"
           "d /var/lib/qbittorrent/config 0755 1000 1000 -"
         ];
-        mounts."var-cache-jellyfin" = {
-          what = "tmpfs";
-          where = "/var/cache/jellyfin";
-          type = "tmpfs";
-          options = "size=4G,mode=0755,uid=146,gid=146";
-          before = ["jellyfin.service"];
-          wantedBy = ["multi-user.target"];
-        };
+        mounts = [
+          {
+            what = "tmpfs";
+            where = "/var/cache/jellyfin";
+            type = "tmpfs";
+            options = "size=4G,mode=0755,uid=146,gid=146";
+            before = ["jellyfin.service"];
+            wantedBy = ["multi-user.target"];
+          }
+        ];
         services.duckdns-updater = {
           description = "Update DuckDNS IP";
           path = [pkgs.curl];

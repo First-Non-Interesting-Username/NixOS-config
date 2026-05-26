@@ -16,6 +16,7 @@ _: {
               ".local/share/containers"
               ".config/containers"
               ".local/share/distrobox"
+              ".local/share/applications/"
             ];
           };
         };
