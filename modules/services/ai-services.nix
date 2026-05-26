@@ -74,8 +74,6 @@
       );
       domain = "iameasytoremember.duckdns.org";
     in {
-      imports = [self.nixosModules.web-expose];
-
       custom.web-expose.routers = {
         litellm = {
           subdomain = "ai-api";
@@ -1326,95 +1324,95 @@
               }
             ];
           };
+        };
 
-          meilisearch.masterKeyFile = config.sops.secrets."librechat/meili-master-key".path;
+        meilisearch.masterKeyFile = config.sops.secrets."librechat/meili-master-key".path;
 
-          librechat = {
-            enable = true;
-            enableLocalDB = true;
-            meilisearch.enable = true;
+        librechat = {
+          enable = true;
+          enableLocalDB = true;
+          meilisearch.enable = true;
 
-            credentialsFile = config.sops.secrets."librechat/env".path;
+          credentialsFile = config.sops.secrets."librechat/env".path;
 
-            env = {
-              HOST = "127.0.0.1";
-              PORT = 3080;
+          env = {
+            HOST = "127.0.0.1";
+            PORT = 3080;
 
-              ALLOW_REGISTRATION = true;
-              ALLOW_EMAIL_LOGIN = false;
-              ALLOW_SOCIAL_LOGIN = true;
-              OPENID_ISSUER = "https://auth.${domain}";
-              OPENID_CLIENT_ID = "librechat";
-              OPENID_CALLBACK_URL = "https://chat.${domain}/oauth/openid/callback";
-              OPENID_SCOPE = "openid profile email";
-              OPENID_BUTTON_LABEL = "Login with Authelia";
+            ALLOW_REGISTRATION = true;
+            ALLOW_EMAIL_LOGIN = false;
+            ALLOW_SOCIAL_LOGIN = true;
+            OPENID_ISSUER = "https://auth.${domain}";
+            OPENID_CLIENT_ID = "librechat";
+            OPENID_CALLBACK_URL = "https://chat.${domain}/oauth/openid/callback";
+            OPENID_SCOPE = "openid profile email";
+            OPENID_BUTTON_LABEL = "Login with Authelia";
 
-              LITELLM_BASE_URL = "http://127.0.0.1:4000";
+            LITELLM_BASE_URL = "http://127.0.0.1:4000";
+          };
+
+          settings = {
+            version = "1.3.11";
+            cache = true;
+
+            search = {
+              enabled = true;
+              provider = "searxng";
+              searchQuery = {
+                url = "http://127.0.0.1:8889";
+              };
             };
 
-            settings = {
-              version = "1.3.11";
-              cache = true;
+            endpoints = {
+              custom = [
+                {
+                  name = "LiteLLM";
+                  apiKey = "\${LITELLM_API_KEY}";
+                  baseURL = "http://127.0.0.1:4000/v1";
+                  models = {
+                    default = [
+                      "general"
+                      "fast"
+                      "code"
+                      "Polski"
+                      "auto-router"
+                    ];
+                    fetch = true;
+                  };
+                  titleConvo = true;
+                  titleModel = "general";
+                  dropParams = ["stop"];
+                  modelDisplayLabel = "LiteLLM";
+                }
+              ];
+            };
 
-              search = {
-                enabled = true;
-                provider = "searxng";
-                searchQuery = {
-                  url = "http://127.0.0.1:8889";
-                };
-              };
-
-              endpoints = {
-                custom = [
-                  {
-                    name = "LiteLLM";
-                    apiKey = "\${LITELLM_API_KEY}";
-                    baseURL = "http://127.0.0.1:4000/v1";
-                    models = {
-                      default = [
-                        "general"
-                        "fast"
-                        "code"
-                        "Polski"
-                        "auto-router"
-                      ];
-                      fetch = true;
-                    };
-                    titleConvo = true;
-                    titleModel = "general";
-                    dropParams = ["stop"];
-                    modelDisplayLabel = "LiteLLM";
-                  }
-                ];
-              };
-
-              interface = {
-              };
+            interface = {
             };
           };
         };
       };
-      systemd = {
-        services.librechat = {
-          after = ["mongodb.service"];
-          wants = ["mongodb.service"];
-        };
-        tmpfiles.rules = ["d /var/lib/vane 0755 root root -"];
+    };
+    systemd = {
+      services.librechat = {
+        after = ["mongodb.service"];
+        wants = ["mongodb.service"];
       };
+      tmpfiles.rules = ["d /var/lib/vane 0755 root root -"];
+    };
 
-      # add LiteLLM as an OpenAI-compatible provider:
-      #   API URL: http://host.containers.internal:4000
-      #   API Key: LITELLM_MASTER_KEY
-      virtualisation.oci-containers.containers.vane = {
-        # renovate: versioning=docker
-        image = "itzcrazykns1337/vane:slim-1.12.2";
-        ports = ["127.0.0.1:5555:3000"];
-        volumes = ["/var/lib/vane:/home/vane/data"];
-        environment = {
-          SEARXNG_API_URL = "http://host.containers.internal:8889";
-        };
-        extraOptions = ["--add-host=host.containers.internal:host-gateway"];
+    # add LiteLLM as an OpenAI-compatible provider:
+    #   API URL: http://host.containers.internal:4000
+    #   API Key: LITELLM_MASTER_KEY
+    virtualisation.oci-containers.containers.vane = {
+      # renovate: versioning=docker
+      image = "itzcrazykns1337/vane:slim-1.12.2";
+      ports = ["127.0.0.1:5555:3000"];
+      volumes = ["/var/lib/vane:/home/vane/data"];
+      environment = {
+        SEARXNG_API_URL = "http://host.containers.internal:8889";
       };
+      extraOptions = ["--add-host=host.containers.internal:host-gateway"];
     };
   };
 }

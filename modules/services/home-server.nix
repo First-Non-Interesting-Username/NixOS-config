@@ -276,7 +276,7 @@
             subdomain = "rss";
             port = 8035;
             public = true;
-            auth = null;
+            auth = "bypass";
 
             oidc = {
               client_id = "freshrss";
@@ -293,7 +293,7 @@
             subdomain = "files";
             port = 7070;
             public = true;
-            auth = null;
+            auth = "bypass";
 
             oidc = {
               client_id = "filebrowser";
@@ -345,7 +345,7 @@
             port = 4444;
             host = "127.0.0.1";
             public = true;
-            auth = null;
+            auth = "bypass";
             oidc = {
               client_id = "headplane";
               client_secret_hash_file = config.sops.secrets."headplane/oidc-client-secret-hash".path;
@@ -470,12 +470,14 @@
       };
 
       services = {
-        redis.servers = {
-          searxng = {
-            enable = true;
-            package = pkgs.valkey;
-            bind = "127.0.0.1";
-            port = 6380;
+        redis = {
+          package = pkgs.valkey;
+          servers = {
+            searxng = {
+              enable = true;
+              bind = "127.0.0.1";
+              port = 6380;
+            };
           };
         };
 
@@ -573,6 +575,10 @@
             server_url = "https://tailscale.${domain}";
             dns.base_domain = "ts.${domain}";
             dns.magic_dns = true;
+            nameservers.global = [
+              "1.1.1.1"
+              "8.8.8.8"
+            ];
             ip_prefixes = [
               "100.64.0.0/10"
               "fd7a:115c:a1e0::/48"
@@ -662,16 +668,18 @@
           enable = true;
           openFirewall = true;
 
-          config.apiKey = {
-            _secret = config.sops.secrets."nixflix/sonarr/api-key".path;
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/sonarr/password".path;
+          config = {
+            apiKey = {
+              _secret = config.sops.secrets."nixflix/sonarr/api-key".path;
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/sonarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
+            };
           };
         };
 
@@ -679,16 +687,18 @@
           enable = true;
           openFirewall = true;
 
-          config.apiKey = {
-            _secret = config.sops.secrets."nixflix/radarr/api-key".path;
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/radarr/password".path;
+          config = {
+            apiKey = {
+              _secret = config.sops.secrets."nixflix/radarr/api-key".path;
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/radarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
+            };
           };
         };
 
@@ -717,14 +727,14 @@
               {name = "EZTV";}
               {name = "LimeTorrents";}
             ];
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/prowlarr/password".path;
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/prowlarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
           };
         };
 
@@ -776,7 +786,7 @@
               allowEmbeddedSubtitles = "AllowAll";
               requirePerfectSubtitleMatch = false;
               skipSubtitlesIfAudioTrackMatches = false;
-              skipSubtitlesIfEmbeddedsubtitlesPresent = true;
+              skipSubtitlesIfEmbeddedSubtitlesPresent = true;
             };
           in {
             Shows = subtitleSettings;
