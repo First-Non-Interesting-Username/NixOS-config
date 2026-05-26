@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   flake.nixosModules.web-expose = {
     config,
     lib,
@@ -16,7 +16,7 @@
       then cfg.authelia.defaultPolicy
       else null;
 
-    effectiveRouters = lib.mapAttrs (name: r: r // {auth = routerAuth r;}) cfg.routers;
+    effectiveRouters = lib.mapAttrs (_name: r: r // {auth = routerAuth r;}) cfg.routers;
 
     authRouters = lib.filterAttrs (_: r: r.auth != null) effectiveRouters;
     oidcRouters = lib.filterAttrs (_: r: r.oidc != null) effectiveRouters;
@@ -761,7 +761,7 @@
               [
                 cfg.traefikEnvFile
               ]
-              ++ lib.optional (cfg.traefikOidcPlugin.enable) "/var/lib/traefik/oidc-plugin.env";
+              ++ lib.optional cfg.traefikOidcPlugin.enable "/var/lib/traefik/oidc-plugin.env";
 
             staticConfigOptions =
               {
@@ -779,7 +779,7 @@
                   };
                 };
                 certificatesResolvers.letsencrypt.acme = {
-                  email = cfg.email;
+                  inherit (cfg) email;
                   storage = "/var/lib/traefik/acme.json";
                   dnsChallenge = {
                     provider = cfg.dnsChallenge.provider;
@@ -1071,9 +1071,9 @@
                       domain = ["${r.subdomain}.${cfg.domain}"];
                       policy = r.auth;
                       subject = r.subjects;
-                      resources = r.resources;
-                      networks = r.networks;
-                      methods = r.methods;
+                      inherit (r) resources;
+                      inherit (r) networks;
+                      inherit (r) methods;
                     })
                     authRouters);
               };
@@ -1087,7 +1087,7 @@
                   remember_me = "1M";
                   cookies = [
                     {
-                      domain = cfg.domain;
+                      inherit (cfg) domain;
                       authelia_url = "https://${cfg.authelia.subdomain}.${cfg.domain}";
                       name = "authelia_session";
                     }
