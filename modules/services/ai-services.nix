@@ -1,9 +1,6 @@
-{self, ...}: {
+_: {
   flake = {
     nixosModules.ai-services = {
-      lib,
-      username,
-      impermanence,
       config,
       pkgs,
       ...
