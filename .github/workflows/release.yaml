@@ -39,7 +39,7 @@ jobs:
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          installCommand: "nix profile install nixpkgs#cachix"
+          installCommand: "nix profile add nixpkgs#cachix"
 
       - name: Build John
         run: nix build .#john
