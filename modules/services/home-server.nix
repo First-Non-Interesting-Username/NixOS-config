@@ -168,6 +168,7 @@
         enable = lib.mkForce true;
         domain = domain;
         email = email;
+
         traefikEnvFile = config.sops.secrets."routing/traefik/env".path;
 
         lldap = {
@@ -183,7 +184,7 @@
               name = "service-users";
             };
             users.admin = {
-              email = email;
+              inherit email;
               passwordFile = config.sops.secrets."routing/users/admin-user-password".path;
               displayName = "Admin";
               firstName = "Admin";
