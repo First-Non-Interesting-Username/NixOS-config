@@ -16,15 +16,6 @@ _: {
           };
         };
       };
-
-      sops.secrets = {
-        "LLM_keys/NVIDIA".owner = username;
-        "LLM_keys/ZAI".owner = username;
-        "LLM_keys/groq".owner = username;
-        "LLM_keys/cerebras".owner = username;
-        "LLM_keys/openrouter".owner = username;
-        "LLM_keys/together".owner = username;
-      };
       home-manager.users.${username} = _: {
         programs = {
           opencode = {
