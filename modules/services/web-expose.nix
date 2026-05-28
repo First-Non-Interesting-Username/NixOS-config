@@ -976,6 +976,7 @@
               ldap_base_dn = cfg.lldap.baseDn;
               ldap_user_dn = cfg.lldap.adminUsername;
               database_url = "sqlite:///var/lib/lldap/users.db?mode=rwc";
+              force_ldap_user_pass_reset = "always";
             };
             environment = {
               LLDAP_JWT_SECRET_FILE = cfg.lldap.jwtSecretFile;

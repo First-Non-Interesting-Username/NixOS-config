@@ -74,6 +74,10 @@
       );
       domain = "iameasytoremember.duckdns.org";
     in {
+      imports = [
+        self.nixosModules.web-expose
+      ];
+
       custom.web-expose.routers = {
         litellm = {
           subdomain = "ai-api";
@@ -1392,27 +1396,28 @@
           };
         };
       };
-    };
-    systemd = {
-      services.librechat = {
-        after = ["mongodb.service"];
-        wants = ["mongodb.service"];
-      };
-      tmpfiles.rules = ["d /var/lib/vane 0755 root root -"];
-    };
 
-    # add LiteLLM as an OpenAI-compatible provider:
-    #   API URL: http://host.containers.internal:4000
-    #   API Key: LITELLM_MASTER_KEY
-    virtualisation.oci-containers.containers.vane = {
-      # renovate: versioning=docker
-      image = "itzcrazykns1337/vane:slim-1.12.2";
-      ports = ["127.0.0.1:5555:3000"];
-      volumes = ["/var/lib/vane:/home/vane/data"];
-      environment = {
-        SEARXNG_API_URL = "http://host.containers.internal:8889";
+      systemd = {
+        services.librechat = {
+          after = ["mongodb.service"];
+          wants = ["mongodb.service"];
+        };
+        tmpfiles.rules = ["d /var/lib/vane 0755 root root -"];
       };
-      extraOptions = ["--add-host=host.containers.internal:host-gateway"];
+
+      # add LiteLLM as an OpenAI-compatible provider:
+      #   API URL: http://host.containers.internal:4000
+      #   API Key: LITELLM_MASTER_KEY
+      virtualisation.oci-containers.containers.vane = {
+        # renovate: versioning=docker
+        image = "itzcrazykns1337/vane:slim-1.12.2";
+        ports = ["127.0.0.1:5555:3000"];
+        volumes = ["/var/lib/vane:/home/vane/data"];
+        environment = {
+          SEARXNG_API_URL = "http://host.containers.internal:8889";
+        };
+        extraOptions = ["--add-host=host.containers.internal:host-gateway"];
+      };
     };
   };
 }

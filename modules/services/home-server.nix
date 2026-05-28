@@ -18,7 +18,7 @@
     in {
       imports =
         [
-          self.nixosModules.web-expose
+          # self.nixosModules.web-expose already imported via ai-services
           inputs.nixflix.nixosModules.default
           self.nixosModules.ai-services
           inputs.headplane.nixosModules.headplane
@@ -165,7 +165,7 @@
       };
 
       custom.web-expose = {
-        enable = true;
+        enable = lib.mkForce true;
         domain = domain;
         email = email;
         traefikEnvFile = config.sops.secrets."routing/traefik/env".path;
@@ -626,12 +626,12 @@
         };
         aria2 = {
           enable = true;
-          downloadDir = "/mnt/storage/aria2/downloads";
           openPorts = true;
           settings = {
             enable-rpc = true;
             rpc-listen-all = true;
             rpc-listen-port = 6800;
+            dir = "/mnt/storage/aria2/downloads";
           };
           rpcSecretFile = config.sops.secrets."aria2/rpc-token".path;
         };
