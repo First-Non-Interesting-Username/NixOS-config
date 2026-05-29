@@ -166,8 +166,8 @@
 
       custom.web-expose = {
         enable = lib.mkForce true;
-        domain = domain;
-        email = email;
+        inherit domain;
+        inherit email;
 
         traefikEnvFile = config.sops.secrets."routing/traefik/env".path;
 
