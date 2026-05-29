@@ -101,13 +101,13 @@
         };
 
         "routing/lldap/admin-password" = {
-          owner = "lldap";
+          mode = "0444";
         };
         "routing/lldap/jwt-secret" = {
-          owner = "lldap";
+          mode = "0444";
         };
         "routing/lldap/key-seed" = {
-          owner = "lldap";
+          mode = "0444";
         };
 
         "routing/authelia/jwt-secret" = {
@@ -127,7 +127,7 @@
         };
 
         "routing/users/admin-user-password" = {
-          owner = "lldap";
+          mode = "0444";
         };
 
         "searx/env" = {
@@ -147,16 +147,16 @@
         };
 
         "headplane/cookie-secret" = {
-          owner = "headplane";
+          owner = "headscale";
         };
         "headplane/oidc-client-secret" = {
-          owner = "headplane";
+          owner = "headscale";
         };
         "headplane/oidc-client-secret-hash" = {
           owner = "authelia-main";
         };
         "headscale/api-key" = {
-          owner = "headplane";
+          owner = "headscale";
         };
 
         "aria2/rpc-token" = {
@@ -563,7 +563,7 @@
 
           settings = {
             WebService = {
-              Origins = "https://cockpit.${domain}";
+              Origins = lib.mkForce "https://cockpit.${domain}";
             };
           };
         };
@@ -619,12 +619,12 @@
               issuer = "https://auth.${domain}";
               client_id = "headplane";
               client_secret_path = config.sops.secrets."headplane/oidc-client-secret".path;
-              redirect_uri = "https://headplane.${domain}/admin/oidc/callback";
               token_endpoint_auth_method = "client_secret_basic";
               disable_api_key_login = true;
             };
           };
         };
+
         aria2 = {
           enable = true;
           openPorts = true;

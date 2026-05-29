@@ -1114,7 +1114,7 @@ _: {
           systemd.services.authelia-main = {
             serviceConfig = {
               StateDirectory = "authelia-main";
-              StateDirectoryMode = "0750";
+              StateDirectoryMode = "0700";
             };
             # Wrap the pkgs.writeShellScript block inside string interpolation "${ ... }"
             preStart = lib.mkIf anyOidc "${pkgs.writeShellScript "authelia-oidc-setup" ''

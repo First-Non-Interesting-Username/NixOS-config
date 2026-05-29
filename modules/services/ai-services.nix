@@ -136,7 +136,22 @@
         };
 
         "librechat/meili-master-key" = {
-          owner = "meilisearch";
+        };
+      };
+      users = {
+        users = {
+          litellm = {
+            isSystemUser = true;
+            group = "litellm";
+          };
+          meilisearch = {
+            isSystemUser = true;
+            group = "meilisearch";
+          };
+        };
+        groups = {
+          litellm = {};
+          meilisearch = {};
         };
       };
 
@@ -1327,7 +1342,15 @@
           };
         };
 
-        meilisearch.masterKeyFile = config.sops.secrets."librechat/meili-master-key".path;
+        meilisearch = {
+          masterKeyFile = config.sops.secrets."librechat/meili-master-key".path;
+          enable = true;
+        };
+
+        mongodb = {
+          enable = true;
+          package = pkgs.mongodb-ce;
+        };
 
         librechat = {
           enable = true;
