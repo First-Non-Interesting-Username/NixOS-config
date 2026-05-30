@@ -384,7 +384,7 @@
         backend = "podman";
         containers = {
           freshrss = {
-            image = "ghcr.io/freshrss/freshrss:1.29.0";
+            image = "ghcr.io/freshrss/freshrss:1.29.1";
 
             environment = {
               TZ = "Europe/Warsaw";
@@ -429,7 +429,7 @@
           };
 
           up-snap = {
-            image = "ghcr.io/seriousm4x/upsnap:5.3.5";
+            image = "ghcr.io/seriousm4x/upsnap:5.4.0";
             environment = {
               TZ = "Europe/Warsaw";
               UPSNAP_PING_PRIVILEGED = "true";
@@ -445,7 +445,7 @@
           };
 
           qbittorrent = {
-            # renovate: versioning=loose
+            # renovate: extractVersion=^(?<version>\d+\.\d+\.\d+_v\d+\.\d+\.\d+-ls\d+)$
             image = "lscr.io/linuxserver/qbittorrent:5.2.0_v2.0.12-ls458";
             autoStart = true;
 
