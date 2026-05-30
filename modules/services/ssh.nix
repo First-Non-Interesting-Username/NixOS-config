@@ -57,17 +57,18 @@ _: {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-          matchBlocks."*" = {
-            identityFile = "~/.ssh/id_ed25519";
-            addKeysToAgent = "yes";
+          settings = {
+            "*" = {
+              IdentityFile = "~/.ssh/id_ed25519";
+              AddKeysToAgent = "yes";
+            };
+            "Host Server" = {
+              HostName = "iameasytoremember.duckdns.org";
+              User = "nixi";
+              Port = 6767;
+              IdentityFile = "~/.ssh/id_ed25519";
+            };
           };
-          extraConfig = ''
-            Host Server
-              HostName iameasytoremember.duckdns.org
-              User nixi
-              Port 6767
-              IdentityFile ~/.ssh/id_ed25519
-          '';
         };
       };
     };
@@ -133,17 +134,18 @@ _: {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-          matchBlocks."*" = {
-            identityFile = "~/.ssh/id_ed25519";
-            addKeysToAgent = "yes";
+          settings = {
+            "*" = {
+              IdentityFile = "~/.ssh/id_ed25519";
+              AddKeysToAgent = "yes";
+            };
+            "Host Server" = {
+              HostName = "iameasytoremember.duckdns.org";
+              User = "nixi";
+              Port = 6767;
+              IdentityFile = "~/.ssh/id_ed25519";
+            };
           };
-          extraConfig = ''
-            Host Server
-              HostName iameasytoremember.duckdns.org
-              User nixi
-              Port 6767
-              IdentityFile ~/.ssh/id_ed25519
-          '';
         };
       };
     };

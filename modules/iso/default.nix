@@ -5,6 +5,8 @@
       pkgs,
       ...
     }: {
+      boot.zfs.forceImportRoot = false;
+
       environment.defaultPackages = with pkgs; [
         nano
         netcat

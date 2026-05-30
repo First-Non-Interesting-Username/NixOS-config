@@ -21,15 +21,12 @@
           # self.nixosModules.web-expose already imported via ai-services
           inputs.nixflix.nixosModules.default
           self.nixosModules.ai-services
-          inputs.headplane.nixosModules.headplane
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
             directories = ["/var/lib"];
           };
         };
-
-      nixpkgs.overlays = [inputs.headplane.overlays.default];
 
       sops.secrets = {
         "nixflix/sonarr/api-key" = {
@@ -610,7 +607,6 @@
                 }
               );
               config_strict = true;
-              api_key_path = config.sops.secrets."headscale/api-key".path;
             };
 
             integration.proc.enabled = true;
@@ -619,6 +615,7 @@
               issuer = "https://auth.${domain}";
               client_id = "headplane";
               client_secret_path = config.sops.secrets."headplane/oidc-client-secret".path;
+              headscale_api_key_path = config.sops.secrets."headscale/api-key".path;
               token_endpoint_auth_method = "client_secret_basic";
               disable_api_key_login = true;
             };

@@ -12,7 +12,7 @@ in {
   }: {
     imports = [wlib.wrapperModules.${name}];
 
-    extraPackages = [pkgs.nerd-fonts.jetbrains-mono];
+    runtimePkgs = [pkgs.nerd-fonts.jetbrains-mono];
 
     settings = {
       main = {
