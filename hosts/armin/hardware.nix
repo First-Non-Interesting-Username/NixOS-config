@@ -20,7 +20,20 @@
 
   boot = {
     supportedFilesystems = ["btrfs"];
-    kernelParams = ["nohibernate"];
+    kernelParams = [
+      "nohibernate"
+      "mem_sleep_default=deep"
+    ];
+  };
+
+  systemd.services.set-default-power-profile = {
+    description = "Set default power profile to power-saver";
+    after = ["power-profiles-daemon.service"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver";
+    };
   };
 
   system.stateVersion = "26.05";
