@@ -18,17 +18,15 @@
     in {
       imports =
         [
+          # self.nixosModules.web-expose already imported via ai-services
           inputs.nixflix.nixosModules.default
           self.nixosModules.ai-services
-          inputs.headplane.nixosModules.headplane
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
             directories = ["/var/lib"];
           };
         };
-
-      nixpkgs.overlays = [inputs.headplane.overlays.default];
 
       sops.secrets = {
         "nixflix/sonarr/api-key" = {
@@ -100,13 +98,13 @@
         };
 
         "routing/lldap/admin-password" = {
-          owner = "lldap";
+          mode = "0444";
         };
         "routing/lldap/jwt-secret" = {
-          owner = "lldap";
+          mode = "0444";
         };
         "routing/lldap/key-seed" = {
-          owner = "lldap";
+          mode = "0444";
         };
 
         "routing/authelia/jwt-secret" = {
@@ -126,7 +124,7 @@
         };
 
         "routing/users/admin-user-password" = {
-          owner = "lldap";
+          mode = "0444";
         };
 
         "searx/env" = {
@@ -146,16 +144,16 @@
         };
 
         "headplane/cookie-secret" = {
-          owner = "headplane";
+          owner = "headscale";
         };
         "headplane/oidc-client-secret" = {
-          owner = "headplane";
+          owner = "headscale";
         };
         "headplane/oidc-client-secret-hash" = {
           owner = "authelia-main";
         };
         "headscale/api-key" = {
-          owner = "headplane";
+          owner = "headscale";
         };
 
         "aria2/rpc-token" = {
@@ -164,9 +162,10 @@
       };
 
       custom.web-expose = {
-        enable = true;
-        domain = domain;
-        email = email;
+        enable = lib.mkForce true;
+        inherit domain;
+        inherit email;
+
         traefikEnvFile = config.sops.secrets."routing/traefik/env".path;
 
         lldap = {
@@ -182,7 +181,7 @@
               name = "service-users";
             };
             users.admin = {
-              email = email;
+              inherit email;
               passwordFile = config.sops.secrets."routing/users/admin-user-password".path;
               displayName = "Admin";
               firstName = "Admin";
@@ -275,7 +274,7 @@
             subdomain = "rss";
             port = 8035;
             public = true;
-            auth = null;
+            auth = "bypass";
 
             oidc = {
               client_id = "freshrss";
@@ -292,7 +291,7 @@
             subdomain = "files";
             port = 7070;
             public = true;
-            auth = null;
+            auth = "bypass";
 
             oidc = {
               client_id = "filebrowser";
@@ -344,7 +343,7 @@
             port = 4444;
             host = "127.0.0.1";
             public = true;
-            auth = null;
+            auth = "bypass";
             oidc = {
               client_id = "headplane";
               client_secret_hash_file = config.sops.secrets."headplane/oidc-client-secret-hash".path;
@@ -469,12 +468,14 @@
       };
 
       services = {
-        redis.servers = {
-          searxng = {
-            enable = true;
-            package = pkgs.valkey;
-            bind = "127.0.0.1";
-            port = 6380;
+        redis = {
+          package = pkgs.valkey;
+          servers = {
+            searxng = {
+              enable = true;
+              bind = "127.0.0.1";
+              port = 6380;
+            };
           };
         };
 
@@ -559,7 +560,7 @@
 
           settings = {
             WebService = {
-              Origins = "https://cockpit.${domain}";
+              Origins = lib.mkForce "https://cockpit.${domain}";
             };
           };
         };
@@ -572,6 +573,10 @@
             server_url = "https://tailscale.${domain}";
             dns.base_domain = "ts.${domain}";
             dns.magic_dns = true;
+            dns.nameservers.global = [
+              "1.1.1.1"
+              "8.8.8.8"
+            ];
             ip_prefixes = [
               "100.64.0.0/10"
               "fd7a:115c:a1e0::/48"
@@ -602,7 +607,6 @@
                 }
               );
               config_strict = true;
-              api_key_path = config.sops.secrets."headscale/api-key".path;
             };
 
             integration.proc.enabled = true;
@@ -611,35 +615,36 @@
               issuer = "https://auth.${domain}";
               client_id = "headplane";
               client_secret_path = config.sops.secrets."headplane/oidc-client-secret".path;
-              redirect_uri = "https://headplane.${domain}/admin/oidc/callback";
+              headscale_api_key_path = config.sops.secrets."headscale/api-key".path;
               token_endpoint_auth_method = "client_secret_basic";
               disable_api_key_login = true;
             };
           };
         };
+
         aria2 = {
           enable = true;
-          downloadDir = "/mnt/storage/aria2/downloads";
           openPorts = true;
           settings = {
             enable-rpc = true;
             rpc-listen-all = true;
             rpc-listen-port = 6800;
+            dir = "/mnt/storage/aria2/downloads";
           };
           rpcSecretFile = config.sops.secrets."aria2/rpc-token".path;
         };
-        nginx = {
-          enable = true;
-          virtualHosts."localhost" = {
-            listen = [
-              {
-                addr = "127.0.0.1";
-                port = 1357;
-              }
-            ];
-            root = "${pkgs.ariang}/share/ariang";
-          };
-        };
+        #nginx = {
+        #  enable = true;
+        #  virtualHosts."localhost" = {
+        #    listen = [
+        #      {
+        #        addr = "127.0.0.1";
+        #        port = 1357;
+        #      }
+        #    ];
+        #    root = "${pkgs.ariang}/share/ariang";
+        #  };
+        #};
       };
 
       nixflix = {
@@ -661,16 +666,18 @@
           enable = true;
           openFirewall = true;
 
-          config.apiKey = {
-            _secret = config.sops.secrets."nixflix/sonarr/api-key".path;
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/sonarr/password".path;
+          config = {
+            apiKey = {
+              _secret = config.sops.secrets."nixflix/sonarr/api-key".path;
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/sonarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
+            };
           };
         };
 
@@ -678,16 +685,18 @@
           enable = true;
           openFirewall = true;
 
-          config.apiKey = {
-            _secret = config.sops.secrets."nixflix/radarr/api-key".path;
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/radarr/password".path;
+          config = {
+            apiKey = {
+              _secret = config.sops.secrets."nixflix/radarr/api-key".path;
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/radarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
+            };
           };
         };
 
@@ -716,14 +725,14 @@
               {name = "EZTV";}
               {name = "LimeTorrents";}
             ];
-          };
-          hostConfig = {
-            username = "admin";
-            password = {
-              _secret = config.sops.secrets."nixflix/prowlarr/password".path;
+            hostConfig = {
+              username = "admin";
+              password = {
+                _secret = config.sops.secrets."nixflix/prowlarr/password".path;
+              };
+              authenticationMethod = "forms";
+              authenticationRequired = "disabledForLocalAddresses";
             };
-            authenticationMethod = "forms";
-            authenticationRequired = "disabledForLocalAddresses";
           };
         };
 
@@ -775,11 +784,10 @@
               allowEmbeddedSubtitles = "AllowAll";
               requirePerfectSubtitleMatch = false;
               skipSubtitlesIfAudioTrackMatches = false;
-              skipSubtitlesIfEmbeddedsubtitlesPresent = true;
+              skipSubtitlesIfEmbeddedSubtitlesPresent = true;
             };
           in {
             Shows = subtitleSettings;
-            Anime = subtitleSettings;
             Movies = subtitleSettings;
           };
 
@@ -924,14 +932,16 @@
           "d /mnt/storage/aria2/downloads 0755 aria2 aria2 - -"
           "d /var/lib/qbittorrent/config 0755 1000 1000 -"
         ];
-        mounts."var-cache-jellyfin" = {
-          what = "tmpfs";
-          where = "/var/cache/jellyfin";
-          type = "tmpfs";
-          options = "size=4G,mode=0755,uid=146,gid=146";
-          before = ["jellyfin.service"];
-          wantedBy = ["multi-user.target"];
-        };
+        mounts = [
+          {
+            what = "tmpfs";
+            where = "/var/cache/jellyfin";
+            type = "tmpfs";
+            options = "size=4G,mode=0755,uid=146,gid=146";
+            before = ["jellyfin.service"];
+            wantedBy = ["multi-user.target"];
+          }
+        ];
         services.duckdns-updater = {
           description = "Update DuckDNS IP";
           path = [pkgs.curl];

@@ -12,6 +12,7 @@
       home-manager.users.${username} = {username, ...}: {
         programs.home-manager.enable = true;
         home.homeDirectory = "/home/${username}";
+        home.enableNixpkgsReleaseCheck = false;
       };
     };
   };

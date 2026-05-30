@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   flake.nixosModules.web-expose = {
     config,
     lib,
@@ -16,7 +16,7 @@
       then cfg.authelia.defaultPolicy
       else null;
 
-    effectiveRouters = lib.mapAttrs (name: r: r // {auth = routerAuth r;}) cfg.routers;
+    effectiveRouters = lib.mapAttrs (_name: r: r // {auth = routerAuth r;}) cfg.routers;
 
     authRouters = lib.filterAttrs (_: r: r.auth != null) effectiveRouters;
     oidcRouters = lib.filterAttrs (_: r: r.oidc != null) effectiveRouters;
@@ -30,10 +30,12 @@
     anyOidcPlugin = oidcPluginRouters != {};
 
     lldapBootstrap = let
-      configHash = builtins.hashString "sha256" (builtins.toJSON {
-        groups = cfg.lldap.bootstrap.groups;
-        users = cfg.lldap.bootstrap.users;
-      });
+      configHash = builtins.hashString "sha256" (
+        builtins.toJSON {
+          groups = cfg.lldap.bootstrap.groups;
+          users = cfg.lldap.bootstrap.users;
+        }
+      );
     in
       pkgs.writeShellScript "lldap-bootstrap" ''
         set -euo pipefail
@@ -759,7 +761,7 @@
               [
                 cfg.traefikEnvFile
               ]
-              ++ lib.optional (cfg.traefikOidcPlugin.enable) "/var/lib/traefik/oidc-plugin.env";
+              ++ lib.optional cfg.traefikOidcPlugin.enable "/var/lib/traefik/oidc-plugin.env";
 
             staticConfigOptions =
               {
@@ -777,7 +779,7 @@
                   };
                 };
                 certificatesResolvers.letsencrypt.acme = {
-                  email = cfg.email;
+                  inherit (cfg) email;
                   storage = "/var/lib/traefik/acme.json";
                   dnsChallenge = {
                     provider = cfg.dnsChallenge.provider;
@@ -974,6 +976,7 @@
               ldap_base_dn = cfg.lldap.baseDn;
               ldap_user_dn = cfg.lldap.adminUsername;
               database_url = "sqlite:///var/lib/lldap/users.db?mode=rwc";
+              force_ldap_user_pass_reset = "always";
             };
             environment = {
               LLDAP_JWT_SECRET_FILE = cfg.lldap.jwtSecretFile;
@@ -999,7 +1002,7 @@
 
         (lib.mkIf (cfg.authelia.enable && cfg.authelia.sessionProvider == "valkey") {
           services.redis = {
-            package = pkgs.valkey;
+            package = lib.mkForce pkgs.valkey;
             servers.authelia = {
               enable = true;
               bind = "127.0.0.1";
@@ -1069,9 +1072,9 @@
                       domain = ["${r.subdomain}.${cfg.domain}"];
                       policy = r.auth;
                       subject = r.subjects;
-                      resources = r.resources;
-                      networks = r.networks;
-                      methods = r.methods;
+                      inherit (r) resources;
+                      inherit (r) networks;
+                      inherit (r) methods;
                     })
                     authRouters);
               };
@@ -1085,7 +1088,7 @@
                   remember_me = "1M";
                   cookies = [
                     {
-                      domain = cfg.domain;
+                      inherit (cfg) domain;
                       authelia_url = "https://${cfg.authelia.subdomain}.${cfg.domain}";
                       name = "authelia_session";
                     }
@@ -1111,46 +1114,45 @@
           systemd.services.authelia-main = {
             serviceConfig = {
               StateDirectory = "authelia-main";
-              StateDirectoryMode = "0750";
+              StateDirectoryMode = "0700";
             };
-            preStart = lib.mkIf anyOidc (
-              pkgs.writeShellScript "authelia-oidc-setup" ''
-                set -euo pipefail
-                OUT="/var/lib/authelia-main/oidc-overlay.json"
-                install -m 600 /dev/null "$OUT"
-                CLIENTS=$(${pkgs.coreutils}/bin/cat ${oidcClientsTemplate})
-                ${lib.concatMapStrings (
-                  r: let
-                    o = r.oidc;
-                  in ''
-                    HASH=$(${pkgs.coreutils}/bin/cat "${o.client_secret_hash_file}")
-                    CLIENTS=$(echo "$CLIENTS" | ${pkgs.jq}/bin/jq \
-                      --arg id "${o.client_id}" \
-                      --arg hash "$HASH" \
-                      'map(if .client_id == $id then . + {client_secret: $hash} else . end)')
-                  ''
-                ) (lib.attrValues oidcRouters)}
-                ${pkgs.jq}/bin/jq -n \
-                  --arg hmac "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.hmacSecretFile})" \
-                  --arg key "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.jwksRsaKeyFile})" \
-                  --argjson clients "$CLIENTS" \
-                  '{
-                    identity_providers: {
-                      oidc: {
-                        hmac_secret: $hmac,
-                        jwks: [{ algorithm: "RS256", use: "sig", key: $key }],
-                        lifespans: {
-                          access_token: "1h",
-                          authorize_code: "1m",
-                          id_token: "1h",
-                          refresh_token: "90m"
-                        },
-                        clients: $clients
-                      }
+            # Wrap the pkgs.writeShellScript block inside string interpolation "${ ... }"
+            preStart = lib.mkIf anyOidc "${pkgs.writeShellScript "authelia-oidc-setup" ''
+              set -euo pipefail
+              OUT="/var/lib/authelia-main/oidc-overlay.json"
+              install -m 600 /dev/null "$OUT"
+              CLIENTS=$(${pkgs.coreutils}/bin/cat ${oidcClientsTemplate})
+              ${lib.concatMapStrings (
+                r: let
+                  o = r.oidc;
+                in ''
+                  HASH=$(${pkgs.coreutils}/bin/cat "${o.client_secret_hash_file}")
+                  CLIENTS=$(echo "$CLIENTS" | ${pkgs.jq}/bin/jq \
+                    --arg id "${o.client_id}" \
+                    --arg hash "$HASH" \
+                    'map(if .client_id == $id then . + {client_secret: $hash} else . end)')
+                ''
+              ) (lib.attrValues oidcRouters)}
+              ${pkgs.jq}/bin/jq -n \
+                --arg hmac "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.hmacSecretFile})" \
+                --arg key "$(${pkgs.coreutils}/bin/cat ${cfg.authelia.oidc.jwksRsaKeyFile})" \
+                --argjson clients "$CLIENTS" \
+                '{
+                  identity_providers: {
+                    oidc: {
+                      hmac_secret: $hmac,
+                      jwks: [{ algorithm: "RS256", use: "sig", key: $key }],
+                      lifespans: {
+                        access_token: "1h",
+                        authorize_code: "1m",
+                        id_token: "1h",
+                        refresh_token: "90m"
+                      },
+                      clients: $clients
                     }
-                  }' > "$OUT"
-              ''
-            );
+                  }
+                }' > "$OUT"
+            ''}";
           };
         })
       ]

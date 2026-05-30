@@ -23,9 +23,8 @@ _: {
 
       home-manager.users.${username} = {pkgs, ...}: {
         programs = {
-          vscode = {
+          vscodium = {
             enable = true;
-            package = pkgs.vscodium;
             profiles.default = {
               extensions = with pkgs.vscode-extensions; [
                 jnoortheen.nix-ide

@@ -46,6 +46,7 @@
         gtk.enable = true;
         stylix = {
           enable = true;
+          enableReleaseChecks = false;
           inherit image;
           base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark.yaml";
           polarity = "dark";

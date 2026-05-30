@@ -57,7 +57,7 @@ jobs:
   check-changed-files:
     runs-on: ubuntu-latest
     outputs:
-      has-changes: ${{ steps.filter.outputs.nix || github.event_name != 'pull_request' }}
+      has-changes: ${{ steps.filter.outputs.nix == 'true' || github.event_name != 'pull_request' }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -151,6 +151,7 @@ jobs:
         uses: docker/setup-qemu-action@v4
         with:
           platforms: arm64
+          cache-image: false
 
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
@@ -163,7 +164,7 @@ jobs:
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          installCommand: "nix profile install nixpkgs#cachix"
+          installCommand: "nix profile add nixpkgs#cachix"
 
       - name: Build NixOS configurations
         if: needs.discover.outputs.matrix != '[]'

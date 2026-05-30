@@ -8,10 +8,6 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
-> [!TIP]
-> If you are coming from Flavortown, check [this docs page](./docs/flavortown/README.md).
-> You are free to do whatever you want.
-
 ## Table of Contents
 
 - [Hosts Matrix](#hosts-matrix)

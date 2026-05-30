@@ -39,7 +39,7 @@ jobs:
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          installCommand: "nix profile install nixpkgs#cachix"
+          installCommand: "nix profile add nixpkgs#cachix"
 
       - name: Build John
         run: nix build .#john
@@ -126,7 +126,7 @@ jobs:
 
             ### John (Graphical)
             * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ steps.safe_name.outputs.safe_name }}-john.iso/download)**
-            * **SHA256:** `${{ steps.extract-checksums.outputs.sha256_john }}`
+            * **SHA256:** ${{ steps.extract-checksums.outputs.sha256_john }}
 
             Notable changes:
 
@@ -145,8 +145,8 @@ jobs:
     steps:
       - name: Create maintenance reminder
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GH_REPO: "${{ github.repository }}"
         run: |
           set -e
           EXISTING_ISSUE=$(gh issue list --search "SourceForge Cleanup" --state open --json number --jq '.[0].number')
