@@ -633,18 +633,18 @@
           };
           rpcSecretFile = config.sops.secrets."aria2/rpc-token".path;
         };
-        nginx = {
-          enable = true;
-          virtualHosts."localhost" = {
-            listen = [
-              {
-                addr = "127.0.0.1";
-                port = 1357;
-              }
-            ];
-            root = "${pkgs.ariang}/share/ariang";
-          };
-        };
+        #nginx = {
+        #  enable = true;
+        #  virtualHosts."localhost" = {
+        #    listen = [
+        #      {
+        #        addr = "127.0.0.1";
+        #        port = 1357;
+        #      }
+        #    ];
+        #    root = "${pkgs.ariang}/share/ariang";
+        #  };
+        #};
       };
 
       nixflix = {
