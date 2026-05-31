@@ -1,10 +1,6 @@
-{inputs, ...}: {
+_: {
   flake = {
-    nixosModules.bootloader = {
-      pkgs,
-      lib,
-      ...
-    }: {
+    nixosModules.bootloader = _: {
       stylix.targets.limine.enable = true;
 
       boot.loader = {

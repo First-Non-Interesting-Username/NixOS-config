@@ -1,14 +1,7 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+_: {
   flake = {
     nixosModules.power = {
-      pkgs,
       lib,
-      config,
-      username,
       impermanence,
       ...
     }: {
