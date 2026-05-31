@@ -1,6 +1,21 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.nix = _: {
+    nixosModules.nix = {
+      lib,
+      impermanence,
+      username,
+    }: {
+      imports =
+        []
+        ++ lib.optional impermanence {
+          environment.persistence."/persist" = {
+            users.${username} = {
+              directories = [
+                ".cache/nix"
+              ];
+            };
+          };
+        };
       nix = {
         settings = {
           experimental-features = [

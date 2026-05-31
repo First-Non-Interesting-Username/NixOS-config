@@ -38,12 +38,6 @@
 
           users.${username} = {
             directories = [
-              "Projects"
-              "Persist"
-              "Games"
-              "Downloads"
-              ".local/state"
-              ".cache/fontconfig"
               ".cache/mesa_shader_cache"
             ];
 

@@ -11,6 +11,7 @@
           users.${username} = {
             directories = [
               ".mozilla"
+              ".cache/mozilla"
             ];
           };
         };

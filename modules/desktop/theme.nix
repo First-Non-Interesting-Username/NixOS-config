@@ -6,6 +6,8 @@
       pkgs,
       width ? 1920,
       height ? 1080,
+      lib,
+      impermanence,
       ...
     }: let
       theme = "gruvbox-dark";
@@ -38,9 +40,19 @@
           $out
       '';
     in {
-      imports = [
-        inputs.stylix.nixosModules.stylix
-      ];
+      imports =
+        [
+          inputs.stylix.nixosModules.stylix
+        ]
+        ++ lib.optional impermanence {
+          environment.persistence."/persist" = {
+            users.${username} = {
+              directories = [
+                ".cache/fontconfig"
+              ];
+            };
+          };
+        };
 
       stylix = {
         enable = true;
@@ -89,7 +101,6 @@
         gtk.enable = true;
         stylix = {
           enable = true;
-          enableReleaseChecks = false;
           targets = {
             vscode.colors.enable = false;
             kde.enable = false;
