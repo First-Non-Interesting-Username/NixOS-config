@@ -15,6 +15,8 @@ in {
       hostname = Hostname;
       gitName = "ISO-User";
       gitEmail = "iso@nixos.local";
+      width = 1920;
+      height = 1080;
       impermanence = false;
     };
     modules = [
@@ -42,10 +44,7 @@ in {
         home-manager.extraSpecialArgs = {
           inherit self inputs;
           username = Username;
-
           hostname = Hostname;
-          width = 1920;
-          height = 1080;
         };
       }
     ];

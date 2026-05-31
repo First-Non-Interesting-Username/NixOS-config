@@ -18,6 +18,8 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      width = Width;
+      height = Height;
       impermanence = true;
     };
     modules = [
@@ -60,8 +62,6 @@ in {
           username = Username;
           gitName = GitName;
           gitEmail = GitEmail;
-          width = Width;
-          height = Height;
           hostname = Hostname;
         };
       }

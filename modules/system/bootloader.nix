@@ -1,6 +1,12 @@
-_: {
+{inputs, ...}: {
   flake = {
-    nixosModules.bootloader = _: {
+    nixosModules.bootloader = {
+      pkgs,
+      lib,
+      ...
+    }: {
+      stylix.targets.limine.enable = true;
+
       boot.loader = {
         efi = {
           canTouchEfiVariables = true;

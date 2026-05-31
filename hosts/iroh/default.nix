@@ -20,6 +20,8 @@ in {
       gitEmail = GitEmail;
       hostname = Hostname;
       domain = Domain;
+      width = Width;
+      height = Height;
       impermanence = false;
     };
     modules = [
@@ -50,8 +52,6 @@ in {
           gitEmail = GitEmail;
           hostname = Hostname;
           domain = Domain;
-          width = Width;
-          height = Height;
         };
       }
     ];
