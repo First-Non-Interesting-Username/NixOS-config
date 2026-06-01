@@ -93,7 +93,7 @@
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${username} = _: {
         qt = {
           enable = true;
           style.name = "breeze";
