@@ -37,6 +37,7 @@ in {
       self.nixosModules.shell
       self.nixosModules.ssh-debug
       self.nixosModules.user-debug
+      self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;

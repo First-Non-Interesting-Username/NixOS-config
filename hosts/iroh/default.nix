@@ -41,6 +41,7 @@ in {
       self.nixosModules.update
       self.nixosModules.user
       self.nixosModules.virtualization-server
+      self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
