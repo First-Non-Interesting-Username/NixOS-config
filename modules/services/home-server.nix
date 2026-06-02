@@ -426,7 +426,7 @@
           };
 
           up-snap = {
-            image = "ghcr.io/seriousm4x/upsnap:5.4.0";
+            image = "ghcr.io/seriousm4x/upsnap:5.4.1";
             environment = {
               TZ = "Europe/Warsaw";
               UPSNAP_PING_PRIVILEGED = "true";
