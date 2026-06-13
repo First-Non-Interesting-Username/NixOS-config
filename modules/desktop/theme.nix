@@ -55,6 +55,7 @@
         };
 
       stylix = {
+        autoEnable = false;
         enable = true;
         base16Scheme = "${inputs.nixpkgs.legacyPackages.x86_64-linux.base16-schemes}/share/themes/${theme}.yaml";
         inherit polarity;
@@ -100,6 +101,7 @@
         };
         gtk.enable = true;
         stylix = {
+          autoEnable = true;
           enable = true;
           targets = {
             vscode.colors.enable = false;
