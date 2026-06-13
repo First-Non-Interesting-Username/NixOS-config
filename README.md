@@ -121,3 +121,8 @@ Iroh:
 - [ryan4yin/nix-config](https://github.com/ryan4yin/nix-config) — Helped me a lot in the later stages of the project. Golden standard for NixOS configs.
 - [wimpysworld/nix-config](https://github.com/wimpysworld/nix-config) — Great docs and unique way of enabling modules. Very interesting config.
 - [Tarow/nix-podman-stacks](https://github.com/Tarow/nix-podman-stacks) - Extremely helpful for setting up my own homelab. Highly recommended.
+
+### License
+
+This project is licensed under the GNU General Public License v3.0 or later.
+See the [LICENSE](LICENSE) file for details.

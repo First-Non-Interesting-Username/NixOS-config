@@ -49,12 +49,12 @@ jobs:
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.PAT }}
-          commit-message: "chore: update flake.lock"
-          title: "chore: biweekly flake.lock update"
+          commit-message: "deps: update flake.lock"
+          title: "chore(deps): biweekly flake.lock update"
           body: |
             Automated `flake.lock` update via `nix flake update`.
             Please review input changes before merging.
-          branch: "chore/flake-lock-update"
+          branch: "chore(deps)/flake-lock-update"
           delete-branch: true
           labels: dependencies
 
