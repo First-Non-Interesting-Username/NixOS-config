@@ -10,9 +10,7 @@ _: {
         environment.persistence."/persist" = {
           users.${username} = {
             directories = [
-              ".config/VSCodium"
               ".config/zed"
-              ".vscode-oss"
             ];
             files = [
               ".wakatime.cfg"
@@ -23,31 +21,17 @@ _: {
 
       home-manager.users.${username} = {pkgs, ...}: {
         programs = {
-          vscodium = {
-            enable = true;
-            profiles.default = {
-              extensions = with pkgs.vscode-extensions; [
-                jnoortheen.nix-ide
-              ];
-              userSettings = {
-                "nix.enableLanguageServer" = true;
-                "nix.serverPath" = "nil";
-                "nix.formatterPath" = "alejandra";
-                "editor.formatOnSave" = true;
-                "workbench.editor.defaultBinaryEditor" = "hexEditor.treeview";
-              };
-            };
-          };
-
           micro = {
             enable = true;
           };
+
           zed-editor = {
             enable = true;
-            extensions = ["nix"];
+            extensions = ["nix" "markdown-snippets" "marksman"];
             extraPackages = with pkgs; [
               nil
               alejandra
+              marksman
             ];
 
             userSettings = {
@@ -62,6 +46,14 @@ _: {
               };
 
               languages = {
+                Markdown = {
+                  format_on_save = "on";
+                  formatter = "prettier";
+                  prettier = {
+                    allowed = true;
+                  };
+                };
+
                 Nix = {
                   language_servers = [
                     "nil"

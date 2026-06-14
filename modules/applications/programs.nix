@@ -17,7 +17,6 @@ _: {
           users.${username} = {
             directories = [
               ".config/kdeconnect"
-              ".config/obsidian"
             ];
             files = [
               # User-level files to persist (relative to $HOME)
@@ -31,11 +30,6 @@ _: {
       };
 
       home-manager.users.${username} = _: {
-        programs = {
-          obsidian = {
-            enable = true;
-          };
-        };
       };
     };
   };
