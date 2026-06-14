@@ -59,10 +59,10 @@ jobs:
     outputs:
       has-changes: ${{ steps.filter.outputs.nix == 'true' || github.event_name != 'pull_request' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ inputs.ref || github.ref }}
-      - uses: dorny/paths-filter@v4
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4
         id: filter
         if: github.event_name == 'pull_request'
         with:
@@ -80,11 +80,11 @@ jobs:
     outputs:
       matrix: ${{ steps.list.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ inputs.ref || github.ref }}
 
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
@@ -138,29 +138,29 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ inputs.ref || github.ref }}
 
-      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
         with:
           hatchet-protocol: cleave
 
       - name: Enable aarch64 via QEMU binfmt
         if: matrix.system == 'aarch64-linux'
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4
         with:
           platforms: arm64
-          cache-image: false
+          cache-image: true
 
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
             build-dir = /nix/build
             ${{ matrix.system == 'aarch64-linux' && 'extra-platforms = aarch64-linux' || '' }}
 
-      - uses: cachix/cachix-action@v17
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
@@ -214,7 +214,7 @@ jobs:
       issues: write
     steps:
       - name: Report failures to issue
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({

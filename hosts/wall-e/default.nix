@@ -15,6 +15,8 @@ in {
       hostname = Hostname;
       gitName = "ISO-User";
       gitEmail = "iso@nixos.local";
+      width = 1920;
+      height = 1080;
       impermanence = false;
     };
     modules = [
@@ -31,6 +33,7 @@ in {
       self.nixosModules.shell
       self.nixosModules.ssh-debug
       self.nixosModules.user-debug
+      self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -39,8 +42,6 @@ in {
           inherit self inputs;
           username = Username;
           hostname = Hostname;
-          width = 1920;
-          height = 1080;
         };
       }
     ];

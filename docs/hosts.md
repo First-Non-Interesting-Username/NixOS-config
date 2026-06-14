@@ -99,4 +99,5 @@ There are only few rules regarding naming hosts:
 
 Names:
 
-- Annabeth.
+- Annabeth
+- Victim

@@ -30,6 +30,7 @@
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -113,7 +114,6 @@
         (inputs.import-tree ./packages)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-environment)
-        ./devShells
         inputs.git-hooks-nix.flakeModule
         inputs.nix-wrapper-modules.flakeModules.wrappers
       ];

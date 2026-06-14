@@ -19,16 +19,16 @@ jobs:
     outputs:
       success: ${{ steps.check.outputs.success }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           persist-credentials: false
 
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
 
-      - uses: cachix/cachix-action@v17
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: matrix
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
@@ -43,7 +43,7 @@ jobs:
           nix run nixpkgs#alejandra -- .
 
       - name: Enable aarch64 via QEMU
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4
         with:
           platforms: arm64
 
@@ -65,7 +65,7 @@ jobs:
 
       - name: Create Maintenance Pull Request
         if: steps.changes.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "style: nix maintenance (statix, deadnix, alejandra)"

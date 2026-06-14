@@ -42,6 +42,10 @@
         desktopManager.gnome.enable = true;
         displayManager.gdm.enable = true;
       };
+
+      stylix.targets = {
+        gnome.enable = true;
+      };
       environment.gnome.excludePackages = with pkgs; [
         gnome-tour
         orca
@@ -111,6 +115,7 @@
                 search-light
                 vitals
                 vicinae
+                hide-cursor
               ]
             );
           };
@@ -149,6 +154,7 @@
             };
             "org/gnome/desktop/peripherals/touchpad" = {
               two-finger-scrolling-enabled = true;
+              tap-to-click = true;
             };
             "org/gnome/desktop/privacy" = {
               report-technical-problems = true;

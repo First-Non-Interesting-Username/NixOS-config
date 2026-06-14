@@ -6,3 +6,4 @@ nixos-*.iso
 result
 .direnv/
 .pre-commit-config.yaml
+.devenv

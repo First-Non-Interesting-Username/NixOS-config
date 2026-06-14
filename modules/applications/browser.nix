@@ -11,6 +11,7 @@
           users.${username} = {
             directories = [
               ".mozilla"
+              ".cache/mozilla"
             ];
           };
         };
@@ -90,13 +91,23 @@
                 default = "ddg";
                 force = true;
                 engines = {
-                  "MyNixOS" = {
-                    urls = [{template = "https://mynixos.com/search?q={searchTerms}";}];
-                    icon = "https://mynixos.com/favicon.ico";
+                  "NixOS Packages" = {
+                    urls = [{template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";}];
+                    icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                     updateInterval = 24 * 60 * 60 * 1000;
                     definedAliases = [
-                      "@mn"
-                      "@mynixos"
+                      "@nixpkgs"
+                      "@nix"
+                      "@np"
+                    ];
+                  };
+                  "NixOS Options" = {
+                    urls = [{template = "https://search.nixos.org/options?channel=unstable&query={searchTerms}";}];
+                    icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                    updateInterval = 24 * 60 * 60 * 1000;
+                    definedAliases = [
+                      "@no"
+                      "@nixoptions"
                     ];
                   };
 

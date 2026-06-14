@@ -18,6 +18,8 @@ in {
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
+      width = Width;
+      height = Height;
       impermanence = true;
     };
     modules = [
@@ -33,7 +35,6 @@ in {
       self.nixosModules.IDE
       self.nixosModules.impermanence
       self.nixosModules.input
-      self.nixosModules.kernel-laptop
       self.nixosModules.locale
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop
@@ -51,6 +52,7 @@ in {
       self.nixosModules.user
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland
+      self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -60,8 +62,6 @@ in {
           username = Username;
           gitName = GitName;
           gitEmail = GitEmail;
-          width = Width;
-          height = Height;
           hostname = Hostname;
         };
       }

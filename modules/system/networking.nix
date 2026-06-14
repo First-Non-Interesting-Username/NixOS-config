@@ -12,7 +12,7 @@ _: {
         hostName = hostname;
         networkmanager.enable = true;
 
-        useDHCP = lib.mkDefault true;
+        useDHCP = false;
 
         firewall = {
           enable = true;
@@ -55,7 +55,7 @@ _: {
           method=auto
           EOF
 
-            cat > /etc/NetworkManager/system-connections/secondnet.nmconnection << EOF
+            cat > /etc/NetworkManager/system-connections/malti_5g.nmconnection << EOF
           [connection]
           id=MALTI_5G
           type=wifi
@@ -102,7 +102,7 @@ _: {
         hostName = hostname;
         networkmanager.enable = true;
 
-        useDHCP = lib.mkDefault true;
+        useDHCP = false;
 
         firewall = {
           enable = true;
@@ -145,7 +145,6 @@ _: {
         firewall = {
           enable = true;
           allowedTCPPorts = [
-            22
             80
             443
           ];
@@ -161,7 +160,7 @@ _: {
         hostName = hostname;
         networkmanager.enable = true;
 
-        useDHCP = lib.mkDefault true;
+        useDHCP = lib.mkDefault false;
 
         firewall = {
           enable = true;
