@@ -24,3 +24,7 @@ DON'T USE ON PRODUCTION MACHINES
 ## nixosModules.user-debug
 
 - Sets root password to `nixos`.
+
+## nixosModules.xdg
+
+- Creates xdg directories, with location based on impermanence enablement
