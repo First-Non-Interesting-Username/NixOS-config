@@ -7,20 +7,21 @@
 }: {
   services.qemuGuest.enable = true;
 
-  boot.initrd.availableKernelModules = [
-    "virtio_pci"
-    "virtio_blk"
-    "virtio_scsi"
-    "ahci"
-    "xhci_pci"
-    "usbhid"
-    "sr_mod"
-  ];
-
-  boot.supportedFilesystems = [
-    "btrfs"
-    "xfs"
-  ];
+  boot = {
+    initrd.availableKernelModules = [
+      "virtio_pci"
+      "virtio_blk"
+      "virtio_scsi"
+      "ahci"
+      "xhci_pci"
+      "usbhid"
+      "sr_mod"
+    ];
+    supportedFilesystems = [
+      "btrfs"
+      "xfs"
+    ];
+  };
 
   hardware = {
     usbStorage.manageShutdown = true;

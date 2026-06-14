@@ -42,6 +42,10 @@
         desktopManager.gnome.enable = true;
         displayManager.gdm.enable = true;
       };
+
+      stylix.targets = {
+        gdm.enable = true;
+      };
       environment.gnome.excludePackages = with pkgs; [
         gnome-tour
         orca
