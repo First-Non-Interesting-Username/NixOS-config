@@ -287,6 +287,13 @@
             subjects = ["group:service-users"];
             traefikRule = ''Host(`fgc.${cfg.domain}`) && (PathPrefix(`/novnc`) || Path(`/websockify`))'';
           };
+
+          aiostreams = {
+            subdomain = "aiostreams";
+            port = 4321;
+            public = true;
+            auth = "bypass";
+          };
         };
       };
 
