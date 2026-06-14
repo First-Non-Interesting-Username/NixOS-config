@@ -115,6 +115,7 @@
                 search-light
                 vitals
                 vicinae
+                hide-cursor
               ]
             );
           };
