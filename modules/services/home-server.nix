@@ -101,6 +101,8 @@
         };
 
         "fgc/env" = {};
+
+        "aiostreams/env" = {};
       };
 
       custom.web-expose = {
@@ -268,6 +270,23 @@
             auth = "two_factor";
             subjects = ["group:service-users"];
           };
+
+          fgc = {
+            subdomain = "fgc";
+            port = 7080;
+            public = false;
+            auth = "two_factor";
+            subjects = ["group:service-users"];
+          };
+
+          fgc-novnc = {
+            subdomain = "fgc-novnc";
+            port = 6080;
+            public = false;
+            auth = "two_factor";
+            subjects = ["group:service-users"];
+            traefikRule = ''Host(`fgc.${cfg.domain}`) && (PathPrefix(`/novnc`) || Path(`/websockify`))'';
+          };
         };
       };
 
@@ -369,10 +388,29 @@
               "127.0.0.1:6080:6080"
               "127.0.0.1:7080:7080"
             ];
+            environment = {
+                PUBLIC_URL = "https://fgc.${config.custom.web-expose.domain}";
+            };
             volumes = ["/var/lib/fgc:/fgc/data"];
             environmentFiles = [
               config.sops.secrets."fgc/env".path
             ];
+          };
+
+          aiostreams = {
+            # renovate: versioning=docker
+            image = "ghcr.io/viren070/aiostreams:v2.30.3";
+            ports = ["127.0.0.1:4321:3000"];
+            volumes = [
+              "/var/lib/aiostreams/data:/app/data"
+            ];
+            environment = {
+              BASE_URL = "https://aiostreams.${domain}";
+            };
+            environmentFiles = [
+              config.sops.secrets."aiostreams/env".path
+            ];
+            autoStart = true;
           };
         };
       };
