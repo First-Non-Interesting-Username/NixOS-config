@@ -19,8 +19,9 @@
       imports =
         [
           # self.nixosModules.web-expose already imported via ai-services
+          self.nixosModules.web-expose
           inputs.nixflix.nixosModules.default
-          self.nixosModules.ai-services
+          # self.nixosModules.ai-services
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
@@ -159,6 +160,8 @@
         "aria2/rpc-token" = {
           owner = "aria2";
         };
+
+        "fgc/env" = {};
       };
 
       custom.web-expose = {
@@ -381,6 +384,7 @@
         backend = "podman";
         containers = {
           freshrss = {
+            # renovate: versioning=docker
             image = "ghcr.io/freshrss/freshrss:1.29.1";
 
             environment = {
@@ -426,6 +430,7 @@
           };
 
           up-snap = {
+            # renovate: versioning=docker
             image = "ghcr.io/seriousm4x/upsnap:5.4.1";
             environment = {
               TZ = "Europe/Warsaw";
@@ -447,9 +452,9 @@
             autoStart = true;
 
             ports = [
-              "8585:8585"
-              "6881:6881"
-              "6881:6881/udp"
+              "127.0.0.1:8585:8585"
+              "127.0.0.1:6881:6881"
+              "127.0.0.1:6881:6881/udp"
             ];
 
             environment = {
@@ -462,6 +467,20 @@
             volumes = [
               "/var/lib/qbittorrent/config:/config"
               "/mnt/storage/qbittorrent/downloads:/downloads"
+            ];
+          };
+
+          free-games = {
+            # renovate: versioning=docker
+            image = "ghcr.io/feldorn/free-games-claimer:a7d40b2";
+            autoStart = true;
+            ports = [
+              "127.0.0.1:6080:6080"
+              "127.0.0.1:7080:7080"
+            ];
+            volumes = ["/var/lib/fgc:/fgc/data"];
+            environmentFiles = [
+              config.sops.secrets."fgc/env".path
             ];
           };
         };
