@@ -50,7 +50,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${username} = _: {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
