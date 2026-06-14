@@ -9,8 +9,6 @@
     enable = true;
   };
 
-  kernelPackages = pkgs.linuxPackages_zen;
-
   services = {
     scx = {
       enable = true;
@@ -36,6 +34,7 @@
       "amd_pstate=active"
       "nvme.noacpi=1"
     ];
+    kernelPackages = pkgs.linuxPackages_zen;
   };
 
   systemd.services.set-default-power-profile = {

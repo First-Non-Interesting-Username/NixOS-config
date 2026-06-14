@@ -30,6 +30,7 @@
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";

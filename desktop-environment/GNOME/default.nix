@@ -44,7 +44,7 @@
       };
 
       stylix.targets = {
-        gdm.enable = true;
+        gnome.enable = true;
       };
       environment.gnome.excludePackages = with pkgs; [
         gnome-tour
