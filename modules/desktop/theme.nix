@@ -57,7 +57,7 @@
       stylix = {
         autoEnable = false;
         enable = true;
-        base16Scheme = "${inputs.nixpkgs.legacyPackages.x86_64-linux.base16-schemes}/share/themes/${theme}.yaml";
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/${theme}.yaml";
         inherit polarity;
         inherit image;
 

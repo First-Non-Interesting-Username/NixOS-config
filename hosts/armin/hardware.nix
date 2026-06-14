@@ -40,8 +40,10 @@
   systemd.services.set-default-power-profile = {
     description = "Set default power profile to power-saver";
     after = ["power-profiles-daemon.service"];
+    requires = ["power-profiles-daemon.service"];
     wantedBy = ["multi-user.target"];
     serviceConfig = {
+      RemainAfterExit = true;
       Type = "oneshot";
       ExecStart = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver";
     };
