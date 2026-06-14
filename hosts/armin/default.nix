@@ -35,7 +35,6 @@ in {
       self.nixosModules.IDE
       self.nixosModules.impermanence
       self.nixosModules.input
-      self.nixosModules.kernel-laptop
       self.nixosModules.locale
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop

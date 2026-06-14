@@ -1,14 +1,5 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.kernel-laptop = {pkgs, ...}: {
-      boot = {
-        kernelParams = [
-          "amd_pstate=active"
-          "nvme.noacpi=1"
-        ];
-        kernelPackages = pkgs.linuxPackages_zen;
-      };
-    };
     nixosModules.kernel-desktop = {pkgs, ...}: {
       nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
 

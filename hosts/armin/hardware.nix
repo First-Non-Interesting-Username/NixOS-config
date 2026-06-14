@@ -9,6 +9,16 @@
     enable = true;
   };
 
+  kernelPackages = pkgs.linuxPackages_zen;
+
+  services = {
+    scx = {
+      enable = true;
+      scheduler = "scx_bpfland";
+    };
+    system76-scheduler.enable = true;
+  };
+
   hardware = {
     firmware = [pkgs.linux-firmware];
     cpu.amd.updateMicrocode = true;
@@ -23,6 +33,8 @@
     kernelParams = [
       "nohibernate"
       "mem_sleep_default=deep"
+      "amd_pstate=active"
+      "nvme.noacpi=1"
     ];
   };
 
