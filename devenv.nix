@@ -4,6 +4,7 @@
   packages = with pkgs; [
     yamllint
     alejandra
+    nixd
   ];
 
   files.".vscode/settings.json".json = {

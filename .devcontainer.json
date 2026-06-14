@@ -1,1 +1,14 @@
-/nix/store/7z51l9sann807002a6q83j8qf58x4vi5-devcontainer.json
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "jnoortheen.nix-ide",
+        "esbenp.prettier-vscode",
+        "wakatime.vscode-wakatime"
+      ]
+    }
+  },
+  "image": "ghcr.io/cachix/devenv/devcontainer:latest",
+  "overrideCommand": false,
+  "updateContentCommand": "devenv test"
+}

@@ -130,11 +130,11 @@
             self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
             self.packages.${pkgs.stdenv.hostPlatform.system}.btop
             shell-gpt
+            devenv
           ];
           shellAliases = {
             cat = "bat --style=plain --pager=never";
             igrep = "ug -t";
-            rm = "trash-put";
             tp = "trash-put";
             tl = "trash-list";
             te = "trash-empty";
