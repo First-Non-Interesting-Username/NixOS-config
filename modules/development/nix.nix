@@ -1,4 +1,4 @@
-{inputs, self, ...}: {
+{inputs, ...}: {
   flake = {
     nixosModules.nix = {
       lib,
@@ -6,17 +6,15 @@
       username,
       ...
     }: {
-      imports =
-        []
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            users.${username} = {
-              directories = [
-                ".cache/nix"
-              ];
-            };
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          users.${username} = {
+            directories = [
+              ".cache/nix"
+            ];
           };
         };
+      };
       nix = {
         settings = {
           experimental-features = [

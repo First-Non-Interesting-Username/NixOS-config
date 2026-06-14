@@ -4,7 +4,6 @@ _: {
       lib,
       username,
       impermanence,
-      pkgs,
       ...
     }: {
       imports = lib.optional impermanence {

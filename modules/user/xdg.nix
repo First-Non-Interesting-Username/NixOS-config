@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.xdg = {
       lib,
@@ -6,19 +6,17 @@
       impermanence,
       ...
     }: {
-      imports =
-        []
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            users.${username} = {
-              directories = [
-                ".config"
-                ".local/share"
-                ".local/state"
-              ];
-            };
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          users.${username} = {
+            directories = [
+              ".config"
+              ".local/share"
+              ".local/state"
+            ];
           };
         };
+      };
       home-manager.users.${username} = {config, ...}: let
         homeBase =
           if impermanence
