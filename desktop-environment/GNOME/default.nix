@@ -155,7 +155,6 @@
             "org/gnome/desktop/peripherals/touchpad" = {
               two-finger-scrolling-enabled = true;
               tap-to-click = true;
-              click-method = "area";
             };
             "org/gnome/desktop/privacy" = {
               report-technical-problems = true;
