@@ -5,17 +5,14 @@
   modulesPath,
   ...
 }: {
-  services.qemuGuest.enable = true;
-
   boot = {
     initrd.availableKernelModules = [
-      "virtio_pci"
-      "virtio_blk"
-      "virtio_scsi"
       "ahci"
       "xhci_pci"
       "usbhid"
-      "sr_mod"
+      "usb_storage"
+      "sd_mod" # instead of virtio_blk/virtio_scsi
+      "nvme"
     ];
     supportedFilesystems = [
       "btrfs"
@@ -24,6 +21,7 @@
   };
 
   hardware = {
+    cpu.intel.updateMicrocode = true;
     usbStorage.manageShutdown = true;
     graphics = {
       enable = true;
@@ -47,7 +45,7 @@
       interval = "monthly";
     };
     udev.extraRules = ''
-      ACTION=="add|change", KERNEL=="sdc", ATTR{queue/scheduler}="bfq"
+      ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq""
     '';
   };
 
@@ -56,7 +54,6 @@
   imports = [
     inputs.disko.nixosModules.disko
     ./disko.nix
-    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   home-manager.users.${username} = _: {

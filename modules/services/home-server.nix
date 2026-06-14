@@ -396,7 +396,7 @@
               "127.0.0.1:7080:7080"
             ];
             environment = {
-                PUBLIC_URL = "https://fgc.${config.custom.web-expose.domain}";
+              PUBLIC_URL = "https://fgc.${config.custom.web-expose.domain}";
             };
             volumes = ["/var/lib/fgc:/fgc/data"];
             environmentFiles = [

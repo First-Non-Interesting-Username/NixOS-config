@@ -129,7 +129,7 @@ _: {
         hostName = hostname;
         networkmanager.enable = false;
 
-        interfaces.ens18 = {
+        interfaces.eno1 = {
           useDHCP = false;
           ipv4.addresses = [
             {
