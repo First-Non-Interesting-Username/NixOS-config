@@ -3,7 +3,7 @@ _: {
     disk = {
       root = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/nvme-PM991a_NVMe_Samsung_256GB__S660NX1T729293";
         content = {
           type = "gpt";
           partitions = {
@@ -84,7 +84,7 @@ _: {
 
       ssd = {
         type = "disk";
-        device = "/dev/sdb";
+        device = "/dev/disk/by-id/ata-SSDPR-CX400-512-G2_4S0218458";
         content = {
           type = "gpt";
           partitions = {

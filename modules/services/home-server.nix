@@ -285,7 +285,7 @@
             public = false;
             auth = "two_factor";
             subjects = ["group:service-users"];
-            traefikRule = ''Host(`fgc.${cfg.domain}`) && (PathPrefix(`/novnc`) || Path(`/websockify`))'';
+            traefikRule = ''Host(`fgc.${domain}`) && (PathPrefix(`/novnc`) || Path(`/websockify`))'';
           };
 
           aiostreams = {
