@@ -85,7 +85,7 @@ _: {
                 format = "xfs";
                 extraArgs = ["-d" "su=64k,sw=1" "-l" "size=256m,lazy-count=1"];
                 mountpoint = "/mnt/storage";
-                mountOptions = ["noatime" "largeio" "inode64" "noquota" "allocsize=64m"];
+                mountOptions = ["noatime" "largeio" "inode64" "noquota" "allocsize=64m" "nofail"];
               };
             };
           };
