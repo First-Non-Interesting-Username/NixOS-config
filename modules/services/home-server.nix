@@ -19,7 +19,7 @@
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
-            directories = ["/var/lib"];
+            # directories = ["/var/lib"];
           };
         };
 

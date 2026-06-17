@@ -3,13 +3,23 @@ _: {
     nixosModules.nasServer = {
       lib,
       impermanence,
+      config,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          directories = [
-            "/var/lib/nfs"
-          ];
+          directories =
+            lib.filter (
+              d: let
+                dir =
+                  if builtins.isString d
+                  then d
+                  else d.directory;
+              in
+                !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
+            ) [
+              "/var/lib/nfs"
+            ];
         };
       };
 
