@@ -11,9 +11,9 @@
         enable = true;
         services.rollback = {
           description = "Wipe root subvolume on boot";
-          wantedBy = [ "initrd.target" ];
-          after = [ "dev-disk-by\\x2dpartlabel-disk\\x2droot\\x2droot.device" ];
-          before = [ "sysroot.mount" ];
+          wantedBy = ["initrd.target"];
+          after = ["dev-disk-by\\x2dpartlabel-disk\\x2droot\\x2droot.device"];
+          before = ["sysroot.mount"];
           unitConfig.DefaultDependencies = "no";
           serviceConfig = {
             Type = "oneshot";
