@@ -1,12 +1,7 @@
-{
-  inputs,
-  self,
-  ...
-}: {
+{self, ...}: {
   flake = {
     nixosModules.home-server-iroh = {
       lib,
-      username,
       impermanence,
       config,
       pkgs,

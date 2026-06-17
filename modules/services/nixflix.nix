@@ -5,14 +5,11 @@
 }: {
   flake = {
     nixosModules.nixflix = {
-      lib,
       username,
       config,
       pkgs,
       ...
-    }: let
-      domain = "iameasytoremember.duckdns.org";
-    in {
+    }: {
       imports = [
         inputs.nixflix.nixosModules.default
         self.nixosModules.web-expose

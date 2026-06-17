@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   username,
-  modulesPath,
   ...
 }: {
   boot = {
