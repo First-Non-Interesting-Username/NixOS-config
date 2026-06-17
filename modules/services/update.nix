@@ -25,7 +25,7 @@ _: {
             ExecStart = pkgs.writeShellScript "upgrade" ''
               set -e
               ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
-                --flake "github:First-Non-Interesting-Username/NixOS-config#$(hostname)" \
+                --flake "github:First-Non-Interesting-Username/NixOS-config#${hostname}" \
                 -L
             '';
           };

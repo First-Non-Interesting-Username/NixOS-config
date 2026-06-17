@@ -274,7 +274,7 @@
             subjects = ["group:service-users"];
           };
 
-          fgc-novnc = {
+          fgcNovnc = {
             subdomain = "fgc-novnc";
             port = 6080;
             public = false;
@@ -382,7 +382,7 @@
             ];
           };
 
-          free-games = {
+          freeGames = {
             # renovate: versioning=docker
             image = "ghcr.io/feldorn/free-games-claimer:a7d40b2";
             autoStart = true;
