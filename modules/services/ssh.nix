@@ -50,10 +50,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
-        home.packages = with pkgs; [
-          lazyssh
-        ];
+      home-manager.users.${username} = _: {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
@@ -61,8 +58,17 @@ _: {
             "*" = {
               IdentityFile = "~/.ssh/id_ed25519";
               AddKeysToAgent = "yes";
+              IdentitiesOnly = "yes";
+              ServerAliveInterval = "60";
+              ServerAliveCountMax = "3";
+              ConnectTimeout = "10";
+
+              ForwardX11 = "no";
+              ForwardX11Trusted = "no";
+              PasswordAuthentication = "yes";
+              VisualHostKey = "yes";
             };
-            "Host Server" = {
+            "Iroh" = {
               HostName = "iameasytoremember.duckdns.org";
               User = "nixi";
               Port = 6767;

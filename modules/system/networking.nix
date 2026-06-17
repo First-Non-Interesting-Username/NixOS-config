@@ -10,7 +10,12 @@ _: {
       sops.secrets."wifi_password" = {};
       networking = {
         hostName = hostname;
-        networkmanager.enable = true;
+        networkmanager = {
+          enable = true;
+          dns = "none";
+        };
+
+        nameservers = ["1.1.1.1" "1.0.0.1"];
 
         useDHCP = false;
 
@@ -98,9 +103,15 @@ _: {
       impermanence,
       ...
     }: {
+
       networking = {
         hostName = hostname;
-        networkmanager.enable = true;
+        networkmanager = {
+          enable = true;
+          dns = "none";
+        };
+
+        nameservers = ["1.1.1.1" "1.0.0.1"];
 
         useDHCP = false;
 
@@ -129,18 +140,18 @@ _: {
         hostName = hostname;
         networkmanager.enable = false;
 
-        interfaces.ens18 = {
+        interfaces.enp1s0 = {
           useDHCP = false;
           ipv4.addresses = [
             {
-              address = "192.168.0.124";
+              address = "192.168.0.10";
               prefixLength = 24;
             }
           ];
         };
 
         defaultGateway = "192.168.0.1";
-        nameservers = ["192.168.0.1"];
+        nameservers = ["1.1.1.1" "1.0.0.1"];
 
         firewall = {
           enable = true;

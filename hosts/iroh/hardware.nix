@@ -2,20 +2,17 @@
   pkgs,
   inputs,
   username,
-  modulesPath,
+  lib,
   ...
 }: {
-  services.qemuGuest.enable = true;
-
   boot = {
     initrd.availableKernelModules = [
-      "virtio_pci"
-      "virtio_blk"
-      "virtio_scsi"
       "ahci"
       "xhci_pci"
       "usbhid"
-      "sr_mod"
+      "usb_storage"
+      "sd_mod"
+      "nvme"
     ];
     supportedFilesystems = [
       "btrfs"
@@ -24,6 +21,10 @@
   };
 
   hardware = {
+    facter = lib.optionalAttrs (builtins.pathExists ./facter.json) {
+      reportPath = ./facter.json;
+    };
+    cpu.intel.updateMicrocode = true;
     usbStorage.manageShutdown = true;
     graphics = {
       enable = true;
@@ -47,19 +48,18 @@
       interval = "monthly";
     };
     udev.extraRules = ''
-      ACTION=="add|change", KERNEL=="sdc", ATTR{queue/scheduler}="bfq"
+      ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
     '';
   };
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 
   imports = [
     inputs.disko.nixosModules.disko
     ./disko.nix
-    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   home-manager.users.${username} = _: {
-    home.stateVersion = "26.05";
+    home.stateVersion = "26.11";
   };
 }

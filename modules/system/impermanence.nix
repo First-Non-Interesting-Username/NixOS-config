@@ -39,6 +39,7 @@
           users.${username} = {
             directories = [
               ".cache/mesa_shader_cache"
+              "persist"
             ];
 
             files = [
@@ -60,7 +61,7 @@
         home-manager.users.${username} = _: {
           programs.zsh.initContent = ''
             if [[ $PWD == $HOME ]]; then
-                cd ~/Persist
+                cd ~/persist
             fi
           '';
         };
