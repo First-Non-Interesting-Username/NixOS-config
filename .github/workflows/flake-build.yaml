@@ -93,20 +93,20 @@ jobs:
         id: list
         run: |
           HOSTS=$(nix eval .#nixosConfigurations \
-            --apply 'n: builtins.map (name: { 
-            inherit name; 
-            type = "host"; 
-            system = n.${name}.config.nixpkgs.system; 
+            --apply 'n: builtins.map (name: {
+            inherit name;
+            type = "host";
+            system = n.${name}.config.nixpkgs.system;
             }) (builtins.attrNames n)' \
             --json)
 
           PKGS=$(nix eval .#packages \
-            --apply 'p: 
+            --apply 'p:
               builtins.concatLists (
-                builtins.map (system: 
-                  builtins.map (name: { 
-                    inherit name system; 
-                    type = "pkg"; 
+                builtins.map (system:
+                  builtins.map (name: {
+                    inherit name system;
+                    type = "pkg";
                   }) (builtins.attrNames p.${system})
                 ) (builtins.attrNames p)
               )' \
@@ -128,12 +128,16 @@ jobs:
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     needs: discover
     strategy:
       fail-fast: false
       matrix:
-        system: [x86_64-linux, aarch64-linux]
+        include:
+          - system: x86_64-linux
+            runner: ubuntu-latest
+          - system: aarch64-linux
+            runner: ubuntu-24.04-arm
     permissions:
       contents: read
       id-token: write
@@ -145,13 +149,6 @@ jobs:
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
         with:
           hatchet-protocol: cleave
-
-      - name: Enable aarch64 via QEMU binfmt
-        if: matrix.system == 'aarch64-linux'
-        uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4
-        with:
-          platforms: arm64
-          cache-image: true
 
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:

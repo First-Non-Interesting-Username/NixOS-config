@@ -19,9 +19,9 @@ jobs:
         id: parse
         run: |
           BRANCH="${{ github.head_ref }}"
-          if [[ "$BRANCH" =~ ^([a-z]+)/(.+)$ ]]; then
+          if [[ "$BRANCH" =~ ^([a-z]+(\([^)]+\))?)/(.+)$ ]]; then
             TYPE="${BASH_REMATCH[1]}"
-            DESC="${BASH_REMATCH[2]//[-_]/ }"
+            DESC="${BASH_REMATCH[3]//[-_]/ }"
             echo "title=${TYPE}: ${DESC}" >> $GITHUB_OUTPUT
           else
             echo "Branch doesn't match expected format"
