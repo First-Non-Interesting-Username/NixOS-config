@@ -249,6 +249,18 @@ WIP
 
 # Services
 
+## nixosModules.nas-server
+
+PERSONAL
+
+- Sets up a NAS server
+
+## nixosModules.nas-client
+
+PERSONAL
+
+- Sets up a NAS client for above server
+
 ## nixosModules.secrets
 
 - Sets up secrets management system with sops.
@@ -271,7 +283,7 @@ DON'T USE ON PRODUCTION MACHINES
 
 - Sets up SSH with my public keys.
 - Installs Lazyssh.
-- Puts publically available SSH public and private keys to right directories (now with persist, so they work with impermanence) with sops.
+- Puts publically available SSH public and private keys to right directories.
 
 ## nixosModules.ssh-debug
 

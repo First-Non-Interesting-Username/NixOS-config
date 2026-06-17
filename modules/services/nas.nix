@@ -1,8 +1,7 @@
-{...}: {
+_: {
   flake = {
     nixosModules.nasServer = {
       lib,
-      username,
       impermanence,
       config,
       ...
@@ -25,6 +24,7 @@
               ];
           };
         };
+      };
 
       services.nfs.server = {
         enable = true;
@@ -42,19 +42,16 @@
     };
     nixosModules.nasClient = {
       lib,
-      username,
       impermanence,
       ...
     }: {
-      imports =
-        []
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            directories = [
-              "/var/lib/nfs"
-            ];
-          };
+      imports = lib.optional impermanence {
+        environment.persistence."/persist" = {
+          directories = [
+            "/var/lib/nfs"
+          ];
         };
+      };
 
       boot.supportedFilesystems = ["nfs"];
       fileSystems."/mnt/storage" = {
