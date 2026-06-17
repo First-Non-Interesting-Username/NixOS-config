@@ -31,6 +31,7 @@ in {
       self.nixosModules.home-manager
       self.nixosModules.home-server-iroh
       self.nixosModules.locale
+      self.nixosModules.nas-server
       self.nixosModules.networking-server
       self.nixosModules.nix
       self.nixosModules.secrets

@@ -37,6 +37,7 @@ in {
       self.nixosModules.input
       self.nixosModules.locale
       self.nixosModules.moonlight
+      self.nixosModules.nas-client
       self.nixosModules.networking-desktop
       self.nixosModules.nix
       self.nixosModules.opencode

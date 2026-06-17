@@ -1,5 +1,11 @@
 # Services
 
+## nixosModules.nas-server
+
+PERSONAL
+
+- Sets up a NAS server
+
 ## nixosModules.secrets
 
 - Sets up secrets management system with sops.
