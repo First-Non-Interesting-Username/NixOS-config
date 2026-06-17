@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   username,
+  lib,
   ...
 }: {
   boot = {

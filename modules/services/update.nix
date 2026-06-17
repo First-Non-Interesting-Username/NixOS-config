@@ -1,6 +1,6 @@
 _: {
   flake = {
-    nixosModules.update = {hostname, ...}: {
+    nixosModules.update = {hostname, pkgs,...}: {
       programs.nh = {
         enable = true;
         clean = {
