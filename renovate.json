@@ -28,8 +28,11 @@
 
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "digest"],
-      "matchCurrentVersion": "!/^v?0\\./",
+      "matchDatasources": ["docker"],
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["github-actions"],
       "automerge": false
     }
   ]
