@@ -29,15 +29,14 @@ The name of this host is based on [Armin Arlert](https://attackontitan.fandom.co
 
 ## Iroh
 
-This is the main services VM on my Proxmox server.
-I run my services with [Nix-Podman-Stacks](https://github.com/Tarow/nix-podman-stacks).
+This is my home server
 
 Specs:
 
-- i5 8500T 4c
+- i5 8500T
 - UHD 630
-- 24GB of RAM 2666MT/s DDR4
-- 100GB NVMe SSD
+- 32GB of RAM 2666MT/s DDR4
+- 256GB NVMe SSD
 - 512GB SATA SSD
 - 14TB HDD in a SATA to USB enclosure
 
