@@ -1,6 +1,6 @@
 {...}: {
   flake = {
-    nixosModules.nas-server = {
+    nixosModules.nasServer = {
       lib,
       username,
       impermanence,
@@ -30,7 +30,7 @@
         allowedUDPPorts = [ 111 2049 4045 4046 4047 ];
       };
     };
-    nixosModules.nas-client = {
+    nixosModules.nasClient = {
       lib,
       username,
       impermanence,
