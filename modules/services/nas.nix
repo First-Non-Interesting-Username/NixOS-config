@@ -44,18 +44,17 @@
           };
         };
 
-        boot.supportedFilesystems = [ "nfs"];
-        fileSystems."/mnt/storage" = {
-          device = "192.168.0.10:/mnt/storage";
-          fsType = "nfs";
-          options = [
-            "x-systemd-automount"
-            "noauto"
-            "x-systemd.idle-timeout=600"
-            "rw"
-          ];
-        };
-
+      boot.supportedFilesystems = ["nfs"];
+      fileSystems."/mnt/storage" = {
+        device = "192.168.0.10:/mnt/storage";
+        fsType = "nfs";
+        options = [
+          "x-systemd-automount"
+          "noauto"
+          "x-systemd.idle-timeout=600"
+          "rw"
+        ];
+      };
     };
   };
 }

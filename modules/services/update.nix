@@ -14,17 +14,32 @@ _: {
         automatic = true;
         dates = "weekly";
       };
-      system.autoUpgrade = {
-        enable = true;
-        flake = "github:First-Non-Interesting-Username/NixOS-config#${hostname}";
-        allowReboot = false;
-        persistent = true;
-        dates = "02:00";
-        randomizedDelaySec = "45min";
-        operation = "boot";
-        flags = [
-          "-L"
-        ];
+      systemd = {
+        services.nixos-upgrade = {
+          description = "NixOS upgrade";
+          requires = ["network-online.target"];
+          after = ["network-online.target"];
+
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = pkgs.writeShellScript "upgrade" ''
+              set -e
+              ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
+                --flake "github:First-Non-Interesting-Username/NixOS-config#$(hostname)" \
+                -L
+            '';
+          };
+        };
+
+        timers.nixos-upgrade = {
+          description = "Run upgrade daily";
+          wantedBy = ["timers.target"];
+          timerConfig = {
+            OnCalendar = "02:00";
+            RandomizedDelaySec = "45min";
+            Persistent = true;
+          };
+        };
       };
     };
   };
