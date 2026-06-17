@@ -12,7 +12,7 @@ _: {
         hostName = hostname;
         networkmanager = {
           enable = true;
-          dns = false;
+          dns = "none";
         };
 
         nameservers = ["1.1.1.1" "1.0.0.1"];
@@ -103,11 +103,12 @@ _: {
       impermanence,
       ...
     }: {
+
       networking = {
         hostName = hostname;
         networkmanager = {
           enable = true;
-          dns = false;
+          dns = "none";
         };
 
         nameservers = ["1.1.1.1" "1.0.0.1"];
