@@ -106,7 +106,7 @@ _: {
 
       hdd = {
         type = "disk";
-        device = "/dev/sdc";
+        device = "/dev/disk/by-id/ata-WDC_WUH721414ALN600_9JJ0V75T";
         content = {
           type = "gpt";
           partitions = {
