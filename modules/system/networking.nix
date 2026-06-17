@@ -103,7 +103,6 @@ _: {
       impermanence,
       ...
     }: {
-
       networking = {
         hostName = hostname;
         networkmanager = {
