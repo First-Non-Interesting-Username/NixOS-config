@@ -20,6 +20,10 @@
             ExecStart = pkgs.writeShellScript "rollback" ''
               mkdir /btrfs_tmp
               mount -t btrfs -o subvol=/ /dev/disk/by-partlabel/disk-root-root /btrfs_tmp
+              # Delete nested subvolumes first (if any)
+              btrfs subvolume list -o /btrfs_tmp/@ 2>/dev/null | cut -f9 -d' ' | while read subvol; do
+                btrfs subvolume delete "/btrfs_tmp/$subvol"
+              done
               btrfs subvolume delete /btrfs_tmp/@
               btrfs subvolume create /btrfs_tmp/@
               umount /btrfs_tmp
