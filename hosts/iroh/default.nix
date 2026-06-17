@@ -22,7 +22,7 @@ in {
       domain = Domain;
       width = Width;
       height = Height;
-      impermanence = false;
+      impermanence = true;
     };
     modules = [
       ./hardware.nix
@@ -30,6 +30,7 @@ in {
       self.nixosModules.git
       self.nixosModules.home-manager
       self.nixosModules.home-server-iroh
+      self.nixosModules.impermanence
       self.nixosModules.locale
       self.nixosModules.nasServer
       self.nixosModules.networking-server

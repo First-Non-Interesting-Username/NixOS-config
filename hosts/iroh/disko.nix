@@ -32,48 +32,19 @@ _: {
                 subvolumes = {
                   "@" = {
                     mountpoint = "/";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                      "space_cache=v2"
-                      "discard=async"
-                    ];
+                    mountOptions = ["compress=zstd" "noatime" "space_cache=v2" "discard=async"];
                   };
                   "@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                      "space_cache=v2"
-                      "discard=async"
-                    ];
+                    mountOptions = ["compress=zstd" "noatime" "space_cache=v2" "discard=async"];
                   };
-                  "@var" = {
-                    mountpoint = "/var";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                      "space_cache=v2"
-                      "discard=async"
-                    ];
-                  };
-                  "@home" = {
-                    mountpoint = "/home";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                      "space_cache=v2"
-                      "discard=async"
-                    ];
+                  "@persist" = {
+                    mountpoint = "/persist";
+                    mountOptions = ["compress=zstd" "noatime" "space_cache=v2" "discard=async"];
                   };
                   "@snapshots" = {
                     mountpoint = "/.snapshots";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                      "space_cache=v2"
-                      "discard=async"
-                    ];
+                    mountOptions = ["compress=zstd" "noatime" "space_cache=v2" "discard=async"];
                   };
                 };
               };
@@ -94,10 +65,7 @@ _: {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var/lib";
-                mountOptions = [
-                  "noatime"
-                  "errors=remount-ro"
-                ];
+                mountOptions = ["noatime" "errors=remount-ro"];
               };
             };
           };
@@ -115,20 +83,9 @@ _: {
               content = {
                 type = "filesystem";
                 format = "xfs";
-                extraArgs = [
-                  "-d"
-                  "su=64k,sw=1"
-                  "-l"
-                  "size=256m,lazy-count=1"
-                ];
+                extraArgs = ["-d" "su=64k,sw=1" "-l" "size=256m,lazy-count=1"];
                 mountpoint = "/mnt/storage";
-                mountOptions = [
-                  "noatime"
-                  "largeio"
-                  "inode64"
-                  "noquota"
-                  "allocsize=64m"
-                ];
+                mountOptions = ["noatime" "largeio" "inode64" "noquota" "allocsize=64m"];
               };
             };
           };

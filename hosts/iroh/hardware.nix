@@ -6,14 +6,36 @@
   ...
 }: {
   boot = {
-    initrd.availableKernelModules = [
-      "ahci"
-      "xhci_pci"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-      "nvme"
-    ];
+    initrd = {
+      systemd = {
+        enable = true;
+        services.rollback = {
+          description = "Wipe root subvolume on boot";
+          wantedBy = [ "initrd.target" ];
+          after = [ "dev-disk-by\\x2dpartlabel-disk\\x2droot\\x2droot.device" ];
+          before = [ "sysroot.mount" ];
+          unitConfig.DefaultDependencies = "no";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = pkgs.writeShellScript "rollback" ''
+              mkdir /btrfs_tmp
+              mount -t btrfs -o subvol=/ /dev/disk/by-partlabel/disk-root-root /btrfs_tmp
+              btrfs subvolume delete /btrfs_tmp/@
+              btrfs subvolume create /btrfs_tmp/@
+              umount /btrfs_tmp
+            '';
+          };
+        };
+      };
+      availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "nvme"
+      ];
+    };
     supportedFilesystems = [
       "btrfs"
       "xfs"
