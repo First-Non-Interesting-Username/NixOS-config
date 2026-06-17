@@ -10,7 +10,7 @@
       "xhci_pci"
       "usbhid"
       "usb_storage"
-      "sd_mod" # instead of virtio_blk/virtio_scsi
+      "sd_mod"
       "nvme"
     ];
     supportedFilesystems = [
@@ -20,6 +20,9 @@
   };
 
   hardware = {
+    facter = lib.optionalAttrs (builtins.pathExists ./facter.json) {
+      reportPath = ./facter.json;
+    };
     cpu.intel.updateMicrocode = true;
     usbStorage.manageShutdown = true;
     graphics = {

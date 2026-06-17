@@ -140,7 +140,7 @@ _: {
         hostName = hostname;
         networkmanager.enable = false;
 
-        interfaces.eno1 = {
+        interfaces.enp1s0 = {
           useDHCP = false;
           ipv4.addresses = [
             {
