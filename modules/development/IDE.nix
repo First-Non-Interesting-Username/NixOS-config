@@ -83,8 +83,8 @@ _: {
         ];
 
         home.sessionVariables = {
-          EDITOR = "codium --wait";
-          VISUAL = "codium --wait";
+          EDITOR = "zed --wait";
+          VISUAL = "zed --wait";
         };
       };
     };
