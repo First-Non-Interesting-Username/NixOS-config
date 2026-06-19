@@ -1,3 +1,3 @@
 ## packages.sops-easy
 
-Wrapper for using sops, because it didn't work as I wanted it to.
+Automatically detects and configures the SSH host Ed25519 key for sops age encryption.
