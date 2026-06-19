@@ -1,11 +1,9 @@
-{ self, ... }:
-
-{
-  perSystem = { pkgs, ... }: {
+_: {
+  perSystem = {pkgs, ...}: {
     packages.sops-easy = pkgs.writeShellApplication {
       name = "sops-easy";
 
-      runtimeInputs = [ pkgs.sops pkgs.coreutils pkgs.sudo ];
+      runtimeInputs = [pkgs.sops pkgs.coreutils pkgs.sudo];
 
       text = ''
         if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
