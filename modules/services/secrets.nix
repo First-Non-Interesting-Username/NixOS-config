@@ -37,6 +37,7 @@
         sops
         age
         ssh-to-age
+        self.packages.${pkgs.stdenv.hostPlatform.system}.sops-easy
       ];
 
       sops = {

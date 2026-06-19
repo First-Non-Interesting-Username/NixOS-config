@@ -26,7 +26,7 @@ jobs:
             "packages/wrappers/btop/README.md"
             "packages/wrappers/fastfetch/README.md"
             "packages/wrappers/foot/README.md"
-            "packages/shell-scripts/README.md"
+            "packages/shell-scripts/sops-easy/README.md"
           )
 
           cat /dev/null > docs/package-list.md
