@@ -313,8 +313,8 @@
             environmentFiles = [config.sops.secrets."freshrss/oidc-env".path];
 
             volumes = [
-              "/var/lib/freshrss/data:/var/www/FreshRSS/data"
-              "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions"
+              "/var/lib/freshrss/data:/var/www/FreshRSS/data:Z"
+              "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions:Z"
             ];
 
             ports = ["127.0.0.1:8035:80"];
@@ -334,10 +334,10 @@
             ports = ["127.0.0.1:7070:80"];
 
             volumes = [
-              "${filebrowserStateDir}:/home/filebrowser/data"
-              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro"
-              "/mnt/data:/sources/mnt-data:ro"
-              "/var/lib:/sources/var-lib:ro"
+              "${filebrowserStateDir}:/home/filebrowser/data:Z"
+              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro,Z"
+              "/mnt/storage:/sources/mnt-storage:ro,Z"
+              "/var/lib:/sources/var-lib:ro,Z"
             ];
           };
 
@@ -350,7 +350,7 @@
               UPSNAP_HTTP_LISTEN = "127.0.0.1:8090";
             };
 
-            volumes = ["/var/lib/up-snap:/app/pb_data"];
+            volumes = ["/var/lib/up-snap:/app/pb_data:Z"];
 
             extraOptions = [
               "--network=host"
@@ -377,8 +377,8 @@
             };
 
             volumes = [
-              "/var/lib/qbittorrent/config:/config"
-              "/mnt/storage/qbittorrent/downloads:/downloads"
+              "/var/lib/qbittorrent/config:/config:Z"
+              "/mnt/storage/qbittorrent/downloads:/downloads:Z"
             ];
           };
 
@@ -393,7 +393,7 @@
             environment = {
               PUBLIC_URL = "https://fgc.${config.custom.web-expose.domain}";
             };
-            volumes = ["/var/lib/fgc:/fgc/data"];
+            volumes = ["/var/lib/fgc:/fgc/data:Z"];
             environmentFiles = [
               config.sops.secrets."fgc/env".path
             ];
@@ -404,7 +404,7 @@
             image = "ghcr.io/viren070/aiostreams:v2.30.3";
             ports = ["127.0.0.1:4321:3000"];
             volumes = [
-              "/var/lib/aiostreams/data:/app/data"
+              "/var/lib/aiostreams/data:/app/data:Z"
             ];
             environment = {
               BASE_URL = "https://aiostreams.${domain}";
@@ -599,13 +599,19 @@
 
       systemd = {
         tmpfiles.rules = [
-          "d /var/lib/freshrss/data       0750 root root -"
-          "d /var/lib/freshrss/extensions 0750 root root -"
-          "d ${filebrowserStateDir} 0700 1000 1000 -"
-          "d /var/lib/headplane 0750 headplane headplane -"
+          "d /mnt/storage 0755 root root -"
           "d /mnt/storage/aria2 0755 aria2 aria2 - -"
           "d /mnt/storage/aria2/downloads 0755 aria2 aria2 - -"
-          "d /var/lib/qbittorrent/config 0755 1000 1000 -"
+          "d /mnt/storage/qbittorrent/downloads 0755 root root -"
+          "d /var/lib 0755 root root -"
+          "d /var/lib/aiostreams/data 0755 root root -"
+          "d /var/lib/fgc 0755 root root -"
+          "d /var/lib/filebrowser 0755 root root -"
+          "d /var/lib/freshrss/data 0755 root root -"
+          "d /var/lib/freshrss/extensions 0755 root root -"
+          "d /var/lib/headplane 0750 headplane headplane -"
+          "d /var/lib/qbittorrent/config 0755 root root -"
+          "d /var/lib/up-snap 0755 root root -"
         ];
         services.duckdns-updater = {
           description = "Update DuckDNS IP";
