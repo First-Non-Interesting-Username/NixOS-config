@@ -970,6 +970,16 @@ _: {
         }
 
         (lib.mkIf cfg.lldap.enable {
+          users = {
+            users.lldap = lib.mkDefault {
+              isSystemUser = true;
+              group = "lldap";
+              home = "/var/lib/lldap";
+            };
+
+            groups.lldap = lib.mkDefault {};
+          };
+
           services.lldap = {
             enable = true;
             settings = {
