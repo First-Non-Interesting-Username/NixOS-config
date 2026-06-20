@@ -761,7 +761,7 @@ _: {
               [
                 cfg.traefikEnvFile
               ]
-              ++ lib.optional cfg.traefikOidcPlugin.enable "/var/lib/traefik/oidc-plugin.env";
+              ++ lib.optional anyOidcPlugin "/var/lib/traefik/oidc-plugin.env";
 
             staticConfigOptions =
               {
@@ -970,6 +970,16 @@ _: {
         }
 
         (lib.mkIf cfg.lldap.enable {
+          users = {
+            users.lldap = lib.mkDefault {
+              isSystemUser = true;
+              group = "lldap";
+              home = "/var/lib/lldap";
+            };
+
+            groups.lldap = lib.mkDefault {};
+          };
+
           services.lldap = {
             enable = true;
             settings = {
