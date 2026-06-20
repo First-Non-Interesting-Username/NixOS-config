@@ -761,7 +761,7 @@ _: {
               [
                 cfg.traefikEnvFile
               ]
-              ++ lib.optional cfg.traefikOidcPlugin.enable "/var/lib/traefik/oidc-plugin.env";
+              ++ lib.optional anyOidcPlugin "/var/lib/traefik/oidc-plugin.env";
 
             staticConfigOptions =
               {

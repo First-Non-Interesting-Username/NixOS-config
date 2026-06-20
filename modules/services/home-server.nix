@@ -146,10 +146,10 @@
           };
         };
 
-        traefikOidcPlugin = {
-          enable = true;
-          sessionSecretFile = config.sops.secrets."routing/traefik/oidc-session".path;
-        };
+        #traefikOidcPlugin = {
+        #  enable = true;
+        #  sessionSecretFile = config.sops.secrets."routing/traefik/oidc-session".path;
+        #};
 
         routers = {
           searxng = {
