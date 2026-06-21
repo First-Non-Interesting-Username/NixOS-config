@@ -10,13 +10,15 @@ _: {
         clean = {
           dates = "daily";
           enable = true;
-          extraArgs = "--keep-since 7d --keep 10 --gc";
+          extraArgs = "--keep-since 7d --keep 10";
         };
         flake = "github:First-Non-Interesting-Username/NixOS-config";
       };
-      nix.optimise = {
-        automatic = true;
-        dates = "weekly";
+      nix = {
+        optimise = {
+          automatic = true;
+          dates = "weekly";
+        };
       };
       systemd = {
         services.nixos-upgrade = {
