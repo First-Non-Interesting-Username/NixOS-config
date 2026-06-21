@@ -33,12 +33,15 @@
 
         "routing/lldap/admin-password" = {
           mode = "0444";
+          owner = "lldap";
         };
         "routing/lldap/jwt-secret" = {
           mode = "0444";
+          owner = "lldap";
         };
         "routing/lldap/key-seed" = {
           mode = "0444";
+          owner = "lldap";
         };
 
         "routing/authelia/jwt-secret" = {
