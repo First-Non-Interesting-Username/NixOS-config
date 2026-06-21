@@ -54,6 +54,8 @@
           };
         };
 
+      programs.dconf.enable = true;
+
       stylix = {
         autoEnable = false;
         enable = true;
@@ -100,6 +102,7 @@
           style.name = "breeze";
         };
         gtk.enable = true;
+
         stylix = {
           autoEnable = true;
           enable = true;
