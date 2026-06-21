@@ -12,7 +12,7 @@ _: {
           KEY=/etc/ssh/ssh_host_ed25519_key
         fi
 
-        sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=cat $KEY" sops "$@"
+        /run/current-system/sw/bin/sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=cat $KEY" sops "$@"
       '';
     };
   };
