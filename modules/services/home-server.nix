@@ -335,9 +335,9 @@
 
             volumes = [
               "${filebrowserStateDir}:/home/filebrowser/data:U"
-              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro,Z"
-              "/mnt/storage:/sources/mnt-storage:ro,Z"
-              "/var/lib:/sources/var-lib:ro,Z"
+              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro"
+              "/mnt/storage:/sources/mnt-storage:ro"
+              "/var/lib:/sources/var-lib:ro"
             ];
           };
 

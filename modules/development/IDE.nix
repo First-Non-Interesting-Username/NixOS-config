@@ -4,6 +4,7 @@ _: {
       lib,
       username,
       impermanence,
+      config,
       ...
     }: {
       imports = lib.optional impermanence {
@@ -12,14 +13,30 @@ _: {
             directories = [
               ".config/zed"
             ];
-            files = [
-              ".wakatime.cfg"
-            ];
           };
         };
       };
 
+      sops = {
+        secrets.wakatime_api_key = {};
+        templates.".wakatime.cfg" = {
+          content = ''
+            [settings]
+            api_url = https://hackatime.hackclub.com/api/hackatime/v1
+            api_key = ${config.sops.placeholder.wakatime_api_key}
+            heartbeat_rate_limit_seconds = 30
+          '';
+          path = "${config.users.users.${username}.home}/.wakatime.cfg";
+        };
+      };
+
       home-manager.users.${username} = {pkgs, ...}: {
+        home.file.".wakatime.cfg" = {
+          text = ''            [settings]
+                               api_url = https://hackatime.hackclub.com/api/hackatime/v1
+                               api_key = e61ca5c1-4477-4390-b93a-d57be3a938f8
+                               heartbeat_rate_limit_seconds = 30'';
+        };
         programs = {
           micro = {
             enable = true;
@@ -27,7 +44,7 @@ _: {
 
           zed-editor = {
             enable = true;
-            extensions = ["nix" "markdown-snippets" "marksman"];
+            extensions = ["nix" "markdown-snippets" "marksman" "wakatime"];
             extraPackages = with pkgs; [
               nil
               alejandra
@@ -72,7 +89,6 @@ _: {
               };
 
               format_on_save = "on";
-              vim_mode = true;
             };
           };
         };
@@ -83,8 +99,8 @@ _: {
         ];
 
         home.sessionVariables = {
-          EDITOR = "zed --wait";
-          VISUAL = "zed --wait";
+          EDITOR = "micro";
+          VISUAL = "zededitor --wait";
         };
       };
     };
