@@ -38,7 +38,6 @@
               "/var/lib/systemd"
               "/var/log"
               "/tmp"
-              "/etc/nixos"
             ];
 
           files = [
