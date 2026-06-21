@@ -17,6 +17,10 @@ _: {
       };
 
       home-manager.users.${username} = {config, ...}: {
+        home.activation.createGboxDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          mkdir -p "${config.home.homeDirectory}/homes/Gbox"
+        '';
+
         programs.distrobox = {
           settings = {
             container_manager = "podman";
