@@ -9,6 +9,5 @@ _: {
 
       /run/wrappers/bin/sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=${pkgs.coreutils}/bin/cat $KEY" ${pkgs.sops}/bin/sops "$@"
     '';
-    };
   };
 }
