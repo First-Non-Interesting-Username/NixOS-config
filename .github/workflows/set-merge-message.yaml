@@ -19,12 +19,14 @@ jobs:
         id: parse
         run: |
           BRANCH="${{ github.head_ref }}"
-          if [[ "$BRANCH" =~ ^([a-z]+(\([^)]+\))?)/(.+)$ ]]; then
+          REGEX='^([a-z]+(\([^)]+\))?)/(.+)$'
+
+          if [[ "$BRANCH" =~ $REGEX ]]; then
             TYPE="${BASH_REMATCH[1]}"
             DESC="${BASH_REMATCH[3]//[-_]/ }"
             echo "title=${TYPE}: ${DESC}" >> $GITHUB_OUTPUT
           else
-            echo "Branch doesn't match expected format"
+            echo "Branch '$BRANCH' doesn't match expected format"
             exit 1
           fi
 
@@ -36,5 +38,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
-              title: "${{ steps.parse.outputs.title }}"
+              title: process.env.PR_TITLE
             });
+        env:
+          PR_TITLE: ${{ steps.parse.outputs.title }}
