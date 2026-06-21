@@ -997,8 +997,12 @@ _: {
 
           systemd.services.lldap-bootstrap = lib.mkIf cfg.lldap.bootstrap.enable {
             description = "Bootstrap LLDAP users and groups";
-            after = ["lldap.service"];
+            after = [
+              "lldap.service"
+              "nss-user-lookup.target"
+            ];
             requires = ["lldap.service"];
+            wants = ["nss-user-lookup.target"];
             wantedBy = ["multi-user.target"];
             serviceConfig = {
               Type = "oneshot";
