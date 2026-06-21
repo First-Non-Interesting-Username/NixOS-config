@@ -1,19 +1,14 @@
 _: {
   perSystem = {pkgs, ...}: {
-    packages.sops-easy = pkgs.writeShellApplication {
-      name = "sops-easy";
+    packages.sops-easy = pkgs.writeShellScriptBin "sops-easy" ''
+      if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
+        KEY=/persist/etc/ssh/ssh_host_ed25519_key
+      else
+        KEY=/etc/ssh/ssh_host_ed25519_key
+      fi
 
-      runtimeInputs = [pkgs.sops pkgs.coreutils];
-
-      text = ''
-        if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
-          KEY=/persist/etc/ssh/ssh_host_ed25519_key
-        else
-          KEY=/etc/ssh/ssh_host_ed25519_key
-        fi
-
-        /run/current-system/sw/bin/sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=cat $KEY" sops "$@"
-      '';
+      /run/wrappers/bin/sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=${pkgs.coreutils}/bin/cat $KEY" ${pkgs.sops}/bin/sops "$@"
+    '';
     };
   };
 }
