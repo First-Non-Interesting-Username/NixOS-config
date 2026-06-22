@@ -30,7 +30,7 @@ _: {
           enable = true;
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260620";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260621";
               init = false;
               root = false;
               start_now = false;
