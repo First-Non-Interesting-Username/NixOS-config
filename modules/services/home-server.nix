@@ -316,8 +316,8 @@
             environmentFiles = [config.sops.secrets."freshrss/oidc-env".path];
 
             volumes = [
-              "/var/lib/freshrss/data:/var/www/FreshRSS/data:Z"
-              "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions:Z"
+              "/var/lib/freshrss/data:/var/www/FreshRSS/data:U"
+              "/var/lib/freshrss/extensions:/var/www/FreshRSS/extensions:U"
             ];
 
             ports = ["127.0.0.1:8035:80"];
@@ -337,10 +337,10 @@
             ports = ["127.0.0.1:7070:80"];
 
             volumes = [
-              "${filebrowserStateDir}:/home/filebrowser/data:Z"
-              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro,Z"
-              "/mnt/storage:/sources/mnt-storage:ro,Z"
-              "/var/lib:/sources/var-lib:ro,Z"
+              "${filebrowserStateDir}:/home/filebrowser/data:U"
+              "/etc/filebrowser-config.yaml:/home/filebrowser/data/config.yaml:ro"
+              "/mnt/storage:/sources/mnt-storage:ro"
+              "/var/lib:/sources/var-lib:ro"
             ];
           };
 
@@ -353,7 +353,7 @@
               UPSNAP_HTTP_LISTEN = "127.0.0.1:8090";
             };
 
-            volumes = ["/var/lib/up-snap:/app/pb_data:Z"];
+            volumes = ["/var/lib/up-snap:/app/pb_data:U"];
 
             extraOptions = [
               "--network=host"
@@ -380,8 +380,8 @@
             };
 
             volumes = [
-              "/var/lib/qbittorrent/config:/config:Z"
-              "/mnt/storage/qbittorrent/downloads:/downloads:Z"
+              "/var/lib/qbittorrent/config:/config:U"
+              "/mnt/storage/qbittorrent/downloads:/downloads:U"
             ];
           };
 
@@ -394,9 +394,10 @@
               "127.0.0.1:7080:7080"
             ];
             environment = {
+              TZ = "Europe/Warsaw";
               PUBLIC_URL = "https://fgc.${config.custom.web-expose.domain}";
             };
-            volumes = ["/var/lib/fgc:/fgc/data:Z"];
+            volumes = ["/var/lib/fgc:/fgc/data:U"];
             environmentFiles = [
               config.sops.secrets."fgc/env".path
             ];
@@ -407,9 +408,10 @@
             image = "ghcr.io/viren070/aiostreams:v2.30.3";
             ports = ["127.0.0.1:4321:3000"];
             volumes = [
-              "/var/lib/aiostreams/data:/app/data:Z"
+              "/var/lib/aiostreams/data:/app/data:U"
             ];
             environment = {
+              TZ = "Europe/Warsaw";
               BASE_URL = "https://aiostreams.${domain}";
             };
             environmentFiles = [
@@ -605,6 +607,7 @@
           "d /mnt/storage 0755 root root -"
           "d /mnt/storage/aria2 0755 aria2 aria2 - -"
           "d /mnt/storage/aria2/downloads 0755 aria2 aria2 - -"
+          "d /mnt/storage/qbittorrent 0755 root root -"
           "d /mnt/storage/qbittorrent/downloads 0755 root root -"
           "d /var/lib 0755 root root -"
           "d /var/lib/aiostreams/data 0755 root root -"
