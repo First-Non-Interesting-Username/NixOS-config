@@ -1,6 +1,6 @@
 {...}: {
   flake = {
-    nixosModules.CHANGEME = {config, ...}: {
+    nixosModules.CHANGEME = {...}: {
       options.custom.CHANGEME = {
         # Create options here
       };
