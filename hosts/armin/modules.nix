@@ -28,7 +28,6 @@
         package = pkgs.morewaita-icon-theme;
         name = "MoreWaita";
       };
-
     };
   };
 }

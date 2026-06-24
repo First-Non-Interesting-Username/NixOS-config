@@ -4,15 +4,11 @@
   ...
 }: let
   Hostname = "armin";
-  GitName = "First-Non-Interesting-Username";
-  GitEmail = "janekmusin@proton.me";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      gitName = GitName;
-      gitEmail = GitEmail;
       impermanence = true;
     };
     modules = [
@@ -53,8 +49,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          gitName = GitName;
-          gitEmail = GitEmail;
         };
       }
     ];

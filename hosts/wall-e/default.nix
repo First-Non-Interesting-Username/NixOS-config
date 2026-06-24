@@ -10,8 +10,6 @@ in {
     specialArgs = {
       inherit self inputs;
       inherit Hostname;
-      gitName = "ISO-User";
-      gitEmail = "iso@nixos.local";
       impermanence = false;
     };
     modules = [

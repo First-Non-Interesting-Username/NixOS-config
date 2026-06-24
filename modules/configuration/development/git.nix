@@ -5,8 +5,6 @@ _: {
       lib,
       config,
       impermanence,
-      gitName,
-      gitEmail,
       ...
     }: {
       imports = lib.optional impermanence {
@@ -26,8 +24,11 @@ _: {
         git
         gh
       ];
-      sops.secrets.github_pat = {
-        owner = config.custom.user.name;
+
+      sops.secrets = {
+        "github_pat" = {
+          owner = config.custom.user.name;
+        };
       };
       home-manager.users.${config.custom.user.name} = {
         pkgs,
@@ -40,8 +41,8 @@ _: {
             enable = true;
             settings = {
               user = {
-                name = gitName;
-                email = gitEmail;
+                name = "First-Non-Interesting-Username";
+                email = "janekmusin@proton.me";
               };
               push = {
                 autoSetupRemote = true;
@@ -73,8 +74,6 @@ _: {
       lib,
       config,
       impermanence,
-      gitName,
-      gitEmail,
       ...
     }: {
       imports = lib.optional impermanence {
@@ -102,8 +101,8 @@ _: {
             enable = true;
             settings = {
               user = {
-                name = gitName;
-                email = gitEmail;
+                name = "local";
+                email = "local@local.local";
               };
               push = {
                 autoSetupRemote = true;
