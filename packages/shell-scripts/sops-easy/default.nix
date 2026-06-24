@@ -7,7 +7,9 @@ _: {
         KEY=/etc/ssh/ssh_host_ed25519_key
       fi
 
-      /run/wrappers/bin/sudo env "SOPS_AGE_SSH_PRIVATE_KEY_CMD=${pkgs.coreutils}/bin/cat $KEY" ${pkgs.sops}/bin/sops "$@"
+      SOPS_AGE_KEY=$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i $KEY | tail -1)
+
+      ${pkgs.sops}/bin/sops "$@"
     '';
   };
 }

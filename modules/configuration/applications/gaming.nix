@@ -16,6 +16,10 @@ _: {
       };
 
       home-manager.users.${config.custom.user.name} = {config, ...}: {
+
+        home.activation.createGboxDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          mkdir -p "${config.home.homeDirectory}/homes/Gbox"
+        '';
         programs.distrobox = {
           settings = {
             container_manager = "podman";
@@ -25,7 +29,7 @@ _: {
           enable = true;
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260620";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260623";
               init = false;
               root = false;
               start_now = false;

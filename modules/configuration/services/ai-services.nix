@@ -1432,8 +1432,9 @@
         # renovate: versioning=docker
         image = "itzcrazykns1337/vane:slim-1.12.2";
         ports = ["127.0.0.1:5555:3000"];
-        volumes = ["/var/lib/vane:/home/vane/data"];
+        volumes = ["/var/lib/vane:/home/vane/data:U"];
         environment = {
+          TZ = "Europe/Warsaw";
           SEARXNG_API_URL = "http://host.containers.internal:8889";
         };
         extraOptions = ["--add-host=host.containers.internal:host-gateway"];

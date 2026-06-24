@@ -19,6 +19,8 @@ on:
 jobs:
   check:
     uses: ./.github/workflows/flake-check.yaml
+    permissions:
+      contents: read
 
   build:
     runs-on: ubuntu-latest
