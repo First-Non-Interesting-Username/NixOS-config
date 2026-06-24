@@ -7,7 +7,7 @@
       ...
     }: {
       imports = [
-        self.nixosModules.vicinae
+        # self.nixosModules.vicinae
         self.nixosModules.wayland
       ];
 
