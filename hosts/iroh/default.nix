@@ -4,7 +4,6 @@
   ...
 }: let
   Hostname = "iroh";
-  Domain = "iameasytoremember.duckdns.org";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
