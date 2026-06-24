@@ -1,8 +1,7 @@
-{...}: {
+_: {
   flake = {
     nixosModules.hostname = {
       lib,
-      pkgs,
       config,
       ...
     }: let

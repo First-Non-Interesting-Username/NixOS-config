@@ -1,9 +1,4 @@
-{
-  pkgs,
-  config,
-  hostName,
-  ...
-}: {
+{hostName, ...}: {
   imports = [
     self.nixosModules.hostname
     self.nixosModules.impermanence

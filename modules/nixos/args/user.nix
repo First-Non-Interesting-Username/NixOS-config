@@ -1,8 +1,7 @@
-{...}: {
+_: {
   flake = {
     nixosModules.user = {
       lib,
-      pkgs,
       config,
       ...
     }: let
@@ -57,8 +56,8 @@
               "gamemode"
               "input"
             ];
-            hashedPasswordFile = cfg.hashedPasswordFile;
-            hashedPassword = cfg.hashedPassword;
+            inherit (cfg) hashedPasswordFile;
+            inherit (cfg) hashedPassword;
             initialPassword = cfg.password;
             subUidRanges = [
               {

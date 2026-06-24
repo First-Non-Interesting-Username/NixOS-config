@@ -129,7 +129,7 @@ _: {
         };
       };
     };
-    nixosModules.networking-server = {...}: {
+    nixosModules.networking-server = _: {
       networking = {
         networkmanager.enable = false;
 
