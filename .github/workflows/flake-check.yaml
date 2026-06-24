@@ -40,6 +40,7 @@ jobs:
           nix run nixpkgs#statix -- fix . \
             --ignore "modules/configuration/template.nix" \
             --ignore "hosts/template"
+            --ignore "modules/nixos/template.nix"
           nix run nixpkgs#alejandra -- .
 
       - name: Enable aarch64 via QEMU
