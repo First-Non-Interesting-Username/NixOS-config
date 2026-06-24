@@ -1,6 +1,6 @@
 # Module List
 
-Special args: username (required for all modules)
+Set `config.custom.user.name` to your username, almost all modules use it.
 
 # Applications
 
@@ -393,23 +393,11 @@ Special args: hostname
 
 ## nixosModules.user
 
-Secrets: sudo_password/${hostname}
+Configured via `custom.user` options (provided by `modules/nixos/args/user.nix`).
 
-- Creates a user with username passed via special arg.
+- Creates a user with the configured name.
 - Adds it to various groups.
-- Sets a password for it with the passed secret.
-
-## nixosModules.secretless-user
-
-DON'T USE ON PRODUCTION MACHINES
-
-- Creates a user with username passed via special arg.
-- Adds it to various groups.
-- Sets a password for it (`nixos`).
-
-## nixosModules.user-debug
-
-- Sets root password to `nixos`.
+- Sets a password for it with the configured option.
 
 ## nixosModules.xdg
 

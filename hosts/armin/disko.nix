@@ -43,6 +43,8 @@ _: {
                     mountOptions = [
                       "compress=zstd"
                       "noatime"
+                      "space_cache=v2"
+                      "discard=async"
                     ];
                   };
                   "@persist" = {
@@ -50,6 +52,8 @@ _: {
                     mountOptions = [
                       "compress=zstd"
                       "noatime"
+                      "space_cache=v2"
+                      "discard=async"
                     ];
                   };
                   "@snapshots" = {
@@ -57,6 +61,8 @@ _: {
                     mountOptions = [
                       "compress=zstd"
                       "noatime"
+                      "space_cache=v2"
+                      "discard=async"
                     ];
                   };
                 };

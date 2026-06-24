@@ -2,30 +2,24 @@
 
 This guide explains how to use the NixOS modules and packages provided by this configuration, both internally (within this flake) and externally (as a flake input in another project).
 
-## Important: Special Arguments
+## Configuration Options
 
-Many modules in this configuration rely on `specialArgs` being passed to the NixOS system. These arguments are essential for the modules to know which user to configure, what the hostname is, and whether to enable certain features like impermanence.
+Modules use NixOS config options instead of `specialArgs` for user configuration.
 
-Key `specialArgs` used across modules:
+Key options:
 
-- `username`: The primary user's name (required for almost all modules).
-- `hostname`: The name of the host (used for networking and secrets).
-- `impermanence`: A boolean flag to enable/disable persistence logic.
+- `custom.user.name`: The primary user's name (set via module options).
+- `custom.user.enable`: Enable the user module.
+- `custom.hostname`: The system hostname, set via module options in each host's `modules.nix`.
+- `impermanence`: A boolean special arg to enable/disable persistence logic.
 
-Refer to [special args docs](./special-args.md) for more informations.
-
-Ensure these are passed in your `nixosSystem` configuration:
+Set `custom.user` in your host configuration:
 
 ```nix
-modules = [
-  {
-    _module.args = {
-      username = "your-user";
-      hostname = "your-host";
-      impermanence = false;
-    };
-  }
-];
+custom.user = {
+  enable = true;
+  name = "your-user";
+};
 ```
 
 ---
@@ -98,12 +92,12 @@ In your `flake.nix`:
       system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
-        username = "myuser"; # Required for modules
-        hostname = "myhost";
         impermanence = false;
       };
       modules = [
+        {_module.args.hostName = "myhost";}
         ./configuration.nix
+        nixos-config.nixosModules.hostname
         nixos-config.nixosModules.audio
         nixos-config.nixosModules.theme
       ];

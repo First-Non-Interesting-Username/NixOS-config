@@ -43,5 +43,4 @@ You must activate the secret to use it, do that by adding `sops.secrets.<name> =
 
 Use `osConfig.sops.secrets.<name>.path` to reference secrets in home-manager configuration.
 
-Your user needs to have the access to that secret. add `owner = username` to `{}` in secret activation.
-Remember to pass `username` to the module you are declaring the secret in.
+Your user needs to have the access to that secret. add `owner = config.custom.user.name` to `{}` in secret activation.

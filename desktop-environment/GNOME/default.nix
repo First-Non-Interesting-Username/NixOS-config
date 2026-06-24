@@ -2,35 +2,34 @@
   flake = {
     nixosModules.GNOME = {
       lib,
-      username,
-      impermanence,
+      config,
       pkgs,
       ...
     }: {
-      imports =
-        [
-          self.nixosModules.vicinae
-          self.nixosModules.wayland
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
+      imports = [
+        self.nixosModules.vicinae
+        self.nixosModules.wayland
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          directories = [
+            "/var/lib/gdm"
+          ];
+          users.${config.custom.user.name} = {
             directories = [
-              "/var/lib/gdm"
+              ".local/share/keyrings"
+              ".local/share/recently-used"
+              ".local/share/nautilus"
+              ".config/goa-1.0"
+              ".cache/tracker3"
             ];
-            users.${username} = {
-              directories = [
-                ".local/share/keyrings"
-                ".local/share/recently-used"
-                ".local/share/nautilus"
-                ".config/goa-1.0"
-                ".cache/tracker3"
-              ];
-              files = [
-                ".local/share/recently-used.xbel"
-              ];
-            };
+            files = [
+              ".local/share/recently-used.xbel"
+            ];
           };
         };
+      };
 
       programs = {
         ssh.startAgent = lib.mkForce false;
@@ -86,7 +85,7 @@
         ];
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
           mission-center
         ];
