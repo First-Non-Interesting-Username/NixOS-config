@@ -1,3 +1,7 @@
+# Module List
+
+Set `config.custom.user.name` to your username, almost all modules use it.
+
 # Applications
 
 ## nixosModules.audio
@@ -389,13 +393,7 @@ Special args: hostname
 
 ## nixosModules.user
 
-Configured via `custom.user` options:
-
-- `custom.user.enable` - Enable the user module.
-- `custom.user.name` - Username.
-- `custom.user.hashedPasswordFile` - Path to hashed password file.
-- `custom.user.password` - Initial password (plaintext).
-- `custom.user.hashedPassword` - Hashed password string.
+Configured via `custom.user` options (provided by `modules/nixos/args/user.nix`).
 
 - Creates a user with the configured name.
 - Adds it to various groups.
