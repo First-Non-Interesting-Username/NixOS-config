@@ -16,9 +16,9 @@ _: {
           };
         };
       };
-      home-manager.users.${config.custom.user.name} = {config, ...}: let
+      home-manager.users.${config.custom.user.name} = {config, osConfig, ...}: let
         homeBase =
-          if config.custom.impermanence.enable
+          if osConfig.custom.impermanence.enable
           then "${config.home.homeDirectory}/persist"
           else config.home.homeDirectory;
       in {

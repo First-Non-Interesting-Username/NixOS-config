@@ -104,7 +104,7 @@
           };
 
           icons = {
-            enable = lib.mkIf (cfg.icons.package != null);
+            enable = lib.mkIf (cfg.icons.package != null) true;
             package = cfg.icons.package;
             dark = cfg.icons.name;
             light = cfg.icons.name;
@@ -133,7 +133,7 @@
         home-manager.users.${config.custom.user.name} = _: {
           qt = {
             enable = true;
-            style.name = "breeze";
+            style.name = lib.mkForce "breeze";
           };
           gtk.enable = true;
 
