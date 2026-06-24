@@ -1,0 +1,40 @@
+name: Quick TODO
+description: A minimal template for quick, on-the-go TODOs
+title: "[TODO] "
+labels: ["todo"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs doing?
+      description: Brief description of the task
+      placeholder: Add feature X, fix bug Y, refactor Z...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      description: Any relevant context, links, or files
+      placeholder: Related to module X, issue #123...
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "Low - When time permits"
+        - "Medium - Soon"
+        - "High - ASAP"
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    id: subtasks
+    attributes:
+      label: Subtasks (optional)
+      options:
+        - label: "Subtask 1"
+        - label: "Subtask 2"
+        - label: "Subtask 3"
