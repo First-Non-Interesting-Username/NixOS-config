@@ -16,13 +16,7 @@ This is a flake-based NixOS configuration using the [flake-parts](https://github
 .
 ├── hosts/          # Host-specific NixOS configurations
 ├── modules/        # Reusable NixOS modules (imported via import-tree)
-│   ├── template.nix
-│   ├── desktop/
-│   ├── desktop-enviroment/
-│   ├── services/
-│   ├── system/
-│   ├── user/
-│   └── development/
+│   └── configuration/
 ├── devShells/      # Development shell definitions
 ├── secrets/        # SOPS-encrypted secrets (age)
 ├── flake.nix       # Flake entry point
@@ -76,7 +70,7 @@ General:
 
 ### Module Structure
 
-Each NixOS module MUST follow this pattern (based on `modules/template.nix`):
+Each NixOS module MUST follow this pattern (based on `modules/configuration/template.nix`):
 
 ```nix
 {
