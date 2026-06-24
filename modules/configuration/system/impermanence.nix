@@ -38,6 +38,7 @@
               "/var/lib/systemd"
               "/var/log"
               "/tmp"
+              "/var/lib/AccountsService"
             ];
 
           files = [
