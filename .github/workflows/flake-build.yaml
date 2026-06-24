@@ -136,8 +136,8 @@ jobs:
         include:
           - system: x86_64-linux
             runner: ubuntu-latest
-          - system: aarch64-linux
-            runner: ubuntu-24.04-arm
+           - system: aarch64-linux
+             runner: ubuntu-26.04-arm
     permissions:
       contents: read
       id-token: write
