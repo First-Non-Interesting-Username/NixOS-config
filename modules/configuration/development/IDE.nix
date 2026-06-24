@@ -25,11 +25,11 @@ _: {
             api_key = ${config.sops.placeholder.wakatime_api_key}
             heartbeat_rate_limit_seconds = 30
           '';
-          path = "${config.users.users.${username}.home}/.wakatime.cfg";
+          path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
         };
       };
 
-      home-manager.users.${config.custom.user.name} = {pkgs, ...} {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
 
         programs = {
           micro = {
