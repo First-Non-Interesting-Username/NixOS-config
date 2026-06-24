@@ -6,8 +6,6 @@
   Hostname = "armin";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
-  Width = 2256;
-  Height = 1504;
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -15,8 +13,6 @@ in {
       inherit self inputs;
       gitName = GitName;
       gitEmail = GitEmail;
-      width = Width;
-      height = Height;
       impermanence = true;
     };
     modules = [
@@ -47,7 +43,6 @@ in {
       self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.terminal
-      self.nixosModules.theme
       self.nixosModules.update
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland

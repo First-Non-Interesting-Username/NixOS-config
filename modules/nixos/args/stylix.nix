@@ -104,7 +104,7 @@
           };
 
           icons = {
-            enable = true;
+            enable = lib.mkIf (cfg.icons.package != null);
             package = cfg.icons.package;
             dark = cfg.icons.name;
             light = cfg.icons.name;

@@ -12,8 +12,6 @@ in {
       inherit Hostname;
       gitName = "ISO-User";
       gitEmail = "iso@nixos.local";
-      width = 1920;
-      height = 1080;
       impermanence = false;
     };
     modules = [
@@ -32,7 +30,6 @@ in {
       self.nixosModules.nix
       self.nixosModules.power
       self.nixosModules.terminal
-      self.nixosModules.theme
       self.nixosModules.secretless-git
       self.nixosModules.shell
       self.nixosModules.ssh-debug

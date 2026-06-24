@@ -7,8 +7,6 @@
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Domain = "iameasytoremember.duckdns.org";
-  Width = 2560;
-  Height = 1440;
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -16,9 +14,7 @@ in {
       inherit self inputs;
       gitName = GitName;
       gitEmail = GitEmail;
-      domain = Domain;
-      width = Width;
-      height = Height;
+      domain = Domain;;
       impermanence = true;
     };
     modules = [
@@ -39,7 +35,6 @@ in {
       self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.ssh-server
-      self.nixosModules.theme
       self.nixosModules.update
       self.nixosModules.virtualization-server
       self.nixosModules.xdg
