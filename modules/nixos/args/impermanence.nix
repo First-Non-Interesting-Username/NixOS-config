@@ -2,7 +2,6 @@
   flake = {
     nixosModules.impermanence = {
       lib,
-      pkgs,
       config,
       ...
     }: let
