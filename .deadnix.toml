@@ -1,5 +1,5 @@
 exclude = [
   "modules/configuration/template.nix",
-  "hosts/template/*"
-  "modules/nixos/template.nix"
+  "hosts/template/*",
+  "modules/nixos/template.nix",
 ]
