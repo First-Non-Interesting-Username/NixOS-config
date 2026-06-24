@@ -9,7 +9,7 @@
   Width = 2256;
   Height = 1504;
 in {
-  flake.nixosConfigurations.armin = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
@@ -20,7 +20,7 @@ in {
       impermanence = true;
     };
     modules = [
-      {_module.args.hostName = "armin";}
+      {_module.args.hostName = Hostname;}
       ./modules.nix
       ./hardware.nix
       self.nixosModules.audio

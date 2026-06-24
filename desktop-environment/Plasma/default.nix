@@ -65,6 +65,13 @@
           inputs.plasma-manager.homeModules.plasma-manager
         ];
 
+        stylix = {
+          targets = {
+            kde.enable = false;
+            qt.enable = false;
+          };
+        };
+
         home.packages = with pkgs.kdePackages; [
           dolphin
           gwenview

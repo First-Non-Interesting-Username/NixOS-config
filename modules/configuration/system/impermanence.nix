@@ -50,6 +50,7 @@
             directories = [
               ".cache/mesa_shader_cache"
               "persist"
+              ".cache/fontconfig"
             ];
 
             files = [
