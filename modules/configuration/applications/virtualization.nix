@@ -2,7 +2,7 @@ _: {
   flake = {
     nixosModules.virtualization-desktop = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
@@ -11,7 +11,7 @@ _: {
           directories = [
             "/var/lib/containers"
           ];
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".local/share/containers"
               ".config/containers"
@@ -32,7 +32,7 @@ _: {
         "binder_linux"
         "ashmem_linux"
       ];
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
           distroshelf
         ];
@@ -46,7 +46,6 @@ _: {
 
     nixosModules.virtualization-server = {
       lib,
-      username,
       impermanence,
       config,
       ...
@@ -65,7 +64,7 @@ _: {
             ) [
               "/var/lib/containers"
             ];
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".local/share/containers"
               ".config/containers"

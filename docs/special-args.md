@@ -3,17 +3,25 @@
 ## Table of Contents
 
 - [Special args](#special-args)
-  - [`username`](#username)
+  - [`custom.user`](#customuser)
   - [`hostname`](#hostname)
   - [`gitName` & `gitEmail`](#gitname--gitemail)
   - [`width` & `height`](#width--height)
   - [`impermanence`](#impermanence)
 
-## `username`
+## `custom.user`
 
-This special arg is used universally in almost all modules.
-You should set it to your username.
-Import `nixosModules.user` to create an user with that username.
+The `custom.user` module option replaces the old `username` special arg.
+Set it in your host configuration:
+
+```nix
+custom.user = {
+  enable = true;
+  name = "your-username";
+};
+```
+
+Import `nixosModules.user` to enable the user module.
 
 ## `hostname`
 

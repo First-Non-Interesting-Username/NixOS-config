@@ -3,7 +3,7 @@ _: {
     nixosModules.git = {
       pkgs,
       lib,
-      username,
+      config,
       impermanence,
       gitName,
       gitEmail,
@@ -11,7 +11,7 @@ _: {
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".config/git"
               ".config/gh"
@@ -27,9 +27,9 @@ _: {
         gh
       ];
       sops.secrets.github_pat = {
-        owner = username;
+        owner = config.custom.user.name;
       };
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         osConfig,
         ...
@@ -71,7 +71,7 @@ _: {
     nixosModules.secretless-git = {
       pkgs,
       lib,
-      username,
+      config,
       impermanence,
       gitName,
       gitEmail,
@@ -79,7 +79,7 @@ _: {
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".config/git"
               ".config/gh"
@@ -95,7 +95,7 @@ _: {
         gh
       ];
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [onefetch];
         programs = {
           git = {

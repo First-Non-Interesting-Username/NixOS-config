@@ -2,7 +2,6 @@
   flake = {
     nixosModules.impermanence = {
       lib,
-      username,
       impermanence,
       config,
       ...
@@ -18,7 +17,7 @@
         };
 
         systemd.tmpfiles.rules = [
-          "d /persist/home/${username} 0700 ${username} users -"
+          "d /persist/home/${config.custom.user.name} 0700 ${config.custom.user.name} users -"
         ];
 
         environment.persistence."/persist" = {
@@ -47,7 +46,7 @@
             "/etc/ssh/ssh_host_ed25519_key.pub"
           ];
 
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".cache/mesa_shader_cache"
               "persist"
@@ -69,7 +68,7 @@
             neededForBoot = true;
           };
         };
-        home-manager.users.${username} = _: {
+        home-manager.users.${config.custom.user.name} = _: {
           programs.zsh.initContent = ''
             if [[ $PWD == $HOME ]]; then
                 cd ~/persist

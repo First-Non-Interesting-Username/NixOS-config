@@ -3,7 +3,6 @@ _: {
     nixosModules.ssh = {
       lib,
       config,
-      username,
       hostname,
       impermanence,
       ...
@@ -15,9 +14,9 @@ _: {
     in {
       programs.ssh.startAgent = true;
       systemd.tmpfiles.rules = [
-        "d ${config.users.users.${username}.home}/.ssh 0700 ${username} users - -"
+        "d ${config.users.users.${config.custom.user.name}.home}/.ssh 0700 ${config.custom.user.name} users - -"
       ];
-      users.users.${username} = {
+      users.users.${config.custom.user.name} = {
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGzRUdlC8OdgeZhL9Kn+57GHAmMpkfBG3iqPl3dRYTM Desktop_key"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFb1ByQK+SH7b7ZD+Epe5zYDyOUp2V0Sr/GcAfKy8J4y Laptop_key"
@@ -25,21 +24,21 @@ _: {
         ];
       };
       sops.secrets."ssh_keys/private/${hostname}" = {
-        owner = username;
-        inherit (config.users.users.${username}) group;
+        owner = config.custom.user.name;
+        inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0600";
-        path = "${sshDir}${config.users.users.${username}.home}/.ssh/id_ed25519";
+        path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519";
       };
       sops.secrets."ssh_keys/public/${hostname}" = {
-        owner = username;
-        inherit (config.users.users.${username}) group;
+        owner = config.custom.user.name;
+        inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0644";
-        path = "${sshDir}${config.users.users.${username}.home}/.ssh/id_ed25519.pub";
+        path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519.pub";
       };
 
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               {
                 directory = ".ssh";
@@ -50,7 +49,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${config.custom.user.name} = _: {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
@@ -82,7 +81,6 @@ _: {
     nixosModules.secretless-ssh = {
       lib,
       config,
-      username,
       impermanence,
       ...
     }: let
@@ -99,12 +97,12 @@ _: {
     in {
       programs.ssh.startAgent = true;
       systemd.tmpfiles.rules = [
-        "d ${config.users.users.${username}.home}/.ssh 0700 ${username} users - -"
-        "f ${config.users.users.${username}.home}/.ssh/id_* 0600 ${username} users - -"
-        "f ${config.users.users.${username}.home}/.ssh/*.pub 0644 ${username} users - -"
-        "f ${config.users.users.${username}.home}/.ssh/authorized_keys 0644 ${username} users - -"
+        "d ${config.users.users.${config.custom.user.name}.home}/.ssh 0700 ${config.custom.user.name} users - -"
+        "f ${config.users.users.${config.custom.user.name}.home}/.ssh/id_* 0600 ${config.custom.user.name} users - -"
+        "f ${config.users.users.${config.custom.user.name}.home}/.ssh/*.pub 0644 ${config.custom.user.name} users - -"
+        "f ${config.users.users.${config.custom.user.name}.home}/.ssh/authorized_keys 0644 ${config.custom.user.name} users - -"
       ];
-      users.users.${username} = {
+      users.users.${config.custom.user.name} = {
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGzRUdlC8OdgeZhL9Kn+57GHAmMpkfBG3iqPl3dRYTM Desktop_key"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFb1ByQK+SH7b7ZD+Epe5zYDyOUp2V0Sr/GcAfKy8J4y Laptop_key"
@@ -114,7 +112,7 @@ _: {
 
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               {
                 directory = ".ssh";
@@ -125,7 +123,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
           lazyssh
         ];

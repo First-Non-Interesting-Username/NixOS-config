@@ -7,7 +7,7 @@
     nixosModules.plasma = {
       pkgs,
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
@@ -20,7 +20,7 @@
             directories = [
               "/var/lib/sddm"
             ];
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [
                 ".local/share/kactivitymanagerd"
                 ".local/share/kscreen"
@@ -54,7 +54,7 @@
         ]
         ++ [pkgs.sddm-astronaut];
 
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         config,
         ...

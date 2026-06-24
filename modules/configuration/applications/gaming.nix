@@ -2,13 +2,13 @@ _: {
   flake = {
     nixosModules.gaming = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               "homes"
             ];
@@ -16,7 +16,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = {config, ...}: {
+      home-manager.users.${config.custom.user.name} = {config, ...}: {
         programs.distrobox = {
           settings = {
             container_manager = "podman";

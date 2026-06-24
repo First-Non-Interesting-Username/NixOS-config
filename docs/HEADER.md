@@ -1,3 +1,3 @@
 # Module List
 
-Special args: username (required for all modules)
+Set `config.custom.user.name` to your username, almost all modules use it.

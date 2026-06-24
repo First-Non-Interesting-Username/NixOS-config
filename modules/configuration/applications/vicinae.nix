@@ -2,14 +2,14 @@
   flake = {
     nixosModules.vicinae = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optionals impermanence [
         {
           environment.persistence."/persist" = {
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [
                 ".local/share/vicinae"
                 ".config/vicinae"
@@ -19,7 +19,7 @@
         }
       ];
 
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         lib,
         ...

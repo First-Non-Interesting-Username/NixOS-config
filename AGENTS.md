@@ -83,7 +83,6 @@ Each NixOS module MUST follow this pattern (based on `modules/configuration/temp
       pkgs,
       lib,
       config,
-      username,
       impermanence,
       ...
     }: {
@@ -91,7 +90,7 @@ Each NixOS module MUST follow this pattern (based on `modules/configuration/temp
         environment.persistence."/persist" = {
           directories = [];
           files = [];
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [];
             files = [];
           };
@@ -100,7 +99,7 @@ Each NixOS module MUST follow this pattern (based on `modules/configuration/temp
 
       # System config here
 
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         lib,
         config,
@@ -205,4 +204,4 @@ Description rules:
 
 ---
 
-Last modified by MiniMax M2.5, 28.03.2026
+Last modified by deepseek-v4-flash-free, 24.06.2026

@@ -2,7 +2,7 @@ _: {
   flake = {
     nixosModules.programs-desktop = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
@@ -14,7 +14,7 @@ _: {
           files = [
             # System-level files to persist
           ];
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".config/kdeconnect"
             ];
@@ -29,7 +29,7 @@ _: {
         kdeconnect.enable = true;
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${config.custom.user.name} = _: {
       };
     };
   };

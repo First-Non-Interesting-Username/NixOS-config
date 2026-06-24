@@ -3,7 +3,7 @@
     nixosModules.flatpak = {
       pkgs,
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
@@ -12,7 +12,7 @@
           directories = [
             "/var/lib/flatpak"
           ];
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".local/share/flatpak"
               ".var/app"
@@ -27,7 +27,7 @@
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
         config.common.default = "*";
       };
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         imports = [
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ];

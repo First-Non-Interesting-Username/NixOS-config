@@ -7,13 +7,13 @@
     nixosModules.shell = {
       pkgs,
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".local/share/atuin"
               ".local/share/zoxide"
@@ -25,7 +25,7 @@
         };
       };
 
-      users.users.${username}.shell = pkgs.zsh;
+      users.users.${config.custom.user.name}.shell = pkgs.zsh;
       programs.zsh.enable = true;
 
       security.polkit.extraConfig = ''
@@ -37,7 +37,7 @@
           }
         });
       '';
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         config,
         ...

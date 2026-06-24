@@ -1,7 +1,6 @@
 {inputs, ...}: {
   flake = {
     nixosModules.theme = {
-      username,
       config,
       pkgs,
       width ? 1920,
@@ -46,7 +45,7 @@
         ]
         ++ lib.optional impermanence {
           environment.persistence."/persist" = {
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [
                 ".cache/fontconfig"
               ];
@@ -96,7 +95,7 @@
         };
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${config.custom.user.name} = _: {
         qt = {
           enable = true;
           style.name = "breeze";

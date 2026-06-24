@@ -1,7 +1,7 @@
 {self, ...}: {
   flake = {
     nixosModules.iso = {
-      username,
+      config,
       pkgs,
       ...
     }: {
@@ -24,10 +24,10 @@
 
       systemd.tmpfiles.rules = [
         "C /etc/nixos - - - - /flake-source"
-        "Z /etc/nixos 0777 ${username} ${username} -"
+        "Z /etc/nixos 0777 ${config.custom.user.name} ${config.custom.user.name} -"
       ];
 
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         osConfig,
         lib,
         ...

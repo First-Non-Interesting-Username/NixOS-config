@@ -4,14 +4,12 @@
   ...
 }: let
   Hostname = "wall-e";
-  Username = "nixos";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      inherit Username Hostname;
-      username = Username;
+      inherit Hostname;
       hostname = Hostname;
       gitName = "ISO-User";
       gitEmail = "iso@nixos.local";
@@ -20,6 +18,8 @@ in {
       impermanence = false;
     };
     modules = [
+      ./configuration.nix
+      ./modules.nix
       self.nixosModules.input
       self.nixosModules.iso-terminal
       self.nixosModules.home-manager
@@ -29,10 +29,8 @@ in {
       self.nixosModules.power
       self.nixosModules.theme
       self.nixosModules.secretless-git
-      self.nixosModules.secretless-user
       self.nixosModules.shell
       self.nixosModules.ssh-debug
-      self.nixosModules.user-debug
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
@@ -40,7 +38,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          username = Username;
           hostname = Hostname;
         };
       }

@@ -2,7 +2,6 @@
   flake = {
     nixosModules.CHANGEME = {
       lib,
-      username,
       impermanence,
       config,
       ...
@@ -27,7 +26,7 @@
             files = [
               # System-level files to persist
             ];
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [
                 # User-level dirs to persist (relative to $HOME)
               ];
@@ -40,7 +39,7 @@
 
       # System config goes here
 
-      home-manager.users.${username} = {...}: {
+      home-manager.users.${config.custom.user.name} = {...}: {
         # Home config goes here
       };
     };

@@ -2,13 +2,13 @@
   flake = {
     nixosModules.nix = {
       lib,
+      config,
       impermanence,
-      username,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".cache/nix"
             ];

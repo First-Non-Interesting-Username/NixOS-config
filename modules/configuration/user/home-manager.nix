@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.home-manager = {username, ...}: {
+    nixosModules.home-manager = {config, ...}: {
       imports = [
         inputs.home-manager.nixosModules.home-manager
       ];
@@ -9,9 +9,9 @@
         useUserPackages = true;
         backupFileExtension = "backup";
       };
-      home-manager.users.${username} = {username, ...}: {
+      home-manager.users.${config.custom.user.name} = {osConfig, ...}: {
         programs.home-manager.enable = true;
-        home.homeDirectory = "/home/${username}";
+        home.homeDirectory = "/home/${osConfig.custom.user.name}";
         home.enableNixpkgsReleaseCheck = false;
       };
     };

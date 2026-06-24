@@ -1,0 +1,15 @@
+{
+  pkgs,
+  config,
+  self,
+  ...
+}: {
+  imports = [self.nixosModules.user];
+
+  custom.user = {
+    enable = true;
+    name = "nixos";
+    # password is `nixos`
+    hashedPassword = "$y$j9T$e3RBMYwLteags209/SMBP0$f4bZILjV/MjNCquJFQmxL55.q6SdtN.gbATDv7Mds50";
+  };
+}

@@ -2,7 +2,7 @@
   flake = {
     nixosModules.GNOME = {
       lib,
-      username,
+      config,
       impermanence,
       pkgs,
       ...
@@ -17,7 +17,7 @@
             directories = [
               "/var/lib/gdm"
             ];
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [
                 ".local/share/keyrings"
                 ".local/share/recently-used"
@@ -86,7 +86,7 @@
         ];
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
           mission-center
         ];

@@ -48,8 +48,7 @@ Then, include the desired modules in your `nixosSystem`:
 ```nix
 modules = [
   inputs.nixos-config.nixosModules.audio
-  # Note: Many modules require specialArgs like 'username'
-  # This is described in the module docs
+  # See module docs for configuration options
 ];
 ```
 

@@ -1,6 +1,6 @@
 {...}: {
   flake = {
-    nixosModules.username = {
+    nixosModules.user = {
       lib,
       pkgs,
       config,
@@ -17,19 +17,19 @@
         };
         enable = lib.mkEnableOption "user";
         hashedPasswordFile = lib.mkOption {
-          type = lib.types.path or null;
+          type = lib.types.nullOr lib.types.path;
           default = null;
-          example = config.sops.secrets."sudo_password/${hostname}".path;
+          example = "/run/secrets/password-hash";
           description = "Path to a file containing hashed password, created with `mkpasswd -m yescrypt`";
         };
         password = lib.mkOption {
-          type = lib.types.str or null;
+          type = lib.types.nullOr lib.types.str;
           default = null;
           example = "nixos";
           description = "string to be set as user password";
         };
         hashedPassword = lib.mkOption {
-          type = lib.types.str or null;
+          type = lib.types.nullOr lib.types.str;
           default = null;
           example = "$y$j9T$e3RBMYwLteags209/SMBP0$f4bZILjV/MjNCquJFQmxL55.q6SdtN.gbATDv7Mds50";
           description = "hashed string to be set as user password, created with `mkpasswd -m yescrypt`";

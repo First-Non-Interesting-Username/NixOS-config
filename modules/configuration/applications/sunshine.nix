@@ -25,8 +25,8 @@ _: {
 
       boot.kernelModules = ["uinput"];
     };
-    nixosModules.moonlight = {username, ...}: {
-      home-manager.users.${username} = {pkgs, ...}: {
+    nixosModules.moonlight = {config, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
           moonlight-qt
         ];

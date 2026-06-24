@@ -5,7 +5,6 @@
 }: {
   flake = {
     nixosModules.nixflix = {
-      username,
       config,
       pkgs,
       ...
@@ -134,7 +133,7 @@
         mediaDir = "/mnt/data/media";
         downloadsDir = "/mnt/data/downloads";
         stateDir = "/var/lib";
-        mediaUsers = [username];
+        mediaUsers = [config.custom.user.name];
 
         nginx.enable = false;
         caddy.enable = false;

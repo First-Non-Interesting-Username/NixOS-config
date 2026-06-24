@@ -2,13 +2,13 @@ _: {
   flake = {
     nixosModules.direnv = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".local/share/direnv"
             ];
@@ -16,7 +16,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = _: {
+      home-manager.users.${config.custom.user.name} = _: {
         programs = {
           direnv = {
             enable = true;

@@ -8,7 +8,6 @@
       pkgs,
       lib,
       impermanence,
-      username,
       config,
       ...
     }: {
@@ -27,7 +26,7 @@
               in
                 !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
             ) ["/var/lib/sops-nix"];
-            users.${username} = {
+            users.${config.custom.user.name} = {
               directories = [".config/sops/age"];
             };
           };

@@ -2,13 +2,13 @@
   flake = {
     nixosModules.browser = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".mozilla"
               ".cache/mozilla"
@@ -17,7 +17,7 @@
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         stylix.targets.firefox = {
           enable = false;
         };

@@ -2,13 +2,13 @@ _: {
   flake = {
     nixosModules.IDE = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".config/zed"
             ];
@@ -19,7 +19,7 @@ _: {
         };
       };
 
-      home-manager.users.${username} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         programs = {
           micro = {
             enable = true;

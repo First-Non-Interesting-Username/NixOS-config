@@ -1,8 +1,8 @@
 {
   pkgs,
   inputs,
-  username,
   lib,
+  config,
   ...
 }: {
   boot = {
@@ -64,7 +64,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /mnt/storage 0755 ${username} users -"
+    "d /mnt/storage 0755 ${config.custom.user.name} users -"
   ];
 
   services = {
@@ -85,7 +85,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${username} = _: {
+  home-manager.users.${config.custom.user.name} = _: {
     home.stateVersion = "26.11";
   };
 }

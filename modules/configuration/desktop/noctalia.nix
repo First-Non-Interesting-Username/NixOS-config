@@ -1,12 +1,12 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.noctalia = {username, ...}: {
+    nixosModules.noctalia = {config, ...}: {
       imports = [
         inputs.noctalia.nixosModules.default
       ];
 
       services.noctalia-shell.enable = true;
-      home-manager.users.${username} = {lib, ...}: {
+      home-manager.users.${config.custom.user.name} = {lib, ...}: {
         imports = [
           inputs.noctalia.homeModules.default
         ];

@@ -2,13 +2,13 @@ _: {
   flake = {
     nixosModules.opencode = {
       lib,
-      username,
+      config,
       impermanence,
       ...
     }: {
       imports = lib.optional impermanence {
         environment.persistence."/persist" = {
-          users.${username} = {
+          users.${config.custom.user.name} = {
             directories = [
               ".config/opencode"
               ".local/share/opencode"
@@ -16,7 +16,7 @@ _: {
           };
         };
       };
-      home-manager.users.${username} = _: {
+      home-manager.users.${config.custom.user.name} = _: {
         programs = {
           opencode = {
             enable = true;

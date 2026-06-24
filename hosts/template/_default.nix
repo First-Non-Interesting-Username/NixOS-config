@@ -4,7 +4,6 @@
   ...
 }: let
   Hostname = "YOUR_HOSTNAME";
-  Username = "YOUR_USERNAME";
   GitName = "YOUR_GIT_USERNAME";
   GitEmail = "YOUR_GIT_EMAIL";
   Width = 1920; # Width of your monitor in pixels, it will default to 1920
@@ -15,7 +14,6 @@ in {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      username = Username;
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
@@ -33,7 +31,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          username = Username;
           gitName = GitName;
           gitEmail = GitEmail;
           hostname = Hostname;

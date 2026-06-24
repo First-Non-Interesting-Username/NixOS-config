@@ -4,7 +4,6 @@
   ...
 }: let
   Hostname = "iroh";
-  Username = "nixi";
   GitName = "First-Non-Interesting-Username";
   GitEmail = "janekmusin@proton.me";
   Domain = "iameasytoremember.duckdns.org";
@@ -15,7 +14,6 @@ in {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      username = Username;
       gitName = GitName;
       gitEmail = GitEmail;
       hostname = Hostname;
@@ -26,6 +24,7 @@ in {
     };
     modules = [
       ./hardware.nix
+      ./modules.nix
       self.nixosModules.bootloader
       self.nixosModules.git
       self.nixosModules.home-manager
@@ -41,7 +40,6 @@ in {
       self.nixosModules.ssh-server
       self.nixosModules.theme
       self.nixosModules.update
-      self.nixosModules.user
       self.nixosModules.virtualization-server
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
@@ -50,7 +48,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          username = Username;
           gitName = GitName;
           gitEmail = GitEmail;
           hostname = Hostname;
