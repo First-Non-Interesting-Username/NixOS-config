@@ -16,7 +16,6 @@ _: {
       };
 
       home-manager.users.${config.custom.user.name} = {config, ...}: {
-
         home.activation.createGboxDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
           mkdir -p "${config.home.homeDirectory}/homes/Gbox"
         '';
