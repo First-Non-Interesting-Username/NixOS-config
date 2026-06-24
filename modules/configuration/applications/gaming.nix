@@ -16,7 +16,6 @@ _: {
       };
 
       home-manager.users.${config.custom.user.name} = {config, ...}: {
-
         home.activation.createGboxDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
           mkdir -p "${config.home.homeDirectory}/homes/Gbox"
         '';
@@ -29,7 +28,7 @@ _: {
           enable = true;
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260623";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260624";
               init = false;
               root = false;
               start_now = false;
