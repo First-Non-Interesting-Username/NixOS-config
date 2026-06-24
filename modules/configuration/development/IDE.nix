@@ -15,7 +15,6 @@ _: {
         };
       };
 
-
       sops = {
         secrets.wakatime_api_key = {};
         templates.".wakatime.cfg" = {
@@ -30,7 +29,6 @@ _: {
       };
 
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
-
         programs = {
           micro = {
             enable = true;
