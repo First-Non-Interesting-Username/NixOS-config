@@ -27,7 +27,7 @@
         imports = [
           inputs.vicinae.homeManagerModules.default
         ];
-        services = {
+        programs = {
           vicinae = {
             enable = true;
             systemd = {
