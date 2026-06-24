@@ -2,7 +2,7 @@
   pkgs,
   lib,
   inputs,
-  username,
+  config,
   ...
 }: {
   zramSwap = {
@@ -57,7 +57,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${username} = _: {
+  home-manager.users.${config.custom.user.name} = _: {
     home.stateVersion = "26.11";
   };
 }

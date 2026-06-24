@@ -4,25 +4,15 @@
   ...
 }: let
   Hostname = "armin";
-  Username = "nixi";
-  GitName = "First-Non-Interesting-Username";
-  GitEmail = "janekmusin@proton.me";
-  Width = 2256;
-  Height = 1504;
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      username = Username;
-      gitName = GitName;
-      gitEmail = GitEmail;
-      hostname = Hostname;
-      width = Width;
-      height = Height;
-      impermanence = true;
     };
     modules = [
+      {_module.args.hostName = Hostname;}
+      ./modules.nix
       ./hardware.nix
       self.nixosModules.audio
       self.nixosModules.bootloader
@@ -33,7 +23,6 @@ in {
       self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.IDE
-      self.nixosModules.impermanence
       self.nixosModules.input
       self.nixosModules.locale
       self.nixosModules.moonlight
@@ -48,9 +37,7 @@ in {
       self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.terminal
-      self.nixosModules.theme
       self.nixosModules.update
-      self.nixosModules.user
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland
       self.nixosModules.xdg
@@ -60,10 +47,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          username = Username;
-          gitName = GitName;
-          gitEmail = GitEmail;
-          hostname = Hostname;
         };
       }
     ];

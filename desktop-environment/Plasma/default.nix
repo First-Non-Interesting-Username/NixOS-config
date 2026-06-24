@@ -7,28 +7,27 @@
     nixosModules.plasma = {
       pkgs,
       lib,
-      username,
-      impermanence,
+      config,
       ...
     }: {
-      imports =
-        [
-          self.nixosModules.wayland
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
+      imports = [
+        self.nixosModules.wayland
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          directories = [
+            "/var/lib/sddm"
+          ];
+          users.${config.custom.user.name} = {
             directories = [
-              "/var/lib/sddm"
+              ".local/share/kactivitymanagerd"
+              ".local/share/kscreen"
+              ".local/share/kwalletd"
             ];
-            users.${username} = {
-              directories = [
-                ".local/share/kactivitymanagerd"
-                ".local/share/kscreen"
-                ".local/share/kwalletd"
-              ];
-            };
           };
         };
+      };
 
       services = {
         xserver.enable = true;
@@ -54,7 +53,7 @@
         ]
         ++ [pkgs.sddm-astronaut];
 
-      home-manager.users.${username} = {
+      home-manager.users.${config.custom.user.name} = {
         pkgs,
         config,
         ...
@@ -64,6 +63,13 @@
         imports = [
           inputs.plasma-manager.homeModules.plasma-manager
         ];
+
+        stylix = {
+          targets = {
+            kde.enable = false;
+            qt.enable = false;
+          };
+        };
 
         home.packages = with pkgs.kdePackages; [
           dolphin

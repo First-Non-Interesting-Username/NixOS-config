@@ -12,10 +12,10 @@ permissions:
 jobs:
   opencode:
     if: >
-      (github.event.comment.author_association == 'OWNER' || 
-       github.event.comment.author_association == 'COLLABORATOR' || 
+      (github.event.comment.author_association == 'OWNER' ||
+       github.event.comment.author_association == 'COLLABORATOR' ||
        github.event.comment.author_association == 'MEMBER') &&
-      (startsWith(github.event.comment.body, '/oc') || 
+      (startsWith(github.event.comment.body, '/oc') ||
        startsWith(github.event.comment.body, '/opencode') ||
        contains(github.event.comment.body, ' /oc') ||
        contains(github.event.comment.body, ' /opencode'))
@@ -38,4 +38,4 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          model: nvidia/z-ai/glm-5.1
+          model: nvidia/nvidia/nemotron-3-ultra-550b-a55b

@@ -1,0 +1,51 @@
+_: {
+  flake = {
+    nixosModules.xdg = {
+      lib,
+      config,
+      ...
+    }: {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          users.${config.custom.user.name} = {
+            directories = [
+              ".config"
+              ".local/share"
+              ".local/state"
+            ];
+          };
+        };
+      };
+      home-manager.users.${config.custom.user.name} = {
+        config,
+        osConfig,
+        ...
+      }: let
+        homeBase =
+          if osConfig.custom.impermanence.enable
+          then "${config.home.homeDirectory}/persist"
+          else config.home.homeDirectory;
+      in {
+        xdg = {
+          enable = true;
+          userDirs = {
+            enable = true;
+            createDirectories = true;
+            desktop = null;
+            download = "${homeBase}/Downloads";
+            documents = "${homeBase}/Documents";
+            pictures = "${homeBase}/Pictures";
+            music = null;
+            publicShare = null;
+            templates = "${homeBase}/Templates";
+            videos = "${homeBase}/Videos";
+            projects = "${homeBase}/Projects";
+            extraConfig = {
+              XDG_GAMES_DIR = "${homeBase}/Games";
+            };
+          };
+        };
+      };
+    };
+  };
+}

@@ -48,8 +48,7 @@ Then, include the desired modules in your `nixosSystem`:
 ```nix
 modules = [
   inputs.nixos-config.nixosModules.audio
-  # Note: Many modules require specialArgs like 'username'
-  # This is described in the module docs
+  # See module docs for configuration options
 ];
 ```
 
@@ -59,13 +58,13 @@ For detailed instructions on internal and external usage, see the [Usage Guide](
 
 ### Modules
 
-- [Applications](./modules/applications/README.md)
-- [Desktop](./modules/desktop/README.md)
-- [Development](./modules/development/README.md)
-- [Home](./modules/home/README.md)
-- [Services](./modules/services/README.md)
-- [System](./modules/system/README.md)
-- [User](./modules/user/README.md)
+- [Applications](./modules/configuration/applications/README.md)
+- [Desktop](./modules/configuration/desktop/README.md)
+- [Development](./modules/configuration/development/README.md)
+- [Home](./modules/configuration/home/README.md)
+- [Services](./modules/configuration/services/README.md)
+- [System](./modules/configuration/system/README.md)
+- [User](./modules/configuration/user/README.md)
 
 For the full list, go [here](./docs/module-list.md).
 

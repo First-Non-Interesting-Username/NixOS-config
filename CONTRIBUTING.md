@@ -288,7 +288,7 @@ General:
 
 ### Module Structure
 
-Each NixOS module in this repository MUST follow this structure and be based on the [template](./modules/template.nix).
+Each NixOS module in this repository MUST follow this structure and be based on the [template](./modules/configuration/template.nix).
 
 ### Testing
 
