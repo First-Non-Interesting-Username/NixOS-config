@@ -5,7 +5,7 @@
   hostName,
   ...
 }: {
-  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix];
+  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix self.nixosModules.impermanence];
 
   custom = {
     user = {
@@ -23,5 +23,6 @@
         name = "MoreWaita";
       };
     };
+    impermanence.enable = false;
   };
 }

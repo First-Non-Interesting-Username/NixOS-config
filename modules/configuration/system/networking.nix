@@ -2,7 +2,6 @@ _: {
   flake = {
     nixosModules.networking-desktop = {
       lib,
-      impermanence,
       config,
       ...
     }: {
@@ -85,8 +84,8 @@ _: {
         '';
       };
 
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories = [
             "/etc/NetworkManager"
             "/var/lib/NetworkManager"
@@ -97,7 +96,7 @@ _: {
     };
     nixosModules.secretless-networking-desktop = {
       lib,
-      impermanence,
+      config,
       ...
     }: {
       networking = {
@@ -120,8 +119,8 @@ _: {
         powerOnBoot = true;
       };
 
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories = [
             "/etc/NetworkManager"
             "/var/lib/NetworkManager"

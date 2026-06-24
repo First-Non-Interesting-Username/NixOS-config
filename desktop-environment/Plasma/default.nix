@@ -8,27 +8,26 @@
       pkgs,
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports =
-        [
-          self.nixosModules.wayland
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
+      imports = [
+        self.nixosModules.wayland
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          directories = [
+            "/var/lib/sddm"
+          ];
+          users.${config.custom.user.name} = {
             directories = [
-              "/var/lib/sddm"
+              ".local/share/kactivitymanagerd"
+              ".local/share/kscreen"
+              ".local/share/kwalletd"
             ];
-            users.${config.custom.user.name} = {
-              directories = [
-                ".local/share/kactivitymanagerd"
-                ".local/share/kscreen"
-                ".local/share/kwalletd"
-              ];
-            };
           };
         };
+      };
 
       services = {
         xserver.enable = true;

@@ -2,12 +2,11 @@ _: {
   flake = {
     nixosModules.nasServer = {
       lib,
-      impermanence,
       config,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories =
             lib.filter (
               d: let
@@ -39,11 +38,11 @@ _: {
     };
     nixosModules.nasClient = {
       lib,
-      impermanence,
+      config,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories = [
             "/var/lib/nfs"
           ];

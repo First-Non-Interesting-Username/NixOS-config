@@ -5,7 +5,7 @@
   hostName,
   ...
 }: {
-  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix];
+  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix self.nixosModules.impermanence];
   sops.secrets."sudo_password/${config.custom.hostname}" = {
     neededForUsers = true;
   };
@@ -29,5 +29,6 @@
         name = "MoreWaita";
       };
     };
+    impermanence.enable = true;
   };
 }

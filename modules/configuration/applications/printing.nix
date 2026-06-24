@@ -3,11 +3,11 @@ _: {
     nixosModules.printing = {
       pkgs,
       lib,
-      impermanence,
+      config,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories = [
             "/var/lib/cups"
           ];

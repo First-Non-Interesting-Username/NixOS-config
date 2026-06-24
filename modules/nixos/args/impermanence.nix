@@ -2,15 +2,21 @@
   flake = {
     nixosModules.impermanence = {
       lib,
-      impermanence,
+      pkgs,
       config,
       ...
-    }: {
-      imports = lib.optional impermanence {
-        imports = [
-          inputs.impermanence.nixosModules.impermanence
-        ];
+    }: let
+      cfg = config.custom.impermanence;
+    in {
+      imports = [
+        inputs.impermanence.nixosModules.impermanence
+      ];
 
+      options.custom.impermanence = {
+        enable = lib.mkEnableOption "impermanence module. It may work unpredictably if you don't have /persist partition.";
+      };
+
+      config = lib.mkIf cfg.enable {
         boot = {
           initrd.systemd.enable = true;
           tmp.cleanOnBoot = true;
@@ -70,6 +76,7 @@
           };
         };
         home-manager.users.${config.custom.user.name} = _: {
+          # Temporary, will be changed with nushell
           programs.zsh.initContent = ''
             if [[ $PWD == $HOME ]]; then
                 cd ~/persist

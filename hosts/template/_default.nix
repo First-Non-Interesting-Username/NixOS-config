@@ -9,7 +9,6 @@ in {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      impermanence = false;
     };
     modules = [
       {_module.args.hostName = Hostname;}

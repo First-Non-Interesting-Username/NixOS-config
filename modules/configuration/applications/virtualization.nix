@@ -3,11 +3,10 @@ _: {
     nixosModules.virtualization-desktop = {
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories = [
             "/var/lib/containers"
           ];
@@ -46,12 +45,11 @@ _: {
 
     nixosModules.virtualization-server = {
       lib,
-      impermanence,
       config,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           directories =
             lib.filter (
               d: let

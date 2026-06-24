@@ -3,34 +3,33 @@
     nixosModules.GNOME = {
       lib,
       config,
-      impermanence,
       pkgs,
       ...
     }: {
-      imports =
-        [
-          self.nixosModules.vicinae
-          self.nixosModules.wayland
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
+      imports = [
+        self.nixosModules.vicinae
+        self.nixosModules.wayland
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          directories = [
+            "/var/lib/gdm"
+          ];
+          users.${config.custom.user.name} = {
             directories = [
-              "/var/lib/gdm"
+              ".local/share/keyrings"
+              ".local/share/recently-used"
+              ".local/share/nautilus"
+              ".config/goa-1.0"
+              ".cache/tracker3"
             ];
-            users.${config.custom.user.name} = {
-              directories = [
-                ".local/share/keyrings"
-                ".local/share/recently-used"
-                ".local/share/nautilus"
-                ".config/goa-1.0"
-                ".cache/tracker3"
-              ];
-              files = [
-                ".local/share/recently-used.xbel"
-              ];
-            };
+            files = [
+              ".local/share/recently-used.xbel"
+            ];
           };
         };
+      };
 
       programs = {
         ssh.startAgent = lib.mkForce false;

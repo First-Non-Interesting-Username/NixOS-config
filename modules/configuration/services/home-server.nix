@@ -2,7 +2,6 @@
   flake = {
     nixosModules.home-server-iroh = {
       lib,
-      impermanence,
       config,
       pkgs,
       ...
@@ -11,17 +10,17 @@
       email = "janekmusin@proton.me";
       filebrowserStateDir = "/var/lib/filebrowser";
     in {
-      imports =
-        [
-          self.nixosModules.web-expose
-          # self.nixosModules.nixflix
-          # self.nixosModules.ai-services
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            # directories = ["/var/lib"];
-          };
+      imports = [
+        self.nixosModules.web-expose
+        # self.nixosModules.nixflix
+        # self.nixosModules.ai-services
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          # directories = ["/var/lib"];
         };
+      };
 
       sops.secrets = {
         "routing/traefik/env" = {

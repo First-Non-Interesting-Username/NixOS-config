@@ -3,11 +3,10 @@ _: {
     nixosModules.ssh = {
       lib,
       config,
-      impermanence,
       ...
     }: let
       sshDir =
-        if impermanence
+        if config.custom.impermanence.enable
         then "/persist"
         else "";
     in {
@@ -35,8 +34,8 @@ _: {
         path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519.pub";
       };
 
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
               {
@@ -80,7 +79,6 @@ _: {
     nixosModules.secretless-ssh = {
       lib,
       config,
-      impermanence,
       ...
     }: let
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILh2Ni5c9wMmg1ojjGmlf0oPuijIYVQhV8kLX3nSoP4v Showcase_keys";
@@ -109,8 +107,8 @@ _: {
         ];
       };
 
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
               {

@@ -7,30 +7,29 @@
     nixosModules.secrets = {
       pkgs,
       lib,
-      impermanence,
       config,
       ...
     }: {
-      imports =
-        [
-          inputs.sops-nix.nixosModules.sops
-        ]
-        ++ lib.optional impermanence {
-          environment.persistence."/persist" = {
-            directories = lib.filter (
-              d: let
-                dir =
-                  if builtins.isString d
-                  then d
-                  else d.directory;
-              in
-                !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
-            ) ["/var/lib/sops-nix"];
-            users.${config.custom.user.name} = {
-              directories = [".config/sops/age"];
-            };
+      imports = [
+        inputs.sops-nix.nixosModules.sops
+      ];
+
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          directories = lib.filter (
+            d: let
+              dir =
+                if builtins.isString d
+                then d
+                else d.directory;
+            in
+              !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
+          ) ["/var/lib/sops-nix"];
+          users.${config.custom.user.name} = {
+            directories = [".config/sops/age"];
           };
         };
+      };
 
       environment.systemPackages = with pkgs; [
         sops
@@ -42,7 +41,7 @@
       sops = {
         defaultSopsFile = "${self}/secrets/secrets.yaml";
         age =
-          if impermanence
+          if config.custom.impermanence.enable
           then {
             generateKey = false;
             sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];

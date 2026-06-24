@@ -3,21 +3,18 @@
     nixosModules.vicinae = {
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports = lib.optionals impermanence [
-        {
-          environment.persistence."/persist" = {
-            users.${config.custom.user.name} = {
-              directories = [
-                ".local/share/vicinae"
-                ".config/vicinae"
-              ];
-            };
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          users.${config.custom.user.name} = {
+            directories = [
+              ".local/share/vicinae"
+              ".config/vicinae"
+            ];
           };
-        }
-      ];
+        };
+      };
 
       home-manager.users.${config.custom.user.name} = {
         pkgs,

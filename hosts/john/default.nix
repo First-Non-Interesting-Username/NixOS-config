@@ -10,7 +10,6 @@ in {
     specialArgs = {
       inherit self inputs;
       inherit Hostname;
-      impermanence = false;
     };
     modules = [
       {_module.args.hostName = Hostname;}

@@ -8,11 +8,10 @@
       pkgs,
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
               ".local/share/atuin"

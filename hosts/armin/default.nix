@@ -9,7 +9,6 @@ in {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      impermanence = true;
     };
     modules = [
       {_module.args.hostName = Hostname;}
@@ -24,7 +23,6 @@ in {
       self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.IDE
-      self.nixosModules.impermanence
       self.nixosModules.input
       self.nixosModules.locale
       self.nixosModules.moonlight

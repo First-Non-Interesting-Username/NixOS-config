@@ -3,11 +3,10 @@ _: {
     nixosModules.xdg = {
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
               ".config"
@@ -19,7 +18,7 @@ _: {
       };
       home-manager.users.${config.custom.user.name} = {config, ...}: let
         homeBase =
-          if impermanence
+          if config.custom.impermanence.enable
           then "${config.home.homeDirectory}/persist"
           else config.home.homeDirectory;
       in {
