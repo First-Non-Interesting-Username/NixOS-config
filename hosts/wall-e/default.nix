@@ -23,7 +23,6 @@ in {
       self.nixosModules.input
       self.nixosModules.iso-terminal
       self.nixosModules.home-manager
-      self.nixosModules.hostname
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
