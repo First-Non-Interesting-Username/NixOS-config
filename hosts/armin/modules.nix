@@ -1,18 +1,21 @@
 {
   pkgs,
-  hostname,
   config,
   self,
+  hostName,
   ...
 }: {
-  imports = [self.nixosModules.user];
-  sops.secrets."sudo_password/${hostname}" = {
+  imports = [self.nixosModules.user self.nixosModules.hostname];
+  sops.secrets."sudo_password/${config.custom.hostname}" = {
     neededForUsers = true;
   };
 
-  custom.user = {
-    enable = true;
-    name = "nixi";
-    hashedPasswordFile = config.sops.secrets."sudo_password/${hostname}".path;
+  custom = {
+    user = {
+      enable = true;
+      name = "nixi";
+      hashedPasswordFile = config.sops.secrets."sudo_password/${config.custom.hostname}".path;
+    };
+    hostname = hostName;
   };
 }

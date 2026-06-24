@@ -16,18 +16,19 @@ in {
       inherit self inputs;
       gitName = GitName;
       gitEmail = GitEmail;
-      hostname = Hostname;
       domain = Domain;
       width = Width;
       height = Height;
       impermanence = true;
     };
     modules = [
+      {_module.args.hostName = Hostname;}
       ./hardware.nix
       ./modules.nix
       self.nixosModules.bootloader
       self.nixosModules.git
       self.nixosModules.home-manager
+
       self.nixosModules.home-server-iroh
       self.nixosModules.impermanence
       self.nixosModules.locale
@@ -50,7 +51,6 @@ in {
           inherit self inputs;
           gitName = GitName;
           gitEmail = GitEmail;
-          hostname = Hostname;
           domain = Domain;
         };
       }

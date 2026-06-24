@@ -2,14 +2,12 @@ _: {
   flake = {
     nixosModules.networking-desktop = {
       lib,
-      hostname,
       impermanence,
       config,
       ...
     }: {
       sops.secrets."wifi_password" = {};
       networking = {
-        hostName = hostname;
         networkmanager = {
           enable = true;
           dns = "none";
@@ -99,12 +97,10 @@ _: {
     };
     nixosModules.secretless-networking-desktop = {
       lib,
-      hostname,
       impermanence,
       ...
     }: {
       networking = {
-        hostName = hostname;
         networkmanager = {
           enable = true;
           dns = "none";
@@ -134,9 +130,8 @@ _: {
         };
       };
     };
-    nixosModules.networking-server = {hostname, ...}: {
+    nixosModules.networking-server = {...}: {
       networking = {
-        hostName = hostname;
         networkmanager.enable = false;
 
         interfaces.enp1s0 = {
@@ -161,13 +156,8 @@ _: {
         };
       };
     };
-    nixosModules.networking-minimal = {
-      lib,
-      hostname,
-      ...
-    }: {
+    nixosModules.networking-minimal = {lib, ...}: {
       networking = {
-        hostName = hostname;
         networkmanager.enable = true;
 
         useDHCP = lib.mkDefault false;

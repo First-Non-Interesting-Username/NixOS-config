@@ -3,7 +3,6 @@ _: {
     nixosModules.ssh = {
       lib,
       config,
-      hostname,
       impermanence,
       ...
     }: let
@@ -23,13 +22,13 @@ _: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhyyqVG8KdfHL00jBin/8rJzaD1Str3lO7N+IeF8fPI Server_key"
         ];
       };
-      sops.secrets."ssh_keys/private/${hostname}" = {
+      sops.secrets."ssh_keys/private/${config.custom.hostname}" = {
         owner = config.custom.user.name;
         inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0600";
         path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519";
       };
-      sops.secrets."ssh_keys/public/${hostname}" = {
+      sops.secrets."ssh_keys/public/${config.custom.hostname}" = {
         owner = config.custom.user.name;
         inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0644";

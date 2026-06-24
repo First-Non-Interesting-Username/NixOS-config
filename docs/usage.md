@@ -10,10 +10,8 @@ Key options:
 
 - `custom.user.name`: The primary user's name (set via module options).
 - `custom.user.enable`: Enable the user module.
-- `hostname`: Passed via `specialArgs` for networking and secrets.
+- `custom.hostname`: The system hostname, set via module options in each host's `modules.nix`.
 - `impermanence`: A boolean special arg to enable/disable persistence logic.
-
-Refer to [special args docs](./special-args.md) for more information.
 
 Set `custom.user` in your host configuration:
 
@@ -94,11 +92,12 @@ In your `flake.nix`:
       system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
-        hostname = "myhost";
         impermanence = false;
       };
       modules = [
+        {_module.args.hostName = "myhost";}
         ./configuration.nix
+        nixos-config.nixosModules.hostname
         nixos-config.nixosModules.audio
         nixos-config.nixosModules.theme
       ];

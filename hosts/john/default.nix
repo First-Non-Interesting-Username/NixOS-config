@@ -10,7 +10,6 @@ in {
     specialArgs = {
       inherit self inputs;
       inherit Hostname;
-      hostname = Hostname;
       gitName = "ISO-User";
       gitEmail = "iso@nixos.local";
       width = 1920;
@@ -18,6 +17,7 @@ in {
       impermanence = false;
     };
     modules = [
+      {_module.args.hostName = Hostname;}
       ./configuration.nix
       ./modules.nix
       self.nixosModules.audio
@@ -26,6 +26,7 @@ in {
       self.nixosModules.iso-graphical
       self.nixosModules.GNOME
       self.nixosModules.home-manager
+
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
@@ -42,7 +43,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          hostname = Hostname;
         };
       }
     ];

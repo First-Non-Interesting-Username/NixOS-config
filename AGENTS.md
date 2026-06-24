@@ -113,6 +113,15 @@ Each NixOS module MUST follow this pattern (based on `modules/configuration/temp
 }
 ```
 
+### Hostname Convention
+
+The `hostname` specialArg is NO LONGER used. Instead:
+
+1. Each host's `default.nix` sets `_module.args.hostName` to the hostname string.
+2. Each host's `modules.nix` sets `custom.hostname = hostName;` (sourced from `_module.args.hostName`).
+3. The `self.nixosModules.hostname` module reads `config.custom.hostname` to set `networking.hostName`.
+4. All other modules access the hostname via `config.custom.hostname` instead of the old `hostname` specialArg.
+
 ### Conventions
 
 Documents follow the conventions in `CONVENTIONS.md`:
@@ -205,3 +214,12 @@ Description rules:
 ---
 
 Last modified by deepseek-v4-flash-free, 24.06.2026
+
+## Migration Notes
+
+### 2026-06-24: hostname specialArg replaced with `config.custom.hostname`
+
+The `hostname` specialArg was removed from all hosts. The canonical way to access the hostname
+in modules is now `config.custom.hostname`. Each host sets this via `_module.args.hostName`
+in `default.nix` and `custom.hostname = hostName;` in `modules.nix`. See Hostname Convention
+above for details.

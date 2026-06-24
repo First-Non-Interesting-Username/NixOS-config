@@ -1,8 +1,8 @@
 _: {
   flake = {
     nixosModules.update = {
-      hostname,
       pkgs,
+      config,
       ...
     }: {
       programs.nh = {
@@ -31,7 +31,7 @@ _: {
             ExecStart = pkgs.writeShellScript "upgrade" ''
               set -e
               ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
-                --flake "github:First-Non-Interesting-Username/NixOS-config#${hostname}" \
+                --flake "github:First-Non-Interesting-Username/NixOS-config#${config.custom.hostname}" \
                 -L
             '';
           };
