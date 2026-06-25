@@ -36,7 +36,14 @@ jobs:
 
       - name: Run Nix Fixes and Formatters
         run: |
-          nix run nixpkgs#deadnix -- --edit .
+          nix run nixpkgs#deadnix -- --edit --exclude \
+            modules/configuration/template.nix \
+            modules/nixos/template.nix \
+            hosts/template/configuration.nix \
+            hosts/template/_default.nix \
+            hosts/template/disko.nix \
+            hosts/template/hardware.nix \
+            hosts/template/modules.nix
           nix run nixpkgs#statix -- fix . \
             --ignore "modules/configuration/template.nix" \
             --ignore "hosts/template" \
