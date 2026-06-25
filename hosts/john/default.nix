@@ -21,14 +21,12 @@ in {
       self.nixosModules.iso-graphical
       self.nixosModules.GNOME
       self.nixosModules.home-manager
-
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
       self.nixosModules.power
       self.nixosModules.terminal
       self.nixosModules.secretless-git
-      self.nixosModules.shell
       self.nixosModules.ssh-debug
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
