@@ -59,9 +59,14 @@ _: {
           };
         };
 
-        programs.zsh.initContent = ''
-          export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
-        '';
+        programs = {
+          zsh.initContent = ''
+            export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
+          '';
+          nushell.extraEnv = ''
+            $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
+          '';
+        };
 
         home.shellAliases = {
           commit = "git add . && git commit -m";

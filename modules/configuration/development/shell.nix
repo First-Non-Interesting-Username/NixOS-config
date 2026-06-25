@@ -230,17 +230,13 @@
 
         home = {
           packages = with pkgs; [
-            trash-cli
             ugrep
-            ripgrep
             shell-gpt
             devenv
           ];
           shellAliases = {
             cat = "bat --style=plain --pager=never";
             igrep = "ug -Q";
-            tp = "trash-put";
-            tl = "trash-list";
             te = "trash-empty";
             bin = "nc termbin.com 9999";
           };

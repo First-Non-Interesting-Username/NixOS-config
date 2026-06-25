@@ -75,12 +75,18 @@
           };
         };
         home-manager.users.${config.custom.user.name} = _: {
-          # Temporary, will be changed with nushell
-          programs.zsh.initContent = ''
-            if [[ $PWD == $HOME ]]; then
+          programs = {
+            zsh.initContent = ''
+              if [[ $PWD == $HOME ]]; then
+                  cd ~/persist
+              fi
+            '';
+            nushell.extraConfig = ''
+              if $env.PWD == $env.HOME {
                 cd ~/persist
-            fi
-          '';
+              }
+            '';
+          };
         };
       };
     };
