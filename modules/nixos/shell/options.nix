@@ -1,11 +1,6 @@
 {self, ...}: {
   flake = {
-    nixosModules.shell = {
-      lib,
-      pkgs,
-      config,
-      ...
-    }: {
+    nixosModules.shell = {lib, ...}: {
       imports = [self.nixosModules.nushell self.nixosModules.shell-programs self.nixosModules.zsh];
       options.custom.shell = {
         enable = lib.mkEnableOption "shell config";

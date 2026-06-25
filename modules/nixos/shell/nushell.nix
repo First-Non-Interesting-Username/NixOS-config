@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.nushell = {
       lib,
@@ -25,13 +25,7 @@
         users.users.${config.custom.user.name}.shell = pkgs.nushell;
         environment.shells = [pkgs.nushell];
 
-        home-manager.users.${config.custom.user.name} = {
-          pkgs,
-          config,
-          ...
-        }: {
-
-
+        home-manager.users.${config.custom.user.name} = _: {
           programs = {
             nushell = {
               enable = true;

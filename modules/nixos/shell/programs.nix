@@ -2,17 +2,10 @@
   flake = {
     nixosModules.shell-programs = {
       lib,
-      pkgs,
       config,
       ...
     }: let
       cfg = config.custom.shell;
-      shell =
-        if cfg.name == "nushell"
-        then "Nushell"
-        else if cfg.name == "zsh"
-        then "Zsh"
-        else null;
     in {
       config = lib.mkIf cfg.enable {
         environment.persistence = lib.mkIf config.custom.impermanence.enable {
@@ -43,11 +36,7 @@
           });
         '';
 
-        home-manager.users.${config.custom.user.name} = {
-          pkgs,
-          config,
-          ...
-        }: {
+        home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
           imports = [
             inputs.nix-index-database.homeModules.nix-index
           ];
