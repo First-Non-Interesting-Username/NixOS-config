@@ -37,8 +37,6 @@ _: {
                 def copypath [] {
                   $env.PWD | wl-copy
                 }
-
-                fastfetch
               '';
             };
 
