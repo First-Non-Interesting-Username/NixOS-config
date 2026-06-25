@@ -14,9 +14,6 @@
         then "Zsh"
         else null;
     in {
-      imports = [
-        inputs.nix-index-database.homeModules.nix-index
-      ];
       config = lib.mkIf cfg.enable {
         environment.persistence = lib.mkIf config.custom.impermanence.enable {
           "/persist" = {

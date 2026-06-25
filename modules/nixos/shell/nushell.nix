@@ -23,7 +23,7 @@
         };
 
         users.users.${config.custom.user.name}.shell = pkgs.nushell;
-        programs.nushell.enable = true;
+        environment.shells = [pkgs.nushell];
 
         home-manager.users.${config.custom.user.name} = {
           pkgs,
@@ -53,7 +53,7 @@
             atuin = {enableNushellIntegration = true;};
             eza = {enableNushellIntegration = true;};
             zoxide = {enableNushellIntegration = true;};
-            tealdeer = {enableNushellIntegration = true;};
+            # tealdeer = {enableNushellIntegration = true;};
             television = {enableNushellIntegration = true;};
             pay-respects = {enableNushellIntegration = true;};
             yazi = {enableNushellIntegration = true;};

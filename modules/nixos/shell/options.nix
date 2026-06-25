@@ -10,7 +10,7 @@
       options.custom.shell = {
         enable = lib.mkEnableOption "shell config";
         name = lib.mkOption {
-          type = lib.types.nullOr lib.types.enum ["nushell" "zsh"];
+          type = lib.types.nullOr (lib.types.enum ["nushell" "zsh"]);
           default = null;
           example = "nushell";
           description = "Name of the shell to be enabled and configured";
