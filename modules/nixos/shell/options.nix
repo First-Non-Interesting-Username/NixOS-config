@@ -9,7 +9,7 @@
       imports = [self.nixosModules.nushell self.nixosModules.shell-programs self.nixosModules.zsh];
       options.custom.shell = {
         enable = lib.mkEnableOption "shell config";
-        type = lib.mkOption {
+        name = lib.mkOption {
           type = lib.types.nullOr lib.types.enum ["nushell" "zsh"];
           default = null;
           example = "nushell";
