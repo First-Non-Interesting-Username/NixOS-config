@@ -23,9 +23,6 @@ jobs:
       - name: Generate package-list.md
         run: |
           READMES=(
-            "packages/wrappers/btop/README.md"
-            "packages/wrappers/fastfetch/README.md"
-            "packages/wrappers/foot/README.md"
             "packages/shell-scripts/sops-easy/README.md"
           )
 

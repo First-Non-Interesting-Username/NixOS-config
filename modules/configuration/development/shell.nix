@@ -119,6 +119,92 @@
           bat.enable = true;
 
           fd.enable = true;
+
+          btop = {
+            enable = true;
+            settings = {vim_keys = true;};
+          };
+
+          fastfetch = {
+            enable = true;
+            settings = {
+              display = {
+                separator = "  ";
+                color = "blue";
+              };
+              modules = [
+                {
+                  type = "title";
+                  key = "";
+                  color = {
+                    user = "blue";
+                    at = "white";
+                    host = "blue";
+                  };
+                }
+                {
+                  type = "os";
+                  key = "󱄅";
+                }
+                {
+                  type = "kernel";
+                  key = "";
+                }
+                {
+                  type = "uptime";
+                  key = "󰅐";
+                }
+                "break"
+                {
+                  type = "board";
+                  key = "󱩊";
+                }
+                {
+                  type = "cpu";
+                  key = "";
+                }
+                {
+                  type = "gpu";
+                  key = "󰢮";
+                }
+                {
+                  type = "memory";
+                  key = "";
+                  format = "{1} / {2}";
+                }
+                {
+                  type = "disk";
+                  key = "󰋊";
+                  format = "{1} / {2} ({9})";
+                }
+                {
+                  type = "display";
+                  key = "󰍹";
+                }
+                "break"
+                {
+                  type = "de";
+                  key = "󰧨";
+                }
+                {
+                  type = "wm";
+                  key = "";
+                }
+                {
+                  type = "shell";
+                  key = "";
+                }
+                {
+                  type = "terminal";
+                  key = "";
+                }
+                {
+                  type = "packages";
+                  key = "󰏖";
+                }
+              ];
+            };
+          };
         };
 
         home = {
@@ -126,8 +212,6 @@
             trash-cli
             ugrep
             ripgrep
-            self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
-            self.packages.${pkgs.stdenv.hostPlatform.system}.btop
             shell-gpt
             devenv
           ];

@@ -16,7 +16,27 @@
       };
 
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
-        home.packages = [self.packages.${pkgs.stdenv.hostPlatform.system}.foot];
+        programs.foot = {
+          enable = true;
+          settings = {
+            csd = {
+              size = 0;
+            };
+            scrollback = {
+              multiplier = 5.0;
+            };
+            bell = {
+              urgent = false;
+              notify = false;
+              visual = false;
+            };
+            cursor = {
+              style = "beam";
+              blink = true;
+              blink-rate = 15000;
+            };
+          };
+        };
       };
     };
   };

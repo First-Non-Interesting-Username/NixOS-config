@@ -76,21 +76,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    git-hooks-nix = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-wrapper-modules = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixflix = {
       url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -114,8 +99,6 @@
         (inputs.import-tree ./packages)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-environment)
-        inputs.git-hooks-nix.flakeModule
-        inputs.nix-wrapper-modules.flakeModules.wrappers
       ];
     };
 }
