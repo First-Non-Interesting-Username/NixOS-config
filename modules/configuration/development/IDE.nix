@@ -46,6 +46,7 @@ _: {
             ];
 
             userSettings = {
+              vim_mode = false;
               lsp = {
                 nil = {
                   initialization_options = {
