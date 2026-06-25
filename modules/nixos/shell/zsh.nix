@@ -1,4 +1,4 @@
-{...}: {
+_: {
   flake = {
     nixosModules.zsh = {
       lib,
@@ -24,12 +24,7 @@
         users.users.${config.custom.user.name}.shell = pkgs.zsh;
         programs.zsh.enable = true;
 
-        home-manager.users.${config.custom.user.name} = {
-          pkgs,
-          config,
-          ...
-        }: {
-
+        home-manager.users.${config.custom.user.name} = {config, ...}: {
           programs = {
             zsh = {
               enable = true;

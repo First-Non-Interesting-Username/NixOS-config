@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   flake = {
     nixosModules.terminal = {
       lib,
@@ -15,7 +15,7 @@
         };
       };
 
-      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = _: {
         programs.foot = {
           enable = true;
           settings = {
