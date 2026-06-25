@@ -67,10 +67,6 @@ _: {
             $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
           '';
         };
-
-        home.shellAliases = {
-          commit = "git add . && git commit -m";
-        };
       };
     };
     nixosModules.secretless-git = {
