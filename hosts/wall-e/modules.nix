@@ -4,7 +4,7 @@
   hostName,
   ...
 }: {
-  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix self.nixosModules.impermanence];
+  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix self.nixosModules.impermanence self.nixosModules.shell];
 
   custom = {
     user = {
@@ -23,5 +23,9 @@
       };
     };
     impermanence.enable = false;
+    shell = {
+      enable = true;
+      name = "nushell";
+    };
   };
 }
