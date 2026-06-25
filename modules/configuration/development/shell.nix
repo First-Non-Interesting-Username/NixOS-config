@@ -205,6 +205,27 @@
               ];
             };
           };
+
+          yazi = {
+            enable = true;
+            enableZshIntegration = true;
+          };
+          nix-your-shell = {
+            enable = true;
+            enableZshIntegration = true;
+          };
+          broot = {
+            enable = true;
+            enableZshIntegration = true;
+          };
+          fzf = {
+            enable = true;
+            enableZshIntegration = true;
+          };
+          carapace = {
+            enable = true;
+            enableZshIntegration = true;
+          };
         };
 
         home = {
@@ -217,7 +238,7 @@
           ];
           shellAliases = {
             cat = "bat --style=plain --pager=never";
-            igrep = "ug -t";
+            igrep = "ug -Q";
             tp = "trash-put";
             tl = "trash-list";
             te = "trash-empty";
