@@ -213,7 +213,7 @@ Description rules:
 
 ---
 
-Last modified by deepseek-v4-flash-free, 24.06.2026
+Last modified by nvidia/nemotron-3-super-120b-a12b, 25.06.2026
 
 ## Migration Notes
 
