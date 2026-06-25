@@ -25,7 +25,6 @@ in {
       self.nixosModules.networking-server
       self.nixosModules.nix
       self.nixosModules.secrets
-      self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.ssh-server
       self.nixosModules.update

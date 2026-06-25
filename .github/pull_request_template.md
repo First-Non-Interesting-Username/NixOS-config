@@ -1,19 +1,19 @@
 ## Description
 
-<!-- What does this change do? -->
+ <!-- What does this change do? 
 
-## Motivation
+ ## Motivation
 
-<!-- Why is this change needed? -->
+ Why is this change needed? 
 
 ## Changes
 
-- <!-- List the changes made -->
+- List the changes made -->
 
-## Fixes
+<!-- ## Fixes
 
-- fixes #123
-- fixes #234
+-  fixes #123
+- fixes #234 -->
 
 ## Checklist
 

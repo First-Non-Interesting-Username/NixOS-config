@@ -3,6 +3,7 @@
   inputs,
   ...
 }: let
+  # Change to your hostname
   Hostname = "YOUR_HOSTNAME";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {

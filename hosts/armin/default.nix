@@ -34,7 +34,6 @@ in {
       self.nixosModules.printing
       self.nixosModules.programs-desktop
       self.nixosModules.secrets
-      self.nixosModules.shell
       self.nixosModules.ssh
       self.nixosModules.terminal
       self.nixosModules.update

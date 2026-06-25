@@ -23,7 +23,6 @@ in {
       self.nixosModules.nix
       self.nixosModules.power
       self.nixosModules.secretless-git
-      self.nixosModules.shell
       self.nixosModules.ssh-debug
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
