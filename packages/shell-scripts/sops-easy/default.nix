@@ -7,7 +7,7 @@ _: {
         KEY=/etc/ssh/ssh_host_ed25519_key
       fi
 
-      SOPS_AGE_KEY=$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i $KEY | tail -1)
+      export SOPS_AGE_KEY=$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i $KEY | tail -1)
 
       ${pkgs.sops}/bin/sops "$@"
     '';
