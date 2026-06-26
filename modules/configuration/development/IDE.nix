@@ -44,6 +44,7 @@ _: {
             ];
 
             userSettings = {
+              disable_ai = true;
               lsp = {
                 nil = {
                   initialization_options = {
