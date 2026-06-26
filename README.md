@@ -54,65 +54,6 @@ modules = [
 
 For detailed instructions on internal and external usage, see the [Usage Guide](./docs/usage.md).
 
-## Docs
-
-### Modules
-
-- [Applications](./modules/configuration/applications/README.md)
-- [Desktop](./modules/configuration/desktop/README.md)
-- [Development](./modules/configuration/development/README.md)
-- [Home](./modules/configuration/home/README.md)
-- [Services](./modules/configuration/services/README.md)
-- [System](./modules/configuration/system/README.md)
-- [User](./modules/configuration/user/README.md)
-
-For the full list, go [here](./docs/module-list.md).
-
-If you want to use those modules outside this flake, go to [Usage Guide](./docs/usage.md).
-
-### Packages
-
-For the list of the packages go [here](./docs/package-list.md).
-
-If you want to use those packages outside this flake, go to [Usage Guide](./docs/usage.md).
-
-### Installation Guides
-
-Go to the [installation guides overview](./docs/install-guides.md) to select the guide that fits your situation best.
-
-Remember to choose a host before installing.
-
-### Host creation guide
-
-Host creation guide is avalible [here](./docs/host-guide.md)
-
-### Secrets
-
-Go [here](./secrets/README.md).
-
-Be aware that you need to add your own keys and replace the secrets with yours.
-This is not a trivial task, I recommend using secretless modules.
-
-## Eye candy stuff
-
-### Star History Chart
-
-<a href="https://www.star-history.com/?repos=First-Non-Interesting-Username%2FNixOS-config&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=First-Non-Interesting-Username/NixOS-config&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=First-Non-Interesting-Username/NixOS-config&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=First-Non-Interesting-Username/NixOS-config&type=date&legend=top-left" />
- </picture>
-</a>
-
-### Screenshots
-
-Armin:
-<img width="1920" height="1080" alt="Screenshot from GNOME desktop" src="https://github.com/user-attachments/assets/28443716-6298-4538-929d-ccd03d0ed6a4" />
-
-Iroh:
-<img width="1332" height="927" alt="Screenshot of a NoVNC console " src="https://github.com/user-attachments/assets/ee8d8d41-70ba-48e2-b30a-a3792e2ebfd3" />
-
 ## Footnote
 
 ### Inspired by:
