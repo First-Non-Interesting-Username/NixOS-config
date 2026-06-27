@@ -9,6 +9,12 @@
     enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+      framework-tool
+      framework-tool-tui
+    ];
+
+
   services = {
     scx = {
       enable = true;
