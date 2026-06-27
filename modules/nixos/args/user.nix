@@ -55,6 +55,7 @@ _: {
               "render"
               "gamemode"
               "input"
+              "kvm"
             ];
             inherit (cfg) hashedPasswordFile;
             inherit (cfg) hashedPassword;

@@ -16,6 +16,8 @@ _: {
               ".config/containers"
               ".local/share/distrobox"
               ".local/share/applications/"
+              ".lima"
+              ".cache/lima"
             ];
           };
         };
@@ -33,6 +35,7 @@ _: {
       ];
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
+          lima
           distroshelf
         ];
         programs = {
