@@ -14,6 +14,7 @@ in {
       {_module.args.hostName = Hostname;}
       ./modules.nix
       ./hardware.nix
+      self.nixosModules.agents
       self.nixosModules.audio
       self.nixosModules.bootloader
       self.nixosModules.browser
@@ -29,7 +30,6 @@ in {
       self.nixosModules.nasClient
       self.nixosModules.networking-desktop
       self.nixosModules.nix
-      self.nixosModules.opencode
       self.nixosModules.power
       self.nixosModules.printing
       self.nixosModules.programs-desktop

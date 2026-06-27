@@ -84,6 +84,8 @@
       url = "github:First-Non-Interesting-Username/NixOS-config/main";
       flake = false;
     };
+
+    llm-agents = { url = "github:numtide/llm-agents.nix";};
   };
 
   outputs = inputs:
