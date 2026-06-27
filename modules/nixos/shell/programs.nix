@@ -37,11 +37,11 @@
         '';
 
         systemd = {
-            tmpfiles.rules = [
-              "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
-              "L+ /bin/sh - - - - ${pkgs.bash}/bin/sh"
-            ];
-          };
+          tmpfiles.rules = [
+            "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
+            "L+ /bin/sh - - - - ${pkgs.bash}/bin/sh"
+          ];
+        };
 
         home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
           imports = [
