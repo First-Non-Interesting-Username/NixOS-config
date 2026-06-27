@@ -16,6 +16,8 @@ _: {
       services = {
         upower.enable = true;
         power-profiles-daemon.enable = true;
+        # Here, because it helps to reduce power usage
+        irqbalance.enable = true;
       };
     };
   };
