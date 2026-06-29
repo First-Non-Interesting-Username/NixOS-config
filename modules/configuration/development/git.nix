@@ -133,11 +133,11 @@ _: {
                 email = "local@local.local";
               };
             };
-          };
+
           git = {
             push-bookmark-automatically = true;
             default-branch = "main";
-          };
+          }; };
 
           gh = {
             enable = true;
