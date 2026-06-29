@@ -37,9 +37,7 @@
     supportedFilesystems = ["btrfs"];
     kernelParams = [
       "nohibernate"
-      "mem_sleep_default=deep"
       "amd_pstate=active"
-      "nvme.noacpi=1"
     ];
     kernelPackages = pkgs.linuxPackages_zen;
   };
