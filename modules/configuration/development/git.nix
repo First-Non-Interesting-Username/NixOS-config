@@ -132,18 +132,18 @@ _: {
                 name = "local";
                 email = "local@local.local";
               };
-              git = {
-                push-bookmark-automatically = true;
-                default-branch = "main";
-              };
+            };
+          };
+          git = {
+            push-bookmark-automatically = true;
+            default-branch = "main";
+          };
 
-              gh = {
-                enable = true;
-                settings = {
-                  git_protocol = "ssh";
-                  prompt = "enabled";
-                };
-              };
+          gh = {
+            enable = true;
+            settings = {
+              git_protocol = "ssh";
+              prompt = "enabled";
             };
           };
         };
