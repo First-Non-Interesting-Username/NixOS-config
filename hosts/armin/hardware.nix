@@ -21,6 +21,7 @@
       scheduler = "scx_bpfland";
     };
     system76-scheduler.enable = true;
+    fprintd.enable = true;
   };
 
   hardware = {
