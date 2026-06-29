@@ -1,0 +1,39 @@
+{...}: {
+  flake = {
+    nixosModules.smart = {
+      lib,
+      config,
+      pkgs,
+      ...
+    }: {
+      environment = {
+        persistence = lib.mkIf config.custom.impermanence.enable {
+          "/persist" = {
+            directories =
+              lib.filter (
+                d: let
+                  dir =
+                    if builtins.isString d
+                    then d
+                    else d.directory;
+                in
+                  !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
+              ) [
+                "/var/lib/smartmontools"
+              ];
+          };
+        };
+        systemPackages = with pkgs; [smartmontools];
+      };
+
+      services.smartd = {
+        enable = true;
+        notifications = {
+          systembus-notify.enable = true;
+          wall.enable = true;
+        };
+        defaults = "-a -s (S/../.././02)";
+      };
+    };
+  };
+}

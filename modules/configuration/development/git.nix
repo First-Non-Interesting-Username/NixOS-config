@@ -53,7 +53,7 @@ _: {
           gh = {
             enable = true;
             settings = {
-              git_protocol = "ssh";
+              git_protocol = "https";
               prompt = "enabled";
             };
           };
@@ -79,10 +79,6 @@ _: {
           nushell.extraEnv = ''
             $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
           '';
-        };
-
-        home.shellAliases = {
-          commit = "git add . && git commit -m";
         };
       };
     };
