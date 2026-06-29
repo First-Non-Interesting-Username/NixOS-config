@@ -25,6 +25,9 @@ _: {
             heartbeat_rate_limit_seconds = 30
           '';
           path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
+          owner = config.custom.user.name;
+          group = config.custom.user.name;
+          mode = "0444"
         };
       };
 
