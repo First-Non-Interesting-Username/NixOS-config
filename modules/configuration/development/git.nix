@@ -66,12 +66,11 @@ _: {
               user = {
                 name = "First-Non-Interesting-Username";
                 email = "janekmusin@proton.me";
-              };
 
               git = {
                 push-bookmark-automatically = true;
                 default-branch = "main";
-              };
+              }; };
             };
           };
           zsh.initContent = lib.mkIf config.programs.zsh.enable ''
@@ -132,12 +131,12 @@ _: {
                 name = "local";
                 email = "local@local.local";
               };
-            };
+
 
           git = {
             push-bookmark-automatically = true;
             default-branch = "main";
-          }; };
+          }; }; };
 
           gh = {
             enable = true;
