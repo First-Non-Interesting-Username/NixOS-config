@@ -20,6 +20,7 @@ in {
       self.nixosModules.browser
       self.nixosModules.direnv
       self.nixosModules.flatpak
+      self.nixosModules.gaming
       self.nixosModules.git
       self.nixosModules.GNOME
       self.nixosModules.home-manager

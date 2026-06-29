@@ -47,6 +47,7 @@ _: {
             ];
 
             userSettings = {
+              vim_mode = false;
               disable_ai = true;
               lsp = {
                 nil = {

@@ -58,6 +58,19 @@ _: {
             };
           };
         };
+        jujutsu = {
+          enable = true;
+
+          settings = {
+            user = {
+              name = "First-Non-Interesting-Username";
+              email = "janekmusin@proton.me";
+            };
+
+            git = {
+              push-bookmark-automatically = true;
+              default-branch = "main";
+            };
 
         programs = {
           zsh.initContent = ''
@@ -110,6 +123,17 @@ _: {
               pull.rebase = true;
             };
           };
+          jujutsu = {
+            enable = true;
+            settings = {
+              user = {
+                name = "local";
+                email = "local@local.local";
+              };
+              git = {
+                push-bookmark-automatically = true;
+                default-branch = "main";
+              };
           gh = {
             enable = true;
             settings = {

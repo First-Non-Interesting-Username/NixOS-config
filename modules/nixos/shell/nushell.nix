@@ -37,16 +37,12 @@ _: {
                 def copypath [] {
                   $env.PWD | wl-copy
                 }
-
-                fastfetch
               '';
             };
 
             nix-index = {enableNushellIntegration = true;};
             starship = {enableNushellIntegration = true;};
             atuin = {enableNushellIntegration = true;};
-            eza = {enableNushellIntegration = true;};
-            zoxide = {enableNushellIntegration = true;};
             # tealdeer = {enableNushellIntegration = true;};
             television = {enableNushellIntegration = true;};
             pay-respects = {enableNushellIntegration = true;};
