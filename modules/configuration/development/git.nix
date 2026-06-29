@@ -32,6 +32,7 @@ _: {
       home-manager.users.${config.custom.user.name} = {
         pkgs,
         osConfig,
+        config,
         ...
       }: {
         home.packages = with pkgs; [onefetch];
@@ -57,96 +58,96 @@ _: {
               prompt = "enabled";
             };
           };
-        };
-        jujutsu = {
-          enable = true;
 
-          settings = {
-            user = {
-              name = "First-Non-Interesting-Username";
-              email = "janekmusin@proton.me";
-            };
+          jujutsu = {
+            enable = true;
 
-            git = {
-              push-bookmark-automatically = true;
-              default-branch = "main";
+            settings = {
+              user = {
+                name = "First-Non-Interesting-Username";
+                email = "janekmusin@proton.me";
+              };
+
+              git = {
+                push-bookmark-automatically = true;
+                default-branch = "main";
+              };
             };
           };
-        };
-        zsh.initContent = lib.mkIf config.programs.zsh.enable ''
-          export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
-        '';
-        nushell.extraEnv = lib.mkIf config.programs.zsh.enable ''
-          $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
-        '';
-      };
-    };
-
-  nixosModules.secretless-git = {
-    pkgs,
-    lib,
-    config,
-    ...
-  }: {
-    environment.persistence = lib.mkIf config.custom.impermanence.enable {
-      "/persist" = {
-        users.${config.custom.user.name} = {
-          directories = [
-            ".config/git"
-            ".config/gh"
-          ];
+          zsh.initContent = lib.mkIf config.programs.zsh.enable ''
+            export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
+          '';
+          nushell.extraEnv = lib.mkIf config.programs.nushell.enable ''
+            $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
+          '';
         };
       };
     };
 
-    programs.git.enable = lib.mkForce false;
-
-    environment.systemPackages = with pkgs; [
-      git
-      gh
-    ];
-
-    home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
-      home.packages = with pkgs; [onefetch];
-      programs = {
-        git = {
-          enable = true;
-          settings = {
-            user = {
-              name = "local";
-              email = "local@local.local";
-            };
-            push = {
-              autoSetupRemote = true;
-            };
-            init.defaultBranch = "main";
-            pull.rebase = true;
+    nixosModules.secretless-git = {
+      pkgs,
+      lib,
+      config,
+      ...
+    }: {
+      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        "/persist" = {
+          users.${config.custom.user.name} = {
+            directories = [
+              ".config/git"
+              ".config/gh"
+            ];
           };
         };
-        jujutsu = {
-          enable = true;
-          settings = {
-            user = {
-              name = "local";
-              email = "local@local.local";
-            };
-            git = {
-              push-bookmark-automatically = true;
-              default-branch = "main";
-            };
+      };
 
-          gh = {
+      programs.git.enable = lib.mkForce false;
+
+      environment.systemPackages = with pkgs; [
+        git
+        gh
+      ];
+
+      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+        home.packages = with pkgs; [onefetch];
+        programs = {
+          git = {
             enable = true;
             settings = {
-              git_protocol = "ssh";
-              prompt = "enabled";
+              user = {
+                name = "local";
+                email = "local@local.local";
+              };
+              push = {
+                autoSetupRemote = true;
+              };
+              init.defaultBranch = "main";
+              pull.rebase = true;
             };
           };
-        }; };
-        home.shellAliases = {
-          commit = "git add . && git commit -m";
+          jujutsu = {
+            enable = true;
+            settings = {
+              user = {
+                name = "local";
+                email = "local@local.local";
+              };
+              git = {
+                push-bookmark-automatically = true;
+                default-branch = "main";
+              };
+
+              gh = {
+                enable = true;
+                settings = {
+                  git_protocol = "ssh";
+                  prompt = "enabled";
+                };
+              };
+            };
+          };
         };
       };
     };
-  }; };
+  };
 }

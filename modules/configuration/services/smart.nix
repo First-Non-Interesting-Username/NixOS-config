@@ -32,7 +32,7 @@
           systembus-notify.enable = true;
           wall.enable = true;
         };
-        defaults = "-a -s (S/../.././02)";
+        defaults.autodetected = "-a -s (S/../.././02)";
       };
     };
   };
