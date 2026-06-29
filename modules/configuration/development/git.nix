@@ -81,7 +81,7 @@ _: {
         '';
       };
     };
-  };
+
   nixosModules.secretless-git = {
     pkgs,
     lib,
@@ -134,7 +134,7 @@ _: {
               push-bookmark-automatically = true;
               default-branch = "main";
             };
-          };
+
           gh = {
             enable = true;
             settings = {
@@ -142,11 +142,11 @@ _: {
               prompt = "enabled";
             };
           };
-        };
+        }; };
         home.shellAliases = {
           commit = "git add . && git commit -m";
         };
       };
     };
-  };
+  }; };
 }
