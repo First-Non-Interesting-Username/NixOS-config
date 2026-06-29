@@ -27,7 +27,7 @@ _: {
           path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
           owner = config.custom.user.name;
           group = config.custom.user.name;
-          mode = "0444"
+          mode = "0444";
         };
       };
 
