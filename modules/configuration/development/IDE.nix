@@ -44,6 +44,7 @@ _: {
               nil
               alejandra
               marksman
+              wakatime-cli
             ];
 
             userSettings = {
@@ -93,6 +94,7 @@ _: {
         home.packages = with pkgs; [
           nil
           alejandra
+          wakatime-cli
         ];
 
         home.sessionVariables = {
