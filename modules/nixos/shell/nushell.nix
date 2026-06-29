@@ -38,15 +38,27 @@ _: {
                   $env.PWD | wl-copy
                 }
 
-                fastfetch
+                $env.TRANSIENT_PROMPT_COMMAND = { || starship module character }
+                $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
+                $env.TRANSIENT_PROMPT_INDICATOR = ""
+                $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = ""
+                $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = ""
+                $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
               '';
             };
 
             nix-index = {enableNushellIntegration = true;};
-            starship = {enableNushellIntegration = true;};
+            starship = {
+              enableNushellIntegration = true;
+              settings = {
+                add_newline = false;
+                character = {
+                  success_symbol = "[❯](bold green)";
+                  error_symbol = "[❯](bold red)";
+                };
+              };
+            };
             atuin = {enableNushellIntegration = true;};
-            eza = {enableNushellIntegration = true;};
-            zoxide = {enableNushellIntegration = true;};
             # tealdeer = {enableNushellIntegration = true;};
             television = {enableNushellIntegration = true;};
             pay-respects = {enableNushellIntegration = true;};

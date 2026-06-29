@@ -121,6 +121,8 @@
                 proton-pass
                 sponsorblock
                 violentmonkey
+                private-grammar-checker-harper
+                consent-o-matic
               ];
 
               settings = {

@@ -9,12 +9,18 @@
     enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    framework-tool
+    framework-tool-tui
+  ];
+
   services = {
     scx = {
       enable = true;
       scheduler = "scx_bpfland";
     };
     system76-scheduler.enable = true;
+    fprintd.enable = true;
   };
 
   hardware = {
@@ -30,9 +36,7 @@
     supportedFilesystems = ["btrfs"];
     kernelParams = [
       "nohibernate"
-      "mem_sleep_default=deep"
       "amd_pstate=active"
-      "nvme.noacpi=1"
     ];
     kernelPackages = pkgs.linuxPackages_zen;
   };

@@ -422,6 +422,7 @@
       };
 
       services = {
+        irqbalance.enable = true;
         redis = {
           package = pkgs.valkey;
           servers = {

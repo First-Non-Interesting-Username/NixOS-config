@@ -32,6 +32,7 @@ _: {
       home-manager.users.${config.custom.user.name} = {
         pkgs,
         osConfig,
+        config,
         ...
       }: {
         home.packages = with pkgs; [onefetch];
@@ -53,22 +54,35 @@ _: {
           gh = {
             enable = true;
             settings = {
-              git_protocol = "ssh";
+              git_protocol = "https";
               prompt = "enabled";
             };
           };
-        };
 
-        programs = {
-          zsh.initContent = ''
+          jujutsu = {
+            enable = true;
+
+            settings = {
+              user = {
+                name = "First-Non-Interesting-Username";
+                email = "janekmusin@proton.me";
+
+              git = {
+                push-bookmark-automatically = true;
+                default-branch = "main";
+              }; };
+            };
+          };
+          zsh.initContent = lib.mkIf config.programs.zsh.enable ''
             export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
           '';
-          nushell.extraEnv = ''
+          nushell.extraEnv = lib.mkIf config.programs.nushell.enable ''
             $env.GH_TOKEN = (open ${osConfig.sops.secrets.github_pat.path} | str trim)
           '';
         };
       };
     };
+
     nixosModules.secretless-git = {
       pkgs,
       lib,
@@ -110,6 +124,20 @@ _: {
               pull.rebase = true;
             };
           };
+          jujutsu = {
+            enable = true;
+            settings = {
+              user = {
+                name = "local";
+                email = "local@local.local";
+              };
+
+
+          git = {
+            push-bookmark-automatically = true;
+            default-branch = "main";
+          }; }; };
+
           gh = {
             enable = true;
             settings = {
@@ -117,9 +145,6 @@ _: {
               prompt = "enabled";
             };
           };
-        };
-        home.shellAliases = {
-          commit = "git add . && git commit -m";
         };
       };
     };

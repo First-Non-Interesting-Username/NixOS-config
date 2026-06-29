@@ -3,6 +3,7 @@
     nixosModules.shell-programs = {
       lib,
       config,
+      pkgs,
       ...
     }: let
       cfg = config.custom.shell;
@@ -36,10 +37,21 @@
           });
         '';
 
+        systemd = {
+          tmpfiles.rules = [
+            "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
+          ];
+        };
+
         home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
           imports = [
             inputs.nix-index-database.homeModules.nix-index
           ];
+
+          home.sessionVariables = {
+            PAGER = "${pkgs.bat}/bin/bat";
+            MANPAGER = "sh -c 'col --no-backspaces --spaces | ${pkgs.bat}/bin/bat --language man'";
+          };
 
           programs = {
             nix-index-database.comma = {enable = true;};
@@ -79,7 +91,13 @@
               enable = true;
             };
 
-            bat = {enable = true;};
+            bat = {
+              enable = true;
+              extraPackages = with pkgs.bat-extras; [batdiff batgrep batman batwatch prettybat];
+              config = {
+                style = "plain";
+              };
+            };
 
             fd = {enable = true;};
 
