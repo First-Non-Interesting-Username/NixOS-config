@@ -10,10 +10,9 @@
   };
 
   environment.systemPackages = with pkgs; [
-      framework-tool
-      framework-tool-tui
-    ];
-
+    framework-tool
+    framework-tool-tui
+  ];
 
   services = {
     scx = {

@@ -3,6 +3,7 @@
     nixosModules.shell-programs = {
       lib,
       config,
+      pkgs,
       ...
     }: let
       cfg = config.custom.shell;
@@ -39,7 +40,6 @@
         systemd = {
           tmpfiles.rules = [
             "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
-            "L+ /bin/sh - - - - ${pkgs.bash}/bin/sh"
           ];
         };
 
