@@ -37,6 +37,7 @@ in {
       self.nixosModules.secrets
       self.nixosModules.smart
       self.nixosModules.ssh
+      self.nixosModules.sudo
       self.nixosModules.terminal
       self.nixosModules.update
       self.nixosModules.virtualization-desktop

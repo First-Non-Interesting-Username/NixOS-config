@@ -28,6 +28,7 @@ in {
       self.nixosModules.terminal
       self.nixosModules.secretless-git
       self.nixosModules.ssh-debug
+      self.nixosModules.sudo
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {
