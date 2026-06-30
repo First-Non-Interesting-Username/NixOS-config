@@ -27,16 +27,6 @@
           };
         };
 
-        security.polkit.extraConfig = ''
-          polkit.addRule(function(action, subject) {
-            if (subject.isInGroup("wheel")) {
-              if (action.id.indexOf("org.nixos.") == 0 || action.id.indexOf("org.freedesktop.systemd1.") == 0) {
-                return polkit.Result.AUTH_ADMIN_KEEP;
-              }
-            }
-          });
-        '';
-
         systemd = {
           tmpfiles.rules = [
             "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
