@@ -1,15 +1,21 @@
 _: {
   perSystem = {pkgs, ...}: {
-    packages.sops-easy = pkgs.writeShellScriptBin "sops-easy" ''
+    packages.sops-easy = pkgs.writeShellApplication  {
+      name = "sops-easy";
+      runtimeInputs = with pkgs;
+      [sops
+        ssh-to-age];
+      text = ''
       if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
         KEY=/persist/etc/ssh/ssh_host_ed25519_key
       else
         KEY=/etc/ssh/ssh_host_ed25519_key
       fi
 
-      export SOPS_AGE_KEY=$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i $KEY | tail -1)
+      SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$KEY" | tail -1)
+      export SOPS_AGE_KEY
 
-      ${pkgs.sops}/bin/sops "$@"
-    '';
+      sops "$@"
+    ''};
   };
 }
