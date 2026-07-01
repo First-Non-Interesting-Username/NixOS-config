@@ -31,5 +31,9 @@
       enable = true;
       name = "nushell";
     };
+    DE = {
+      enable = true;
+      type = "gnome";
+    };
   };
 }
