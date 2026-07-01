@@ -125,7 +125,7 @@
                 gtk-enable-primary-paste = false;
                 gtk-key-theme = "Default";
                 accent-color = "slate";
-                show-battery-percentage = "true";
+                show-battery-percentage = true;
               };
               "org/gnome/desktop/peripherals/keyboard" = {
                 numlock-state = false;
