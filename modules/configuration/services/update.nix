@@ -4,7 +4,9 @@ _: {
       pkgs,
       config,
       ...
-    }: {
+    }: let
+      flakeRef = "github:First-Non-Interesting-Username/NixOS-config/main#${config.custom.hostname}";
+    in {
       programs.nh = {
         enable = true;
         clean = {
@@ -12,7 +14,10 @@ _: {
           enable = true;
           extraArgs = "--keep-since 7d --keep 10";
         };
-        flake = "github:First-Non-Interesting-Username/NixOS-config";
+        flake = flakeRef;
+      };
+      environment.variables = {
+        NH_OS_FLAKE = flakeRef;
       };
       nix = {
         optimise = {
@@ -31,7 +36,7 @@ _: {
             ExecStart = pkgs.writeShellScript "upgrade" ''
               set -e
               ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
-                --flake "github:First-Non-Interesting-Username/NixOS-config#${config.custom.hostname}" \
+                --flake flakeRef \
                 -L
             '';
           };
