@@ -1,21 +1,23 @@
 _: {
   perSystem = {pkgs, ...}: {
-    packages.sops-easy = pkgs.writeShellApplication  {
+    packages.sops-easy = pkgs.writeShellApplication {
       name = "sops-easy";
-      runtimeInputs = with pkgs;
-      [sops
-        ssh-to-age];
+      runtimeInputs = with pkgs; [
+        sops
+        ssh-to-age
+      ];
       text = ''
-      if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
-        KEY=/persist/etc/ssh/ssh_host_ed25519_key
-      else
-        KEY=/etc/ssh/ssh_host_ed25519_key
-      fi
+        if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
+          KEY=/persist/etc/ssh/ssh_host_ed25519_key
+        else
+          KEY=/etc/ssh/ssh_host_ed25519_key
+        fi
 
-      SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$KEY" | tail -1)
-      export SOPS_AGE_KEY
+        SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$KEY" | tail -1)
+        export SOPS_AGE_KEY
 
-      sops "$@"
-    ''};
+        sops "$@"
+      '';
+    };
   };
 }

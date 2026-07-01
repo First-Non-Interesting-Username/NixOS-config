@@ -115,6 +115,7 @@
                 vitals
                 vicinae
                 hide-cursor
+                gradia-capture
               ]
             );
           };
