@@ -2,7 +2,6 @@
   flake = {
     nixosModules.DE = {
       lib,
-      pkgs,
       config,
       ...
     }: let

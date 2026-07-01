@@ -1,8 +1,7 @@
-{...}: {
+_: {
   flake = {
     nixosModules.DE-programs = {
       lib,
-      pkgs,
       config,
       ...
     }: let
