@@ -1,10 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.sudo = {
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.sudo = _: {
       security = {
         sudo.enable = false;
         sudo-rs.enable = true;
