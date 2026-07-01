@@ -41,6 +41,13 @@
           xserver.enable = true;
           desktopManager.gnome.enable = true;
           displayManager.gdm.enable = true;
+          gnome = {
+            sushi.enable = true;
+            gnome-software.enable = false;
+            gnome-initial-setup.enable = false;
+            games.enable = false;
+            core-developer-tools.enable = false;
+          };
         };
 
         stylix.targets = {
@@ -49,34 +56,10 @@
         environment.gnome.excludePackages = with pkgs; [
           gnome-tour
           orca
-          snapshot
-          yelp
-          gnome-software
-          aisleriot
-          atomix
-          five-or-more
-          four-in-a-row
-          gnome-2048
-          gnome-klotski
-          gnome-mahjongg
-          gnome-nibbles
-          gnome-robots
-          gnome-sudoku
-          gnome-taquin
-          gnome-tetravex
-          hitori
-          iagno
-          lightsoff
-          quadrapassel
-          swell-foop
-          tali
-          dconf-editor
-          devhelp
-          d-spy
-          gnome-builder
-          sysprof
-          gnome-user-docs
           epiphany
+          gnome-system-monitor
+          gnome-tecla
+          gnome-software
         ];
 
         xdg.portal = {
@@ -162,7 +145,7 @@
               "org/gnome/desktop/wm/preferences" = {
                 button-layout = "appmenu:minimize,maximize,close";
                 resize-with-right-button = true;
-                focus-mode = "sloppy";
+                focus-mode = "click";
                 auto-raise = false;
               };
               "org/gnome/desktop/wm/keybindings" = {

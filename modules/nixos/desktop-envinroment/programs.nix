@@ -20,7 +20,7 @@
                 (lib.mkIf (cfg.systemMonitor == "gnome") [pkgs.mission-center])
                 (lib.mkIf (cfg.textEditor == "gnome") [pkgs.gnome-text-editor])
                 (lib.mkIf (cfg.imageViewer == "gnome") [pkgs.loupe])
-                (lib.mkIf (cfg.paintingApp == "gnome") [pkgs.rnote])
+                (lib.mkIf (cfg.paintingApp == "gnome") [pkgs.pinta])
                 (lib.mkIf (cfg.calculator == "gnome") [pkgs.gnome-calculator])
                 (lib.mkIf (cfg.characterSelector == "gnome") [pkgs.gnome-characters])
                 (lib.mkIf (cfg.isoWriter == "gnome") [pkgs.impression])
