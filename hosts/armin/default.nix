@@ -19,7 +19,6 @@ in {
       self.nixosModules.bootloader
       self.nixosModules.browser
       self.nixosModules.DE
-      self.nixosModules.direnv
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git

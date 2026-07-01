@@ -195,11 +195,13 @@
             ripgrep = {
               enable = true;
             };
+            devenv = {
+              enable = true;
+            };
           };
           home = {
             packages = with pkgs; [
               ugrep
-              devenv
             ];
             shellAliases = {
               cat = "bat --style=plain --pager=never";

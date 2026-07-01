@@ -61,6 +61,7 @@ _: {
             broot = {enableZshIntegration = true;};
             fzf = {enableZshIntegration = true;};
             carapace = {enableZshIntegration = true;};
+            devenv = {enableZshIntegration = true;};
           };
         };
       };
