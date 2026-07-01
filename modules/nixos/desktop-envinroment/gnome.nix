@@ -97,7 +97,6 @@
                   vitals
                   vicinae
                   hide-cursor
-                  gradia-capture
                   tiling-shell
                 ]
               );

@@ -36,7 +36,7 @@
     };
     DE = {
       enable = true;
-      type = "gnome";
+      name = "gnome";
     };
   };
 }

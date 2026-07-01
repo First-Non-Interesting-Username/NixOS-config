@@ -99,7 +99,6 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
-        (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./desktop-environment)
       ];
     };
 }

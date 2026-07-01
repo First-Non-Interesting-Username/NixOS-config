@@ -9,6 +9,7 @@
       desktopEnvType = lib.types.nullOr (lib.types.enum [
         "gnome"
         #"plasma"
+        "blank"
       ]);
       functionalities = [
         "fileManager"
@@ -49,7 +50,7 @@
           name:
             lib.mkOption {
               type = desktopEnvType;
-              default = lib.mkDefault cfg.name;
+              default = cfg.name;
               example = "gnome";
               description = ''
                 Which desktop-environment-specific utility to use for "${name}".
