@@ -67,6 +67,7 @@ _: {
             broot = {enableNushellIntegration = true;};
             fzf = {enableNushellIntegration = true;};
             carapace = {enableNushellIntegration = true;};
+            devenv = {enableNushellIntegration = true;};
           };
         };
       };

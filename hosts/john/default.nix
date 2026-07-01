@@ -17,17 +17,17 @@ in {
       ./modules.nix
       self.nixosModules.audio
       self.nixosModules.browser
+      self.nixosModules.DE
       self.nixosModules.input
       self.nixosModules.iso-graphical
-      self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.locale
       self.nixosModules.networking-minimal
       self.nixosModules.nix
       self.nixosModules.power
-      self.nixosModules.terminal
       self.nixosModules.secretless-git
       self.nixosModules.ssh-debug
+      self.nixosModules.sudo
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {

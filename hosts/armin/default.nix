@@ -18,11 +18,10 @@ in {
       self.nixosModules.audio
       self.nixosModules.bootloader
       self.nixosModules.browser
-      self.nixosModules.direnv
+      self.nixosModules.DE
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git
-      self.nixosModules.GNOME
       self.nixosModules.home-manager
       self.nixosModules.IDE
       self.nixosModules.input
@@ -37,7 +36,7 @@ in {
       self.nixosModules.secrets
       self.nixosModules.smart
       self.nixosModules.ssh
-      self.nixosModules.terminal
+      self.nixosModules.sudo
       self.nixosModules.update
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland

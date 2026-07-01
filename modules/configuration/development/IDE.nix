@@ -44,6 +44,7 @@ _: {
               nil
               alejandra
               marksman
+              wakatime-cli
             ];
 
             userSettings = {
@@ -84,7 +85,6 @@ _: {
                   };
                 };
               };
-
               format_on_save = "on";
             };
           };
@@ -93,6 +93,7 @@ _: {
         home.packages = with pkgs; [
           nil
           alejandra
+          wakatime-cli
         ];
 
         home.sessionVariables = {

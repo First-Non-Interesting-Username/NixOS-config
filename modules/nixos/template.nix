@@ -10,6 +10,11 @@
     in {
       options.custom.CHANGEME = {
         # Create options here
+        # Each option should have:
+        # - type
+        # - default
+        # - example
+        # - description
       };
 
       config = {
