@@ -194,7 +194,7 @@
               "org/gnome/shell" = {
                 favorite-apps = [
                   "firefox.desktop"
-                  "ptyxis.desktop"
+                  "org.gnome.Ptyxis.desktop"
                   "org.gnome.Nautilus.desktop"
                 ];
               };

@@ -56,13 +56,6 @@
 
     hexecute.url = "github:ThatOtherAndrew/Hexecute";
 
-    vicinae.url = "github:vicinaehq/vicinae";
-
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -78,11 +71,6 @@
     nixflix = {
       url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-config = {
-      url = "github:First-Non-Interesting-Username/NixOS-config/main";
-      flake = false;
     };
 
     llm-agents = {url = "github:numtide/llm-agents.nix";};
