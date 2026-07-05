@@ -1,11 +1,50 @@
 _: {
   flake = {
-    nixosModules.DE-programs = {
+    nixosModules.DE-programs-gnome = {
       lib,
       config,
       ...
     }: let
       cfg = config.custom.DE.programs;
+
+      c = config.lib.stylix.colors.withHashtag;
+      normal = {
+        Color0 = c.base00;
+        Color1 = c.base08;
+        Color2 = c.base0B;
+        Color3 = c.base0A;
+        Color4 = c.base0D;
+        Color5 = c.base0E;
+        Color6 = c.base0C;
+        Color7 = c.base05;
+      };
+
+      bright = {
+        Color8 = c.base03;
+        Color9 = c.base08;
+        Color10 = c.base0B;
+        Color11 = c.base0A;
+        Color12 = c.base0D;
+        Color13 = c.base0E;
+        Color14 = c.base0C;
+        Color15 = c.base07;
+      };
+
+      fg_bg = {
+        Foreground = c.base05;
+        Background = c.base00;
+      };
+
+      status = {
+        BellForeground = c.base00;
+        BellBackground = c.base0A;
+        RemoteForeground = c.base05;
+        RemoteBackground = c.base0D;
+        SuperuserForeground = c.base00;
+        SuperuserBackground = c.base08;
+      };
+
+      palette = fg_bg // normal // bright // status;
     in {
       config = lib.mkIf config.custom.DE.enable {
         home-manager.users.${config.custom.user.name} = {pkgs, ...}:
@@ -34,7 +73,17 @@ _: {
 
               programs = lib.mkMerge [
                 (lib.mkIf (cfg.terminalEmulator == "gnome") {
-                  ptyxis.enable = true;
+                  ptyxis = {
+                    palettes = {
+                      stylix = {
+                        Palette.Name = "Stylix";
+
+                        Light = palette;
+                        Dark = palette;
+                      };
+                    };
+                    enable = true;
+                  };
                 })
               ];
             }
