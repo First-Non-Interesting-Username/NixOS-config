@@ -295,7 +295,7 @@
               };
               "org/gnome/shell/keybindings" = {
                 screenshot = [];
-                show-screenshot-ui = ["<Shift>Print"];
+                show-screenshot-ui = [];
               };
               "org/gnome/settings-daemon/plugins/media-keys" = {
                 screensaver = ["<Super>p"];
@@ -312,6 +312,11 @@
                 binding = "<Super>e";
                 command = "xdg-open .";
                 name = "File Manager";
+              };
+              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/gradia" = {
+                binding = "<Shift>Print";
+                command = "${pkgs.gradia}/bin/gradia";
+                name = "Screenshot";
               };
               "org/gnome/settings-daemon/plugins/media-keys" = {
                 custom-keybindings = [
