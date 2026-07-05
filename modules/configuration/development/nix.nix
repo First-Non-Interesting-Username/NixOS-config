@@ -1,4 +1,4 @@
-{inputs, ...}: {
+_: {
   flake = {
     nixosModules.nix = {
       lib,
@@ -54,8 +54,6 @@
       };
 
       programs.nix-ld.enable = true;
-
-      environment.etc."nixos".source = inputs.nixos-config;
     };
   };
 }
