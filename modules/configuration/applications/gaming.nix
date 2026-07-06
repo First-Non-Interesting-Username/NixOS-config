@@ -23,6 +23,12 @@ _: {
         home.activation.createGboxDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
           mkdir -p "${config.home.homeDirectory}/homes/Gbox"
         '';
+
+        systemd.user.services.distrobox-home-manager = {
+                Unit = {
+                  After = ["network-online.target"];
+                  Wants = ["network-online.target"];
+                };
         programs.distrobox = {
           settings = {
             container_manager = "podman";
@@ -37,7 +43,7 @@ _: {
               root = false;
               start_now = false;
               exported_apps = "steam lutris protonup-qt prismlauncher";
-              init_hooks = "/usr/local/prism-instance-bootstrap.sh";
+              init_hooks = "/usr/local/bin/prism-instance-bootstrap.sh";
               home = "${config.home.homeDirectory}/homes/Gbox";
             };
           };

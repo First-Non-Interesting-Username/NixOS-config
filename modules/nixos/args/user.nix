@@ -46,6 +46,7 @@ _: {
             uid = 1000;
             group = cfg.name;
             home = "/home/${cfg.name}";
+            homeMode = "751";
             description = cfg.name;
             extraGroups = [
               "wheel"
