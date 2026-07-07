@@ -24,24 +24,25 @@
       "esbenp.prettier-vscode"
       "wakatime.vscode-wakatime"
     ];
+  };
 
-    files.".zed/settings.json".json = {
-      languages.Nix = {
-        language_servers = [
-          "nixd"
-          "!nil"
-        ];
-        formatter = {
-          external = {
-            command = "alejandra";
-            arguments = [
-              "--quiet"
-              "--"
-            ];
-          };
+  files.".zed/settings.json".json = {
+    languages.Nix = {
+      language_servers = [
+        "nixd"
+        "!nil"
+      ];
+      formatter = {
+        external = {
+          command = "alejandra";
+          arguments = [
+            "--quiet"
+            "--"
+          ];
         };
       };
     };
+  };
 
   git-hooks.hooks = {
     alejandra.enable = true;

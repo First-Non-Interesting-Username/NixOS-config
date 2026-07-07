@@ -6,9 +6,9 @@
       ...
     }: {
       services.kmscon = {
-          enable = true;
-          hwRender = true;
-        };
+        enable = true;
+        hwRender = true;
+      };
     };
   };
 }

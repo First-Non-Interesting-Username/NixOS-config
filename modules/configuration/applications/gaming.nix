@@ -25,10 +25,11 @@ _: {
         '';
 
         systemd.user.services.distrobox-home-manager = {
-                Unit = {
-                  After = ["network-online.target"];
-                  Wants = ["network-online.target"];
-                };
+          Unit = {
+            After = ["network-online.target"];
+            Wants = ["network-online.target"];
+          };
+        };
         programs.distrobox = {
           settings = {
             container_manager = "podman";
@@ -38,7 +39,7 @@ _: {
           enable = true;
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome:20260704";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260707";
               init = false;
               root = false;
               start_now = false;
