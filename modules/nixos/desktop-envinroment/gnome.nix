@@ -322,6 +322,7 @@
                 custom-keybindings = [
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
+                  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/gradia/"
                 ];
               };
             };
