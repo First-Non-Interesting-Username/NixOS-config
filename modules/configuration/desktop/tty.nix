@@ -1,10 +1,6 @@
-{...}: {
+_: {
   flake = {
-    nixosModules.tty = {
-      lib,
-      config,
-      ...
-    }: {
+    nixosModules.tty = _: {
       services.kmscon = {
         enable = true;
         config.hwaccel = true;
