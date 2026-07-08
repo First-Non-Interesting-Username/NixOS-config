@@ -62,6 +62,7 @@ _: {
             fzf = {enableZshIntegration = true;};
             carapace = {enableZshIntegration = true;};
             devenv = {enableZshIntegration = true;};
+            direnv = {enableZshIntegration = true;};
           };
         };
       };

@@ -68,6 +68,7 @@ _: {
             fzf = {enableNushellIntegration = true;};
             carapace = {enableNushellIntegration = true;};
             devenv = {enableNushellIntegration = true;};
+            direnv = {enableNushellIntegration = true;};
           };
         };
       };
