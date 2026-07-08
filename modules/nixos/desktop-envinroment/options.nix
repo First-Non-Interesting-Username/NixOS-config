@@ -35,7 +35,7 @@
     in {
       imports = [
         self.nixosModules.GNOME
-        self.nixosModules.DE-programs
+        self.nixosModules.DE-programs-gnome
       ];
       options.custom.DE = {
         enable = lib.mkEnableOption "DE configuration";

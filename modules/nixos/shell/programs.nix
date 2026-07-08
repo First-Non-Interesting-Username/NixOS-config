@@ -22,6 +22,7 @@
                 ".cache/yazi"
                 ".cache/carapace"
                 ".config/carapace"
+                ".local/share/direnv"
               ];
             };
           };
@@ -188,6 +189,7 @@
             };
             fzf = {
               enable = true;
+              historyWidget.command = "";
             };
             carapace = {
               enable = true;
@@ -196,6 +198,10 @@
               enable = true;
             };
             devenv = {
+              enable = true;
+            };
+            direnv = {
+              nix-direnv.enable = true;
               enable = true;
             };
           };

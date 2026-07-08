@@ -29,6 +29,7 @@ in {
       self.nixosModules.ssh
       self.nixosModules.ssh-server
       self.nixosModules.sudo
+      self.nixosModules.tty
       self.nixosModules.update
       self.nixosModules.virtualization-server
       self.nixosModules.xdg

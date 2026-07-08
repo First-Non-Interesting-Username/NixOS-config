@@ -39,7 +39,7 @@ _: {
 
           zed-editor = {
             enable = true;
-            extensions = ["nix" "markdown-snippets" "marksman" "wakatime"];
+            extensions = ["nix" "markdown-snippets" "marksman" "hackatime"];
             extraPackages = with pkgs; [
               nil
               alejandra
@@ -50,6 +50,69 @@ _: {
             userSettings = {
               vim_mode = false;
               disable_ai = true;
+              tabs = {
+                file_icons = true;
+                git_status = true;
+              };
+              tab_bar = {
+                show = true;
+              };
+              title_bar = {
+                show_menus = false;
+                show_user_menu = true;
+                show_sign_in = false;
+                show_branch_name = true;
+                show_branch_status_icon = false;
+              };
+              diagnostics = {
+                button = true;
+              };
+              status_bar = {
+                line_endings_button = false;
+                cursor_position_button = true;
+                active_language_button = true;
+              };
+              file_finder = {
+                file_icons = true;
+              };
+              search = {
+                button = true;
+                regex = true;
+              };
+              middle_click_paste = false;
+              show_whitespaces = "selection";
+              toolbar = {
+                agent_review = false;
+                selections_menu = true;
+                quick_actions = true;
+                breadcrumbs = true;
+              };
+              minimap = {
+                thumb = "always";
+                show = "auto";
+              };
+              autoscroll_on_clicks = true;
+              autosave = "on_focus_change";
+              auto_update = false;
+              default_open_behavior = "new_window";
+              prettier = {
+                allowed = true;
+              };
+              cli_default_open_behavior = "new_window";
+              project_panel = {
+                folder_icons = true;
+                file_icons = true;
+                default_width = 240.0;
+                button = true;
+                dock = "left";
+              };
+              outline_panel = {
+                dock = "left";
+              };
+              collaboration_panel = {
+                dock = "left";
+              };
+
               lsp = {
                 nil = {
                   initialization_options = {
@@ -85,7 +148,6 @@ _: {
                   };
                 };
               };
-              format_on_save = "on";
             };
           };
         };

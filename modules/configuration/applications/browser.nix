@@ -87,9 +87,24 @@
               isDefault = true;
 
               search = {
-                default = "ddg";
+                default = "Startpage";
                 force = true;
+
                 engines = {
+                  "Startpage" = {
+                    urls = [
+                      {
+                        template = "https://www.startpage.com/sp/search";
+                        params = [
+                          {
+                            name = "query";
+                            value = "{searchTerms}";
+                          }
+                        ];
+                      }
+                    ];
+                    definedAliases = ["@sp" "@startpage"];
+                  };
                   "NixOS Packages" = {
                     urls = [{template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";}];
                     icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";

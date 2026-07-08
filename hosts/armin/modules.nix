@@ -22,6 +22,7 @@
       image = {
         width = "2256";
         height = "1504";
+        enable = true;
       };
       base16Scheme = "gruvbox-dark";
       icons = {

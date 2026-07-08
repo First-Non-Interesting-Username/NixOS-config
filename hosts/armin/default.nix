@@ -37,6 +37,7 @@ in {
       self.nixosModules.smart
       self.nixosModules.ssh
       self.nixosModules.sudo
+      self.nixosModules.tty
       self.nixosModules.update
       self.nixosModules.virtualization-desktop
       self.nixosModules.wayland
