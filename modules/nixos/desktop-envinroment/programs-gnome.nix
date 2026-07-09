@@ -107,7 +107,7 @@
             })
 
             (lib.mkIf (cfg.chess == "gnome") {
-              home.packages = [pkgs.gnome-chess];
+              home.packages = with pkgs; [gnome-chess gnuchess];
             })
 
             (lib.mkIf (cfg.whiteboard == "gnome") {

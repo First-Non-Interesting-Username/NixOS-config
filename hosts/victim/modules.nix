@@ -10,8 +10,8 @@
   custom = {
     stylix = {
       image = {
-        width = "2256";
-        height = "1504";
+        width = "2560";
+        height = "1440";
       };
     };
   };
