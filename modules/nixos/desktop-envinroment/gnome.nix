@@ -315,7 +315,7 @@
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/gradia" = {
                 binding = "<Shift>Print";
-                command = "${pkgs.gradia}/bin/gradia";
+                command = "${pkgs.gradia}/bin/gradia  --screenshot=INTERACTIVE";
                 name = "Screenshot";
               };
               "org/gnome/settings-daemon/plugins/media-keys" = {
