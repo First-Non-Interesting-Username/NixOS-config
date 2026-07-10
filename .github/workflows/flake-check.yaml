@@ -27,6 +27,8 @@ jobs:
         with:
           extra-conf: |
             experimental-features = nix-command flakes pipe-operators
+            extra-substituters = https://attic.xuyh0120.win/lantian https://cache.numtide.com
+            extra-trusted-public-keys = lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
 
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
