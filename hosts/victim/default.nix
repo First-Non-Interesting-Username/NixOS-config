@@ -26,7 +26,6 @@ in {
       self.nixosModules.IDE
       self.nixosModules.input
       self.nixosModules.locale
-      self.nixosModules.kernel-desktop
       self.nixosModules.moonlight
       self.nixosModules.nasClient
       self.nixosModules.networking-desktop
