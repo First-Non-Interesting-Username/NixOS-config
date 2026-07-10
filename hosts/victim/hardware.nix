@@ -34,7 +34,10 @@
       "amd_pstate=active"
       "mem_sleep_default=deep"
     ];
+    kernelPackages = pkgs.cachyosKernels.linux-cachyos-bore-lto-zen4;
   };
+
+  nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
 
   system.stateVersion = "26.11";
 
