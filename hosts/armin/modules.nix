@@ -1,10 +1,4 @@
-{
-  pkgs,
-  config,
-  self,
-  hostName,
-  ...
-}: {
+{...}: {
   imports = [../common/desktop-modules.nix];
 
   custom = {
