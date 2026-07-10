@@ -34,7 +34,7 @@
       "amd_pstate=active"
       "mem_sleep_default=deep"
     ];
-    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-zen4;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
   };
 
   nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
