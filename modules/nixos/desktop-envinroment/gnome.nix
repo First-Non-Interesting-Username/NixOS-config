@@ -53,6 +53,7 @@
         stylix.targets = {
           gnome.enable = true;
         };
+
         environment.gnome.excludePackages = with pkgs; [
           gnome-tour
           orca
@@ -203,7 +204,7 @@
                 menu-button-icon-image = 23;
                 menu-button-icon-size = 20;
                 menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
-                menu-button-terminal = "${pkgs.ptyxis}/bin/ptyxis";
+                menu-button-terminal = "${pkgs.ptyxis}/bin/ptyxis --new-window";
                 show-activities-button = true;
                 show-gamemode = true;
                 show-lockscreen = true;
@@ -305,7 +306,7 @@
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
                 binding = "<Super>Return";
-                command = "${pkgs.ptyxis}/bin/ptyxis";
+                command = "${pkgs.ptyxis}/bin/ptyxis --new-window";
                 name = "Terminal";
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {
