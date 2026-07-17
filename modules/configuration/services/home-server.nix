@@ -345,7 +345,7 @@
 
           up-snap = {
             # renovate: versioning=docker
-            image = "ghcr.io/seriousm4x/upsnap:5.4.2";
+            image = "ghcr.io/seriousm4x/upsnap:5.4.3";
             environment = {
               TZ = "Europe/Warsaw";
               UPSNAP_PING_PRIVILEGED = "true";
