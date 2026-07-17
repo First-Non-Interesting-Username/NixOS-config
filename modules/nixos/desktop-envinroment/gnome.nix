@@ -69,7 +69,11 @@
           ];
         };
 
-        home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+        home-manager.users.${config.custom.user.name} = {
+          pkgs,
+          lib,
+          ...
+        }: {
           home.packages = with pkgs; [
             mission-center
           ];
