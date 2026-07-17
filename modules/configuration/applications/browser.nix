@@ -132,12 +132,12 @@
 
               extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
                 ublock-origin
-                vimium
                 proton-pass
                 sponsorblock
                 violentmonkey
                 private-grammar-checker-harper
                 consent-o-matic
+                lichess-tools-by-siderite
               ];
 
               settings = {
