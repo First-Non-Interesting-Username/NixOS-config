@@ -5,7 +5,7 @@ _: {
       config,
       ...
     }: {
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories =
             lib.filter (
@@ -41,7 +41,7 @@ _: {
       config,
       ...
     }: {
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories = [
             "/var/lib/nfs"

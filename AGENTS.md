@@ -83,11 +83,10 @@ Each NixOS module MUST follow this pattern (based on `modules/configuration/temp
       pkgs,
       lib,
       config,
-      impermanence,
       ...
     }: {
-      imports = lib.optional impermanence {
-        environment.persistence."/persist" = {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
+        "/persist" = {
           directories = [];
           files = [];
           users.${config.custom.user.name} = {

@@ -4,11 +4,11 @@
 
 - Enables Limine bootloader and sets it up according to my preferences.
 
-## nixosModules.impermanence
+## nixosModules.preservation
 
-Special args: impermanence (required for impermanence to function, true/false)
+Configured via `custom.preservation.enable`.
 
-- Enables impermanence. Make sure your system is prepared for it.
+- Enables preservation. Make sure your system is prepared for it.
 
 ## nixosModules.kernel-laptop
 

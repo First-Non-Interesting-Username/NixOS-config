@@ -16,8 +16,8 @@
   - [1. Boot and Prepare](#1-boot-and-prepare)
   - [2. Prepare Host SSH Keys](#2-prepare-host-ssh-keys)
   - [3. Run the Installation](#3-run-the-installation)
-    - [For hosts WITHOUT impermanence](#for-hosts-without-impermanence)
-    - [For hosts WITH impermanence](#for-hosts-with-impermanence)
+    - [For hosts WITHOUT preservation](#for-hosts-without-preservation)
+    - [For hosts WITH preservation](#for-hosts-with-preservation)
   - [4. Post Install](#4-post-install)
 
 # Prerequisites
@@ -60,7 +60,7 @@ Replace `HOSTNAME` with your chosen host from the `hosts/` directory.
 > [!TIP]
 > **Overriding the Disk**: If your `disko.nix` uses a placeholder or you want to target a different drive than what is defined in the config, you can append `--disk <name> /dev/disk/by-id/your-id` to the command. `<name>` is the name given to the disk in your Nix configuration (usually `main`, `root`, etc.).
 
-### For hosts WITHOUT impermanence
+### For hosts WITHOUT preservation
 
 ```bash
 nix run github:nix-community/disko/latest#disko-install -- \
@@ -70,7 +70,7 @@ nix run github:nix-community/disko/latest#disko-install -- \
   --write-efi-boot-entries
 ```
 
-### For hosts WITH impermanence
+### For hosts WITH preservation
 
 ```bash
 nix run github:nix-community/disko/latest#disko-install -- \

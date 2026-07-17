@@ -102,12 +102,11 @@ Secrets: secret_name, ...
 
 #### Special Args
 
-When creating or changing a module, you MUST mention all required special args, except for `impermanence`.
+When creating or changing a module, you MUST mention all required special args.
 Special args are passed to the module via the flake and are required for the module to function.
 Common special args include:
 
 - `hostname` - Required for modules that need host-specific configuration or secrets.
-- `impermanence` - Optional, enables persistence configuration.
 
 Use `config.custom.user.name` instead of a `username` special arg to reference the user name.
 

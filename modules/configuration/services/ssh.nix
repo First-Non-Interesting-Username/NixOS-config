@@ -6,7 +6,7 @@ _: {
       ...
     }: let
       sshDir =
-        if config.custom.impermanence.enable
+        if config.custom.preservation.enable
         then "/persist"
         else "";
     in {
@@ -34,7 +34,7 @@ _: {
         path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519.pub";
       };
 
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
@@ -107,7 +107,7 @@ _: {
         ];
       };
 
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           users.${config.custom.user.name} = {
             directories = [

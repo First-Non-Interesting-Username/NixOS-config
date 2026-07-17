@@ -5,7 +5,13 @@
   hostName,
   ...
 }: {
-  imports = [self.nixosModules.user self.nixosModules.hostname self.nixosModules.stylix self.nixosModules.impermanence self.nixosModules.shell];
+  imports = [
+    self.nixosModules.user
+    self.nixosModules.hostname
+    self.nixosModules.stylix
+    self.nixosModules.preservation
+    self.nixosModules.shell
+  ];
   sops.secrets."sudo_password/${config.custom.hostname}" = {
     neededForUsers = true;
   };
@@ -25,7 +31,7 @@
         name = "MoreWaita";
       };
     };
-    impermanence.enable = true;
+    preservation.enable = true;
     shell = {
       enable = true;
       name = "nushell";
