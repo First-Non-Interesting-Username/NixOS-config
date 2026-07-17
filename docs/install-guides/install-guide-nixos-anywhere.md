@@ -87,15 +87,15 @@ All commands in this section MUST be executed on the **Source**.
 
 ### 2.1 Create the temporary directory
 
-Depending on whether your host uses **impermanence** or not, the directory structure for extra files differs.
+Depending on whether your host uses **preservation** or not, the directory structure for extra files differs.
 
-**For hosts WITHOUT impermanence:**
+**For hosts WITHOUT preservation:**
 
 ```bash
 mkdir -p ./tmp/etc/ssh
 ```
 
-**For hosts WITH impermanence:**
+**For hosts WITH preservation:**
 
 ```bash
 mkdir -p ./tmp/persist/etc/ssh
@@ -109,7 +109,7 @@ If you haven't generated them yet, see [Step 8 of the Host creation guide](../ho
 
 ### 2.3 Set correct permissions
 
-**For hosts WITHOUT impermanence:**
+**For hosts WITHOUT preservation:**
 
 ```bash
 sudo chown -R root:root ./tmp/etc/ssh
@@ -117,7 +117,7 @@ sudo chmod 600 ./tmp/etc/ssh/ssh_host_ed25519_key
 sudo chmod 644 ./tmp/etc/ssh/ssh_host_ed25519_key.pub
 ```
 
-**For hosts WITH impermanence:**
+**For hosts WITH preservation:**
 
 ```bash
 sudo chown -R root:root ./tmp/persist/etc/ssh

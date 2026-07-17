@@ -95,7 +95,7 @@
             })
 
             (lib.mkIf (cfg.musicPlayer == "gnome") {
-              home.packages = [pkgs.gnome-music];
+              home.packages = [pkgs.gnome-music pkgs.monophony];
             })
 
             (lib.mkIf (cfg.matrixClient == "gnome") {

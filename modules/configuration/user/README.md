@@ -15,4 +15,4 @@ Configured via `custom.user` options (provided by `modules/nixos/args/user.nix`)
 
 ## nixosModules.xdg
 
-- Creates xdg directories, with location based on impermanence enablement
+- Creates xdg directories, with location based on preservation enablement

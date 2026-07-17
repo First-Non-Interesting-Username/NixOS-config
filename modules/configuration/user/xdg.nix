@@ -5,7 +5,7 @@ _: {
       config,
       ...
     }: {
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
@@ -22,7 +22,7 @@ _: {
         ...
       }: let
         homeBase =
-          if osConfig.custom.impermanence.enable
+          if osConfig.custom.preservation.enable
           then "${config.home.homeDirectory}/persist"
           else config.home.homeDirectory;
       in {

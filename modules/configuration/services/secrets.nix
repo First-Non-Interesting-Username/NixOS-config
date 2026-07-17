@@ -14,7 +14,7 @@
         inputs.sops-nix.nixosModules.sops
       ];
 
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories = lib.filter (
             d: let
@@ -41,7 +41,7 @@
       sops = {
         defaultSopsFile = "${self}/secrets/secrets.yaml";
         age =
-          if config.custom.impermanence.enable
+          if config.custom.preservation.enable
           then {
             generateKey = false;
             sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];

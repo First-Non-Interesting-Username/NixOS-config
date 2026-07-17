@@ -12,7 +12,7 @@
         self.nixosModules.wayland
       ];
       config = lib.mkIf cfg.enable {
-        environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
           "/persist" = {
             directories = [
               "/var/lib/gdm"
@@ -20,7 +20,6 @@
             users.${config.custom.user.name} = {
               directories = [
                 ".local/share/keyrings"
-                ".local/share/recently-used"
                 ".local/share/nautilus"
                 ".config/goa-1.0"
                 ".cache/tracker3"
@@ -53,6 +52,7 @@
         stylix.targets = {
           gnome.enable = true;
         };
+
         environment.gnome.excludePackages = with pkgs; [
           gnome-tour
           orca
@@ -69,7 +69,11 @@
           ];
         };
 
-        home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+        home-manager.users.${config.custom.user.name} = {
+          pkgs,
+          lib,
+          ...
+        }: {
           home.packages = with pkgs; [
             mission-center
           ];
@@ -95,7 +99,6 @@
                   launch-new-instance
                   logo-menu
                   vitals
-                  vicinae
                   hide-cursor
                   tiling-shell
                 ]
@@ -109,10 +112,10 @@
               "org/gnome/desktop/input-sources" = {
                 current = 0;
                 sources = [
-                  [
+                  (lib.hm.gvariant.mkTuple [
                     "xkb"
                     "pl"
-                  ]
+                  ])
                 ];
                 xkb-options = ["caps:swapescape"];
               };
@@ -203,7 +206,7 @@
                 menu-button-icon-image = 23;
                 menu-button-icon-size = 20;
                 menu-button-system-monitor = "${pkgs.mission-center}/bin/missioncenter";
-                menu-button-terminal = "${pkgs.ptyxis}/bin/ptyxis";
+                menu-button-terminal = "${pkgs.ptyxis}/bin/ptyxis --new-window";
                 show-activities-button = true;
                 show-gamemode = true;
                 show-lockscreen = true;
@@ -264,6 +267,9 @@
                 enabled = true;
                 missing-openssl = false;
               };
+              "org/gnome/shell/extensions/tilingshell" = {
+                outer-gaps = 0;
+              };
               "org/gnome/shell/weather" = {
                 automatic-location = true;
                 locations = [];
@@ -305,7 +311,7 @@
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
                 binding = "<Super>Return";
-                command = "${pkgs.ptyxis}/bin/ptyxis";
+                command = "${pkgs.ptyxis}/bin/ptyxis --new-window";
                 name = "Terminal";
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files" = {

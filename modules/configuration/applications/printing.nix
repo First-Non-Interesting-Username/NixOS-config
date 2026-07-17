@@ -6,7 +6,7 @@ _: {
       config,
       ...
     }: {
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories = [
             "/var/lib/cups"

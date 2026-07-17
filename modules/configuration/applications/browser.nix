@@ -5,7 +5,7 @@
       config,
       ...
     }: {
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           users.${config.custom.user.name} = {
             directories = [
@@ -100,6 +100,10 @@
                             name = "query";
                             value = "{searchTerms}";
                           }
+                          {
+                            name = "prfe";
+                            value = "43de26394a14001889a11b904e373f83b4833751e6bb6aaf1cb898ea811899be8de2ce9e000306e7e258ecb3a1c9eddb6705f30f6aa6441baa704f36c011fc8bfe68d3114b885135b412f73b4b16eaae";
+                          }
                         ];
                       }
                     ];
@@ -132,12 +136,12 @@
 
               extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
                 ublock-origin
-                vimium
                 proton-pass
                 sponsorblock
                 violentmonkey
                 private-grammar-checker-harper
                 consent-o-matic
+                lichess-tools-by-siderite
               ];
 
               settings = {

@@ -84,7 +84,7 @@ _: {
         '';
       };
 
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories = [
             "/etc/NetworkManager"
@@ -119,7 +119,7 @@ _: {
         powerOnBoot = true;
       };
 
-      environment.persistence = lib.mkIf config.custom.impermanence.enable {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories = [
             "/etc/NetworkManager"

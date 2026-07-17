@@ -9,7 +9,7 @@
       cfg = config.custom.shell;
     in {
       config = lib.mkIf cfg.enable {
-        environment.persistence = lib.mkIf config.custom.impermanence.enable {
+        preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
           "/persist" = {
             users.${config.custom.user.name} = {
               directories = [
