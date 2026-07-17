@@ -95,7 +95,6 @@
                   launch-new-instance
                   logo-menu
                   vitals
-                  vicinae
                   hide-cursor
                   tiling-shell
                 ]
@@ -263,6 +262,9 @@
                 devices = [];
                 enabled = true;
                 missing-openssl = false;
+              };
+              "org/gnome/shell/extensions/tilingshell" = {
+                outer-gaps = 0;
               };
               "org/gnome/shell/weather" = {
                 automatic-location = true;
