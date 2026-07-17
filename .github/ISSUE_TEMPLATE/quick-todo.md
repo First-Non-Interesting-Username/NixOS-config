@@ -1,5 +1,5 @@
 ---
-name: Todo / Task
+name: Quick Todo
 about: Something to improve, add, or clean up
 title: "[TODO] "
 labels: todo
