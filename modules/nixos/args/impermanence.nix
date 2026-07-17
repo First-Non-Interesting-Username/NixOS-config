@@ -49,6 +49,7 @@
             "/etc/adjtime"
             "/etc/ssh/ssh_host_ed25519_key"
             "/etc/ssh/ssh_host_ed25519_key.pub"
+            "/etc/machine-id"
           ];
 
           users.${config.custom.user.name} = {

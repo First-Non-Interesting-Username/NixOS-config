@@ -18,7 +18,7 @@
 
       environment.persistence = lib.mkIf config.custom.impermanence.enable {
         "/persist" = {
-          # directories = ["/var/lib"];
+          directories = ["/var/cache/netdata"];
         };
       };
 
