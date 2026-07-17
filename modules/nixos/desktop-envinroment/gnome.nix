@@ -20,7 +20,6 @@
             users.${config.custom.user.name} = {
               directories = [
                 ".local/share/keyrings"
-                ".local/share/recently-used"
                 ".local/share/nautilus"
                 ".config/goa-1.0"
                 ".cache/tracker3"
@@ -110,10 +109,10 @@
               "org/gnome/desktop/input-sources" = {
                 current = 0;
                 sources = [
-                  [
+                  (lib.hm.gvariant.mkTuple [
                     "xkb"
                     "pl"
-                  ]
+                  ])
                 ];
                 xkb-options = ["caps:swapescape"];
               };
