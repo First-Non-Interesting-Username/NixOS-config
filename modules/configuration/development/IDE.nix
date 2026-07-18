@@ -47,7 +47,7 @@
               alejandra
               marksman
               wakatime-cli
-              inputs.wakatime-ls.packages.${pkgs.stdenv.hostPlatform.system}.wakatime-ls
+              zed-wakatime-ls
             ];
 
             userSettings = {
