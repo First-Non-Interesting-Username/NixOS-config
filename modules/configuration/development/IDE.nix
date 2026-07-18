@@ -1,4 +1,4 @@
-_: {
+{inputs, ...}: {
   flake = {
     nixosModules.IDE = {
       lib,
@@ -10,6 +10,8 @@ _: {
           users.${config.custom.user.name} = {
             directories = [
               ".config/zed"
+              ".local/share/zed"
+              ".cache/zed"
             ];
           };
         };
@@ -45,9 +47,12 @@ _: {
               alejandra
               marksman
               wakatime-cli
+              inputs.wakatime-ls.packages.${pkgs.stdenv.hostPlatform.system}.wakatime-ls
             ];
 
             userSettings = {
+              restore_on_startup = "last_session";
+
               vim_mode = false;
               disable_ai = true;
               tabs = {

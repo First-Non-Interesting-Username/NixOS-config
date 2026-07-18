@@ -32,6 +32,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wakatime-ls = {
+      url = "github:mrnossiom/wakatime-ls";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     firefox-addons = {
@@ -73,7 +78,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    llm-agents = {url = "github:numtide/llm-agents.nix";};
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   outputs = inputs:

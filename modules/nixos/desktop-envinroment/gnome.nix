@@ -268,7 +268,7 @@
                 missing-openssl = false;
               };
               "org/gnome/shell/extensions/tilingshell" = {
-                outer-gaps = 0;
+                outer-gaps = lib.hm.gvariant.mkUint32 0;
               };
               "org/gnome/shell/weather" = {
                 automatic-location = true;
