@@ -404,7 +404,7 @@
 
           aiostreams = {
             # renovate: versioning=docker
-            image = "ghcr.io/viren070/aiostreams:v2.31.0";
+            image = "ghcr.io/viren070/aiostreams:v2.31.1";
             ports = ["127.0.0.1:4321:3000"];
             volumes = [
               "/var/lib/aiostreams/data:/app/data:U"
