@@ -3,6 +3,7 @@ _: {
     nixosModules.update = {
       pkgs,
       config,
+      lib,
       ...
     }: let
       flakeRef = "github:First-Non-Interesting-Username/NixOS-config/main#${config.custom.hostname}";
@@ -10,22 +11,35 @@ _: {
       programs.nh = {
         enable = true;
         clean = {
-          dates = "daily";
+          dates = "weekly";
           enable = true;
           extraArgs = "--keep-since 7d --keep 10";
         };
         flake = flakeRef;
       };
+
       environment.variables = {
         NH_OS_FLAKE = flakeRef;
       };
+
       nix = {
         optimise = {
           automatic = true;
           dates = "weekly";
         };
       };
+
       systemd = {
+        timers.nh-clean = lib.mkForce {
+          wantedBy = ["timers.target"];
+          timerConfig = {
+            OnBootSec = "30min";
+            RandomizedDelaySec = "30min";
+            OnCalendar = "weekly";
+            Persistent = false;
+          };
+        };
+
         services.nixos-upgrade = {
           description = "NixOS upgrade";
           requires = ["network-online.target"];
@@ -36,19 +50,20 @@ _: {
             ExecStart = pkgs.writeShellScript "upgrade" ''
               set -e
               ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
-                --flake flakeRef \
+                --flake ${flakeRef} \
                 -L
             '';
           };
         };
 
         timers.nixos-upgrade = {
-          description = "Run upgrade daily";
+          description = "Run upgrade on boot and weekly";
           wantedBy = ["timers.target"];
           timerConfig = {
-            OnCalendar = "02:00";
-            RandomizedDelaySec = "45min";
-            Persistent = true;
+            OnBootSec = "30min";
+            RandomizedDelaySec = "30min";
+            OnCalendar = "weekly";
+            Persistent = false;
           };
         };
       };
