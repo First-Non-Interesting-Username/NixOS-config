@@ -18,11 +18,18 @@
       config = lib.mkIf cfg.enable {
         boot = {
           initrd.systemd.enable = true;
-          tmp.cleanOnBoot = true;
+          tmp = {
+            useTmpfs = true;
+            cleanOnBoot = true;
+          };
         };
 
         systemd = {
           suppressedSystemUnits = ["systemd-machine-id-commit.service"];
+          services.systemd-machine-id-commit = {
+            unitConfig.ConditionPathIsMountPoint = ["" "/persist/etc/machine-id"];
+            serviceConfig.ExecStart = ["" "systemd-machine-id-setup --commit --root /persist"];
+          };
           tmpfiles.rules = [
             "d /persist/home/${config.custom.user.name} 0700 ${config.custom.user.name} users -"
           ];
@@ -46,7 +53,6 @@
                 "/var/lib/nixos"
                 "/var/lib/systemd"
                 "/var/log"
-                "/tmp"
                 "/var/lib/AccountsService"
               ];
 
@@ -65,6 +71,8 @@
               {
                 file = "/etc/machine-id";
                 inInitrd = true;
+                how = "symlink";
+                configureParent = true;
               }
             ];
 
