@@ -12,6 +12,7 @@ _: {
               ".config/zed"
               ".local/share/zed"
               ".cache/zed"
+              ".wakatime"
             ];
           };
         };
@@ -25,6 +26,7 @@ _: {
             api_url = https://hackatime.hackclub.com/api/hackatime/v1
             api_key = ${config.sops.placeholder.wakatime_api_key}
             heartbeat_rate_limit_seconds = 30
+            sync_ai_disabled = true
           '';
           path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
           owner = config.custom.user.name;
@@ -41,7 +43,15 @@ _: {
 
           zed-editor = {
             enable = true;
-            extensions = ["nix" "markdown-snippets" "marksman" "hackatime"];
+            extensions = [
+              "nix"
+              "markdown-snippets"
+              "marksman"
+              "hackatime"
+              "git-firefly"
+              "toml"
+              "log"
+            ];
             extraPackages = with pkgs; [
               nil
               alejandra
@@ -141,6 +151,7 @@ _: {
                   language_servers = [
                     "nil"
                     "!nixd"
+                    "..."
                   ];
                   formatter = {
                     external = {
