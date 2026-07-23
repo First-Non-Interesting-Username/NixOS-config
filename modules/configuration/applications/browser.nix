@@ -161,6 +161,7 @@
                 "signon.rememberSignons" = false;
                 "signon.autofillForms" = false;
                 "browser.toolbars.bookmarks.visibility" = "never";
+                "general.autoScroll" = true;
               };
             };
           };
