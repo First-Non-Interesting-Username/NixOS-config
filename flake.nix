@@ -76,6 +76,10 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
     };
+
+    hack = {
+      url = "github:First-Non-Interesting-Username/hack";
+    };
   };
 
   outputs = inputs:
