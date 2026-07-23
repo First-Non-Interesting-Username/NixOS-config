@@ -1,19 +1,17 @@
-inputs: {
-  lib,
-  config,
-  ...
-}: {
-  config =
-    lib.mkIf (config ? sops)
-    && lib.mkIf config.custom.shell.enable {
+{inputs, ...}: {
+  flake.nixosModules.shell-secret-programs = {
+    lib,
+    config,
+    ...
+  }: {
+    config = lib.mkIf ((config ? sops) && config.custom.shell.enable) {
       sops.secrets."HACK_CLUB_AI_API_KEY" = {
         owner = config.custom.user.name;
       };
 
       home-manager.users.${config.custom.user.name} = {osConfig, ...}: {
-        imports = [
-          inputs.hack.homeManagerModules.default
-        ];
+        imports = [inputs.hack.homeManagerModules.default];
+
         programs.hack = {
           enable = true;
           settings = {
@@ -24,4 +22,5 @@ inputs: {
         };
       };
     };
+  };
 }

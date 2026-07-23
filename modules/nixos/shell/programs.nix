@@ -8,9 +8,6 @@
     }: let
       cfg = config.custom.shell;
     in {
-      imports = [
-        ./secret-programs.nix
-      ];
       config = lib.mkIf cfg.enable {
         preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
           "/persist" = {
@@ -40,7 +37,6 @@
         home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
           imports = [
             inputs.nix-index-database.homeModules.nix-index
-            inputs.hack.homeManagerModules.default
           ];
 
           home.sessionVariables = {

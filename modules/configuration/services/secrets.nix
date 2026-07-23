@@ -12,6 +12,8 @@
     }: {
       imports = [
         inputs.sops-nix.nixosModules.sops
+        # TODO: Create secrets module (same concept as preservation module)
+        self.nixosModules.shell-secret-programs
       ];
 
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
