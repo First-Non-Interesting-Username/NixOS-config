@@ -324,7 +324,7 @@
 
           filebrowser = {
             # renovate: versioning=docker
-            image = "ghcr.io/gtsteffaniak/filebrowser:1.4.0-stable";
+            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.0-stable";
 
             environment = {
               TZ = "Europe/Warsaw";
@@ -345,7 +345,7 @@
 
           up-snap = {
             # renovate: versioning=docker
-            image = "ghcr.io/seriousm4x/upsnap:5.4.3";
+            image = "ghcr.io/seriousm4x/upsnap:5.4.4";
             environment = {
               TZ = "Europe/Warsaw";
               UPSNAP_PING_PRIVILEGED = "true";
