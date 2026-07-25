@@ -13,6 +13,13 @@ _: {
               ".local/share/zed"
               ".cache/zed"
               ".wakatime"
+
+              ".config/Google"
+              ".local/share/Google"
+              ".android"
+              ".gradle"
+              ".cache/Google"
+              ".java"
             ];
           };
         };
