@@ -20,6 +20,10 @@ _: {
               ".gradle"
               ".cache/Google"
               ".java"
+
+              "Android"
+              ".m2"
+              ".konan"
             ];
           };
         };
