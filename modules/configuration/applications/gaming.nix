@@ -25,13 +25,6 @@ _: {
         '';
 
         programs.distrobox = {
-          settings = {
-            container_manager = "podman";
-            container_generate_entry = 1;
-            container_user_custom_home = "${config.home.homeDirectory}/homes/default";
-          };
-          enableSystemdUnit = true;
-          enable = true;
           containers = {
             Gbox = {
               image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260717";
