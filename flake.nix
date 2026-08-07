@@ -80,6 +80,10 @@
     hack = {
       url = "github:First-Non-Interesting-Username/hack";
     };
+
+    hexecute-gnome = {
+      url = "github:first-non-interesting-username/Hexecute-gnome";
+    };
   };
 
   outputs = inputs:

@@ -4,6 +4,7 @@
       lib,
       config,
       pkgs,
+      inputs,
       ...
     }: let
       cfg = config.custom.DE;
@@ -26,6 +27,7 @@
               ];
               files = [
                 ".local/share/recently-used.xbel"
+                ".config/hexecute/gestures.json"
               ];
             };
           };
@@ -53,14 +55,16 @@
           gnome.enable = true;
         };
 
-        environment.gnome.excludePackages = with pkgs; [
-          gnome-tour
-          orca
-          epiphany
-          gnome-system-monitor
-          gnome-tecla
-          gnome-software
-        ];
+        environment = {
+          gnome.excludePackages = with pkgs; [
+            gnome-tour
+            orca
+            epiphany
+            gnome-system-monitor
+            gnome-tecla
+            gnome-software
+          ];
+        };
 
         xdg.portal = {
           enable = true;
@@ -76,6 +80,7 @@
         }: {
           home.packages = with pkgs; [
             mission-center
+            inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
           stylix.targets = {
@@ -324,11 +329,17 @@
                 command = "${pkgs.gradia}/bin/gradia  --screenshot=INTERACTIVE";
                 name = "Screenshot";
               };
+              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hexecute" = {
+                binding = "<Super>Space";
+                command = "${inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/hexecute";
+                name = "Hexecute";
+              };
               "org/gnome/settings-daemon/plugins/media-keys" = {
                 custom-keybindings = [
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/files/"
                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/gradia/"
+                  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hexecute/"
                 ];
               };
             };
