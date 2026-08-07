@@ -60,10 +60,9 @@
               DontCheckDefaultBrowser = true;
               DisableSetDesktopBackground = true;
               DisableProfileImport = true;
-              EnableWidevine = true;
               Preferences = {
                 "browser.download.useDownloadDir" = true;
-                "browser.download.alwaysOpenPanel" = false;
+                "browser.download.alwaysOpenPanel" = true;
                 "browser.tabs.warnOnClose" = false;
                 "browser.tabs.closeWindowWithLastTab" = true;
                 "browser.startup.page" = 3;
@@ -162,6 +161,12 @@
                 "signon.autofillForms" = false;
                 "browser.toolbars.bookmarks.visibility" = "never";
                 "general.autoScroll" = true;
+                "app.update.auto" = false;
+                "browser.aboutConfig.showWarning" = false;
+                "browser.download.autohideButton" = false;
+                "browser.ml.linkPreview.optin" = true;
+                "browser.ml.chat.provider" = "https://arena.ai/agent";
+                "browser.preferences.moreFromMozilla" = false;
               };
             };
           };
