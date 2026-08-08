@@ -13,8 +13,18 @@ _: {
           enable = true;
           efiSupport = true;
           biosSupport = false;
-          enableEditor = true;
           maxGenerations = 10;
+
+          secureBoot = {
+            enable = true;
+            autoGenerateKeys = true;
+            autoEnrollKeys = {
+              enable = true;
+              extraArgs = [
+                "--firmware-builtin"
+              ];
+            };
+          };
         };
       };
     };
