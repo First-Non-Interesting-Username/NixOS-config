@@ -20,7 +20,6 @@
           experimental-features = [
             "nix-command"
             "flakes"
-            "pipe-operators"
           ];
 
           substituters = [
@@ -43,6 +42,9 @@
             "root"
             "@wheel"
           ];
+          warn-dirty = false;
+          keep-outputs = true;
+          keep-derivations = true;
         };
         channel.enable = false;
       };
@@ -51,6 +53,10 @@
         allowUnfree = true;
         allowBroken = false;
       };
+
+      documentation.nixos.enable = false;
+
+      environment.defaultPackages = [];
 
       programs.nix-ld.enable = true;
     };
