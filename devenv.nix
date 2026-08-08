@@ -31,6 +31,7 @@
       language_servers = [
         "nixd"
         "!nil"
+        "..."
       ];
       formatter = {
         external = {
