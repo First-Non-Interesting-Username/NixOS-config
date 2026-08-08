@@ -204,6 +204,7 @@
                   "firefox.desktop"
                   "org.gnome.Ptyxis.desktop"
                   "org.gnome.Nautilus.desktop"
+                  "dev.zed.Zed.desktop"
                 ];
               };
               "org/gnome/shell/extensions/Logo-menu" = {
