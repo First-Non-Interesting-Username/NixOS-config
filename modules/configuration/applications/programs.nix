@@ -28,6 +28,8 @@ _: {
         kdeconnect.enable = true;
       };
 
+      services.ananicy.enable = true;
+
       home-manager.users.${config.custom.user.name} = _: {
       };
     };
