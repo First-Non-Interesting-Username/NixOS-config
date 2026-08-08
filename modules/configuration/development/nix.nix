@@ -1,4 +1,4 @@
-_: {
+{inputs, ...}: {
   flake = {
     nixosModules.nix = {
       lib,
@@ -15,6 +15,7 @@ _: {
         };
       };
       nix = {
+        registry.nixpkgs.flake = inputs.nixpkgs;
         settings = {
           experimental-features = [
             "nix-command"
