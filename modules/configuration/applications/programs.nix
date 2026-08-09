@@ -28,7 +28,11 @@ _: {
         kdeconnect.enable = true;
       };
 
-      services.ananicy.enable = true;
+      services.ananicy = {
+        enable = true;
+        package = pkgs.ananicy-cpp;
+        rulesProvider = pkgs.ananicy-rules-cachyos;
+      };
 
       home-manager.users.${config.custom.user.name} = _: {
       };
