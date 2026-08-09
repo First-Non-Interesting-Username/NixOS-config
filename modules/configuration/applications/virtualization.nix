@@ -41,6 +41,12 @@ _: {
         programs = {
           distrobox = {
             enable = true;
+            settings = {
+              container_manager = "podman";
+              container_generate_entry = 1;
+              container_user_custom_home = "${config.home.homeDirectory}/homes/default";
+            };
+            enableSystemdUnit = true;
           };
         };
       };
@@ -79,16 +85,6 @@ _: {
           enable = true;
           defaultNetwork.settings.dns_enabled = true;
         };
-      };
-
-      programs.distrobox = {
-        settings = {
-          container_manager = "podman";
-          container_generate_entry = 1;
-          container_user_custom_home = "${config.home.homeDirectory}/homes/default";
-        };
-        enableSystemdUnit = true;
-        enable = true;
       };
     };
   };
