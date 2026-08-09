@@ -3,6 +3,7 @@ _: {
     nixosModules.programs-desktop = {
       lib,
       config,
+      pkgs,
       ...
     }: {
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
