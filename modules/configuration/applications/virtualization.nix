@@ -33,7 +33,11 @@ _: {
         "binder_linux"
         "ashmem_linux"
       ];
-      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {
+        pkgs,
+        config,
+        ...
+      }: {
         home.packages = with pkgs; [
           lima
           distroshelf
