@@ -8,7 +8,7 @@
   ];
 
   files.".vscode/settings.json" = {
-    copyMode = "copy";
+    #copyMode = "copy";
     json = {
       editor.defaultFormatter = "esbenp.prettier-vscode";
       editor.formatOnSave = true;
@@ -22,7 +22,7 @@
   };
 
   files.".vscode/extensions.json" = {
-    copyMode = "copy";
+    #copyMode = "copy";
     json = {
       recommendations = [
         "jnoortheen.nix-ide"
@@ -33,7 +33,7 @@
   };
 
   files.".zed/settings.json" = {
-    copyMode = "copy";
+    #copyMode = "copy";
     json = {
       languages.Nix = {
         language_servers = [
