@@ -324,7 +324,7 @@
 
           filebrowser = {
             # renovate: versioning=docker
-            image = "ghcr.io/gtsteffaniak/filebrowser:1.4.0-stable";
+            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.1-stable";
 
             environment = {
               TZ = "Europe/Warsaw";
@@ -345,7 +345,7 @@
 
           up-snap = {
             # renovate: versioning=docker
-            image = "ghcr.io/seriousm4x/upsnap:5.4.3";
+            image = "ghcr.io/seriousm4x/upsnap:5.4.4";
             environment = {
               TZ = "Europe/Warsaw";
               UPSNAP_PING_PRIVILEGED = "true";
@@ -404,7 +404,7 @@
 
           aiostreams = {
             # renovate: versioning=docker
-            image = "ghcr.io/viren070/aiostreams:v2.31.1";
+            image = "ghcr.io/viren070/aiostreams:v2.33.1";
             ports = ["127.0.0.1:4321:3000"];
             volumes = [
               "/var/lib/aiostreams/data:/app/data:U"
