@@ -584,6 +584,7 @@
             enable-rpc = true;
             rpc-listen-all = true;
             rpc-listen-port = 6800;
+            rpc-allow-origin-all = true;
             dir = "/mnt/storage/aria2/downloads";
           };
           rpcSecretFile = config.sops.secrets."aria2/rpc-token".path;

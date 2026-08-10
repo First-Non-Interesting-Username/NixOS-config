@@ -13,6 +13,8 @@ _: {
           ];
         };
       };
+
+      users.groups.netdev = {};
       services.avahi = {
         enable = true;
         nssmdns4 = true;

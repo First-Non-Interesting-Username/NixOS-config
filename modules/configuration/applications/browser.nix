@@ -161,7 +161,6 @@
                 "signon.autofillForms" = false;
                 "browser.toolbars.bookmarks.visibility" = "never";
                 "general.autoScroll" = true;
-                "app.update.auto" = false;
                 "browser.aboutConfig.showWarning" = false;
                 "browser.download.autohideButton" = false;
                 "browser.ml.linkPreview.optin" = true;

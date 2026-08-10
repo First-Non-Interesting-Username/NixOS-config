@@ -43,7 +43,6 @@
             "@wheel"
           ];
           warn-dirty = false;
-          keep-outputs = true;
           keep-derivations = true;
         };
         channel.enable = false;

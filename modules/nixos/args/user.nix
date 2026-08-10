@@ -57,6 +57,7 @@ _: {
               "gamemode"
               "input"
               "kvm"
+              "netdev"
             ];
             inherit (cfg) hashedPasswordFile;
             inherit (cfg) hashedPassword;

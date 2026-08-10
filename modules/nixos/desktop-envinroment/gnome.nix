@@ -332,7 +332,7 @@
               };
               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hexecute" = {
                 binding = "<Super>Space";
-                command = "${inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/hexecute";
+                command = "${self.packages.${pkgs.stdenv.hostPlatform.system}.hexecute-gnome}/bin/hexecute";
                 name = "Hexecute";
               };
               "org/gnome/settings-daemon/plugins/media-keys" = {
