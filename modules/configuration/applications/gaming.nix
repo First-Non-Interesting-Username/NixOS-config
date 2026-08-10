@@ -24,19 +24,7 @@ _: {
           mkdir -p "${config.home.homeDirectory}/homes/Gbox"
         '';
 
-        systemd.user.services.distrobox-home-manager = {
-          Unit = {
-            After = ["network-online.target"];
-            Wants = ["network-online.target"];
-          };
-        };
         programs.distrobox = {
-          settings = {
-            container_manager = "podman";
-            container_generate_entry = 1;
-            container_user_custom_home = "${config.home.homeDirectory}/homes/default";
-          };
-          enable = true;
           containers = {
             Gbox = {
               image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260809";

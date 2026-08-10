@@ -33,7 +33,11 @@ _: {
         "binder_linux"
         "ashmem_linux"
       ];
-      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {
+        pkgs,
+        config,
+        ...
+      }: {
         home.packages = with pkgs; [
           lima
           distroshelf
@@ -41,6 +45,12 @@ _: {
         programs = {
           distrobox = {
             enable = true;
+            settings = {
+              container_manager = "podman";
+              container_generate_entry = 1;
+              container_user_custom_home = "${config.home.homeDirectory}/homes/default";
+            };
+            enableSystemdUnit = true;
           };
         };
       };

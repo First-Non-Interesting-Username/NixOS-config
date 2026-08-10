@@ -1,4 +1,4 @@
-_: {
+{inputs, ...}: {
   flake = {
     nixosModules.nix = {
       lib,
@@ -15,11 +15,11 @@ _: {
         };
       };
       nix = {
+        registry.nixpkgs.flake = inputs.nixpkgs;
         settings = {
           experimental-features = [
             "nix-command"
             "flakes"
-            "pipe-operators"
           ];
 
           substituters = [
@@ -42,6 +42,8 @@ _: {
             "root"
             "@wheel"
           ];
+          warn-dirty = false;
+          keep-derivations = true;
         };
         channel.enable = false;
       };
@@ -50,6 +52,10 @@ _: {
         allowUnfree = true;
         allowBroken = false;
       };
+
+      documentation.nixos.enable = false;
+
+      environment.defaultPackages = [];
 
       programs.nix-ld.enable = true;
     };

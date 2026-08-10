@@ -7,38 +7,48 @@
     nixd
   ];
 
-  files.".vscode/settings.json".json = {
-    editor.defaultFormatter = "esbenp.prettier-vscode";
-    editor.formatOnSave = true;
-    "[nix]" = {
-      editor.defaultFormatter = "jnoortheen.nix-ide";
+  files.".vscode/settings.json" = {
+    #copyMode = "copy";
+    json = {
+      editor.defaultFormatter = "esbenp.prettier-vscode";
+      editor.formatOnSave = true;
+      "[nix]" = {
+        editor.defaultFormatter = "jnoortheen.nix-ide";
+      };
+      nix.enableLanguageServer = true;
+      nix.serverPath = "nixd";
+      nix.formatterPath = "alejandra";
     };
-    nix.enableLanguageServer = true;
-    nix.serverPath = "nixd";
-    nix.formatterPath = "alejandra";
   };
 
-  files.".vscode/extensions.json".json = {
-    recommendations = [
-      "jnoortheen.nix-ide"
-      "esbenp.prettier-vscode"
-      "wakatime.vscode-wakatime"
-    ];
-  };
-
-  files.".zed/settings.json".json = {
-    languages.Nix = {
-      language_servers = [
-        "nixd"
-        "!nil"
+  files.".vscode/extensions.json" = {
+    #copyMode = "copy";
+    json = {
+      recommendations = [
+        "jnoortheen.nix-ide"
+        "esbenp.prettier-vscode"
+        "wakatime.vscode-wakatime"
       ];
-      formatter = {
-        external = {
-          command = "alejandra";
-          arguments = [
-            "--quiet"
-            "--"
-          ];
+    };
+  };
+
+  files.".zed/settings.json" = {
+    #copyMode = "copy";
+    json = {
+      languages.Nix = {
+        language_servers = [
+          "nixd"
+          "!nil"
+          "..."
+        ];
+        formatter = {
+          external = {
+            command = "alejandra";
+            arguments = [
+              "--quiet"
+              "--"
+            ];
+          };
         };
       };
     };

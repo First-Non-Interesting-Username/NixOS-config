@@ -532,10 +532,10 @@
               "1.1.1.1"
               "8.8.8.8"
             ];
-            ip_prefixes = [
-              "100.64.0.0/10"
-              "fd7a:115c:a1e0::/48"
-            ];
+            prefixes = {
+              v4 = "100.64.0.0/10";
+              v6 = "fd7a:115c:a1e0::/48";
+            };
             logtail.enabled = false;
             derp.server.enabled = false;
           };
@@ -554,6 +554,7 @@
 
             headscale = {
               url = "https://tailscale.${domain}";
+              api_key_path = config.sops.secrets."headscale/api-key".path;
               config_path = (pkgs.formats.yaml {}).generate "headscale.yml" (
                 lib.recursiveUpdate config.services.headscale.settings {
                   tls_cert_path = "/dev/null";
@@ -570,7 +571,6 @@
               issuer = "https://auth.${domain}";
               client_id = "headplane";
               client_secret_path = config.sops.secrets."headplane/oidc-client-secret".path;
-              headscale_api_key_path = config.sops.secrets."headscale/api-key".path;
               token_endpoint_auth_method = "client_secret_basic";
               disable_api_key_login = true;
             };
@@ -584,22 +584,23 @@
             enable-rpc = true;
             rpc-listen-all = true;
             rpc-listen-port = 6800;
+            rpc-allow-origin-all = true;
             dir = "/mnt/storage/aria2/downloads";
           };
           rpcSecretFile = config.sops.secrets."aria2/rpc-token".path;
         };
-        #nginx = {
-        #  enable = true;
-        #  virtualHosts."localhost" = {
-        #    listen = [
-        #      {
-        #        addr = "127.0.0.1";
-        #        port = 1357;
-        #      }
-        #    ];
-        #    root = "${pkgs.ariang}/share/ariang";
-        #  };
-        #};
+        nginx = {
+          enable = true;
+          virtualHosts."localhost" = {
+            listen = [
+              {
+                addr = "127.0.0.1";
+                port = 1357;
+              }
+            ];
+            root = "${pkgs.ariang}/share/ariang";
+          };
+        };
       };
 
       systemd = {
@@ -615,7 +616,7 @@
           "d /var/lib/filebrowser 0755 root root -"
           "d /var/lib/freshrss/data 0755 root root -"
           "d /var/lib/freshrss/extensions 0755 root root -"
-          "d /var/lib/headplane 0750 headplane headplane -"
+          "d /var/lib/headplane 0750 headscale headscale -"
           "d /var/lib/qbittorrent/config 0755 root root -"
           "d /var/lib/up-snap 0755 root root -"
         ];

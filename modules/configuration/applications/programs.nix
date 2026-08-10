@@ -3,6 +3,7 @@ _: {
     nixosModules.programs-desktop = {
       lib,
       config,
+      pkgs,
       ...
     }: {
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
@@ -26,6 +27,12 @@ _: {
 
       programs = {
         kdeconnect.enable = true;
+      };
+
+      services.ananicy = {
+        enable = true;
+        package = pkgs.ananicy-cpp;
+        rulesProvider = pkgs.ananicy-rules-cachyos;
       };
 
       home-manager.users.${config.custom.user.name} = _: {
