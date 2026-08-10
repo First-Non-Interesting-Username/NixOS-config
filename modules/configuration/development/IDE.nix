@@ -46,7 +46,14 @@ _: {
         };
       };
 
-      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {
+        pkgs,
+        config,
+        ...
+      }: let
+        nixLogo = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        configPath = "${config.xdg.userDirs.projects}/NixOS-config";
+      in {
         programs = {
           micro = {
             enable = true;
@@ -188,6 +195,18 @@ _: {
         home.sessionVariables = {
           EDITOR = "micro";
           VISUAL = "zededitor --wait";
+        };
+
+        xdg.desktopEntries = {
+          "nixosconfig" = {
+            name = "NixOS Config";
+            comment = "Open zed with nixos config";
+            exec = "zededitor ${configPath}";
+            icon = nixLogo;
+            terminal = false;
+            type = "Application";
+            categories = ["Developement" "IDE"];
+          };
         };
       };
     };
