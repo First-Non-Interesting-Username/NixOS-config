@@ -671,6 +671,12 @@
 
       networking.firewall = {
         allowedUDPPorts = [41641];
+        allowedTCPPortRanges = [
+          {
+            from = 10000;
+            to = 11000;
+          }
+        ];
         trustedInterfaces = ["tailscale0"];
       };
     };
