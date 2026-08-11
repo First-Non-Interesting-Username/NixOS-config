@@ -86,6 +86,10 @@
       url = "github:first-non-interesting-username/Hexecute-gnome";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:

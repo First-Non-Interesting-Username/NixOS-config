@@ -24,6 +24,7 @@ in {
       self.nixosModules.sudo
       self.nixosModules.update
       self.nixosModules.xdg
+      self.nixosModules.vlh-agent
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
