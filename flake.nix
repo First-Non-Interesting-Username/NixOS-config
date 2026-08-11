@@ -79,10 +79,12 @@
 
     hack = {
       url = "github:First-Non-Interesting-Username/hack";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hexecute-gnome = {
       url = "github:first-non-interesting-username/Hexecute-gnome";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

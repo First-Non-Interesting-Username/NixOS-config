@@ -12,6 +12,7 @@
     self.nixosModules.preservation
     self.nixosModules.shell
   ];
+
   sops.secrets."sudo_password/${config.custom.hostname}" = {
     neededForUsers = true;
   };
