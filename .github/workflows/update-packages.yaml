@@ -1,0 +1,13 @@
+name: Update Packages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 6 * * 1,4
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
