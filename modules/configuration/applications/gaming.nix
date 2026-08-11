@@ -27,7 +27,7 @@ _: {
         programs.distrobox = {
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260809";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260810";
               init = false;
               root = false;
               start_now = false;
