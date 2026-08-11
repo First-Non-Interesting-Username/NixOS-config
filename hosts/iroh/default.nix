@@ -4,13 +4,11 @@
   ...
 }: let
   Hostname = "iroh";
-  Domain = "iameasytoremember.duckdns.org";
 in {
   flake.nixosConfigurations.${Hostname} = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       inherit self inputs;
-      domain = Domain;
     };
     modules = [
       {_module.args.hostName = Hostname;}
@@ -39,7 +37,6 @@ in {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit self inputs;
-          domain = Domain;
         };
       }
     ];
