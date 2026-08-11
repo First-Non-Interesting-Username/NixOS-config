@@ -140,7 +140,7 @@ _: {
               IdentityFile = "~/.ssh/id_ed25519";
               AddKeysToAgent = "yes";
             };
-            "Host Server" = {
+            "Iroh" = {
               HostName = "iameasytoremember.duckdns.org";
               User = "nixi";
               Port = 6767;
