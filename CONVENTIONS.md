@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 This convention applies to all documents in this repository, including contributor-related, such as [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).

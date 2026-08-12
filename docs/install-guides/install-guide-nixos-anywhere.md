@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 > [!CAUTION]
 > **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.

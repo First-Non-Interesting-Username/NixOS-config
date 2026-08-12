@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Contributor License Agreement
 
 By submitting a pull request or otherwise contributing to this repository,

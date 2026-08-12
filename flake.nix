@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   inputs = {
     nixpkgs = {
@@ -84,10 +87,6 @@
 
     hexecute-gnome = {
       url = "github:first-non-interesting-username/Hexecute-gnome";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    inputs.hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 # SOPS configuration - defines which keys can encrypt/decrypt secrets
 #
 # IMPORTANT: Derive your age public key from the SSH host PRIVATE key:
