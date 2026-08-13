@@ -79,6 +79,7 @@ _: {
               marksman
               wakatime-cli
               zed-wakatime-ls
+              nixd
             ];
 
             userSettings = {
