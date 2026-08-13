@@ -26,11 +26,11 @@
           ];
 
           substituters = [
-            "https://cache.nixos.org/"
-            "https://nix-community.cachix.org/"
-            "https://matrix.cachix.org"
+            "https://cache.nixos.org?priority=40"
+            "https://nix-community.cachix.org"
+            "https://matrix.cachix.org?priority=42"
             "https://devenv.cachix.org"
-            "https://cache.numtide.com"
+            "https://cache.numtide.com?priority=41"
           ];
 
           trusted-public-keys = [
@@ -62,7 +62,10 @@
 
       environment.defaultPackages = [];
 
-      programs.nix-ld.enable = true;
+      programs.nix-ld = {
+        enable = true;
+        libraries = [];
+      };
     };
   };
 }
