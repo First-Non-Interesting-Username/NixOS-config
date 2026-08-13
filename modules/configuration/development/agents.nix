@@ -33,7 +33,20 @@
             package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
             enable = true;
           };
+          ssh.settings = {
+            "hermes" = {
+              IdentityFile = "~/.ssh/id_ed25519";
+              HostName = "hackclub.app";
+              User = "serbian";
+              Port = 22;
+              RequestTTY = "force";
+              RemoteCommand = "hermes; exec $SHELL -l";
+            };
+          };
         };
+        home.packages = [
+          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.kilocode-cli
+        ];
       };
     };
   };
