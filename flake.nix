@@ -42,8 +42,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-mineral.url = "github:cynicsketch/nix-mineral/";
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,8 +54,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
-    hexecute.url = "github:ThatOtherAndrew/Hexecute";
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
@@ -86,7 +82,7 @@
     };
 
     hexecute-gnome = {
-      url = "github:first-non-interesting-username/Hexecute-gnome";
+      url = "github:First-Non-Interesting-Username/Hexecute-gnome";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
