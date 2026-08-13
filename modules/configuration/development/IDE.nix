@@ -39,7 +39,7 @@ _: {
             [settings]
             api_url = https://hackatime.hackclub.com/api/hackatime/v1
             api_key = ${config.sops.placeholder.wakatime_api_key}
-            heartbeat_rate_limit_seconds = 30
+            heartbeat_rate_limit_seconds = 1
             sync_ai_disabled = true
           '';
           path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
