@@ -21,8 +21,13 @@ _: {
         flake = flakeRef;
       };
 
-      environment.variables = {
-        NH_OS_FLAKE = flakeRef;
+      environment = {
+        systemPackages = [
+          self.packages.${pkgs.stdenv.hostPlatform.system}.rebuild
+        ];
+        variables = {
+          NH_OS_FLAKE = flakeRef;
+        };
       };
 
       nix = {
