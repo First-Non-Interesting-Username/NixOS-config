@@ -1,54 +1,93 @@
-> [!NOTE]
-> Humans SHOULD NOT modify this file, it should be fully vibe created.
-> When you modify this file change the footer to `Last modified by [modelName], DD.MM.YYYY`.
-
 # AGENTS.md
 
 This file provides guidance for AI assistants working with this NixOS configuration repository.
 
 ## Project Overview
 
-This is a flake-based NixOS configuration using the [flake-parts](https://github.com/hercules-ci/flake-parts) module system. Configurations are split into reusable modules and host-specific settings.
+This is a flake-based NixOS configuration using [flake-parts](https://github.com/hercules-ci/flake-parts) and [import-tree](https://github.com/vic/import-tree). Configurations are split into reusable modules and host-specific settings. Hosts are composed of modules imported from `self.nixosModules`.
 
 ## Repository Structure
 
 ```
 .
-├── hosts/          # Host-specific NixOS configurations
-├── modules/        # Reusable NixOS modules (imported via import-tree)
-│   └── configuration/
-├── devShells/      # Development shell definitions
-├── secrets/        # SOPS-encrypted secrets (age)
-├── flake.nix       # Flake entry point
-└── .sops.yaml      # SOPS key configuration
+├── hosts/              # Host-specific NixOS configurations
+│   ├── armin/          # Real host (laptop/desktop)
+│   ├── iroh/           # Real host (server)
+│   ├── victim/         # Real host (desktop)
+│   ├── wall-e/         # Installation ISO host
+│   ├── john/           # Installation ISO host
+│   ├── common/         # Shared host module (e.g. desktop-modules.nix)
+│   └── template/       # Copy this to start a new host
+├── modules/
+│   ├── configuration/  # Reusable NixOS modules (imported via import-tree)
+│   │   ├── applications/
+│   │   ├── desktop/
+│   │   ├── development/
+│   │   ├── iso/
+│   │   ├── services/
+│   │   ├── system/
+│   │   └── user/
+│   └── nixos/          # Flake-level options/plumbing
+│       ├── args/       # custom.* options (hostname, user, preservation, stylix)
+│       ├── desktop-envinroment/
+│       ├── server/
+│       └── shell/
+├── packages/           # Custom packages / shell scripts (perSystem)
+│   ├── mirrors/
+│   └── shell-scripts/  # rebuild, sops-easy, template
+├── secrets/            # SOPS-encrypted secrets (age)
+├── docs/               # Documentation (host-names, install-guides)
+├── flake.nix           # Flake entry point
+└── .sops.yaml          # SOPS key configuration
 ```
+
+## How Modules Are Loaded
+
+`flake.nix` wires everything via `import-tree`:
+
+```nix
+imports = [
+  (inputs.import-tree ./modules)
+  (inputs.import-tree ./packages)
+  (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
+];
+```
+
+- `modules/` and `packages/` are imported recursively (every `default.nix` becomes an output).
+- `hosts/` are matched by any `*/default.nix` (or `_default.nix`) one level deep, each producing a `flake.nixosConfigurations.<name>`.
 
 ## Development Environment
 
-Enter the development shell with:
+The dev environment is provided by [devenv](https://devenv.sh/) (`devenv.nix` + `devenv.yaml`), not a `devShells/` attribute.
+
+Enter it with:
 
 ```bash
-nix develop
+devenv shell
 ```
 
-Or with direnv:
+Or with direnv (after `direnv allow`).
 
-```bash
-direnv allow
-```
+The dev environment provides:
 
-The dev shell includes:
-
-- `alejandra` - Nix formatter
-- `nil` - Nix language server
-- `yamllint` - YAML linter
-- `vscodium` with Nix and Prettier extensions
+- `alejandra` - Nix formatter (also enforced on commit via git-hooks).
+- `nixd` - Nix language server.
+- `yamllint` - YAML linter.
+- Editor config (`.vscode` / `.zed`) wiring `nixd` and `alejandra`.
 
 ## Code Standards
 
-### Nix Style
+### Headers
 
-Formatting:
+Every `.nix` file MUST begin with the SPDX license header:
+
+```nix
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+```
+
+### Nix Style
 
 - All `.nix` files MUST be formatted with `alejandra`.
 - Lines SHOULD NOT exceed 100 characters.
@@ -57,73 +96,61 @@ Naming:
 
 - Attribute names MUST use `camelCase`.
 - File names MUST use `kebab-case`.
-- Module option names MUST use `camelCase`.
 
-Imports:
+Imports & scope:
 
-- Imports SHOULD be sorted alphabetically within their group.
-- Standard library imports SHOULD appear before local imports.
-
-General:
-
-- `with lib;` at the top level of a module MUST NOT be used. Use explicit `lib.` prefixes instead.
+- `with lib;` at the top level MUST NOT be used. Use explicit `lib.` prefixes.
 
 ### Module Structure
 
-Each NixOS module MUST follow this pattern (based on `modules/configuration/template.nix`):
+Reusable modules follow the `flake.nixosModules` pattern. The canonical form for a module that needs no flake inputs:
 
 ```nix
-{
-  self,
-  inputs,
-  ...
-}: {
+_: {
   flake = {
     nixosModules.MODULE_NAME = {
-      pkgs,
       lib,
       config,
       ...
     }: {
-      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
-        "/persist" = {
-          directories = [];
-          files = [];
-          users.${config.custom.user.name} = {
-            directories = [];
-            files = [];
-          };
-        };
-      };
-
       # System config here
-
-      home-manager.users.${config.custom.user.name} = {
-        pkgs,
-        lib,
-        config,
-        osConfig,
-        ...
-      }: {
-        # Home config here
-      };
     };
   };
 }
 ```
 
+When a module needs flake inputs (e.g. to import another flake's module), use the explicit form:
+
+```nix
+{inputs, ...}: {
+  flake = {
+    nixosModules.MODULE_NAME = {
+      lib,
+      config,
+      ...
+    }: {
+      imports = [
+        inputs.preservation.nixosModules.preservation
+      ];
+    };
+  };
+}
+```
+
+Modules define their options under `options.custom.*` (see `modules/nixos/args/`) and read them via `config.custom.*`. Hosts opt into modules by listing `self.nixosModules.<name>` in their `modules.nix`.
+
 ### Hostname Convention
 
 The `hostname` specialArg is NO LONGER used. Instead:
 
-1. Each host's `default.nix` sets `_module.args.hostName` to the hostname string.
+1. Each host's `_default.nix` (or `default.nix`) sets `_module.args.hostName` to the hostname string inside `nixosSystem`.
 2. Each host's `modules.nix` sets `custom.hostname = hostName;` (sourced from `_module.args.hostName`).
 3. The `self.nixosModules.hostname` module reads `config.custom.hostname` to set `networking.hostName`.
 4. All other modules access the hostname via `config.custom.hostname` instead of the old `hostname` specialArg.
 
 ### Conventions
 
-Documents follow the conventions in `CONVENTIONS.md`:
+Documents follow the conventions in `CONVENTIONS.md` (if present):
 
 - Use simple present tense and active voice.
 - Headings MUST NOT end with punctuation.
@@ -148,7 +175,7 @@ sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key | tail -1
 # Edit encrypted secrets
 sops secrets/secrets.yaml
 
-# Encrypt plaintext file in-place
+# Encrypt a plaintext file in-place
 sops --encrypt --in-place secrets/secrets.yaml
 ```
 
@@ -156,9 +183,16 @@ sops --encrypt --in-place secrets/secrets.yaml
 
 1. Add the new key to `.sops.yaml` with the system age key reference.
 2. Edit `secrets/secrets.yaml` with `sops`.
-3. Use `mkpasswd -m sha-512` for password hashes.
+3. For user password hashes use `mkpasswd -m yescrypt` (the `custom.user` options expect a yescrypt hash, not sha-512).
 
 ## Available Commands
+
+### Development Shell
+
+```bash
+devenv shell       # enter the dev environment
+direnv allow       # auto-enter via direnv
+```
 
 ### Formatting
 
@@ -166,14 +200,24 @@ sops --encrypt --in-place secrets/secrets.yaml
 alejandra .
 ```
 
+Formatting is also checked automatically on commit through devenv's git-hooks.
+
 ### Validation
 
 ```bash
 # Check all flake outputs
 nix flake check
 
-# Build specific host
+# Build a specific host
 nixos-rebuild build --flake .#<hostname>
+```
+
+### Rebuilding a Host
+
+The `rebuild` package (under `packages/shell-scripts/rebuild`) wraps `nh` and deploys the host from this flake on GitHub:
+
+```bash
+rebuild   # runs: nh os boot github:First-Non-Interesting-Username/NixOS-Config/main#$HOSTNAME
 ```
 
 ### Secrets
@@ -204,7 +248,7 @@ Description rules:
 
 ## Pull Request Checklist
 
-- [ ] Code follows style guidelines.
+- [ ] Code follows style guidelines (alejandra formatted).
 - [ ] `nix flake check` passes.
 - [ ] Documentation is updated if needed.
 - [ ] Commit messages follow Conventional Commits.
@@ -212,13 +256,4 @@ Description rules:
 
 ---
 
-Last modified by nvidia/nemotron-3-super-120b-a12b, 25.06.2026
-
-## Migration Notes
-
-### 2026-06-24: hostname specialArg replaced with `config.custom.hostname`
-
-The `hostname` specialArg was removed from all hosts. The canonical way to access the hostname
-in modules is now `config.custom.hostname`. Each host sets this via `_module.args.hostName`
-in `default.nix` and `custom.hostname = hostName;` in `modules.nix`. See Hostname Convention
-above for details.
+Last modified by opencode/hy3-free, 13.08.2026
