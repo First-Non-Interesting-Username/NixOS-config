@@ -21,7 +21,6 @@ in {
       self.nixosModules.audio
       self.nixosModules.bootloader
       self.nixosModules.browser
-      self.nixosModules.DE
       self.nixosModules.flatpak
       self.nixosModules.gaming
       self.nixosModules.git
