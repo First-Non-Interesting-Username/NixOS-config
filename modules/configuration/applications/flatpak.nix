@@ -43,6 +43,7 @@
             }
           ];
           packages = [
+            # Useless on a declarative system
             "com.github.tchx84.Flatseal"
           ];
           uninstallUnmanaged = true;

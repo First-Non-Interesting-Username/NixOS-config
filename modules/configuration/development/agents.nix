@@ -30,6 +30,9 @@
             "hermes" = {
               IdentityFile = "~/.ssh/id_ed25519";
               HostName = "hackclub.app";
+              # I'm not from Serbia, serbian is my fav meme linux distro
+              # https://distrowatch.com/table.php?distribution=serbian
+              # Well, I hope it is a meme distro
               User = "serbian";
               Port = 22;
               RequestTTY = "force";
@@ -37,6 +40,7 @@
             };
           };
         };
+
         home.packages = [
           inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.kilocode-cli
         ];

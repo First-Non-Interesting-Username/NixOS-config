@@ -42,11 +42,6 @@
             inputs.nix-index-database.homeModules.nix-index
           ];
 
-          home.sessionVariables = {
-            PAGER = "${pkgs.bat}/bin/bat";
-            MANPAGER = "sh -c 'col --no-backspaces --spaces | ${pkgs.bat}/bin/bat --language man'";
-          };
-
           programs = {
             nix-index-database.comma = {enable = true;};
             nix-index = {
@@ -211,12 +206,18 @@
           home = {
             packages = with pkgs; [
               ugrep
+              trash-cli
             ];
             shellAliases = {
               cat = "bat --style=plain --pager=never";
               igrep = "ug -Q";
               te = "trash-empty";
+              tp = "trash-put";
               tb = "nc termbin.com 9999";
+            };
+            sessionVariables = {
+              PAGER = "${pkgs.bat}/bin/bat";
+              MANPAGER = "sh -c 'col --no-backspaces --spaces | ${pkgs.bat}/bin/bat --language man'";
             };
           };
         };

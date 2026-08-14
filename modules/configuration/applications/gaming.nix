@@ -30,11 +30,12 @@ _: {
         programs.distrobox = {
           containers = {
             Gbox = {
-              image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260809";
+              image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260814";
               init = false;
               root = false;
               start_now = false;
               exported_apps = "steam lutris protonup-qt prismlauncher";
+              # Likely doesn't work, because I created it
               init_hooks = "/usr/local/bin/prism-instance-bootstrap.sh";
               home = "${config.home.homeDirectory}/homes/Gbox";
             };
