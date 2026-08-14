@@ -57,8 +57,10 @@
       "nohibernate"
       "amd_pstate=active"
     ];
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server;
   };
+
+  nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
 
   systemd.services.set-default-power-profile = {
     description = "Set default power profile to power-saver";
