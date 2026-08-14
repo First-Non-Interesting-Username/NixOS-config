@@ -10,6 +10,8 @@ _: {
         ssh-to-age
       ];
       text = ''
+        set -euo pipefail
+
         if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
           KEY=/persist/etc/ssh/ssh_host_ed25519_key
         else

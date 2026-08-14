@@ -9,7 +9,7 @@ _: {
         nh
       ];
       text = ''
-        nh os boot github:First-Non-Interesting-Username/NixOS-Config/main#$HOSTNAME
+        nh os boot github:First-Non-Interesting-Username/NixOS-config/main#$HOSTNAME
       '';
     };
   };
