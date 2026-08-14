@@ -8,10 +8,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 > **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
 
-> [!NOTE]
-> This guide is for a single-machine installation where you boot the target machine from a live ISO and perform the installation directly on it.
-> You can find the list of all guides in [this file](../install-guides.md).
-
 > [!WARNING]
 > BROKEN FOR NOW, DON'T USE
 

@@ -8,10 +8,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 > **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
 
-> [!NOTE]
-> This is a general guide for installing NixOS on a machine on your local network using `nixos-anywhere`.
-> You can find the list of all guides in [this file](../install-guides.md).
-
 ## Table of Contents
 
 - [Definitions](#definitions)
