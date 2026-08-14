@@ -61,22 +61,6 @@ _: {
               prompt = "enabled";
             };
           };
-
-          jujutsu = {
-            enable = true;
-
-            settings = {
-              user = {
-                name = "First-Non-Interesting-Username";
-                email = "janekmusin@proton.me";
-
-                git = {
-                  push-bookmark-automatically = true;
-                  default-branch = "main";
-                };
-              };
-            };
-          };
           zsh.initContent = lib.mkIf config.programs.zsh.enable ''
             export GH_TOKEN="$(cat ${osConfig.sops.secrets.github_pat.path})"
           '';
@@ -126,20 +110,6 @@ _: {
               };
               init.defaultBranch = "main";
               pull.rebase = true;
-            };
-          };
-          jujutsu = {
-            enable = true;
-            settings = {
-              user = {
-                name = "local";
-                email = "local@local.local";
-              };
-
-              git = {
-                push-bookmark-automatically = true;
-                default-branch = "main";
-              };
             };
           };
 

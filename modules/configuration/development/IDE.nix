@@ -209,7 +209,7 @@ _: {
             icon = nixLogo;
             terminal = false;
             type = "Application";
-            categories = ["Developement" "IDE"];
+            categories = ["Development" "IDE"];
           };
         };
       };
