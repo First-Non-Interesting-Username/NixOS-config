@@ -57,6 +57,7 @@
       "nohibernate"
       "amd_pstate=active"
     ];
+    # This is the only kernel with 300hz timer, which should marginally improve battery life
     kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server;
   };
 
