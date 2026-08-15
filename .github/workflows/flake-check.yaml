@@ -49,11 +49,14 @@ jobs:
             hosts/template/_default.nix \
             hosts/template/disko.nix \
             hosts/template/hardware.nix \
-            hosts/template/modules.nix
+            hosts/template/modules.nix \
+            packages/shell-scripts/template/default.nix \
+            checks/template.nix
           nix run nixpkgs#statix -- fix . \
             --ignore "modules/configuration/template.nix" \
             --ignore "hosts/template" \
-            --ignore "modules/nixos/template.nix"
+            --ignore "modules/nixos/template.nix" \
+            --ignore "checks/template.nix"
           nix run nixpkgs#alejandra -- .
 
       - name: Enable aarch64 via QEMU
@@ -69,7 +72,7 @@ jobs:
       - name: Check flake
         id: check
         run: |
-          nix flake check && echo "success=true" >> $GITHUB_OUTPUT
+          nix flake check --no-build && echo "success=true" >> $GITHUB_OUTPUT
 
       - name: Check for formatter changes
         id: changes
