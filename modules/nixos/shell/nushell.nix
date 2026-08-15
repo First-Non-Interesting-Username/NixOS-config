@@ -50,7 +50,9 @@ _: {
               '';
             };
 
-            nix-index = {enableNushellIntegration = true;};
+            nix-index = {
+              enableNushellIntegration = true;
+            };
             starship = {
               enableNushellIntegration = true;
               settings = {
