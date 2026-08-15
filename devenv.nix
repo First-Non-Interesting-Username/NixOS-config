@@ -24,17 +24,6 @@
     };
   };
 
-  files.".vscode/extensions.json" = {
-    #copyMode = "copy";
-    json = {
-      recommendations = [
-        "jnoortheen.nix-ide"
-        "esbenp.prettier-vscode"
-        "wakatime.vscode-wakatime"
-      ];
-    };
-  };
-
   files.".zed/settings.json" = {
     #copyMode = "copy";
     json = {
