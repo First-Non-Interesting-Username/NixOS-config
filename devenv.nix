@@ -10,6 +10,11 @@
     nixd
   ];
 
+  # Trust me, you don't want to run the checks, eval is enough for basic dev
+  scripts.flake-check.exec = ''
+    nix flake check --no-build
+  '';
+
   files.".vscode/settings.json" = {
     #copyMode = "copy";
     json = {
