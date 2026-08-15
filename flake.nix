@@ -80,12 +80,14 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
+        # Literally useless
         "aarch64-linux"
       ];
 
       imports = [
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
+        (inputs.import-tree ./checks)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
     };
