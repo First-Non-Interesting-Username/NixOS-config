@@ -43,6 +43,7 @@
             "https://devenv.cachix.org"
             # The goat of caches
             "https://cache.numtide.com?priority=41"
+            "https://attic.xuyh0120.win/lantian"
           ];
 
           trusted-public-keys = [
@@ -51,6 +52,7 @@
             "matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w="
             "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
             "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+            "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
           ];
 
           max-jobs = "auto";
