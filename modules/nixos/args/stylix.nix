@@ -101,7 +101,7 @@
         stylix = {
           autoEnable = false;
           enable = true;
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.base16Scheme}.yaml";
+          base16Scheme = "${inputs.stylix.inputs.tinted-schemes}/base16/${cfg.base16Scheme}.yaml";
           polarity = "dark";
           image = lib.mkIf cfg.image.enable generatedImage;
 
