@@ -10,6 +10,11 @@
     nixd
   ];
 
+  # Trust me, you don't want to run the checks, eval is enough for basic dev
+  scripts.flake-check.exec = ''
+    nix flake check --no-build
+  '';
+
   files.".vscode/settings.json" = {
     #copyMode = "copy";
     json = {
@@ -21,17 +26,6 @@
       nix.enableLanguageServer = true;
       nix.serverPath = "nixd";
       nix.formatterPath = "alejandra";
-    };
-  };
-
-  files.".vscode/extensions.json" = {
-    #copyMode = "copy";
-    json = {
-      recommendations = [
-        "jnoortheen.nix-ide"
-        "esbenp.prettier-vscode"
-        "wakatime.vscode-wakatime"
-      ];
     };
   };
 

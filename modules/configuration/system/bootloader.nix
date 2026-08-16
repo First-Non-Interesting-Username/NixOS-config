@@ -18,6 +18,7 @@ _: {
           biosSupport = false;
           maxGenerations = 10;
 
+          # I don't use secure boot on my PCs anyway, but it is nice to have it I guess
           secureBoot = {
             enable = true;
             autoGenerateKeys = true;

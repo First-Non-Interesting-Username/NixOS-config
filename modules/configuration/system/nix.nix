@@ -30,6 +30,7 @@
             "https://nix-community.cachix.org"
             "https://matrix.cachix.org?priority=42"
             "https://devenv.cachix.org"
+            # The goat of caches
             "https://cache.numtide.com?priority=41"
           ];
 

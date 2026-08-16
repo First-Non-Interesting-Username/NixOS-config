@@ -75,8 +75,8 @@
                 "layers.acceleration.force-enabled" = true;
                 "browser.search.suggest.enabled" = true;
                 "browser.urlbar.suggest.searches" = true;
-                "media.autoplay.default" = 0;
-                "media.autoplay.blocking_policy" = 0;
+                "media.autoplay.default" = 1;
+                "media.autoplay.blocking_policy" = 1;
                 "browser.tabs.unloadOnLowMemory" = true;
                 "permissions.default.desktop-notification" = 2;
                 "sidebar.revamp" = true;
@@ -149,6 +149,7 @@
               settings = {
                 "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
                 "general.smoothScroll" = true;
+                # I love telemetry
                 "datareporting.healthreport.uploadEnabled" = true;
                 "toolkit.telemetry.enabled" = true;
                 "sidebar.verticalTabs" = true;

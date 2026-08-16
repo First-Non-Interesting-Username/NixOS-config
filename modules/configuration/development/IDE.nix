@@ -190,15 +190,20 @@ _: {
           };
         };
 
-        home.packages = with pkgs; [
-          nil
-          alejandra
-          wakatime-cli
-        ];
+        home = {
+          packages = with pkgs; [
+            nil
+            alejandra
+            wakatime-cli
+          ];
 
-        home.sessionVariables = {
-          EDITOR = "micro";
-          VISUAL = "zededitor --wait";
+          sessionVariables = {
+            EDITOR = "micro";
+            VISUAL = "zededitor --wait";
+          };
+          shellAliases = {
+            canistopcoding = "wakatime-cli --today";
+          };
         };
 
         xdg.desktopEntries = {
@@ -209,7 +214,7 @@ _: {
             icon = nixLogo;
             terminal = false;
             type = "Application";
-            categories = ["Developement" "IDE"];
+            categories = ["Development" "IDE"];
           };
         };
       };

@@ -48,6 +48,7 @@
           };
         };
 
+        # This will cause issues in the future
         services.nixos-upgrade = {
           description = "NixOS upgrade";
           requires = ["network-online.target"];

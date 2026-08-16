@@ -34,8 +34,6 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 | [template](./hosts/template/README.md) | N/A                        | N/A         | N/A               | N/A  | Other            |
 | [victim](./hosts/victim/README.md)     | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
-For more in depth explanation, visit [hosts](./docs/hosts.md).
-
 ## Quickstart
 
 To use modules or packages from this flake in your own configuration, add it as an input:

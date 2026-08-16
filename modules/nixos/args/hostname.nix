@@ -12,7 +12,7 @@ _: {
     in {
       options.custom = {
         hostname = lib.mkOption {
-          type = lib.types.str or null;
+          type = lib.types.nullOr lib.types.str;
           default = null;
           example = "some_hostname";
           description = "hostname for your system";

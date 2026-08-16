@@ -32,6 +32,7 @@ _: {
         kdeconnect.enable = true;
       };
 
+      # Probably not the right place for that
       services.ananicy = {
         enable = true;
         package = pkgs.ananicy-cpp;

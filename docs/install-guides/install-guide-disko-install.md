@@ -24,10 +24,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Prerequisites
 
-1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases, [iso docs](../iso.md) for more informations.
+1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases.
 2. **Internet Connection**: Ethernet or Wi-Fi access.
 3. **Secure Boot**: Must be disabled in UEFI.
-4. **Host Configuration**: A host defined in `hosts/`. See [Host creation guide](../host-guide.md).
+4. **Host Configuration**: A host defined in `hosts/`.
 
 ---
 
@@ -86,7 +86,6 @@ nix run github:nix-community/disko/latest#disko-install -- \
 
 After the machine reboots:
 
-1. Review the `IMPERATIVE` section in `hosts/HOSTNAME/README.md`.
-2. Apply any host-specific manual steps.
+1. Apply any host-specific manual steps.
 
 # You are done!

@@ -29,6 +29,9 @@ _: {
           then "${config.home.homeDirectory}/persist"
           else config.home.homeDirectory;
       in {
+        systemd.user.tmpfiles.rules = [
+          "d ${homeBase}/Games 0755 ${config.custom.user.name} ${config.custom.user.name} -"
+        ];
         xdg = {
           enable = true;
           userDirs = {

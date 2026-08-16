@@ -35,11 +35,11 @@ In this guide, the following terms are used:
 
 # Prerequisites
 
-1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases, [iso docs](../iso.md) for more informations).
+1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases).
 2.  **Source**: A machine with Nix installed and network access to the Target.
 3.  **Network**: Both machines must be on the same network.
 4.  **SSH**: The Source must be able to SSH into the Target as `root`.
-5.  **Host Configuration**: You must have a host already defined in `hosts/`. If not, see the [Host creation guide](../host-guide.md).
+5.  **Host Configuration**: You must have a host already defined in `hosts/`
 
 ---
 
@@ -148,7 +148,6 @@ nix run github:nix-community/nixos-anywhere -- \
 
 After the machine reboots:
 
-1. Review the `IMPERATIVE` section in `hosts/HOSTNAME/README.md`.
-2. Apply any host-specific manual steps.
+1. Apply any host-specific manual steps.
 
 # You are done!

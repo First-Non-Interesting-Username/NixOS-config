@@ -4,6 +4,7 @@
 _: {
   flake = {
     nixosModules.locale = _: {
+      # Waiting for en_EU locale
       i18n.defaultLocale = "en_US.UTF-8";
 
       i18n.extraLocaleSettings = {

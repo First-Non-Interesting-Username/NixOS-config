@@ -24,6 +24,7 @@ _: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhyyqVG8KdfHL00jBin/8rJzaD1Str3lO7N+IeF8fPI Server_key"
         ];
       };
+      # This is either the worst or the smartest thing in the history of humanity, nothing in between
       sops.secrets."ssh_keys/private/${config.custom.hostname}" = {
         owner = config.custom.user.name;
         inherit (config.users.users.${config.custom.user.name}) group;

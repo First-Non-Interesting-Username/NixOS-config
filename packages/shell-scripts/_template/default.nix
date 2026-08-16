@@ -2,9 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 _: {
-  perSystem = {pkgs, ...}: {
-    packages.shell-scripts-CHANGEME = pkgs.writeShellApplication {
-      name = "CHANGEME";
+  perSystem = {pkgs, ...}: let
+    packagename = "CHANGEME";
+  in {
+    "packages.shell-scripts-${packagename}" = pkgs.writeShellApplication {
+      name = packagename;
       runtimeInputs = with pkgs; [
       ];
       text = ''
