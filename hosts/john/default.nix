@@ -20,7 +20,6 @@ in {
       ./modules.nix
       self.nixosModules.audio
       self.nixosModules.browser
-      self.nixosModules.DE
       self.nixosModules.input
       self.nixosModules.iso-graphical
       self.nixosModules.home-manager

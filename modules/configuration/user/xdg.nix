@@ -30,7 +30,7 @@ _: {
           else config.home.homeDirectory;
       in {
         systemd.user.tmpfiles.rules = [
-          "d ${homeBase}/Games 0755 ${config.custom.user.name} ${config.custom.user.name} -"
+          "d ${homeBase}/Games 0755 ${osConfig.custom.user.name} ${osConfig.custom.user.name} -"
         ];
         xdg = {
           enable = true;
