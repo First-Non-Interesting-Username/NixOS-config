@@ -327,7 +327,7 @@
 
           filebrowser = {
             # renovate: versioning=docker
-            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.1-stable";
+            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.2-stable";
 
             environment = {
               TZ = "Europe/Warsaw";
@@ -407,7 +407,7 @@
 
           aiostreams = {
             # renovate: versioning=docker
-            image = "ghcr.io/viren070/aiostreams:v2.33.1";
+            image = "ghcr.io/viren070/aiostreams:v2.33.2";
             ports = ["127.0.0.1:4321:3000"];
             volumes = [
               "/var/lib/aiostreams/data:/app/data:U"
