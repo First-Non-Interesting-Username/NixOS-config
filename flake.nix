@@ -70,6 +70,11 @@
       url = "github:First-Non-Interesting-Username/Hexecute-gnome";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    inputs.nix2container = {
+      url = "github:nlewo/nix2container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
