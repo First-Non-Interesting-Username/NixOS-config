@@ -1,0 +1,109 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Flake check
+
+on:
+  push:
+  workflow_call:
+    outputs:
+      success:
+        value: ${{ jobs.check.outputs.success }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      success: ${{ steps.check.outputs.success }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+<<<<<<< HEAD
+          extra-conf: ${{ env.NIX_CONF }}
+=======
+          extra-conf: |
+            experimental-features = nix-command flakes pipe-operators
+            substituters = https://cache.nixos.org/ https://nix-community.cachix.org/ https://matrix.cachix.org https://devenv.cachix.org https://cache.numtide.com https://attic.xuyh0120.win/lantian
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+>>>>>>> a5f85d7 (ci: add cachyos kernel cache)
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: Run Nix Fixes and Formatters
+        run: |
+          nix run nixpkgs#deadnix -- --edit --exclude \
+            modules/configuration/template.nix \
+            modules/nixos/template.nix \
+            hosts/template/configuration.nix \
+            hosts/template/_default.nix \
+            hosts/template/disko.nix \
+            hosts/template/hardware.nix \
+            hosts/template/modules.nix \
+            packages/shell-scripts/template/default.nix \
+            checks/template.nix
+          nix run nixpkgs#statix -- fix . \
+            --ignore "modules/configuration/template.nix" \
+            --ignore "hosts/template" \
+            --ignore "modules/nixos/template.nix" \
+            --ignore "checks/template.nix"
+          nix run nixpkgs#alejandra -- .
+
+      - name: Enable aarch64 via QEMU
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4
+        with:
+          platforms: arm64
+
+      - name: Add aarch64 as extra platform
+        run: |
+          echo "extra-platforms = aarch64-linux" | sudo tee -a /etc/nix/nix.conf
+          sudo systemctl restart nix-daemon
+
+      - name: Check flake
+        id: check
+        run: |
+          nix flake check --no-build && echo "success=true" >> $GITHUB_OUTPUT
+
+      - name: Check for formatter changes
+        id: changes
+        if: github.event_name == 'push' && github.ref_name != github.event.repository.default_branch
+        run: |
+          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Create Maintenance Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "style: nix maintenance (statix, deadnix, alejandra)"
+          title: "style: Auto-fixes for ${{ github.ref_name }}"
+          body: |
+            Automated maintenance for branch `${{ github.ref_name }}`:
+            - **Statix**: Fixed linting suggestions.
+            - **Deadnix**: Removed unused code.
+            - **Alejandra**: Applied standard formatting.
+          branch: chore/nix-maintenance-${{ github.ref_name }}
+          base: ${{ github.ref_name }}
+          delete-branch: true
