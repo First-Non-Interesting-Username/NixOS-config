@@ -34,7 +34,16 @@ _: {
 
       # Probably not the right place for that
       services.ananicy = {
+<<<<<<< HEAD
+<<<<<<< HEAD
         # Temporary
+=======
+>>>>>>> f89094b (fix: NOW everything should build properly)
+=======
+=======
+        # Temporary
+>>>>>>> 4326aee (fix: disable broken packages)
+>>>>>>> 74e141b (fix: disable broken packages)
         enable = false;
         package = pkgs.ananicy-cpp;
         rulesProvider = pkgs.ananicy-rules-cachyos;
