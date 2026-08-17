@@ -78,6 +78,10 @@
     nix-github-actions  = { 
       url = "github:nix-community/nix-github-actions";
       inputs.nixpkgs.follows = "nixpkgs";
+
+    flake-registry = {
+      url = "github:nixos/flake-registry";
+      flake = false;
     };
   };
 
