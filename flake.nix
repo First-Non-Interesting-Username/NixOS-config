@@ -74,6 +74,11 @@
       url = "github:First-Non-Interesting-Username/Hexecute-gnome";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-registry = {
+      url = "github:nixos/flake-registry";
+      flake = false;
+    };
   };
 
   outputs = inputs:

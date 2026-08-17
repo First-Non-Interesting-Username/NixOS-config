@@ -18,12 +18,23 @@
         };
       };
       nix = {
-        registry.nixpkgs.flake = inputs.nixpkgs;
+        registry = {
+          nixpkgs.flake = inputs.nixpkgs;
+          # Allows me to use shorhand 'config' instead of 'github:First-Non-Interesting-Username/NixOS-config'
+          config.to = {
+            type = "github";
+            owner = "First-Non-Interesting-Username";
+            repo = "NixOS-config";
+            ref = "main";
+          };
+        };
         settings = {
           experimental-features = [
             "nix-command"
             "flakes"
           ];
+
+          flake-registry = "${inputs.flake-registry}/flake-registry.json";
 
           substituters = [
             "https://cache.nixos.org?priority=40"
