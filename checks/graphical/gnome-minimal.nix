@@ -28,14 +28,7 @@
           stylix = {
             enable = true;
             image = {
-              width = lib.mkDefault "2560";
-              height = lib.mkDefault "1440";
               enable = true;
-            };
-            base16Scheme = "gruvbox-dark";
-            icons = {
-              package = pkgs.morewaita-icon-theme;
-              name = "MoreWaita";
             };
           };
           preservation.enable = false;
@@ -47,8 +40,8 @@
       };
 
       testScript = ''
-        machine.wait_for_unit("graphical.target")
-        machine.wait_for_unit("gdm.service")
+        default.wait_for_unit("graphical.target")
+        default.wait_for_unit("gdm.service")
       '';
     };
   };
