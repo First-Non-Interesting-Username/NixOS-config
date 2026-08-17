@@ -15,7 +15,7 @@
   services = {
     scx = {
       enable = true;
-      scheduler = "scx_bpfland";
+      scheduler = "scx_lavd";
     };
     system76-scheduler.enable = true;
   };
