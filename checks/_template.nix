@@ -1,11 +1,11 @@
-{self, ...}: {
+_: {
   perSystem = {pkgs, ...}: let
     checkname = "CHANGEME";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = {...}: {
+      nodes.default = _: {
         # VM config goes here
       };
 
