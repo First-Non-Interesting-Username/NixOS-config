@@ -8,7 +8,7 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = {
+      nodes.machine = {
         lib,
         pkgs,
         ...
@@ -40,8 +40,8 @@
       };
 
       testScript = ''
-        default.wait_for_unit("graphical.target")
-        default.wait_for_unit("gdm.service")
+        machine.wait_for_unit("graphical.target")
+        machine.wait_for_unit("gdm.service")
       '';
     };
   };

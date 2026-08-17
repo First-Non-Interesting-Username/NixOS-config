@@ -22,7 +22,6 @@
             name = username;
             password = username;
           };
-          stylix.enable = true;
         };
       };
 
