@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+_: {
+=======
 # SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-_: {
+{self, ...}: {
+>>>>>>> 488fc6d (chore: add SPDX headers to checks)
   perSystem = {pkgs, ...}: let
     checkname = "CHANGEME";
   in {
