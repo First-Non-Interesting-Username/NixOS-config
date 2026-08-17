@@ -34,7 +34,8 @@ _: {
 
       # Probably not the right place for that
       services.ananicy = {
-        enable = true;
+        # Temporary
+        enable = false;
         package = pkgs.ananicy-cpp;
         rulesProvider = pkgs.ananicy-rules-cachyos;
       };
