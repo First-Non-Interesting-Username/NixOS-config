@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
   perSystem = {pkgs, ...}: let
-    checkname = "gaming";
+    checkname = "programs";
     username = "test";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
@@ -14,7 +14,7 @@
           self.nixosModules.user
           self.nixosModules.preservation
           self.nixosModules.home-manager
-          self.nixosModules.gaming
+          self.nixosModules.programs
         ];
         custom = {
           user = {
