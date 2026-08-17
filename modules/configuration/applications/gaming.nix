@@ -28,6 +28,7 @@ _: {
         '';
 
         programs.distrobox = {
+          enable = true;
           containers = {
             Gbox = {
               image = "ghcr.io/first-non-interesting-username/gbox-gnome-amd:20260816";

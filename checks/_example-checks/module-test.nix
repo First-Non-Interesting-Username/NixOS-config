@@ -9,7 +9,7 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = {...}: {
+      nodes.machine = {...}: {
         imports = [
           self.nixosModules.user
           self.nixosModules.preservation
@@ -21,7 +21,6 @@
             name = username;
             password = username;
           };
-          stylix.enable = true;
         };
       };
 
