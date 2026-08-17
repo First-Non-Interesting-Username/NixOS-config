@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   self,
   inputs,
@@ -17,7 +20,6 @@ in {
       ./modules.nix
       self.nixosModules.audio
       self.nixosModules.browser
-      self.nixosModules.DE
       self.nixosModules.input
       self.nixosModules.iso-graphical
       self.nixosModules.home-manager

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   pkgs,
   lib,
@@ -54,8 +57,11 @@
       "nohibernate"
       "amd_pstate=active"
     ];
-    kernelPackages = pkgs.linuxPackages_zen;
+    # This is the only kernel with 300hz timer, which should marginally improve battery life
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server;
   };
+
+  nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
 
   systemd.services.set-default-power-profile = {
     description = "Set default power profile to power-saver";

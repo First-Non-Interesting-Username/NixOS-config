@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
   flake = {
     nixosModules.home-server-iroh = {
@@ -671,6 +674,12 @@
 
       networking.firewall = {
         allowedUDPPorts = [41641];
+        allowedTCPPortRanges = [
+          {
+            from = 10000;
+            to = 11000;
+          }
+        ];
         trustedInterfaces = ["tailscale0"];
       };
     };

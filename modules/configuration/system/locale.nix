@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.locale = _: {
+      # Waiting for en_EU locale
       i18n.defaultLocale = "en_US.UTF-8";
 
       i18n.extraLocaleSettings = {

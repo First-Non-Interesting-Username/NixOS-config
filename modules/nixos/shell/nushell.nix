@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.nushell = {
@@ -47,7 +50,9 @@ _: {
               '';
             };
 
-            nix-index = {enableNushellIntegration = true;};
+            nix-index = {
+              enableNushellIntegration = true;
+            };
             starship = {
               enableNushellIntegration = true;
               settings = {

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.gaming = {
@@ -32,6 +35,7 @@ _: {
               root = false;
               start_now = false;
               exported_apps = "steam lutris protonup-qt prismlauncher";
+              # Likely doesn't work, because I created it
               init_hooks = "/usr/local/bin/prism-instance-bootstrap.sh";
               home = "${config.home.homeDirectory}/homes/Gbox";
             };

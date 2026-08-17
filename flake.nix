@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   inputs = {
     nixpkgs = {
@@ -39,27 +42,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-mineral.url = "github:cynicsketch/nix-mineral/";
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     preservation.url = "github:nix-community/preservation";
-
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    hexecute.url = "github:ThatOtherAndrew/Hexecute";
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
@@ -79,10 +67,12 @@
 
     hack = {
       url = "github:First-Non-Interesting-Username/hack";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hexecute-gnome = {
-      url = "github:first-non-interesting-username/Hexecute-gnome";
+      url = "github:First-Non-Interesting-Username/Hexecute-gnome";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -90,12 +80,14 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
+        # Literally useless
         "aarch64-linux"
       ];
 
       imports = [
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
+        (inputs.import-tree ./checks)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
     };

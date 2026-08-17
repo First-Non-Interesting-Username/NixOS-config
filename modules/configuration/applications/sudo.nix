@@ -1,9 +1,13 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.sudo = _: {
       security = {
         sudo.enable = false;
         sudo-rs.enable = true;
+        # Making you not need to write password over and over
         polkit.extraConfig = ''
           polkit.addRule(function(action, subject) {
             if (subject.isInGroup("wheel")) {

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.xdg = {
@@ -26,6 +29,9 @@ _: {
           then "${config.home.homeDirectory}/persist"
           else config.home.homeDirectory;
       in {
+        systemd.user.tmpfiles.rules = [
+          "d ${homeBase}/Games 0755 ${osConfig.custom.user.name} ${osConfig.custom.user.name} -"
+        ];
         xdg = {
           enable = true;
           userDirs = {

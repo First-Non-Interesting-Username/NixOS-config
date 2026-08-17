@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {...}: {
   flake = {
     nixosModules.CHANGEME = {
@@ -8,7 +11,7 @@
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
           directories =
-            # Omit that block if you don't plan including any subdirectories of /var/lib
+            # Omit this block if you don't plan including any subdirectories of /var/lib
             lib.filter (
               d: let
                 dir =

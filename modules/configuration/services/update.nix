@@ -1,4 +1,7 @@
-_: {
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+{self, ...}: {
   flake = {
     nixosModules.update = {
       pkgs,
@@ -18,8 +21,13 @@ _: {
         flake = flakeRef;
       };
 
-      environment.variables = {
-        NH_OS_FLAKE = flakeRef;
+      environment = {
+        systemPackages = [
+          self.packages.${pkgs.stdenv.hostPlatform.system}.rebuild
+        ];
+        variables = {
+          NH_OS_FLAKE = flakeRef;
+        };
       };
 
       nix = {
@@ -40,6 +48,7 @@ _: {
           };
         };
 
+        # This will cause issues in the future
         services.nixos-upgrade = {
           description = "NixOS upgrade";
           requires = ["network-online.target"];

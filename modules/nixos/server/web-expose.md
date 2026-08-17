@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # `web-expose` NixOS Module
 
 Unified Traefik + Authelia + LLDAP web exposure for NixOS. Securely expose internal services to the internet or LAN with automatic HTTPS, authentication, and identity management.

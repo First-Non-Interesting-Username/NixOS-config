@@ -1,46 +1,20 @@
-{
-  pkgs,
-  self,
-  hostName,
-  ...
-}: {
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+{self, ...}: {
   imports = [
-    self.nixosModules.user
-    self.nixosModules.hostname
-    self.nixosModules.stylix
-    self.nixosModules.preservation
-    self.nixosModules.shell
+    self.nixosModules.DE
+    ../common/iso-modules.nix
   ];
-
   custom = {
-    user = {
-      enable = true;
-      name = "nixos";
-      # password is `nixos`
-      hashedPassword = "$y$j9T$e3RBMYwLteags209/SMBP0$f4bZILjV/MjNCquJFQmxL55.q6SdtN.gbATDv7Mds50";
-    };
-    hostname = hostName;
-    stylix = {
-      enable = true;
-      image = {
-        width = "1920";
-        height = "1080";
-        enable = true;
-      };
-      base16Scheme = "gruvbox-dark";
-      icons = {
-        package = pkgs.morewaita-icon-theme;
-        name = "MoreWaita";
-      };
-    };
-    preservation.enable = false;
-    shell = {
-      enable = true;
-      name = "nushell";
-    };
     DE = {
       enable = true;
       name = "gnome";
+    };
+    stylix.image = {
+      width = "1920";
+      height = "1080";
+      enable = true;
     };
   };
 }

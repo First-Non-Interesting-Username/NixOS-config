@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   pkgs,
   config,
@@ -12,6 +15,7 @@
     self.nixosModules.preservation
     self.nixosModules.shell
   ];
+
   sops.secrets."sudo_password/${config.custom.hostname}" = {
     neededForUsers = true;
   };

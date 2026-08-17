@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+repository:
+  name: NixOS-config
+  description: Personal NixOS config
+  topics: nixos,nixos-config,dotfiles,flakes
+  private: false
+  has_issues: true
+  has_projects: true
+  has_wiki: false
+  has_downloads: true
+  default_branch: main

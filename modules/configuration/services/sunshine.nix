@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.sunshine = {
@@ -28,7 +31,7 @@ _: {
     nixosModules.moonlight = {config, ...}: {
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
-          moonlight-qt
+          #moonlight-qt
         ];
       };
     };

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {inputs, ...}: {
   flake = {
     nixosModules.flatpak = {
@@ -40,6 +43,7 @@
             }
           ];
           packages = [
+            # Useless on a declarative system
             "com.github.tchx84.Flatseal"
           ];
           uninstallUnmanaged = true;

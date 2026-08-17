@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.bootloader = _: {
@@ -15,6 +18,7 @@ _: {
           biosSupport = false;
           maxGenerations = 10;
 
+          # I don't use secure boot on my PCs anyway, but it is nice to have it I guess
           secureBoot = {
             enable = true;
             autoGenerateKeys = true;

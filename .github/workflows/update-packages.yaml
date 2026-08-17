@@ -1,0 +1,87 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Update Packages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 6 * * 1,4
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          token: ${{ secrets.PAT }}
+
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: List packages
+        id: list
+        run: |
+          PKGS=$(nix eval .#packages \
+            --apply 'p:
+              let system = builtins.head (builtins.attrNames p);
+              in builtins.attrNames p.${system}
+            ' \
+            --json)
+
+          P_FILTER='${{ inputs.packages }}'
+          if [ "$P_FILTER" != "[]" ] && [ -n "$P_FILTER" ]; then
+            PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" \
+              '[.[] | select(. as $n | $filter | index($n))]')
+          fi
+
+          echo "packages=$PKGS" >> "$GITHUB_OUTPUT"
+      - name: Update packages
+        env:
+          PACKAGES: ${{ steps.list.outputs.packages }}
+        run: |
+          echo "$PACKAGES" | jq -r '.[]' | while read -r pkg; do
+            echo "::group::nix-update $pkg"
+            nix run github:Mic92/nix-update -- --flake "$pkg" \
+              || echo "::warning::nix-update failed for $pkg"
+            echo "::endgroup::"
+          done
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open PR if changed
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: "deps: update packages"
+          title: "chore(update): biweekly package update"
+          body: |
+            Automated packages update via `nix-update`.
+          branch: "chore(update)/package-updates"
+          delete-branch: true
+          labels: dependencies
+
+      - name: Enable PR auto-merge
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
+        run: gh pr merge "$PR_NUMBER" --auto --squash
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+          PR_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}

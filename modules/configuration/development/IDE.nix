@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   flake = {
     nixosModules.IDE = {
@@ -36,7 +39,7 @@ _: {
             [settings]
             api_url = https://hackatime.hackclub.com/api/hackatime/v1
             api_key = ${config.sops.placeholder.wakatime_api_key}
-            heartbeat_rate_limit_seconds = 30
+            heartbeat_rate_limit_seconds = 1
             sync_ai_disabled = true
           '';
           path = "${config.users.users.${config.custom.user.name}.home}/.wakatime.cfg";
@@ -46,7 +49,14 @@ _: {
         };
       };
 
-      home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
+      home-manager.users.${config.custom.user.name} = {
+        pkgs,
+        config,
+        ...
+      }: let
+        nixLogo = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        configPath = "${config.xdg.userDirs.projects}/NixOS-config";
+      in {
         programs = {
           micro = {
             enable = true;
@@ -69,6 +79,7 @@ _: {
               marksman
               wakatime-cli
               zed-wakatime-ls
+              nixd
             ];
 
             userSettings = {
@@ -179,15 +190,32 @@ _: {
           };
         };
 
-        home.packages = with pkgs; [
-          nil
-          alejandra
-          wakatime-cli
-        ];
+        home = {
+          packages = with pkgs; [
+            nil
+            alejandra
+            wakatime-cli
+          ];
 
-        home.sessionVariables = {
-          EDITOR = "micro";
-          VISUAL = "zededitor --wait";
+          sessionVariables = {
+            EDITOR = "micro";
+            VISUAL = "zededitor --wait";
+          };
+          shellAliases = {
+            canistopcoding = "wakatime-cli --today";
+          };
+        };
+
+        xdg.desktopEntries = {
+          "nixosconfig" = {
+            name = "NixOS Config";
+            comment = "Open zed with nixos config";
+            exec = "zededitor ${configPath}";
+            icon = nixLogo;
+            terminal = false;
+            type = "Application";
+            categories = ["Development" "IDE"];
+          };
         };
       };
     };

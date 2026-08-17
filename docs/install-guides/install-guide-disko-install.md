@@ -1,10 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 > [!CAUTION]
 > **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
-
-> [!NOTE]
-> This guide is for a single-machine installation where you boot the target machine from a live ISO and perform the installation directly on it.
-> You can find the list of all guides in [this file](../install-guides.md).
 
 > [!WARNING]
 > BROKEN FOR NOW, DON'T USE
@@ -22,10 +24,10 @@
 
 # Prerequisites
 
-1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases, [iso docs](../iso.md) for more informations.
+1. **NixOS Live ISO**: I recommend using the official ISO from this config's releases.
 2. **Internet Connection**: Ethernet or Wi-Fi access.
 3. **Secure Boot**: Must be disabled in UEFI.
-4. **Host Configuration**: A host defined in `hosts/`. See [Host creation guide](../host-guide.md).
+4. **Host Configuration**: A host defined in `hosts/`.
 
 ---
 
@@ -84,7 +86,6 @@ nix run github:nix-community/disko/latest#disko-install -- \
 
 After the machine reboots:
 
-1. Review the `IMPERATIVE` section in `hosts/HOSTNAME/README.md`.
-2. Apply any host-specific manual steps.
+1. Apply any host-specific manual steps.
 
 # You are done!

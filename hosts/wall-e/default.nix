@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 {
   self,
   inputs,
@@ -25,6 +28,7 @@ in {
       self.nixosModules.secretless-git
       self.nixosModules.ssh-debug
       self.nixosModules.sudo
+      self.nixosModules.tty
       self.nixosModules.xdg
       inputs.home-manager.nixosModules.home-manager
       {

@@ -1,10 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 > [!CAUTION]
 > **Outsider Warning**: Create an issue if you have any problems, this guide was written for me, outside installations are supported.
 > **Data Loss Warning**: This process will wipe the target disk. Ensure you have backups.
-
-> [!NOTE]
-> This is a general guide for installing NixOS on a machine on your local network using `nixos-anywhere`.
-> You can find the list of all guides in [this file](../install-guides.md).
 
 ## Table of Contents
 
@@ -33,11 +35,11 @@ In this guide, the following terms are used:
 
 # Prerequisites
 
-1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases, [iso docs](../iso.md) for more informations).
+1.  **Target**: Booted into a Linux live ISO (preferably the one from this config's releases).
 2.  **Source**: A machine with Nix installed and network access to the Target.
 3.  **Network**: Both machines must be on the same network.
 4.  **SSH**: The Source must be able to SSH into the Target as `root`.
-5.  **Host Configuration**: You must have a host already defined in `hosts/`. If not, see the [Host creation guide](../host-guide.md).
+5.  **Host Configuration**: You must have a host already defined in `hosts/`
 
 ---
 
@@ -146,7 +148,6 @@ nix run github:nix-community/nixos-anywhere -- \
 
 After the machine reboots:
 
-1. Review the `IMPERATIVE` section in `hosts/HOSTNAME/README.md`.
-2. Apply any host-specific manual steps.
+1. Apply any host-specific manual steps.
 
 # You are done!
