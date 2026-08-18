@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
   perSystem = {pkgs, ...}: let
-    checkname = "wayland";
+    checkname = "CHANGEME";
     username = "test";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
@@ -14,7 +14,7 @@
           self.nixosModules.user
           self.nixosModules.preservation
           self.nixosModules.home-manager
-          self.nixosModules.wayland
+          self.nixosModules.agents
         ];
         custom = {
           user = {
@@ -26,11 +26,8 @@
       };
 
       testScript = ''
-        machine.succeed("wl-copy --version")
-        machine.succeed("wl-paste --version")
-
-        machine.wait_for_unit("dbus.service")
-        machine.wait_for_unit("polkit.service")
+        machine.succeed("opencode --version")
+        machine.succeed("kilo --version")
       '';
     };
   };
