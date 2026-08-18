@@ -70,6 +70,10 @@
       url = "github:First-Non-Interesting-Username/Hexecute-gnome";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs = {
+      nix-github-actions.url = "github:nix-community/nix-github-actions";
+      nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -84,6 +88,7 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
         (inputs.import-tree ./checks)
+        (inputs.import-tree ./github-actions)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
     };

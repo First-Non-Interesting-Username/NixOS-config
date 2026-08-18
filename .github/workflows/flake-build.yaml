@@ -3,154 +3,61 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 name: Flake build
+
 on:
   schedule:
     - cron: "0 8 * * 4"
   workflow_dispatch:
-    inputs:
-      ref:
-        description: "Git ref to checkout"
-        required: false
-        type: string
-      create-issue-on-failure:
-        description: "Create issue on failure"
-        required: false
-        type: boolean
-        default: true
-      packages:
-        description: "JSON array of packages to build"
-        required: false
-        type: string
-        default: "[]"
   pull_request:
     branches: ["main"]
-  workflow_call:
-    inputs:
-      ref:
-        description: "Git ref to checkout"
-        required: false
-        type: string
-        default: ""
-      create-issue-on-failure:
-        description: "Create issue on failure"
-        required: false
-        type: boolean
-        default: true
-      hosts:
-        description: "JSON array of hosts to build"
-        required: false
-        type: string
-        default: "[]"
-      packages:
-        description: "JSON array of packages to build"
-        required: false
-        type: string
-        default: "[]"
-    secrets:
-      CACHIX_AUTH_TOKEN:
-        required: false
-    outputs:
-      built-targets:
-        description: "JSON list of targets attempted"
-        value: ${{ jobs.discover.outputs.matrix }}
 
 permissions:
   contents: read
 
 jobs:
-  check-changed-files:
-    runs-on: ubuntu-latest
-    outputs:
-      has-changes: ${{ steps.filter.outputs.nix == 'true' || github.event_name != 'pull_request' }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ inputs.ref || github.ref }}
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: filter
-        if: github.event_name == 'pull_request'
-        with:
-          filters: |
-            nix:
-              - added|modified:
-                - "flake.nix"
-                - "flake.lock"
-                - "**/*.nix"
-
   discover:
+    name: Discover CI targets
     runs-on: ubuntu-latest
-    needs: check-changed-files
-    if: needs.check-changed-files.outputs.has-changes == 'true'
     outputs:
-      matrix: ${{ steps.list.outputs.matrix }}
+      checks: ${{ steps.matrices.outputs.checks }}
+      packages: ${{ steps.matrices.outputs.packages }}
+      hosts: ${{ steps.matrices.outputs.hosts }}
+
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ inputs.ref || github.ref }}
 
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
-            experimental-features = nix-command flakes pipe-operators
-            substituters = https://cache.nixos.org/ https://nix-community.cachix.org/ https://matrix.cachix.org https://devenv.cachix.org https://cache.numtide.com https://attic.xuyh0120.win/lantian
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+            experimental-features = nix-command flakes
+            substituters = https://cache.nixos.org/ https://nix-community.cachix.org/ https://matrix.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w=
 
-      - name: Generate build matrix & target lists
-        id: list
+      - name: Generate matrices
+        id: matrices
+        shell: bash
         run: |
-          HOSTS=$(nix eval .#nixosConfigurations \
-            --apply 'n: builtins.map (name: {
-            inherit name;
-            type = "host";
-            system = n.${name}.config.nixpkgs.system;
-            }) (builtins.attrNames n)' \
-            --json)
+          set -Eeuo pipefail
 
-          PKGS=$(nix eval .#packages \
-            --apply 'p:
-              builtins.concatLists (
-                builtins.map (system:
-                  builtins.map (name: {
-                    inherit name system;
-                    type = "pkg";
-                  }) (builtins.attrNames p.${system})
-                ) (builtins.attrNames p)
-              )' \
-            --json)
+          echo "checks=$(nix eval --json '.#githubActions.checks')" \
+            >> "$GITHUB_OUTPUT"
 
-          H_FILTER='${{ inputs.hosts }}'
-          if [ "$H_FILTER" != "[]" ] && [ -n "$H_FILTER" ]; then
-            HOSTS=$(echo "$HOSTS" | jq --argjson filter "$H_FILTER" \
-              '[.[] | select(.name as $n | $filter | index($n))]')
-          fi
+          echo "packages=$(nix eval --json '.#githubActions.packages')" \
+            >> "$GITHUB_OUTPUT"
 
-          P_FILTER='${{ inputs.packages }}'
-          if [ "$P_FILTER" != "[]" ] && [ -n "$P_FILTER" ]; then
-            PKGS=$(echo "$PKGS" | jq --argjson filter "$P_FILTER" \
-              '[.[] | select(.name as $n | $filter | index($n))]')
-          fi
+          echo "hosts=$(nix eval --json '.#githubActions.hosts')" \
+            >> "$GITHUB_OUTPUT"
 
-          MATRIX=$(jq -cn --argjson h "$HOSTS" --argjson p "$PKGS" '$h + $p')
-          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-
-  build:
-    runs-on: ${{ matrix.runner }}
+  checks:
+    name: check — ${{ matrix.name }} (${{ matrix.system }})
     needs: discover
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - system: x86_64-linux
-            runner: ubuntu-latest
-          - system: aarch64-linux
-            runner: ubuntu-26.04-arm
-    permissions:
-      contents: read
-      id-token: write
+      matrix: ${{ fromJSON(needs.discover.outputs.checks) }}
+
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ inputs.ref || github.ref }}
 
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
         with:
@@ -159,11 +66,8 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
-            experimental-features = nix-command flakes pipe-operators
+            experimental-features = nix-command flakes
             build-dir = /nix/build
-            ${{ matrix.system == 'aarch64-linux' && 'extra-platforms = aarch64-linux' || '' }}
-            substituters = https://cache.nixos.org/ https://nix-community.cachix.org/ https://matrix.cachix.org https://devenv.cachix.org https://cache.numtide.com https://attic.xuyh0120.win/lantian
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
 
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
@@ -171,44 +75,68 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile add nixpkgs#cachix"
 
-      - name: Build NixOS configurations
-        if: needs.discover.outputs.matrix != '[]'
-        env:
-          MATRIX_CONTEXT: ${{ needs.discover.outputs.matrix }}
-        run: |
-          HOSTS=$(echo "$MATRIX_CONTEXT" | jq -r --arg sys "${{ matrix.system }}" \
-          '.[] | select(.type == "host" and .system == $sys) | .name')
+      - name: Build check
+        run: nix build -L '.#${{ matrix.attr }}'
 
-          for host in $HOSTS; do
-            echo "::group::Building NixOS config: $host (${{ matrix.system }})"
-            nix run github:Mic92/nix-fast-build -- \
-              --no-nom \
-              --skip-cached \
-              --cachix-cache matrix \
-              --flake ".#nixosConfigurations.${host}.config.system.build.toplevel"
-            echo "::endgroup::"
-          done
+  packages:
+    name: package — ${{ matrix.name }} (${{ matrix.system }})
+    needs: discover
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.packages) }}
 
-      - name: Build packages (${{ matrix.system }})
-        if: needs.discover.outputs.matrix != '[]'
-        env:
-          MATRIX_CONTEXT: ${{ needs.discover.outputs.matrix }}
-        run: |
-          PKGS=$(echo "$MATRIX_CONTEXT" | jq -r --arg sys "${{ matrix.system }}" \
-            '.[] | select(.type == "pkg" and .system == $sys) | .name')
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-          if [ -n "$PKGS" ]; then
-            for pkg in $PKGS; do
-              echo "::group::Building package: $pkg (${{ matrix.system }})"
-              nix run github:Mic92/nix-fast-build -- \
-                --systems "${{ matrix.system }}" \
-                --no-nom \
-                --skip-cached \
-                --cachix-cache matrix \
-                --flake ".#packages.${{ matrix.system }}.${pkg}"
-              echo "::endgroup::"
-            done
-          fi
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+        with:
+          hatchet-protocol: cleave
+
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes
+            build-dir = /nix/build
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: Build package
+        run: nix build -L '.#${{ matrix.attr }}'
+
+  hosts:
+    name: host — ${{ matrix.name }} (${{ matrix.system }})
+    needs: discover
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.hosts) }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+        with:
+          hatchet-protocol: cleave
+
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          extra-conf: |
+            experimental-features = nix-command flakes
+            build-dir = /nix/build
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: Build NixOS configuration
+        run: nix build -L '.#${{ matrix.attr }}'
 
   report:
     runs-on: ubuntu-latest
