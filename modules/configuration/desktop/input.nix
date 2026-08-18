@@ -8,7 +8,10 @@ _: {
       config,
       ...
     }: {
-      console.keyMap = "pl";
+      console = {
+        keyMap = "pl";
+        useXkbConfig = true;
+      };
       environment.variables = {
         XKB_DEFAULT_LAYOUT = "pl";
         XKB_DEFAULT_VARIANT = "";

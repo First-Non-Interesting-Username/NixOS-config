@@ -33,6 +33,7 @@
         };
 
         virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
+        virtualisation.memorySize = 2048;
         fonts.packages = with pkgs; [dejavu_fonts];
       };
 
