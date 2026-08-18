@@ -9,7 +9,7 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = {...}: {
+      nodes.machine = {...}: {
         imports = [
           self.nixosModules.user
           self.nixosModules.preservation
@@ -26,8 +26,34 @@
       };
 
       testScript = ''
-        # Python test script
-        # https://nixos.org/manual/nixos/unstable/#ssec-machine-objects - docs
+        unit = "ananicy-cpp.service"
+
+        machine.wait_for_unit(unit)
+        machine.succeed(f"systemctl is-active {unit}")
+        machine.succeed(
+            f"test \"$(systemctl show -p SubState --value {unit})\" = running"
+        )
+
+        machine.succeed("pgrep -x ananicy-cpp")
+
+        machine.fail(f"journalctl -u {unit} -b -p err --no-pager | grep .")
+
+        machine.succeed("test -d /etc/ananicy.d")
+        default.succeed("find /etc/ananicy.d -name '*.rules' | grep -q .")
+
+        machine.succeed("install -m0755 \"$(command -v sleep)\" /tmp/gcc")
+        machine.succeed(
+            "systemd-run --unit=ananicy-probe --collect /tmp/gcc 600"
+        )
+
+        machine.wait_until_succeeds(
+            "pid=$(systemctl show -p MainPID --value ananicy-probe); "
+            "test \"$pid\" -gt 0 && "
+            "test \"$(ps -o ni= -p \"$pid\" | tr -d ' ')\" -gt 0",
+            timeout=90,
+        )
+
+        machine.succeed("systemctl stop ananicy-probe")
       '';
     };
   };
