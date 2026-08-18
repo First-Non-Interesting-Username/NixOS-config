@@ -59,7 +59,7 @@
             ExecStart = pkgs.writeShellScript "upgrade" ''
               set -e
               ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot \
-                --flake ${flakeRef} \
+                --flake ${lib.escapeShellArg flakeRef} \
                 -L
             '';
           };
