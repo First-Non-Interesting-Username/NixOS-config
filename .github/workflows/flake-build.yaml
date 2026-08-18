@@ -48,13 +48,13 @@ jobs:
           echo "hosts=$(nix eval --json '.#githubActions.hosts')" \
             >> "$GITHUB_OUTPUT"
 
-  checks:
-    name: check — ${{ matrix.name }} (${{ matrix.system }})
+  build:
+    name: ${{matrix.type}} - ${{ matrix.name }} (${{ matrix.system }})
     needs: discover
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.discover.outputs.checks) }}
+      matrix: ${{ fromJSON(needs.discover.outputs.fullMatrix) }}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -72,76 +72,21 @@ jobs:
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: matrix
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          authToken: "${{matrix.type != 'checks' && secrets.CACHIX_AUTH_TOKEN || ''}}"
           installCommand: "nix profile add nixpkgs#cachix"
 
       - name: Build check
-        run: nix build -L '.#${{ matrix.attr }}'
-
-  packages:
-    name: package — ${{ matrix.name }} (${{ matrix.system }})
-    needs: discover
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.discover.outputs.packages) }}
-
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
-        with:
-          hatchet-protocol: cleave
-
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        with:
-          extra-conf: |
-            experimental-features = nix-command flakes
-            build-dir = /nix/build
-
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
-        with:
-          name: matrix
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          installCommand: "nix profile add nixpkgs#cachix"
-
-      - name: Build package
-        run: nix build -L '.#${{ matrix.attr }}'
-
-  hosts:
-    name: host — ${{ matrix.name }} (${{ matrix.system }})
-    needs: discover
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.discover.outputs.hosts) }}
-
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
-        with:
-          hatchet-protocol: cleave
-
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        with:
-          extra-conf: |
-            experimental-features = nix-command flakes
-            build-dir = /nix/build
-
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
-        with:
-          name: matrix
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          installCommand: "nix profile add nixpkgs#cachix"
-
-      - name: Build NixOS configuration
-        run: nix build -L '.#${{ matrix.attr }}'
+        run: |
+          nix run github:Mic92/nix-fast-build -- \
+            --no-nom \
+            --skip-cached \
+            --cachix-cache matrix \
+            --flake '.#${{ matrix.attr }}'
 
   report:
     runs-on: ubuntu-latest
     needs: build
-    if: failure() && (inputs.create-issue-on-failure == true || inputs.create-issue-on-failure == '')
+    if: failure()
     permissions:
       contents: read
       issues: write
