@@ -8,7 +8,7 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = {...}: {
+      nodes.machine = {...}: {
         # VM config goes here
       };
 
