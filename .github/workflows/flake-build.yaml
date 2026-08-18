@@ -26,10 +26,17 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
-          extra-conf: |
-                ${{ readFile('.github/nix.conf') }}
+          extra-conf: ${{ env.NIX_CONF }}
 
       - name: Generate matrices
         id: matrices
@@ -61,10 +68,17 @@ jobs:
         with:
           hatchet-protocol: cleave
 
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
-          extra-conf: |
-            ${{ readFile('.github/nix.conf') }}
+          extra-conf: ${{ env.NIX_CONF }}
 
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
@@ -137,7 +151,7 @@ jobs:
 
   all-systems-passed:
     runs-on: ubuntu-latest
-    needs: [check-changed-files, build]
+    needs: build
     if: always()
     steps:
       - name: Check build status

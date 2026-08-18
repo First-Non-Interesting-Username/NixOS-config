@@ -29,10 +29,17 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
-          extra-conf: |
-                ${{ readFile('.github/nix.conf') }}
+          extra-conf: ${{ env.NIX_CONF }}
 
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
