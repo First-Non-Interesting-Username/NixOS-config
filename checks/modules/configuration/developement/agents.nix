@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
   perSystem = {pkgs, ...}: let
-    checkname = "CHANGEME";
+    checkname = "agents";
     username = "test";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
