@@ -44,13 +44,7 @@ jobs:
         run: |
           set -Eeuo pipefail
 
-          echo "checks=$(nix eval --json '.#githubActions.checks')" \
-            >> "$GITHUB_OUTPUT"
-
-          echo "packages=$(nix eval --json '.#githubActions.packages')" \
-            >> "$GITHUB_OUTPUT"
-
-          echo "hosts=$(nix eval --json '.#githubActions.hosts')" \
+          echo "fullMatrix=$(nix eval --json '.#githubActions.fullMatrix')" \
             >> "$GITHUB_OUTPUT"
 
   build:
@@ -150,12 +144,13 @@ jobs:
             }
 
   all-systems-passed:
+    name: All Systems Passed
     runs-on: ubuntu-latest
-    needs: build
+    needs: [discover, build]
     if: always()
     steps:
       - name: Check build status
         if: >-
-          needs.check-changed-files.result == 'failure' ||
+          needs.discover.result != 'success' ||
           (needs.build.result != 'success' && needs.build.result != 'skipped')
         run: exit 1
