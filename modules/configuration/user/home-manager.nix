@@ -12,10 +12,15 @@
         useUserPackages = true;
         backupFileExtension = "backup";
       };
-      home-manager.users.${config.custom.user.name} = {osConfig, ...}: {
+      home-manager.users.${config.custom.user.name} = {
+        osConfig,
+        lib,
+        ...
+      }: {
         programs.home-manager.enable = true;
         home.homeDirectory = "/home/${osConfig.custom.user.name}";
         home.enableNixpkgsReleaseCheck = false;
+        home.stateVersion = lib.mkDefault osConfig.system.stateVersion;
       };
     };
   };
