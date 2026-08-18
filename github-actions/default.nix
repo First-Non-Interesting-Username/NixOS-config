@@ -12,12 +12,16 @@
     "aarch64-linux" = "ubuntu-26.04-arm";
   };
 
-  mkMatrix = attrPrefix: targets:
-    (inputs.nix-github-actions.lib.mkGithubMatrix {
-      checks = targets;
-      inherit attrPrefix;
-      platforms = runners;
-    }).matrix;
+  mkMatrix = attrPrefix: targets: let
+    rawMatrix =
+      (inputs.nix-github-actions.lib.mkGithubMatrix {
+        checks = targets;
+        inherit attrPrefix;
+        platforms = runners;
+      }).matrix;
+  in {
+    include = map (entry: entry // {type = attrPrefix;}) rawMatrix.include;
+  };
 
   hostsBySystem = lib.foldl' (
     bySystem: hostName: let
@@ -33,10 +37,14 @@ in {
   flake = {
     hosts = hostsBySystem;
 
-    githubActions = {
+    githubActions = let
       checks = mkMatrix "checks" config.flake.checks;
       packages = mkMatrix "packages" config.flake.packages;
       hosts = mkMatrix "hosts" hostsBySystem;
+    in {
+      inherit checks packages hosts;
+
+      fullMatrix.include = checks.include ++ packages.include ++ hosts.include;
     };
   };
 }
