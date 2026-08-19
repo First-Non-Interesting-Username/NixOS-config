@@ -1,80 +1,90 @@
 # SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-{self, ...}: {
-  perSystem = {pkgs, ...}: let
+{
+  self,
+  system,
+  ...
+}: {
+  perSystem = {
+    pkgs,
+    lib,
+    ...
+  }: let
     checkname = "browser";
     username = "testuser";
   in {
-    checks.${checkname} = pkgs.testers.runNixOSTest {
-      name = checkname;
+    checks = lib.optionalAttrs (system == "x86_64-linux") {
+      ${checkname} = pkgs.testers.runNixOSTest {
+        name = checkname;
 
-      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
+        requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
-      nodes.machine = {...}: {
-        imports = [
-          self.nixosModules.browser
-          self.nixosModules.user
-          self.nixosModules.preservation
-          self.nixosModules.home-manager
-          self.nixosModules.stylix
-        ];
-        custom = {
-          user = {
+        nodes.machine = {...}: {
+          imports = [
+            self.nixosModules.browser
+            self.nixosModules.user
+            self.nixosModules.preservation
+            self.nixosModules.home-manager
+            self.nixosModules.stylix
+          ];
+          custom = {
+            user = {
+              enable = true;
+              name = username;
+              password = username;
+            };
+            stylix.enable = true;
+          };
+          services.cage = {
             enable = true;
-            name = username;
-            password = username;
+            user = username;
+            program = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.firefox}/bin/firefox";
+            environment = {
+              MOZ_ENABLE_WAYLAND = "1";
+              WLR_RENDERER = "pixman";
+              LIBGL_ALWAYS_SOFTWARE = "1";
+              MOZ_DISABLE_CONTENT_SANDBOX = "1";
+            };
           };
-          stylix.enable = true;
-        };
-        services.cage = {
-          enable = true;
-          user = username;
-          program = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.firefox}/bin/firefox";
-          environment = {
-            MOZ_ENABLE_WAYLAND = "1";
-            WLR_RENDERER = "pixman";
-            LIBGL_ALWAYS_SOFTWARE = "1";
-            MOZ_DISABLE_CONTENT_SANDBOX = "1";
+
+          virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
+          virtualisation.memorySize = 4096;
+          fonts.packages = with pkgs; [dejavu_fonts];
+          home-manager.users.${username} = _: {
+            programs.bash.enable = true;
           };
         };
 
-        virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
-        virtualisation.memorySize = 4096;
-        fonts.packages = with pkgs; [dejavu_fonts];
-        home-manager.users.${username} = _: {
-          programs.bash.enable = true;
-        };
+        enableOCR = true;
+
+        testScript = {nodes, ...}: let
+          uid = toString nodes.machine.users.users.${username}.uid;
+        in ''
+
+          machine.wait_for_unit("multi-user.target")
+          machine.wait_for_unit("home-manager-${username}.service")
+
+          machine.succeed("su - ${username} -c 'command -v firefox'")
+
+          machine.succeed("su - ${username} -c 'cat ~/.config/mimeapps.list | grep -q \"text/html=firefox.desktop\"'")
+          machine.succeed("su - ${username} -c 'cat ~/.config/mimeapps.list | grep -q \"x-scheme-handler/https=firefox.desktop\"'")
+
+          machine.succeed("su - ${username} -c 'echo $BROWSER' | grep -q firefox")
+          machine.succeed("su - ${username} -c 'echo $DEFAULT_BROWSER' | grep -q firefox")
+
+          machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
+
+          try:
+              machine.wait_until_succeeds("pgrep -f firefox", timeout=120)
+          except Exception as e:
+              machine.log(machine.succeed("journalctl -u cage-tty1 --no-pager || true"))
+              machine.log(machine.succeed("ps aux"))
+              raise e
+
+          machine.wait_for_text("Firefox|Google|Mozilla|Welcome")
+        '';
       };
-
-      enableOCR = true;
-
-      testScript = {nodes, ...}: let
-        uid = toString nodes.machine.users.users.${username}.uid;
-      in ''
-
-        machine.wait_for_unit("multi-user.target")
-        machine.wait_for_unit("home-manager-${username}.service")
-
-        machine.succeed("su - ${username} -c 'command -v firefox'")
-
-        machine.succeed("su - ${username} -c 'cat ~/.config/mimeapps.list | grep -q \"text/html=firefox.desktop\"'")
-        machine.succeed("su - ${username} -c 'cat ~/.config/mimeapps.list | grep -q \"x-scheme-handler/https=firefox.desktop\"'")
-
-        machine.succeed("su - ${username} -c 'echo $BROWSER' | grep -q firefox")
-        machine.succeed("su - ${username} -c 'echo $DEFAULT_BROWSER' | grep -q firefox")
-
-        machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
-
-        try:
-            machine.wait_until_succeeds("pgrep -f firefox", timeout=120)
-        except Exception as e:
-            machine.log(machine.succeed("journalctl -u cage-tty1 --no-pager || true"))
-            machine.log(machine.succeed("ps aux"))
-            raise e
-
-        machine.wait_for_text("Firefox|Google|Mozilla|Welcome")
-      '';
     };
   };
 }
