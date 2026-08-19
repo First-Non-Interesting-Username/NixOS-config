@@ -20,7 +20,7 @@
       nix = {
         registry = {
           nixpkgs.flake = inputs.nixpkgs;
-          # Allows me to use shorhand 'config' instead of 'github:First-Non-Interesting-Username/NixOS-config'
+          # Allows me to use shorthand 'config' instead of 'github:First-Non-Interesting-Username/NixOS-config'
           config.to = {
             type = "github";
             owner = "First-Non-Interesting-Username";
