@@ -34,9 +34,20 @@
           environment = {
             WLR_RENDERER = "pixman";
           };
+<<<<<<< HEAD
+=======
         };
 
-        # Upstream does that, not gonna question
+        systemd.services.cage = {
+          wantedBy = ["multi-user.target"];
+>>>>>>> 1cb6d5d (fix: NOW everything should build properly)
+        };
+
+        systemd.services.cage = {
+          wantedBy = ["multi-user.target"];
+        };
+
+        # Nixpkgs does that, not gonna question
         virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
         virtualisation.memorySize = 2048;
         fonts.packages = with pkgs; [dejavu_fonts];
