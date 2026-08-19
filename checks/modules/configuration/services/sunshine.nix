@@ -65,6 +65,8 @@
 
         # Test if 5353 is open and UDP
         machine.wait_until_succeeds("ss -ulpn | grep :5353")
+
+        client.wait_until_succeeds("ping -4 -c 1 -W 1 machine")
         client.succeed("echo \'\' | socat -t 2 - UDP4:machine:5353")
 
         tcp_ports = [47984, 47989, 47990, 48010]

@@ -72,10 +72,10 @@
 
         try:
             machine.wait_until_succeeds("pgrep -x firefox", timeout=120)
-                except Exception as e:
-                    machine.log(machine.succeed("journalctl -u cage --no-pager"))
-                    machine.log(machine.succeed("ps aux"))
-                    raise e
+        except Exception as e:
+            machine.log(machine.succeed("journalctl -u cage --no-pager"))
+            machine.log(machine.succeed("ps aux"))
+            raise e
 
         machine.wait_for_text("Firefox|Google|Mozilla|Welcome")
       '';
