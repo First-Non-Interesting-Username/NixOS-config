@@ -19,9 +19,7 @@ jobs:
     name: Discover CI targets
     runs-on: ubuntu-latest
     outputs:
-      checks: ${{ steps.matrices.outputs.checks }}
-      packages: ${{ steps.matrices.outputs.packages }}
-      hosts: ${{ steps.matrices.outputs.hosts }}
+      fullMatrix: ${{ steps.matrices.outputs.fullMatrix }}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -34,6 +32,7 @@ jobs:
             cat .github/nix.conf
             echo 'EOF'
           } >> "$GITHUB_ENV"
+
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: ${{ env.NIX_CONF }}
@@ -70,6 +69,7 @@ jobs:
             cat .github/nix.conf
             echo 'EOF'
           } >> "$GITHUB_ENV"
+
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: ${{ env.NIX_CONF }}
@@ -82,11 +82,16 @@ jobs:
 
       - name: Build check
         run: |
+          CHECKS_ONLY_FLAGS=""
+          if [ "${{ matrix.type }}" != "checks" ] && [ -n "${{ secrets.CACHIX_AUTH_TOKEN }}" ]; then
+            CHECKS_ONLY_FLAGS="--cachix-cache matrix"
+          fi
+
           nix run github:Mic92/nix-fast-build -- \
             --no-nom \
             --skip-cached \
-            --cachix-cache matrix \
-            --flake '.#${{ matrix.attr }}'
+            --flake '.#${{ matrix.attr }}' \
+            $CHECKS_ONLY_FLAGS
 
   report:
     runs-on: ubuntu-latest
@@ -107,7 +112,7 @@ jobs:
             });
 
             const failed = jobs.jobs
-              .filter(j => j.conclusion === 'failure' && j.name.startsWith('build'))
+              .filter(j => j.conclusion === 'failure' && !['Discover CI targets', 'report', 'All Systems Passed'].includes(j.name))
               .map(j => `- \`${j.name}\` — [logs](${j.html_url})`)
               .join('\n');
 
