@@ -98,4 +98,5 @@
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
     };
+  };
 }
