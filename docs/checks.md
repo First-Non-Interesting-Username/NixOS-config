@@ -2,7 +2,7 @@
 
 Checks (also called tests) are derivations built by nix to check if things work properly.
 
-## Philosphy of writing checks
+## Philosophy of writing checks
 
 I write checks only in 2 cases:
 
