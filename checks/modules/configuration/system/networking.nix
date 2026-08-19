@@ -31,7 +31,7 @@
 
       testScript = ''
         machine.wait_for_unit("resolvconf.service")
-        machine.wait_for_unit("network-setup.service")
+        machine.wait_for_unit("network.target")
         machine.wait_for_unit("NetworkManager.service")
 
         resolv = machine.succeed("cat /etc/resolv.conf")

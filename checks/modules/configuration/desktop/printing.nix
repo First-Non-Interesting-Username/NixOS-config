@@ -30,6 +30,13 @@
             enable = true;
             user = username;
             program = "${pkgs.ungoogled-chromium}/bin/chromium-browser --kiosk \"http://localhost:631\"";
+            environment = {
+              WLR_RENDERER = "pixman";
+            };
+          };
+
+          systemd.services.cage = {
+            wantedBy = ["multi-user.target"];
           };
 
           # Upstream does that, not gonna question
@@ -58,7 +65,7 @@
 
         # Test if 5353 is open and service UDP
         machine.wait_until_succeeds("ss -ulpn | grep :5353")
-        client.succeed("echo \'\' | socat -t 2 - UDP:machine:5353")
+        client.succeed("echo \'\' | socat -t 2 - UDP4:machine:5353")
 
         # Test if 631 is closed
         machine.wait_for_open_port(631)

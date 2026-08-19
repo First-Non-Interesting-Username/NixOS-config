@@ -31,7 +31,7 @@
         machine.wait_for_unit("multi-user.target")
 
         machine.succeed("su - ${username} -c 'opencode --version'")
-        machine.succeed("su - ${username} -c 'kilo --version'")
+        machine.succeed("su - ${username} -c 'kilocode --version'")
       '';
     };
   };

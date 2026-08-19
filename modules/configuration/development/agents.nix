@@ -15,6 +15,7 @@
             directories = [
               ".config/opencode"
               ".local/share/opencode"
+              ".config/kilocode"
             ];
           };
         };

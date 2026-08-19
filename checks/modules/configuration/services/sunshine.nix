@@ -30,6 +30,13 @@
             enable = true;
             user = username;
             program = "${pkgs.ungoogled-chromium}/bin/chromium-browser --kiosk \"http://localhost:47990\"";
+            environment = {
+              WLR_RENDERER = "pixman";
+            };
+          };
+
+          systemd.services.cage = {
+            wantedBy = ["multi-user.target"];
           };
 
           # Upstream does that, not gonna question
@@ -58,7 +65,7 @@
 
         # Test if 5353 is open and UDP
         machine.wait_until_succeeds("ss -ulpn | grep :5353")
-        client.succeed("echo \'\' | socat -t 2 - UDP:machine:5353")
+        client.succeed("echo \'\' | socat -t 2 - UDP4:machine:5353")
 
         tcp_ports = [47984, 47989, 47990, 48010]
 
@@ -70,7 +77,7 @@
         udp_ports = [47998, 47999, 48000, 48002, 48010]
         for port in udp_ports:
                 machine.wait_until_succeeds("ss -ulpn | grep :{port}")
-                client.succeed("echo \'\' | socat -t 2 - UDP:machine:{port}")
+                client.succeed("echo \'\' | socat -t 2 - UDP4:machine:{port}")
 
         services = ["sunshine.service", "avahi-daemon.service"]
         for service in services:

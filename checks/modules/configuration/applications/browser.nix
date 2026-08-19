@@ -31,12 +31,22 @@
           enable = true;
           user = username;
           program = "${pkgs.firefox}/bin/firefox";
-          environment = {MOZ_ENABLE_WAYLAND = "1";};
+          environment = {
+            MOZ_ENABLE_WAYLAND = "1";
+            WLR_RENDERER = "pixman";
+          };
+        };
+
+        systemd.services.cage = {
+          wantedBy = ["multi-user.target"];
         };
 
         virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
         virtualisation.memorySize = 2048;
         fonts.packages = with pkgs; [dejavu_fonts];
+        home-manager.users.${username} = _: {
+          programs.bash.enable = true;
+        };
       };
 
       enableOCR = true;
