@@ -46,7 +46,7 @@
 
       testScript = ''
         machine.wait_for_unit("graphical.target")
-        machine.wait_for_unit("gdm.service")
+        machine.wait_for_unit("display-manager.service")
       '';
     };
   };
