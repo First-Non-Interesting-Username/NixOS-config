@@ -8,6 +8,9 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
+      # Gh actions aarch64 runners don't have qemu
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
+
       nodes.machine = {...}: {
         # VM config goes here
       };

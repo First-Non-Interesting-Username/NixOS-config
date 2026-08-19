@@ -4,10 +4,12 @@
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     checkname = "agents";
-    username = "test";
+    username = "testuser";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
+
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
       nodes.machine = {...}: {
         imports = [
@@ -26,8 +28,10 @@
       };
 
       testScript = ''
-        machine.succeed("opencode --version")
-        machine.succeed("kilo --version")
+        machine.wait_for_unit("multi-user.target")
+
+        machine.succeed("su - ${username} -c 'opencode --version'")
+        machine.succeed("su - ${username} -c 'kilo --version'")
       '';
     };
   };

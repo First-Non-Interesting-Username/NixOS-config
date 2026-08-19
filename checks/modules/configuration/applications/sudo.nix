@@ -4,10 +4,12 @@
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     checkname = "sudo";
-    username = "test";
+    username = "testuser";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
+
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
       nodes.machine = {...}: {
         imports = [
