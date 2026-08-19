@@ -8,6 +8,8 @@
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
+
       nodes.machine = {
         lib,
         pkgs,
@@ -18,12 +20,13 @@
           self.nixosModules.user
           self.nixosModules.stylix
           self.nixosModules.preservation
+          self.nixosModules.home-manager
         ];
         custom = {
           user = {
             enable = true;
-            name = "test";
-            password = "test";
+            name = "testuser";
+            password = "testuser";
           };
           stylix = {
             enable = true;

@@ -9,7 +9,6 @@ _: {
       ...
     }: {
       console = {
-        keyMap = "pl";
         useXkbConfig = true;
       };
       environment.variables = {

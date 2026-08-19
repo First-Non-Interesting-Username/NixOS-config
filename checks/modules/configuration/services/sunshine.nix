@@ -4,10 +4,12 @@
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     checkname = "sunshine";
-    username = "test";
+    username = "testuser";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
+
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
       nodes = {
         machine = {...}: {
@@ -23,7 +25,6 @@
               name = username;
               password = username;
             };
-            stylix.enable = false;
           };
           services.cage = {
             enable = true;
@@ -45,7 +46,7 @@
       enableOCR = true;
 
       testScript = {nodes, ...}: let
-        uid = toString nodes.machine.config.users.users.${username}.uid;
+        uid = toString nodes.machine.users.users.${username}.uid;
       in ''
         machine.wait_for_unit("multi-user.target")
 

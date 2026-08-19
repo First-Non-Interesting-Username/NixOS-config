@@ -4,10 +4,12 @@
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     checkname = "update";
-    username = "test";
+    username = "testuser";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
+
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
       nodes.machine = {...}: {
         imports = [
@@ -38,7 +40,7 @@
         services = ["nh-clean.service", "nixos-upgrade.service", "nix-optimise.service"]
 
         for services in services:
-              machine.succeed(f"systemctl cat {unit}")
+              machine.succeed(f"systemctl cat {service}")
 
         machine.wait_for_unit("nix-daemon.socket")
         machine.succeed("systemctl start nix-optimise.service", timeout=600)

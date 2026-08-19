@@ -4,10 +4,12 @@
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     checkname = "networking";
-    username = "test";
+    username = "testuser";
   in {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
+
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
       nodes.machine = {...}: {
         imports = [
@@ -29,21 +31,21 @@
 
       testScript = ''
         machine.wait_for_unit("resolvconf.service")
-            machine.wait_for_unit("network-setup.service")
-            machine.wait_for_unit("NetworkManager.service")
+        machine.wait_for_unit("network-setup.service")
+        machine.wait_for_unit("NetworkManager.service")
 
-            resolv = machine.succeed("cat /etc/resolv.conf")
-            print(resolv)
-            assert "nameserver 1.1.1.1" in resolv, resolv
-            assert "nameserver 1.0.0.1" in resolv, resolv
+        resolv = machine.succeed("cat /etc/resolv.conf")
+        print(resolv)
+        assert "nameserver 1.1.1.1" in resolv, resolv
+        assert "nameserver 1.0.0.1" in resolv, resolv
 
-            nm = machine.succeed("NetworkManager --print-config")
-            print(nm)
-            assert "dns=none" in nm, nm
+        nm = machine.succeed("NetworkManager --print-config")
+        print(nm)
+        assert "dns=none" in nm, nm
 
-            _status, dig = machine.execute("dig +time=1 +tries=1 example.com")
-            print(dig)
-            assert "SERVER: 1.1.1.1" in dig, dig
+        _status, dig = machine.execute("dig +time=1 +tries=1 example.com")
+        print(dig)
+        assert "SERVER: 1.1.1.1" in dig, dig
       '';
     };
   };
