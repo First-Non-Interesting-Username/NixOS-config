@@ -30,10 +30,12 @@
         services.cage = {
           enable = true;
           user = username;
-          program = "${pkgs.firefox}/bin/firefox";
+          program = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.firefox}/bin/firefox";
           environment = {
             MOZ_ENABLE_WAYLAND = "1";
             WLR_RENDERER = "pixman";
+            LIBGL_ALWAYS_SOFTWARE = "1";
+            MOZ_DISABLE_CONTENT_SANDBOX = "1";
           };
         };
 
@@ -42,7 +44,7 @@
         };
 
         virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
-        virtualisation.memorySize = 2048;
+        virtualisation.memorySize = 4096;
         fonts.packages = with pkgs; [dejavu_fonts];
         home-manager.users.${username} = _: {
           programs.bash.enable = true;
@@ -68,7 +70,12 @@
 
         machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
 
-        machine.wait_until_succeeds("pgrep -x firefox")
+        try:
+            machine.wait_until_succeeds("pgrep -x firefox", timeout=120)
+                except Exception as e:
+                    machine.log(machine.succeed("journalctl -u cage --no-pager"))
+                    machine.log(machine.succeed("ps aux"))
+                    raise e
 
         machine.wait_for_text("Firefox|Google|Mozilla|Welcome")
       '';

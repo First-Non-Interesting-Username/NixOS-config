@@ -29,6 +29,15 @@
         };
         virtualisation.writableStore = true;
         virtualisation.memorySize = 2048;
+
+        nix = {
+          settings = {
+            experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
+          };
+        };
       };
 
       testScript = ''

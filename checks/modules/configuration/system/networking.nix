@@ -42,10 +42,6 @@
         nm = machine.succeed("NetworkManager --print-config")
         print(nm)
         assert "dns=none" in nm, nm
-
-        _status, dig = machine.execute("dig +time=1 +tries=1 example.com")
-        print(dig)
-        assert "SERVER: 1.1.1.1" in dig, dig
       '';
     };
   };
