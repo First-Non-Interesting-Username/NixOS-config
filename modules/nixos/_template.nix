@@ -5,7 +5,7 @@ _: let
   modulename = "CHANGEME";
 in {
   flake = {
-    nixosModules.${modulename} = {config, ...}: {
+    nixosModules.${modulename} = _: {
       options.custom.${modulename} = {
         # Create options here
         # Each option should have:
