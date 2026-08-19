@@ -34,7 +34,7 @@
             pkgs.socat
           ];
         };
-        client = {...}: {
+        client = _: {
           environment.systemPackages = [pkgs.netcat-openbsd pkgs.socat];
         };
       };

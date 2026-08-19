@@ -14,11 +14,7 @@
       ${checkname} = pkgs.testers.runNixOSTest {
         name = checkname;
 
-        nodes.machine = {
-          lib,
-          pkgs,
-          ...
-        }: {
+        nodes.machine = {...}: {
           _module.args.inputs = self.inputs;
 
           imports = [
