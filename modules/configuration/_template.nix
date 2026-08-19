@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-{...}: {
+_: {
   flake = {
     nixosModules.CHANGEME = {
       lib,
@@ -39,7 +39,7 @@
 
       # System config goes here
 
-      home-manager.users.${config.custom.user.name} = {...}: {
+      home-manager.users.${config.custom.user.name} = _: {
         # Home config goes here
       };
     };

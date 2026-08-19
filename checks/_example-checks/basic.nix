@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-{self, ...}: {
+_: {
   perSystem = {pkgs, ...}: let
     checkname = "CHANGEME";
   in {
@@ -11,7 +11,7 @@
       # Gh actions aarch64 runners don't have qemu
       requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
 
-      nodes.machine = {...}: {
+      nodes.machine = _: {
         # VM config goes here
       };
 
