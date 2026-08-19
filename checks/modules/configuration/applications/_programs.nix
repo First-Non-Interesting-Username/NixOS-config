@@ -41,7 +41,7 @@
         machine.fail(f"journalctl -u {unit} -b -p err --no-pager | grep .")
 
         machine.succeed("test -d /etc/ananicy.d")
-        default.succeed("find /etc/ananicy.d -name '*.rules' | grep -q .")
+        machine.succeed("find /etc/ananicy.d -name '*.rules' | grep -q .")
 
         machine.succeed("install -m0755 \"$(command -v sleep)\" /tmp/gcc")
         machine.succeed(
