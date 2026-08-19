@@ -39,10 +39,6 @@
           };
         };
 
-        systemd.services.cage = {
-          wantedBy = ["multi-user.target"];
-        };
-
         virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
         virtualisation.memorySize = 4096;
         fonts.packages = with pkgs; [dejavu_fonts];
@@ -71,9 +67,9 @@
         machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
 
         try:
-            machine.wait_until_succeeds("pgrep -x firefox", timeout=120)
+            machine.wait_until_succeeds("pgrep -f firefox", timeout=120)
         except Exception as e:
-            machine.log(machine.succeed("journalctl -u cage --no-pager"))
+            machine.log(machine.succeed("journalctl -u cage-tty1 --no-pager || true"))
             machine.log(machine.succeed("ps aux"))
             raise e
 

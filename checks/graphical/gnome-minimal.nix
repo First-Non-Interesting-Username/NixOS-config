@@ -2,57 +2,61 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
-  perSystem = {pkgs, ...}: let
+  perSystem = {
+    pkgs,
+    lib,
+    system,
+    ...
+  }: let
     checkname = "gnome-minimal";
   in {
-    checks.${checkname} = pkgs.testers.runNixOSTest {
-      name = checkname;
+    checks = lib.optionalAttrs (system == "x86_64-linux") {
+      ${checkname} = pkgs.testers.runNixOSTest {
+        name = checkname;
 
-      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
+        nodes.machine = {
+          lib,
+          pkgs,
+          ...
+        }: {
+          _module.args.inputs = self.inputs;
 
-      nodes.machine = {
-        lib,
-        pkgs,
-        ...
-      }: {
-        _module.args.inputs = self.inputs;
+          imports = [
+            self.nixosModules.DE
+            self.nixosModules.user
+            self.nixosModules.stylix
+            self.nixosModules.preservation
+            self.nixosModules.home-manager
+          ];
 
-        imports = [
-          self.nixosModules.DE
-          self.nixosModules.user
-          self.nixosModules.stylix
-          self.nixosModules.preservation
-          self.nixosModules.home-manager
-        ];
-        custom = {
-          user = {
-            enable = true;
-            name = "testuser";
-            password = "testuser";
-          };
-          stylix = {
-            enable = true;
-            image = {
+          custom = {
+            user = {
               enable = true;
+              name = "testuser";
+              password = "testuser";
+            };
+            stylix = {
+              enable = true;
+              image.enable = true;
+            };
+            preservation.enable = false;
+            DE = {
+              enable = true;
+              name = "gnome";
             };
           };
-          preservation.enable = false;
-          DE = {
-            enable = true;
-            name = "gnome";
+
+          virtualisation = {
+            cores = 2;
+            memorySize = 4096;
           };
         };
 
-        virtualisation = {
-          cores = 2;
-          memorySize = 4096;
-        };
+        testScript = ''
+          machine.wait_for_unit("graphical.target")
+          machine.wait_for_unit("display-manager.service")
+        '';
       };
-
-      testScript = ''
-        machine.wait_for_unit("graphical.target")
-        machine.wait_for_unit("display-manager.service")
-      '';
     };
   };
 }

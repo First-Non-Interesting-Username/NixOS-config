@@ -26,55 +26,34 @@
               password = username;
             };
           };
-          services.cage = {
-            enable = true;
-            user = username;
-            program = "${pkgs.ungoogled-chromium}/bin/chromium-browser --kiosk \"http://localhost:631\"";
-            environment = {
-              WLR_RENDERER = "pixman";
-            };
-          };
 
-          systemd.services.cage = {
-            wantedBy = ["multi-user.target"];
-          };
-
-          # Upstream does that, not gonna question
-          virtualisation.qemu.options = ["-vga none -device virtio-gpu-pci"];
-          virtualisation.memorySize = 2048;
-          fonts.packages = with pkgs; [dejavu_fonts];
-          environment.systemPackages = [pkgs.netcat-openbsd pkgs.socat];
+          virtualisation.memorySize = 1024;
+          environment.systemPackages = [
+            pkgs.curl
+            pkgs.netcat-openbsd
+            pkgs.socat
+          ];
         };
         client = {...}: {
           environment.systemPackages = [pkgs.netcat-openbsd pkgs.socat];
         };
       };
 
-      enableOCR = true;
-
-      testScript = {nodes, ...}: let
-        uid = toString nodes.machine.users.users.${username}.uid;
-      in ''
+      testScript = ''
         machine.wait_for_unit("multi-user.target")
         client.wait_for_unit("multi-user.target")
 
-        machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
-
         client.wait_until_succeeds("ping -c 1 -W 1 machine")
 
-        machine.wait_until_succeeds("pgrep -x chromium")
+        machine.wait_for_open_port(631)
+        machine.succeed("curl -fsS --max-time 10 http://127.0.0.1:631 | grep -qi cups")
 
-        machine.wait_for_text("CUPS")
-
-        # Test if 5353 is open and service UDP
+        # Test if 5353 is open and serving UDP.
         machine.wait_until_succeeds("ss -ulpn | grep :5353")
-        # Ensure the client's IPv4 path to the machine is up before the
-        # forced-IPv4 probe (eth1's IPv4 address races with its IPv6 one).
+
         client.wait_until_succeeds("ping -4 -c 1 -W 1 machine")
         client.succeed("echo \'\' | socat -t 2 - UDP4:machine:5353")
 
-        # Test if 631 is closed
-        machine.wait_for_open_port(631)
         machine.succeed("nc -zv 127.0.0.1 631")
         client.fail("nc -zv -w 2 machine 631")
 
