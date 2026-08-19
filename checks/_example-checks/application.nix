@@ -31,6 +31,13 @@
           enable = true;
           user = username;
           program = "YOUR PROGRAM EXECUTABLE";
+          environment = {
+            WLR_RENDERER = "pixman";
+          };
+        };
+
+        systemd.services.cage = {
+          wantedBy = ["multi-user.target"];
         };
 
         # Upstream does that, not gonna question

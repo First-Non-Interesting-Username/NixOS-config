@@ -32,6 +32,7 @@
         machine.succeed("wl-paste --version")
 
         machine.wait_for_unit("dbus.service")
+        machine.succeed("systemctl start polkit.service")
         machine.wait_for_unit("polkit.service")
       '';
     };

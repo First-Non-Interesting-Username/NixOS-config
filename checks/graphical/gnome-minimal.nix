@@ -15,6 +15,8 @@
         pkgs,
         ...
       }: {
+        _module.args.inputs = self.inputs;
+
         imports = [
           self.nixosModules.DE
           self.nixosModules.user

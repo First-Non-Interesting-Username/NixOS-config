@@ -52,6 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      max-parallel: 17
       matrix: ${{ fromJSON(needs.discover.outputs.fullMatrix) }}
 
     steps:

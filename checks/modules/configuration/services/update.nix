@@ -39,7 +39,7 @@
 
         services = ["nh-clean.service", "nixos-upgrade.service", "nix-optimise.service"]
 
-        for services in services:
+        for service in services:
               machine.succeed(f"systemctl cat {service}")
 
         machine.wait_for_unit("nix-daemon.socket")
