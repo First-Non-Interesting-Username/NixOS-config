@@ -1,6 +1,6 @@
 # Checks
 
-Checks (also called tests) are deriviations built by nix to check if things work properly.
+Checks (also called tests) are derivations built by nix to check if things work properly.
 
 ## Philosphy of writing checks
 
