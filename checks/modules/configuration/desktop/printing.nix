@@ -56,8 +56,11 @@
         uid = toString nodes.machine.users.users.${username}.uid;
       in ''
         machine.wait_for_unit("multi-user.target")
+        client.wait_for_unit("multi-user.target")
 
         machine.wait_for_file("/run/user/${uid}/wayland-0.lock")
+
+        client.wait_until_succeeds("ping -c 1 -W 1 machine")
 
         machine.wait_until_succeeds("pgrep -x chromium")
 
@@ -65,6 +68,9 @@
 
         # Test if 5353 is open and service UDP
         machine.wait_until_succeeds("ss -ulpn | grep :5353")
+        # Ensure the client's IPv4 path to the machine is up before the
+        # forced-IPv4 probe (eth1's IPv4 address races with its IPv6 one).
+        client.wait_until_succeeds("ping -4 -c 1 -W 1 machine")
         client.succeed("echo \'\' | socat -t 2 - UDP4:machine:5353")
 
         # Test if 631 is closed

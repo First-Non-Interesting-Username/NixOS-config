@@ -42,6 +42,11 @@
             name = "gnome";
           };
         };
+
+        virtualisation = {
+          cores = 2;
+          memorySize = 4096;
+        };
       };
 
       testScript = ''
