@@ -38,7 +38,7 @@ _: {
         config,
         ...
       }: {
-        home.packages = with pkgs; [onefetch];
+        home.packages = with pkgs; [onefetch meld];
         programs = {
           git = {
             enable = true;
@@ -52,6 +52,10 @@ _: {
               };
               init.defaultBranch = "main";
               pull.rebase = true;
+              rerere.enabled = true;
+              merge.tool = "meld";
+              mergetool.keepBackup = false;
+              mergetool.trustExitCode = true;
             };
           };
           gh = {
@@ -96,7 +100,7 @@ _: {
       ];
 
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
-        home.packages = with pkgs; [onefetch];
+        home.packages = with pkgs; [onefetch meld];
         programs = {
           git = {
             enable = true;
@@ -110,13 +114,17 @@ _: {
               };
               init.defaultBranch = "main";
               pull.rebase = true;
+              rerere.enabled = true;
+              merge.tool = "meld";
+              mergetool.keepBackup = false;
+              mergetool.trustExitCode = true;
             };
           };
 
           gh = {
             enable = true;
             settings = {
-              git_protocol = "ssh";
+              git_protocol = "https";
               prompt = "enabled";
             };
           };

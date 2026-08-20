@@ -21,10 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak = {
-      url = "github:gmodena/nix-flatpak/?ref=latest";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,6 +75,11 @@
       url = "github:nixos/flake-registry";
       flake = false;
     };
+
+    nix-github-actions = {
+      url = "github:nix-community/nix-github-actions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -93,6 +94,7 @@
         (inputs.import-tree ./modules)
         (inputs.import-tree ./packages)
         (inputs.import-tree ./checks)
+        (inputs.import-tree ./github-actions)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
     };

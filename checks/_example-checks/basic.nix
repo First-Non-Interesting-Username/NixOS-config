@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 _: {
   perSystem = {pkgs, ...}: let
     checkname = "CHANGEME";
@@ -5,7 +8,10 @@ _: {
     checks.${checkname} = pkgs.testers.runNixOSTest {
       name = checkname;
 
-      nodes.default = _: {
+      # Gh actions aarch64 runners don't have kvm
+      requiredFeatures.kvm = pkgs.stdenv.hostPlatform.isx86_64;
+
+      nodes.machine = _: {
         # VM config goes here
       };
 

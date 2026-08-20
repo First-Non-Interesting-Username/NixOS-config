@@ -36,7 +36,8 @@
   services = {
     scx = {
       enable = true;
-      scheduler = "scx_bpfland";
+      scheduler = "scx_lavd";
+      extraArgs = ["--autopower"];
     };
     system76-scheduler.enable = true;
     fprintd.enable = true;

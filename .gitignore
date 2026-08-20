@@ -11,3 +11,4 @@ result
 .direnv/
 .devenv
 *.patch
+*.orig

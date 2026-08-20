@@ -4,7 +4,6 @@
 _: {
   flake = {
     nixosModules.printing = {
-      pkgs,
       lib,
       config,
       ...
@@ -26,10 +25,6 @@ _: {
 
       services.printing = {
         enable = true;
-        drivers = with pkgs; [
-          cups-filters
-          cups-browsed
-        ];
       };
     };
   };

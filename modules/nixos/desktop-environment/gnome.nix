@@ -7,7 +7,6 @@
       lib,
       config,
       pkgs,
-      inputs,
       ...
     }: let
       cfg = config.custom.DE;
@@ -83,7 +82,7 @@
         }: {
           home.packages = with pkgs; [
             mission-center
-            inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
+            self.inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
           stylix.targets = {

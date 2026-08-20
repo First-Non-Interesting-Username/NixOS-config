@@ -27,12 +27,17 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
-          extra-conf: |
-            experimental-features = nix-command flakes pipe-operators
-            substituters = https://cache.nixos.org/ https://nix-community.cachix.org/ https://matrix.cachix.org https://devenv.cachix.org https://cache.numtide.com https://attic.xuyh0120.win/lantian
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=
+          extra-conf: ${{ env.NIX_CONF }}
 
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
