@@ -30,7 +30,6 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 | [armin](./hosts/armin/README.md)       | Framework 13               | Ryzen 7640U | Radeon 760M       | 16GB | Desktop (GNOME)  |
 | [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
 | [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
-| [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T    | UHD 630           | 32GB | Local Server     |
 | [template](./hosts/template/README.md) | N/A                        | N/A         | N/A               | N/A  | Other            |
 | [victim](./hosts/victim/README.md)     | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
