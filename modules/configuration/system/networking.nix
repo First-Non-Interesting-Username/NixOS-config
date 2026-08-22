@@ -14,7 +14,6 @@ _: {
             "/var/lib/bluetooth"
             "/etc/NetworkManager"
             "/var/lib/NetworkManager"
-            "/var/lib/bluetooth"
           ];
         };
       };
