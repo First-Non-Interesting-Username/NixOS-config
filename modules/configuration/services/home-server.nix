@@ -327,7 +327,7 @@
 
           filebrowser = {
             # renovate: versioning=docker
-            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.2-stable";
+            image = "ghcr.io/gtsteffaniak/filebrowser:1.5.3-stable";
 
             environment = {
               TZ = "Europe/Warsaw";
