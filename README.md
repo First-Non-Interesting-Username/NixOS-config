@@ -12,16 +12,15 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 <img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
 
-
 ## Hosts Matrix
 
-| Hostname                               | Motherboard / Laptop Model | CPU         | GPU               | RAM  | Primary Purpose  |
-| -------------------------------------- | -------------------------- | ----------- | ----------------- | ---- | ---------------- |
-| [armin](./hosts/armin/README.md)       | Framework 13               | Ryzen 7640U | Radeon 760M       | 16GB | Desktop (GNOME)  |
-| [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
-| [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
-| [template](./hosts/template/README.md) | N/A                        | N/A         | N/A               | N/A  | Other            |
-| [victim](./hosts/victim/README.md)     | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
+| Hostname | Motherboard / Laptop Model | CPU         | GPU               | RAM  | Primary Purpose  |
+| -------- | -------------------------- | ----------- | ----------------- | ---- | ---------------- |
+| armin    | Framework 13               | Ryzen 7640U | Radeon 760M       | 16GB | Desktop (GNOME)  |
+| john     | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
+| wall-e   | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
+| template | N/A                        | N/A         | N/A               | N/A  | Other            |
+| victim   | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
 ## Quickstart
 
