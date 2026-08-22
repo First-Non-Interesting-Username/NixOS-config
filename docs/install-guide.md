@@ -47,3 +47,9 @@ nix run github:nix-community/nixos-anywhere -- \
 ```nushell
 ^nix run github:nix-community/nixos-anywhere -- --flake 'github:First-Non-Interesting-Username/NixOS-config#HOST-NAME' --extra-files ./tmp --target-host 'root@IP'
 ```
+
+## Post installation
+
+Log in to password manager, matrix etc
+
+It might be a good idea to regenerate facter hardware config after the first boot.
