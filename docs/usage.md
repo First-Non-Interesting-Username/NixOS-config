@@ -46,3 +46,5 @@ External usage is highly dependant on your nixos configuration framework.
 Currently, I'm the only user of this flake.
 If you are interested in using anything from this flake and don't know how to do it, please create an issue, I will try to help you.
 If you use this flake, please create a section for your framework.
+
+Generally, you almost always need `custom.user = "name-of-your-user"` set. You also need to have home manager enabled.

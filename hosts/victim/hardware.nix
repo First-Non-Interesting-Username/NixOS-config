@@ -51,7 +51,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${config.custom.user.name} = _: {
-    home.stateVersion = "26.11";
+  home-manager.users.${config.custom.user.name} = {osConfig, ...}: {
+    home.stateVersion = osConfig.system.stateVersion;
   };
 }

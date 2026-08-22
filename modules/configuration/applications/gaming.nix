@@ -49,6 +49,7 @@ _: {
         config,
         pkgs,
         lib,
+        ...
       }: {
         preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
           "/persist" = {
@@ -62,7 +63,6 @@ _: {
                 ".config/heroic"
                 ".local/share/heroic"
                 ".config/hydra"
-                "Games"
                 ".local/share/keyrings"
                 ".cache/ProtonPlus"
               ];

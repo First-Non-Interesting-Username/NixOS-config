@@ -18,6 +18,7 @@ in {
       {_module.args.hostName = Hostname;}
       ./modules.nix
       ./hardware.nix
+      ./configuration.nix
       # Modules go here, remember to reference them with self. prefix
       inputs.home-manager.nixosModules.home-manager
       {

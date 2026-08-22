@@ -41,7 +41,7 @@
     kernelParams = [];
   };
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 
   imports = [
     # https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
@@ -50,7 +50,7 @@
     ./disko.nix
   ];
 
-  home-manager.users.${config.custom.user.name} = {...}: {
-    home.stateVersion = "26.05";
+  home-manager.users.${config.custom.user.name} = {osConfig, ...}: {
+    home.stateVersion = osConfig.system.stateVersion;
   };
 }
