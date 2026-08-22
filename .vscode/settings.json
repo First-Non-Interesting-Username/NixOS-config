@@ -1,1 +1,16 @@
-/nix/store/01wg9ssi0i9kmnab5nval68n46a8bar1-vscode-settings.json
+{
+  "[nix]": {
+    "editor": {
+      "defaultFormatter": "jnoortheen.nix-ide"
+    }
+  },
+  "editor": {
+    "defaultFormatter": "esbenp.prettier-vscode",
+    "formatOnSave": true
+  },
+  "nix": {
+    "enableLanguageServer": true,
+    "formatterPath": "alejandra",
+    "serverPath": "nixd"
+  }
+}

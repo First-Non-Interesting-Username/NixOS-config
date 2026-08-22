@@ -12,6 +12,8 @@ _: {
         if config.custom.preservation.enable
         then "/persist"
         else "";
+      userKey = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519";
+      hostKey = "${sshDir}/etc/ssh/ssh_host_ed25519_key";
     in {
       programs.ssh.startAgent = true;
       systemd.tmpfiles.rules = [
@@ -24,22 +26,43 @@ _: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPhyyqVG8KdfHL00jBin/8rJzaD1Str3lO7N+IeF8fPI Server_key"
         ];
       };
+
       # This is either the worst or the smartest thing in the history of humanity, nothing in between
       sops.secrets."ssh_keys/private/${config.custom.hostname}" = {
         owner = config.custom.user.name;
         inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0600";
-        path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519";
+        path = userKey;
       };
       sops.secrets."ssh_keys/public/${config.custom.hostname}" = {
         owner = config.custom.user.name;
         inherit (config.users.users.${config.custom.user.name}) group;
         mode = "0644";
-        path = "${sshDir}${config.users.users.${config.custom.user.name}.home}/.ssh/id_ed25519.pub";
+        path = "${userKey}.pub";
       };
+
+      sops.secrets."host_keys/private/${config.custom.hostname}" = {
+        mode = "0600";
+        path = hostKey;
+        restartUnits = ["sshd.service"];
+      };
+      sops.secrets."host_keys/public/${config.custom.hostname}" = {
+        mode = "0644";
+        path = "${hostKey}.pub";
+      };
+
+      services.openssh.hostKeys = [
+        {
+          path = hostKey;
+          type = "ed25519";
+        }
+      ];
 
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
+          directories = [
+            {directory = "/etc/ssh";}
+          ];
           users.${config.custom.user.name} = {
             directories = [
               {
@@ -68,12 +91,6 @@ _: {
               ForwardX11Trusted = "no";
               PasswordAuthentication = "yes";
               VisualHostKey = "yes";
-            };
-            "Iroh" = {
-              HostName = "iameasytoremember.duckdns.org";
-              User = "nixi";
-              Port = 6767;
-              IdentityFile = "~/.ssh/id_ed25519";
             };
           };
         };

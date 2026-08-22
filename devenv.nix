@@ -16,7 +16,7 @@
   '';
 
   files.".vscode/settings.json" = {
-    #copyMode = "copy";
+    copyMode = "copy";
     json = {
       editor.defaultFormatter = "esbenp.prettier-vscode";
       editor.formatOnSave = true;
@@ -30,7 +30,7 @@
   };
 
   files.".zed/settings.json" = {
-    #copyMode = "copy";
+    copyMode = "copy";
     json = {
       languages.Nix = {
         language_servers = [

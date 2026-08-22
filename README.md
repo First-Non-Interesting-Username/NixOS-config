@@ -8,31 +8,19 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
-## Table of Contents
+## Desktop screenshot
 
-- [Hosts Matrix](#hosts-matrix)
-- [Docs](#docs)
-  - [Modules](#modules)
-  - [Packages](#packages)
-  - [Installation Guides](#installation-guides)
-  - [Host creation guide](#host-creation-guide)
-  - [Secrets](#secrets)
-- [Eye candy stuff](#eye-candy-stuff)
-  - [Star History Chart](#star-history-chart)
-  - [Screenshots](#screenshots)
-- [Footnote](#footnote)
-  - [Inspired by](#inspired-by)
+<img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
 
 ## Hosts Matrix
 
-| Hostname                               | Motherboard / Laptop Model | CPU         | GPU               | RAM  | Primary Purpose  |
-| -------------------------------------- | -------------------------- | ----------- | ----------------- | ---- | ---------------- |
-| [armin](./hosts/armin/README.md)       | Framework 13               | Ryzen 7640U | Radeon 760M       | 16GB | Desktop (GNOME)  |
-| [john](./hosts/john/README.md)         | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
-| [wall-e](./hosts/wall-e/README.md)     | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
-| [iroh](./hosts/iroh/README.md)         | Optiplex 3060 Micro        | i5 8500T    | UHD 630           | 32GB | Local Server     |
-| [template](./hosts/template/README.md) | N/A                        | N/A         | N/A               | N/A  | Other            |
-| [victim](./hosts/victim/README.md)     | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
+| Hostname | Motherboard / Laptop Model | CPU         | GPU               | RAM  | Primary Purpose  |
+| -------- | -------------------------- | ----------- | ----------------- | ---- | ---------------- |
+| armin    | Framework 13               | Ryzen 7640U | Radeon 760M       | 16GB | Desktop (GNOME)  |
+| john     | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
+| wall-e   | N/A                        | N/A         | N/A               | N/A  | Installation ISO |
+| template | N/A                        | N/A         | N/A               | N/A  | Other            |
+| victim   | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
 ## Quickstart
 

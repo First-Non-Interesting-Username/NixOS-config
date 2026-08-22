@@ -6,6 +6,7 @@
 ## Checklist
 
 - [ ] Code follows the style guidelines.
-- [ ] `nix flake check` passes.
+- [ ] `nix flake check --no-build` passes.
 - [ ] Documentation is updated if needed.
 - [ ] Commit messages follow Conventional Commits.
+- [ ] Checks are created for new functionality.

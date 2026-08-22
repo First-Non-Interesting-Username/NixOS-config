@@ -12,15 +12,7 @@ _: {
         "/persist" = {
           directories =
             # Omit this block if you don't plan including any subdirectories of /var/lib
-            lib.filter (
-              d: let
-                dir =
-                  if builtins.isString d
-                  then d
-                  else d.directory;
-              in
-                !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
-            ) [
+            [
               # System-level dirs to persist
             ];
           files = [

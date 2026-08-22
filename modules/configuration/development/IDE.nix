@@ -210,7 +210,7 @@ _: {
           "nixosconfig" = {
             name = "NixOS Config";
             comment = "Open zed with nixos config";
-            exec = "zededitor ${configPath}";
+            exec = "${pkgs.zed-editor}/bin/zeditor ${configPath}";
             icon = nixLogo;
             terminal = false;
             type = "Application";

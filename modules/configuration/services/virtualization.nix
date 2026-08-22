@@ -53,7 +53,6 @@ _: {
               container_generate_entry = 1;
               container_user_custom_home = "${config.home.homeDirectory}/homes/default";
             };
-            enableSystemdUnit = true;
           };
         };
       };
@@ -66,18 +65,9 @@ _: {
     }: {
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
-          directories =
-            lib.filter (
-              d: let
-                dir =
-                  if builtins.isString d
-                  then d
-                  else d.directory;
-              in
-                !(config.fileSystems ? "/var/lib" && lib.hasPrefix "/var/lib" dir)
-            ) [
-              "/var/lib/containers"
-            ];
+          directories = [
+            "/var/lib/containers"
+          ];
           users.${config.custom.user.name} = {
             directories = [
               ".local/share/containers"

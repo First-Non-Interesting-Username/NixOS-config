@@ -7,18 +7,17 @@ _: {
       name = "sops-easy";
       runtimeInputs = with pkgs; [
         sops
-        ssh-to-age
       ];
       text = ''
         set -euo pipefail
 
-        if [ -f /persist/etc/ssh/ssh_host_ed25519_key ]; then
-          KEY=/persist/etc/ssh/ssh_host_ed25519_key
+        if [ -f /persist/var/lib/sops-nix/keys.txt ]; then
+          KEY=/persist/var/lib/sops-nix/keys.txt
         else
-          KEY=/etc/ssh/ssh_host_ed25519_key
+          KEY=/var/lib/sops-nix/keys.txt
         fi
 
-        SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$KEY" | tail -1)
+        export SOPS_AGE_KEY_FILE=$KEY
         export SOPS_AGE_KEY
 
         sops "$@"

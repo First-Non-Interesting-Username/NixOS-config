@@ -1,0 +1,97 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Docs
+
+on:
+  push:
+    paths:
+      - "modules/nixos/**"
+      - "packages/docs/**"
+      - "docs/module-reference.md"
+      - ".github/workflows/docs.yaml"
+  pull_request:
+    paths:
+      - "modules/nixos/**"
+      - "packages/docs/**"
+      - "docs/module-reference.md"
+      - ".github/workflows/docs.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # need write permissions for auto-commit
+          persist-credentials: false
+
+      - name: Read Nix config
+        shell: bash
+        run: |
+          {
+            echo 'NIX_CONF<<EOF'
+            cat .github/nix.conf
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          extra-conf: ${{ env.NIX_CONF }}
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: Generate module reference
+        run: |
+          nix build .#module-reference -o result
+          cp result docs/module-reference.md
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if ! git diff --exit-code -- docs/module-reference.md; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            git diff -- docs/module-reference.md
+          fi
+
+      - name: Fail if docs are out of date on PR
+        if: steps.changes.outputs.has_changes == 'true' && github.event_name == 'pull_request'
+        run: |
+          echo "::error::docs/module-reference.md is out of date. Run 'nix run .#update-module-docs' locally and commit."
+          exit 1
+
+      - name: Create Pull Request for docs update
+        id: cpr
+        if: steps.changes.outputs.has_changes == 'true' && github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: update module reference"
+          title: "docs: update module reference"
+          body: |
+            Automated update of `docs/module-reference.md` from `options.custom.*`.
+
+            Generated via `nix build .#module-reference` (pkgs.nixosOptionsDoc).
+            Auto-merge enabled.
+          branch: chore/docs-module-reference-${{ github.ref_name }}
+          base: ${{ github.ref_name }}
+          delete-branch: true
+          add-paths: docs/module-reference.md
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
+        run: gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --auto --squash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -8,6 +8,15 @@ _: {
       config,
       ...
     }: {
+      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
+        "/persist" = {
+          directories = [
+            "/var/lib/bluetooth"
+            "/etc/NetworkManager"
+            "/var/lib/NetworkManager"
+          ];
+        };
+      };
       sops.secrets."wifi_password" = {};
       networking = {
         networkmanager = {
@@ -85,16 +94,6 @@ _: {
             chmod 600 /etc/NetworkManager/system-connections/malti_5g.nmconnection
             systemctl reload NetworkManager || true
         '';
-      };
-
-      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
-        "/persist" = {
-          directories = [
-            "/etc/NetworkManager"
-            "/var/lib/NetworkManager"
-            "/var/lib/bluetooth"
-          ];
-        };
       };
     };
     nixosModules.secretless-networking-desktop = {
