@@ -8,20 +8,7 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
-## Table of Contents
-
-- [Hosts Matrix](#hosts-matrix)
-- [Docs](#docs)
-  - [Modules](#modules)
-  - [Packages](#packages)
-  - [Installation Guides](#installation-guides)
-  - [Host creation guide](#host-creation-guide)
-  - [Secrets](#secrets)
-- [Eye candy stuff](#eye-candy-stuff)
-  - [Star History Chart](#star-history-chart)
-  - [Screenshots](#screenshots)
-- [Footnote](#footnote)
-  - [Inspired by](#inspired-by)
+## Desktop screenshot
 
 ## Hosts Matrix
 
