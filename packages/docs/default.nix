@@ -16,7 +16,7 @@
       stylix
       user
     ];
-    baseModules = import "${pkgs.path}/nixos/modules/module-list.nix";
+    baseModules = import (pkgs.path + "/nixos/modules/module-list.nix");
     eval = lib.evalModules {
       modules = baseModules ++ customModules ++ [{nixpkgs.hostPlatform = pkgs.stdenv.hostPlatform.system;} {_module.check = false;}];
     };
