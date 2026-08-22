@@ -21,7 +21,7 @@
       modules = baseModules ++ customModules ++ [{nixpkgs.hostPlatform = pkgs.stdenv.hostPlatform.system;} {_module.check = false;}];
     };
     optionsDoc = pkgs.nixosOptionsDoc {
-      options = eval.options;
+      inherit (eval) options;
       transformOptions = opt:
         opt
         // {
