@@ -53,7 +53,6 @@ _: {
               container_generate_entry = 1;
               container_user_custom_home = "${config.home.homeDirectory}/homes/default";
             };
-            enableSystemdUnit = true;
           };
         };
       };
