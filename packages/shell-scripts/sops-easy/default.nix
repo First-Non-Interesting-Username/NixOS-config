@@ -18,7 +18,7 @@ _: {
           KEY=/var/lib/sops-nix/keys.txt
         fi
 
-        SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$KEY" | tail -1)
+        export SOPS_AGE_KEY_FILE=/var/lib/sops-nix/keys.txt
         export SOPS_AGE_KEY
 
         sops "$@"
