@@ -65,6 +65,7 @@ _: {
                 ".config/hydra"
                 ".local/share/keyrings"
                 ".cache/ProtonPlus"
+                ".luanti"
               ];
               files = [
                 # User-level files to persist (relative to $HOME)
@@ -73,13 +74,12 @@ _: {
           };
         };
 
-        # System config goes here
-
         home-manager.users.${config.custom.user.name} = _: {
           home.packages = with pkgs; [
             hydralauncher
             heroic
             protonplus
+            luanti
           ];
           programs = {
             lutris = {
