@@ -9,7 +9,7 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
 > [!IMPORTANT]
-> If you wish to use any part of this config (not by coping parts of nix code, but actual modules),
+> If you wish to use any part of this config (not by copying parts of nix code, but actual modules),
 > please let me know with a [Github issue](https://github.com/First-Non-Interesting-Username/NixOS-config/issues)
 
 ## Desktop screenshot
