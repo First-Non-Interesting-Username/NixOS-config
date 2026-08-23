@@ -41,6 +41,10 @@ modules = [
 
 For detailed instructions on internal and external usage, see the [Usage Guide](./docs/usage.md).
 
+## Documentation
+
+Docs are built with Zensical and hosted on github pages ([link](https://first-non-interesting-username.github.io/NixOS-config/))
+
 ## Footnote
 
 ### Inspired by:
