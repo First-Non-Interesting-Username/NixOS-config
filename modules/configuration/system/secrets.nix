@@ -26,7 +26,7 @@
 
       preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
         "/persist" = {
-          directories = ["${preservationDir}/var/lib/sops-nix"];
+          directories = ["/var/lib/sops-nix"];
           users.${config.custom.user.name} = {
             directories = [".config/sops/age"];
           };
@@ -43,7 +43,7 @@
         defaultSopsFile = "${self}/secrets/secrets.yaml";
 
         age = {
-          keyFile = "/persist/var/lib/sops-nix/keys.txt";
+          keyFile = "${preservationDir}/var/lib/sops-nix/keys.txt";
           generateKey = false;
           sshKeyPaths = [];
         };
