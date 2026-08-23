@@ -8,6 +8,10 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
+> [!IMPORTANT]
+> If you wish to use any part of this config (not by coping parts of nix code, but actual modules),
+> please let me know with a [Github issue](https://github.com/First-Non-Interesting-Username/NixOS-config/issues)
+
 ## Desktop screenshot
 
 <img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
