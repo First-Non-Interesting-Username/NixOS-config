@@ -11,10 +11,6 @@ on:
         description: "Version tag using 0ver (e.g., v0.1.0)"
         required: true
         type: string
-      issue_numbers:
-        description: "Comma-separated PR/Issue numbers (e.g., 12,446,266)"
-        required: true
-        type: string
       releaseDescription:
         description: "Optional description for the release"
         required: false
@@ -27,10 +23,15 @@ jobs:
       contents: read
 
   build:
+    name: Build ${{ matrix.iso }}
     runs-on: ubuntu-latest
     needs: check
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        iso: [john, wall-e]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -44,6 +45,7 @@ jobs:
             cat .github/nix.conf
             echo 'EOF'
           } >> "$GITHUB_ENV"
+
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: ${{ env.NIX_CONF }}
@@ -54,40 +56,60 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile add nixpkgs#cachix"
 
-      - name: Build John
-        run: nix build .#john
+      - name: Build ${{ matrix.iso }}
+        run: nix build ".#${{ matrix.iso }}"
 
-      - name: Prepare ISO and Generate Checksum
+      - name: Prepare ISO and generate checksum
         id: checksum
+        shell: bash
+        env:
+          TAG_NAME: ${{ github.event.inputs.tag_name }}
+          ISO: ${{ matrix.iso }}
         run: |
+          set -euo pipefail
           mkdir -p upload_stage
-          SAFE_NAME="${{ github.event.inputs.tag_name }}"
-          SAFE_NAME="${SAFE_NAME//./-}"
-          ISO_NAME="${SAFE_NAME}-john.iso"
-          echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
-          cp -L ./result/iso/*.iso ./upload_stage/$ISO_NAME
-          cd upload_stage
-          sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
+          SAFE_NAME="${TAG_NAME//./-}"
+          ISO_NAME="${SAFE_NAME}-${ISO}.iso"
 
-      - name: Copy file via SSH
+          shopt -s nullglob
+          isos=(./result/iso/*.iso)
+          if (( ${#isos[@]} != 1 )); then
+            printf 'Expected exactly one ISO in ./result/iso; found %d\n' "${#isos[@]}" >&2
+            exit 1
+          fi
+
+          cp -L "${isos[0]}" "upload_stage/${ISO_NAME}"
+          (
+            cd upload_stage
+            sha256sum "$ISO_NAME" > "${ISO_NAME}.sha256"
+          )
+
+          printf 'safe_name=%s\n' "$SAFE_NAME" >> "$GITHUB_OUTPUT"
+          printf 'iso_name=%s\n' "$ISO_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Copy files via SSH
+        shell: bash
+        env:
+          ISO_NAME: ${{ steps.checksum.outputs.iso_name }}
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE }}" > ~/.ssh/id_ed25519
+          printf '%s\n' "${{ secrets.SSH_PRIVATE }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p 22 frs.sourceforge.net >> ~/.ssh/known_hosts
 
           scp -v -P 22 \
             -i ~/.ssh/id_ed25519 \
             -o IdentitiesOnly=yes \
-            "upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso" \
-            "upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso.sha256" \
+            "upload_stage/${ISO_NAME}" \
+            "upload_stage/${ISO_NAME}.sha256" \
             "${{ secrets.SF_USERNAME }}@frs.sourceforge.net:/home/frs/project/nixos-config/"
 
-      - name: Upload Checksum Artifact
+      - name: Upload checksum artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: checksum-john
-          path: upload_stage/${{ steps.checksum.outputs.safe_name }}-john.iso.sha256
+          name: checksum-${{ matrix.config }}
+          path: upload_stage/${{ steps.checksum.outputs.iso_name }}.sha256
 
   release:
     runs-on: ubuntu-latest
@@ -95,35 +117,30 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download Checksum Artifacts
+      - name: Download checksum artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: checksum-*
           merge-multiple: true
 
-      - name: Extract Checksums
+      - name: Extract checksums
         id: extract-checksums
+        shell: bash
         run: |
-          HASH=$(awk '{ print $1 }' *-john.iso.sha256)
-          echo "sha256_john=$HASH" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          JOHN_HASH="$(awk 'NR == 1 { print $1; exit }' -- *-john.iso.sha256)"
+          WALL_E_HASH="$(awk 'NR == 1 { print $1; exit }' -- *-wall-e.iso.sha256)"
+          printf 'sha256_john=%s\n' "$JOHN_HASH" >> "$GITHUB_OUTPUT"
+          printf 'sha256_wall_e=%s\n' "$WALL_E_HASH" >> "$GITHUB_OUTPUT"
 
       - name: Create safe name
         id: safe_name
+        shell: bash
+        env:
+          TAG_NAME: ${{ github.event.inputs.tag_name }}
         run: |
-          SAFE_NAME="${{ github.event.inputs.tag_name }}"
-          SAFE_NAME="${SAFE_NAME//./-}"
-          echo "safe_name=$SAFE_NAME" >> "$GITHUB_OUTPUT"
-
-      - name: Format Issue List
-        id: format_issues
-        run: |
-          RAW="${{ github.event.inputs.issue_numbers }}"
-          FORMATTED=$(echo "$RAW" | sed 's/ //g; s/^/- #/; s/,/\n- #/g')
-          {
-            echo "LIST<<EOF"
-            echo "$FORMATTED"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          SAFE_NAME="${TAG_NAME//./-}"
+          printf 'safe_name=%s\n' "$SAFE_NAME" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
@@ -131,9 +148,9 @@ jobs:
           tag_name: ${{ github.event.inputs.tag_name }}
           name: "Release ${{ github.event.inputs.tag_name }}"
           files: "*.sha256"
+          generate_release_notes: true
           body: |
             # NixOS Configuration Release
-            ${{ github.event.inputs.releaseDescription }}
 
             ## Downloads
 
@@ -141,11 +158,9 @@ jobs:
             * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ steps.safe_name.outputs.safe_name }}-john.iso/download)**
             * **SHA256:** ${{ steps.extract-checksums.outputs.sha256_john }}
 
-            Notable changes:
-
-            ${{ steps.format_issues.outputs.LIST }}
-          draft: false
-          prerelease: false
+            ### wall-e (Non-graphical)
+            * **[Download ISO from SourceForge](https://sourceforge.net/projects/nixos-config/files/${{ steps.safe_name.outputs.safe_name }}-wall-e.iso/download)**
+            * **SHA256:** ${{ steps.extract-checksums.outputs.sha256_wall_e }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -166,7 +181,7 @@ jobs:
           if [ -z "$EXISTING_ISSUE" ]; then
             gh issue create \
               --title "Manual SourceForge Cleanup Required" \
-              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. SourceForge does not have automated pruning, and only the latest ISO should be available at a time. Please manually remove all older ISOs. Steps: 1) Go to https://sourceforge.net/projects/nixos-config/ 2) Click files 3) Remove old ISOs"
+              --body "The release **${{ github.event.inputs.tag_name }}** was uploaded. SourceForge does not have automated pruning. Please retain the current John and wall-e ISOs, and remove older ISO versions. Steps: 1) Go to https://sourceforge.net/projects/nixos-config/ 2) Click files 3) Remove old ISOs"
           else
-            gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to clean up old ISOs."
+            gh issue comment "$EXISTING_ISSUE" --body "Another release (${{ github.event.inputs.tag_name }}) has been pushed. Reminder to remove older John and wall-e ISOs from SourceForge."
           fi

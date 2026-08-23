@@ -2,6 +2,18 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 {
+  description = "First-Non-Interesting-Username's NixOS config";
+
+  nixConfig = {
+    extra-substituters = [
+      "https://matrix.cachix.org"
+    ];
+
+    extra-trusted-public-keys = [
+      "matrix.cachix.org-1:uZWavEIj0/oIRHPjh+OG586y4nXBlyI0xkYfZBfDx7w="
+    ];
+  };
+
   inputs = {
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";

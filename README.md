@@ -12,6 +12,10 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 <img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
 
+## Corpotalk description
+
+A State-Of-The-Art NixOS config, utilizing bleeding edge technologies
+
 ## Hosts Matrix
 
 | Hostname | Motherboard / Laptop Model | CPU         | GPU               | RAM  | Primary Purpose  |
@@ -23,6 +27,17 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 | victim   | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
 ## Quickstart
+
+The config can be tested using the bootable ISO from [github releases](https://github.com/First-Non-Interesting-Username/NixOS-config/releases).
+Note that the ISO is hosted on sourceforge, so the download might be really slow.
+Another way to acquire the ISO is to build it (with cache).
+Run:
+
+```bash
+# Build CLI only ISO by replacing `john` with `wall-e`
+nix build github:First-Non-Interesting-Username/NixOS-config#john
+# Accept all prompts or you will be building the full ISO
+```
 
 To use modules or packages from this flake in your own configuration, add it as an input:
 
