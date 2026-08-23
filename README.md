@@ -12,9 +12,11 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 <img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
 
-## Corpotalk description
+## Features
 
-A State-Of-The-Art NixOS config, utilizing bleeding edge technologies
+- Testing (that barely catches issue)
+- Preservation
+-
 
 ## Hosts Matrix
 
