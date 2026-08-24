@@ -12,7 +12,12 @@
       lib,
       config,
       ...
-    }: {
+    }: let
+      preservationDir =
+        if config.custom.preservation.enable
+        then "/persist"
+        else "";
+    in {
       imports = [
         inputs.sops-nix.nixosModules.sops
         # TODO: Create secrets module (same concept as preservation module)
@@ -38,7 +43,7 @@
         defaultSopsFile = "${self}/secrets/secrets.yaml";
 
         age = {
-          keyFile = "/var/lib/sops-nix/keys.txt";
+          keyFile = "${preservationDir}/var/lib/sops-nix/keys.txt";
           generateKey = false;
           sshKeyPaths = [];
         };

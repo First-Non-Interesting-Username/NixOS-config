@@ -8,9 +8,19 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 > This is a learning project in the first place.
 > Please point out any issues you encounter. I will be more than happy to fix them and learn on my mistakes.
 
+> [!IMPORTANT]
+> If you wish to use any part of this config (not by copying parts of nix code, but actual modules),
+> please let me know with a [Github issue](https://github.com/First-Non-Interesting-Username/NixOS-config/issues)
+
 ## Desktop screenshot
 
 <img width="2560" height="1440" alt="a screenshot of gnome desktop" src="https://github.com/user-attachments/assets/f830e17d-349e-490e-a18c-c1f716d087b1" />
+
+## Features
+
+- Testing (that barely catches issue)
+- Preservation
+-
 
 ## Hosts Matrix
 
@@ -23,6 +33,17 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 | victim   | Gigabyte Eagle B650 AX     | Ryzen 7500F | Radeon RX 7800 XT | 32GB | Desktop (GNOME)  |
 
 ## Quickstart
+
+The config can be tested using the bootable ISO from [github releases](https://github.com/First-Non-Interesting-Username/NixOS-config/releases).
+Note that the ISO is hosted on sourceforge, so the download might be really slow.
+Another way to acquire the ISO is to build it (with cache).
+Run:
+
+```bash
+# Build CLI only ISO by replacing `john` with `wall-e`
+nix build github:First-Non-Interesting-Username/NixOS-config#john
+# Accept all prompts or you will be building the full ISO
+```
 
 To use modules or packages from this flake in your own configuration, add it as an input:
 
@@ -40,6 +61,10 @@ modules = [
 ```
 
 For detailed instructions on internal and external usage, see the [Usage Guide](./docs/usage.md).
+
+## Documentation
+
+Docs are built with Zensical and hosted on github pages ([link](https://first-non-interesting-username.github.io/NixOS-config/))
 
 ## Footnote
 
