@@ -20,7 +20,10 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 - Testing (that barely catches issue)
 - Preservation
--
+- [Documentation on github pages](https://first-non-interesting-username.github.io/NixOS-config/)
+- Caching
+- All the usual nixos goodies
+- Everything you could expect from a polished linux desktop setup, but declarative :)
 
 ## Hosts Matrix
 
@@ -60,7 +63,7 @@ modules = [
 ];
 ```
 
-For detailed instructions on internal and external usage, see the [Usage Guide](./docs/usage.md).
+For detailed instructions on internal and external usage, see the [Usage Guide](usage.md).
 
 ## Documentation
 

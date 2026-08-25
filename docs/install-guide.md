@@ -4,8 +4,8 @@
 
 - Machine with Nix (with flakes) installed (from this point called `source`). It's reccomended that this isn't a potato
 - Target machine (`target` from this point)
-- Host config prepared (see [host creation guide]](./host-creation-guide.md) for more informations)
-- Age `keys.txt` file linked with the host (if you followed that [host creation guide]](./host-creation-guide.md) you should have it somewhere)
+- Host config prepared (see [host creation guide]](host-creation-guide.md) for more informations)
+- Age `keys.txt` file linked with the host (if you followed that [host creation guide]](host-creation-guide.md) you should have it somewhere)
 - Clean workspace
 
 ## Steps

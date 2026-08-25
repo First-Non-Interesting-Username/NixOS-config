@@ -20,7 +20,7 @@ It might be a good idea to let me know that you are a user of this config, so I 
 
 Select a host you want to base your host on and a name for your host.
 
-Naming hosts and a few host names I came up with are available in [host-names.md](/docs/host-names.md) doc.
+Naming hosts and a few host names I came up with are available in [host-names.md](host-names.md) doc.
 
 You should base your host on the `template` host, unless your host is very similiar to another, existising host.
 
@@ -50,7 +50,7 @@ Get through `hardware.nix` and change things you want to change. template config
 
 ## Add configuration modules
 
-[Explanation of modules](/docs/modules.md)
+[Explanation of modules](modules.md)
 
 In `default.nix` adjust the list of modules. In that file, you are supposed to put only configuration modules, ones that don't provide options.
 
