@@ -3,6 +3,13 @@
 A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/First-Non-Interesting-Username/NixOS-config)
+![Hackatime Badge](https://hackatime.hackclub.com/api/v1/badge/U0A9Y38B28H/First-Non-Interesting-Username/NixOS-config)
+[![Flake check](https://img.shields.io/github/actions/workflow/status/First-Non-Interesting-Username/NixOS-config/flake-check.yaml?label=flake+check&logo=nixos&logoColor=5277C3)](https://github.com/First-Non-Interesting-Username/NixOS-config/actions/workflows/flake-check.yaml)
+[![Docs](https://img.shields.io/github/actions/workflow/status/First-Non-Interesting-Username/NixOS-config/docs.yaml?label=docs&logo=readthedocs&logoColor=white)](https://first-non-interesting-username.github.io/NixOS-config/)
+[![Release](https://img.shields.io/github/v/release/First-Non-Interesting-Username/NixOS-config?logo=github)](https://github.com/First-Non-Interesting-Username/NixOS-config/releases)
+[![License](https://img.shields.io/github/license/First-Non-Interesting-Username/NixOS-config?logo=gnu)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/First-Non-Interesting-Username/NixOS-config?logo=github)](https://github.com/First-Non-Interesting-Username/NixOS-config/issues)
+[![Built with Nix](https://img.shields.io/badge/built_with-Nix-5277C3?logo=nixos&logoColor=white&style=flat)](https://nixos.org)
 
 > [!NOTE]
 > This is a learning project in the first place.
