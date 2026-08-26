@@ -45,6 +45,9 @@ A comprehensive OS-as-a-code solution based on NixOS (Work in progress).
 
 ## Quickstart
 
+> [!IMPORTANT]
+> Password for the ISO is `nixos`
+
 The config can be tested using the bootable ISO from [github releases](https://github.com/First-Non-Interesting-Username/NixOS-config/releases).
 Note that the ISO is hosted on sourceforge, so the download might be really slow.
 Another way to acquire the ISO is to build it (with cache).
@@ -54,6 +57,12 @@ Run:
 # Build CLI only ISO by replacing `john` with `wall-e`
 nix build github:First-Non-Interesting-Username/NixOS-config#john
 # Accept all prompts or you will be building the full ISO
+```
+
+If your only goal is to test the config, you can boot the ISO in a nix managed VM with:
+
+```bash
+nix run github:First-Non-Interesting-Username/NixOS-config#john
 ```
 
 To use modules or packages from this flake in your own configuration, add it as an input:
@@ -218,13 +227,15 @@ tree
 │   │   │   └── default.nix
 │   │   └── hexecute-gnome
 │   │       └── default.nix
-│   └── shell-scripts # Shell scripts
-│       ├── rebuild # Faster rebuilds
-│       │   └── default.nix
-│       ├── sops-easy # Sops is kinda broken on nixos (or I'm stupid, one of the 2)
-│       │   └── default.nix
-│       └── _template
-│           └── default.nix
+│   ├── shell-scripts # Shell scripts
+│   │   ├── rebuild # Faster rebuilds
+│   │   │   └── default.nix
+│   │   ├── sops-easy # Sops is kinda broken on nixos (or I'm stupid, one of the 2)
+│   │   │   └── default.nix
+│   │   └── _template
+│   │       └── default.nix
+│   └── vm-hosts # Run this config in a local VM
+│       └── john.nix
 ├── README.md # README
 ├── renovate.json
 ├── REVIEW.md # Review instructions for AI agents
