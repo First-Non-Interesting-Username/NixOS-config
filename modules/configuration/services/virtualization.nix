@@ -43,7 +43,6 @@ _: {
       }: {
         home.packages = with pkgs; [
           lima
-          distroshelf
         ];
         programs = {
           distrobox = {

@@ -31,7 +31,7 @@ _: {
     nixosModules.moonlight = {config, ...}: {
       home-manager.users.${config.custom.user.name} = {pkgs, ...}: {
         home.packages = with pkgs; [
-          #moonlight-qt
+          moonlight-qt
         ];
       };
     };

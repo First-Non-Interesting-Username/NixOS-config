@@ -7,7 +7,7 @@ _: {
       security = {
         sudo.enable = false;
         sudo-rs.enable = true;
-        # Making you not need to write password over and over
+        # Making you don't need to write password over and over
         polkit.extraConfig = ''
           polkit.addRule(function(action, subject) {
             if (subject.isInGroup("wheel")) {
