@@ -247,7 +247,7 @@ tree
 
 ## Known issues
 
-None for now.
+None
 
 ## Footnote
 
