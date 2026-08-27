@@ -38,7 +38,7 @@ nix flake check --no-build
 
 ## Commit conventions
 
-I use relaxed version of [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+I use relaxed version of [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 As long as your commit uses the format of `category: what you did` it is fine.
 
