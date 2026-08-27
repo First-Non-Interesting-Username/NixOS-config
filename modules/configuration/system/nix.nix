@@ -67,7 +67,7 @@
         channel.enable = false;
       };
 
-      nixpkgs.config = lib.mkForce {
+      nixpkgs.config = {
         allowUnfree = true;
         allowBroken = false;
       };

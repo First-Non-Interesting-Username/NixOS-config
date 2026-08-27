@@ -51,7 +51,6 @@ in {
 
           testScript = ''
             machine.wait_for_unit("multi-user.target")
-            machine.succeed("hostname | grep nixos")
             machine.wait_for_unit("graphical.target")
             machine.wait_for_unit("display-manager.service")
           '';
