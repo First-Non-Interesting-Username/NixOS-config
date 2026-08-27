@@ -109,5 +109,8 @@
         (inputs.import-tree ./github-actions)
         (inputs.import-tree.match ".*/[^/]+/default\\.nix" ./hosts)
       ];
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.alejandra;
+      };
     };
 }

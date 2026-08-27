@@ -1,28 +1,61 @@
-{
-  self,
-  inputs,
-  ...
-}: let
-  Hostname = "john";
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+{self, ...}: let
+  checkname = "john";
 in {
-  perSystem = {pkgs, ...}: {
-    checks.${Hostname} = pkgs.testers.runNixOSTest {
-      name = Hostname;
+  perSystem = {
+    pkgs,
+    lib,
+    system,
+    ...
+  }:
+    lib.optionalAttrs (system == "x86_64-linux") {
+      checks = {
+        ${checkname} = pkgs.testers.runNixOSTest {
+          name = checkname;
 
-      nodes.${Hostname} = {
-        imports = self.nixosConfigurations.${Hostname}._module.args.modules;
+          nodes.machine = {...}: {
+            _module.args.inputs = self.inputs;
+
+            imports = [
+              self.nixosModules.DE
+              self.nixosModules.user
+              self.nixosModules.stylix
+              self.nixosModules.preservation
+              self.nixosModules.home-manager
+            ];
+
+            custom = {
+              user = {
+                enable = true;
+                name = "nixos";
+                password = "nixos";
+              };
+              stylix = {
+                enable = true;
+                image.enable = true;
+              };
+              preservation.enable = false;
+              DE = {
+                enable = true;
+                name = "gnome";
+              };
+            };
+
+            virtualisation = {
+              cores = 2;
+              memorySize = 4096;
+            };
+          };
+
+          testScript = ''
+            machine.wait_for_unit("multi-user.target")
+            machine.succeed("hostname | grep nixos")
+            machine.wait_for_unit("graphical.target")
+            machine.wait_for_unit("display-manager.service")
+          '';
+        };
       };
-
-      node.specialArgs = {
-        inherit self inputs Hostname;
-      };
-
-      testScript = ''
-        ${Hostname}.wait_for_unit("multi-user.target")
-        ${Hostname}.succeed("hostname | grep ${Hostname}")
-        ${Hostname}.wait_for_unit("graphical.target")
-        ${Hostname}.wait_for_unit("display-manager.service")
-      '';
     };
-  };
 }
