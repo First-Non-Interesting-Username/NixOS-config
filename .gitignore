@@ -13,3 +13,4 @@ result
 *.patch
 *.orig
 keys.txt
+john.qcow2

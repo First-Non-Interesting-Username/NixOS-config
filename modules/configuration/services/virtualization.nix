@@ -43,7 +43,6 @@ _: {
       }: {
         home.packages = with pkgs; [
           lima
-          distroshelf
         ];
         programs = {
           distrobox = {
@@ -54,33 +53,6 @@ _: {
               container_user_custom_home = "${config.home.homeDirectory}/homes/default";
             };
           };
-        };
-      };
-    };
-
-    nixosModules.virtualization-server = {
-      lib,
-      config,
-      ...
-    }: {
-      preservation.preserveAt = lib.mkIf config.custom.preservation.enable {
-        "/persist" = {
-          directories = [
-            "/var/lib/containers"
-          ];
-          users.${config.custom.user.name} = {
-            directories = [
-              ".local/share/containers"
-              ".config/containers"
-            ];
-          };
-        };
-      };
-      virtualisation = {
-        containers.enable = true;
-        podman = {
-          enable = true;
-          defaultNetwork.settings.dns_enabled = true;
         };
       };
     };
