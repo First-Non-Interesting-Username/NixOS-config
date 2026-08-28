@@ -11,10 +11,6 @@ on:
         description: "Version tag using 0ver (e.g., v0.1.0)"
         required: true
         type: string
-      releaseDescription:
-        description: "Optional description for the release"
-        required: false
-        type: string
 
 jobs:
   check:
@@ -128,8 +124,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          JOHN_HASH="$(awk 'NR == 1 { print $1; exit }' -- *-john.iso.sha256)"
-          WALL_E_HASH="$(awk 'NR == 1 { print $1; exit }' -- *-wall-e.iso.sha256)"
+          JOHN_HASH="$(awk 'NR == 1 { print $1; exit }' *-john.iso.sha256)"
+          WALL_E_HASH="$(awk 'NR == 1 { print $1; exit }' *-wall-e.iso.sha256)"
           printf 'sha256_john=%s\n' "$JOHN_HASH" >> "$GITHUB_OUTPUT"
           printf 'sha256_wall_e=%s\n' "$WALL_E_HASH" >> "$GITHUB_OUTPUT"
 
