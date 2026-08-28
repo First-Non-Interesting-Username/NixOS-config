@@ -261,3 +261,9 @@ None
 
 This project is licensed under the GNU General Public License v3.0 or later.
 See the [LICENSE](LICENSE) file for details.
+
+
+NixOS Logo designed by Tim Cuthbertson (@timbertson).
+
+The NixOS logo is licensed under the [Creative Commons Attribution 4.0
+International License](http://creativecommons.org/licenses/by/4.0/).
