@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 {self, ...}: {
-  perSystem = {...}: {
+  perSystem = _: {
     apps.john.program = "${self.nixosConfigurations.john.config.system.build.vm}/bin/run-john-vm";
   };
 }
