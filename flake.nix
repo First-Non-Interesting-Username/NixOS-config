@@ -39,7 +39,7 @@
     };
 
     stylix = {
-      url = "github:danth/stylix";
+      url = "github:First-Non-Interesting-Username/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
