@@ -9,6 +9,7 @@
       ...
     }: let
       cfg = config.custom.DE.programs;
+      ptyxisUUID = "00000000-0000-0000-0000-000000000000";
     in {
       config = lib.mkIf config.custom.DE.enable {
         home-manager.users.${config.custom.user.name} = {pkgs, ...}:
@@ -89,24 +90,19 @@
 
             (lib.mkIf (cfg.terminalEmulator == "gnome") {
               programs.ptyxis = {
-                palettes.stylix = {
-                  Palette.Name = "Stylix";
-                  Light = palette;
-                  Dark = palette;
-                };
                 enable = true;
               };
               stylix.targets.ptyxis = {
                 enable = true;
-                profileUUIDs = ["00000000-0000-0000-0000-000000000000"];
+                profileUUIDs = [ptyxisUUID];
               };
               dconf.settings = {
                 "org/gnome/Ptyxis" = {
-                  default-profile-uuid = "00000000-0000-0000-0000-000000000000";
+                  default-profile-uuid = ptyxisUUID;
                   restore-session = true;
                   restore-window-size = true;
                   profile-uuids = [
-                    "00000000-0000-0000-0000-000000000000"
+                    ptyxisUUID
                   ];
                 };
               };
