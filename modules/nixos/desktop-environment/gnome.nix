@@ -88,7 +88,7 @@
 
             # Hexecute will throws errors without it
             activation.seedHexecuteGestures = lib.hm.dag.entryAfter ["writeBoundary"] ''
-              gesturesFile="$HOME/.config/hexecute/gestures.json"
+              gesturesFile="$HOME/.config/hexecute/gestures.json"; mkdir -p "$(dirname "$gesturesFile")"
               if [ ! -s "$gesturesFile" ]; then
                 printf '[]\n' > "$gesturesFile"
               fi
