@@ -182,6 +182,7 @@
                 switch-input-source-backward = [];
                 activate-window-menu = ["<Alt><Super>space"];
                 minimize = ["<Super>g"];
+                maximize = ["<Super>f"];
                 move-to-workspace-left = [];
                 move-to-workspace-right = [];
                 move-to-monitor-left = [];
