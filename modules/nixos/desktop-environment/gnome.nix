@@ -80,10 +80,20 @@
           lib,
           ...
         }: {
-          home.packages = with pkgs; [
-            mission-center
-            self.inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
-          ];
+          home = {
+            packages = with pkgs; [
+              mission-center
+              self.inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
+            ];
+
+            # Hexecute will throws errors without it
+            activation.seedHexecuteGestures = lib.hm.dag.entryAfter ["writeBoundary"] ''
+              gesturesFile="$HOME/.config/hexecute/gestures.json"
+              if [ ! -s "$gesturesFile" ]; then
+                printf '[]\n' > "$gesturesFile"
+              fi
+            '';
+          };
 
           stylix.targets = {
             gnome.colors.enable = false;
