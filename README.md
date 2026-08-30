@@ -120,15 +120,16 @@ tree
 ├── devenv.nix
 ├── devenv.yaml
 ├── docs # Documentation, LOL
-│   ├── checks.md
-│   ├── host-creation-guide.md
-│   ├── host-names.md
-│   ├── index.md -> ../README.md # Zensical uses index.md as index for the site and I didn't want it to be empty
-│   ├── install-guide.md
-│   ├── module-reference.md
-│   ├── modules.md
-│   ├── usage.md
-│   └── versions.md
+│   ├── checks.md
+│   ├── host-creation-guide.md
+│   ├── host-names.md
+│   ├── index.md -> ../README.md # Zensical uses index.md as index for the site and I didn't want it to be empty
+│   ├── install-guide.md
+│   ├── keybinds.md # keybinds for all DEs are documented in this file
+│   ├── module-reference.md
+│   ├── modules.md
+│   ├── usage.md
+│   └── versions.md
 ├── flake.lock
 ├── flake.nix
 ├── github-actions # https://github.com/nix-community/nix-github-actions
@@ -261,7 +262,6 @@ None
 
 This project is licensed under the GNU General Public License v3.0 or later.
 See the [LICENSE](LICENSE) file for details.
-
 
 NixOS Logo designed by Tim Cuthbertson (@timbertson).
 
