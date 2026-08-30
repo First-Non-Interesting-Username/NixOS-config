@@ -86,7 +86,7 @@
               self.inputs.hexecute-gnome.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
 
-            # Hexecute will throws errors without it
+            # Hexecute throws errors without it
             activation.seedHexecuteGestures = lib.hm.dag.entryAfter ["writeBoundary"] ''
               gesturesFile="$HOME/.config/hexecute/gestures.json"; mkdir -p "$(dirname "$gesturesFile")"
               if [ ! -s "$gesturesFile" ]; then
