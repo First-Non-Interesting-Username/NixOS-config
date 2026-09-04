@@ -121,8 +121,7 @@
                   logo-menu
                   vitals
                   hide-cursor
-                  #tiling-shell
-                  inputs.mosaicwm.packages.${pkgs.stdenv.hostPlatform.system}.default
+                  tiling-shell
                 ]
               );
             };
