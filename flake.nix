@@ -92,6 +92,10 @@
       url = "github:nix-community/nix-github-actions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mosaicwm = {
+      url = "github:hermesagentv3010/mosaicwm-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:

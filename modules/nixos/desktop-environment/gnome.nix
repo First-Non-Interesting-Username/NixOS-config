@@ -1,7 +1,11 @@
 # SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake = {
     nixosModules.GNOME = {
       lib,
@@ -117,7 +121,8 @@
                   logo-menu
                   vitals
                   hide-cursor
-                  tiling-shell
+                  #tiling-shell
+                  inputs.mosaicwm.packages.${pkgs.stdenv.hostPlatform.system}.default
                 ]
               );
             };
