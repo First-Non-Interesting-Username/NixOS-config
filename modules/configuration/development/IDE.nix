@@ -58,7 +58,6 @@ _: {
         pkgs,
         config,
         osConfig,
-        lib,
         ...
       }: let
         nixLogo = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
