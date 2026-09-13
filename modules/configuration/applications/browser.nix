@@ -89,28 +89,10 @@
               isDefault = true;
 
               search = {
-                default = "Startpage";
+                default = "ddg";
                 force = true;
 
                 engines = {
-                  "Startpage" = {
-                    urls = [
-                      {
-                        template = "https://www.startpage.com/sp/search";
-                        params = [
-                          {
-                            name = "query";
-                            value = "{searchTerms}";
-                          }
-                          {
-                            name = "prfe";
-                            value = "43de26394a14001889a11b904e373f83b4833751e6bb6aaf1cb898ea811899be8de2ce9e000306e7e258ecb3a1c9eddb6705f30f6aa6441baa704f36c011fc8bfe68d3114b885135b412f73b4b16eaae";
-                          }
-                        ];
-                      }
-                    ];
-                    definedAliases = ["@sp" "@startpage"];
-                  };
                   "NixOS Packages" = {
                     urls = [{template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";}];
                     icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
