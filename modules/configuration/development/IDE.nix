@@ -33,7 +33,12 @@ _: {
       };
 
       sops = {
-        secrets.wakatime_api_key = {};
+        secrets = {
+          "wakatime_api_key" = {};
+          "MISTRAL_API_KEY" = {
+            owner = config.custom.user.name;
+          };
+        };
         templates.".wakatime.cfg" = {
           content = ''
             [settings]
@@ -52,10 +57,22 @@ _: {
       home-manager.users.${config.custom.user.name} = {
         pkgs,
         config,
+        osConfig,
+        lib,
         ...
       }: let
         nixLogo = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         configPath = "${config.xdg.userDirs.projects}/NixOS-config";
+        keyFile = osConfig.sops.secrets."MISTRAL_API_KEY".path;
+        zedPackage = pkgs.symlinkJoin {
+          name = "zed-editor-env";
+          paths = [pkgs.zed-editor];
+          nativeBuildInputs = [pkgs.makeWrapper];
+          postBuild = ''
+            wrapProgram $out/bin/zeditor \
+              --run '[ -r "${keyFile}" ] && export CODESTRAL_API_KEY="$(cat "${keyFile}")"'
+          '';
+        };
       in {
         programs = {
           micro = {
@@ -64,6 +81,7 @@ _: {
 
           zed-editor = {
             enable = true;
+            package = zedPackage;
             extensions = [
               "nix"
               "markdown-snippets"
@@ -86,7 +104,15 @@ _: {
               restore_on_startup = "last_session";
 
               vim_mode = false;
-              disable_ai = true;
+              disable_ai = false;
+              show_edit_predictions = true;
+              edit_predictions = {
+                provider = "codestral";
+              };
+              agent = {
+                enabled = false;
+                button = false;
+              };
               tabs = {
                 file_icons = true;
                 git_status = true;
@@ -210,7 +236,7 @@ _: {
           "nixosconfig" = {
             name = "NixOS Config";
             comment = "Open zed with nixos config";
-            exec = "${pkgs.zed-editor}/bin/zeditor ${configPath}";
+            exec = "${zedPackage}/bin/zeditor ${configPath}";
             icon = nixLogo;
             terminal = false;
             type = "Application";
