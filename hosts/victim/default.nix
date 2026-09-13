@@ -26,6 +26,8 @@ in {
       self.nixosModules.home-manager
       self.nixosModules.IDE
       self.nixosModules.input
+      self.nixosModules.languages
+      self.nixosModules.llama-cpp
       self.nixosModules.locale
       self.nixosModules.moonlight
       self.nixosModules.networking-desktop
