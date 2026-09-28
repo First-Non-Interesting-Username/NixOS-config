@@ -691,8 +691,29 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "preservation": "preservation",
+        "slick": "slick",
         "sops-nix": "sops-nix",
         "stylix": "stylix"
+      }
+    },
+    "slick": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790451959,
+        "narHash": "sha256-n78AEMu7FnaR5RX73fLAZuSMFBwrxKK3Lzg8I63ivTQ=",
+        "owner": "3kh0",
+        "repo": "slick",
+        "rev": "0affb2d86f6606dc511c420427c028d1e685d800",
+        "type": "github"
+      },
+      "original": {
+        "owner": "3kh0",
+        "repo": "slick",
+        "type": "github"
       }
     },
     "sops-nix": {

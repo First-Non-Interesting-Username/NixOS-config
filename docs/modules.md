@@ -20,6 +20,7 @@ nixosModules.audio
 nixosModules.gaming-distrobox
 nixosModules.gaming
 nixosModules.programs-desktop
+nixosModules.slick
 nixosModules.sudo
 nixosModules.input
 nixosModules.printing
