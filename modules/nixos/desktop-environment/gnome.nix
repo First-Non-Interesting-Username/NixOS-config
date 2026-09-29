@@ -177,7 +177,6 @@
                 auto-raise = false;
               };
               "org/gnome/desktop/wm/keybindings" = {
-                # Unbind Alt+Tab, keep Super+Tab for app switching
                 switch-applications = ["<Super>Tab"];
                 switch-applications-backward = ["<Shift><Super>Tab"];
                 switch-windows = [];
