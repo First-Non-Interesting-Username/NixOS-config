@@ -171,6 +171,7 @@ tree
 │   │   │   ├── browser.nix
 │   │   │   ├── gaming.nix
 │   │   │   ├── programs.nix
+│   │   │   ├── slick.nix
 │   │   │   └── sudo.nix
 │   │   ├── desktop # Modules related to desktop functionality
 │   │   │   ├── audio.nix
