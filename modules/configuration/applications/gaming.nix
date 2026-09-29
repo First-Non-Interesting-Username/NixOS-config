@@ -57,8 +57,6 @@
 
         programs.nix-crab = {
           slssteam.enable = true;
-          # LuaTools stack: use the slsteam-moon fork (Lua manifest importer)
-          # for downloads from the Steam CDN; takes precedence over slssteam
           slssteam-moon.enable = true;
           cloudredirect.enable = true;
           cloudredirect.moon.enable = true;
@@ -78,8 +76,6 @@
                 ".local/share/keyrings"
                 ".cache/ProtonPlus"
                 ".luanti"
-                # nix-crab / host Steam stack (~/.steam is a compat symlink
-                # to .local/share/Steam created by programs.steam itself)
                 ".local/share/Steam"
                 ".config/SLSsteam"
                 ".config/CloudRedirect"
@@ -106,8 +102,6 @@
             nix-crab = {
               luatools = {
                 enable = true;
-                # Run Lumen as a systemd user service instead of shadowing
-                # the steam command with a wrapper sidecar
                 lumenService = true;
               };
               cloudredirect.moon.enable = true;
