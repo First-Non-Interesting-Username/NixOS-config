@@ -88,7 +88,7 @@
           };
         };
 
-        home-manager.users.${config.custom.user.name} = _: {
+        home-manager.users.${config.custom.user.name} = {lib, ...}: {
           imports = [
             inputs.nix-crab.homeModules.default
           ];
@@ -98,6 +98,18 @@
             protonplus
             luanti
           ];
+
+          home.activation.steamCefAndStplugin = lib.hm.dag.entryAfter ["writeBoundary"] ''
+            mkdir -p "$HOME/.local/share/Steam/config/stplug-in"
+            touch "$HOME/.local/share/Steam/.cef-enable-remote-debugging"
+          '';
+
+          systemd.user.services.nix-crab-lumen.Service = {
+            Environment = "PATH=/run/current-system/sw/bin:/usr/bin:/bin";
+            Restart = lib.mkForce "always";
+            RestartSec = 5;
+          };
+
           programs = {
             nix-crab = {
               luatools = {
