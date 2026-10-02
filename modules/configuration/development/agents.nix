@@ -16,9 +16,10 @@
               ".config/opencode"
               ".local/share/opencode"
               ".config/kilocode"
-              ".dsh"
-              ".pi"
-              ".factory"
+              ".config/ChatGPT"
+              ".config/Claude"
+              ".claude"
+              ".codex"
             ];
           };
         };
@@ -32,12 +33,13 @@
           };
         };
 
-        home.packages = [
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.kilocode-cli
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.dsh
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.droid
+        home.packages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+          kilocode-cli
+          ccusage
+          chatgpt
+          claude-desktop
+          claude-code
+          codex
         ];
       };
     };
