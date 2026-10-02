@@ -110,8 +110,8 @@ _: {
                 mode = "subtle";
               };
               agent = {
-                enabled = false;
-                button = false;
+                enabled = true;
+                button = true;
               };
               tabs = {
                 file_icons = true;
