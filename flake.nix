@@ -70,7 +70,7 @@
     };
 
     nix-crab = {
-      url = "github:ItszFinn/nix-crab";
+      url = "github:first-uninteresting-username/nix-crab";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
