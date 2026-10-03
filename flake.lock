@@ -438,6 +438,27 @@
         "type": "github"
       }
     },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-crab",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790989254,
+        "narHash": "sha256-ZN+riaeFuE+DZ5zfqJiXlM12jLwZzeIXiNkU1YeHMXI=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "acd21c5a3420a9d5fd0ed06299b10828267ef9ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1788467110,
@@ -588,6 +609,7 @@
         "cloudredirect": "cloudredirect",
         "cloudredirect-cli": "cloudredirect-cli",
         "cloudredirect-moon": "cloudredirect-moon",
+        "home-manager": "home-manager_2",
         "luatools-moon": "luatools-moon",
         "lumen": "lumen",
         "millennium": "millennium",
@@ -601,11 +623,11 @@
         "steamnetsock": "steamnetsock"
       },
       "locked": {
-        "lastModified": 1791021611,
-        "narHash": "sha256-KFWahKZkc/NO7QtrJVmrUzB2b5QRmrbbkiOR6diQgus=",
+        "lastModified": 1791025983,
+        "narHash": "sha256-nZbTnUw4UlS/k4Td2VRBTYg+QaSi+EVQijM9TsO3ba0=",
         "owner": "first-uninteresting-username",
         "repo": "nix-crab",
-        "rev": "5c0ffd09ecaff6b9a5f264fcb3281116f1d08ae4",
+        "rev": "bbe4b24f197c44760196a8084053f5d78a002bc0",
         "type": "github"
       },
       "original": {
