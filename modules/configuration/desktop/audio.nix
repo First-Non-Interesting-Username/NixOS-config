@@ -14,7 +14,8 @@ _: {
       # valid stream of digital zeros. The control is volatile and resets on
       # every replug, so clear it whenever the card shows up.
       micCaptureUnmute = pkgs.writeShellScript "mic-capture-unmute" ''
-        export PATH=${lib.makeBinPath [pkgs.alsa-utils pkgs.coreutils]}
+        set -euo pipefail
+        export PATH=${lib.makeBinPath [pkgs.alsa-utils pkgs.coreutils pkgs.gawk]}
 
         card=""
         for path in /sys/class/sound/card[0-9]*; do
@@ -53,6 +54,8 @@ _: {
           exit 0
         fi
 
+        # Force a hardware write even if the cached switch already reads as on.
+        amixer -c "$card" cset "numid=$numid" 0
         amixer -c "$card" cset "numid=$numid" 1
       '';
     in {
