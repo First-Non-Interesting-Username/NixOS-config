@@ -105,7 +105,7 @@
           '';
 
           systemd.user.services.nix-crab-lumen.Service = {
-            Environment = "PATH=/run/current-system/sw/bin:/usr/bin:/bin";
+            Environment = "PATH=${lib.makeBinPath [pkgs.unzip]}:/run/current-system/sw/bin:/usr/bin:/bin";
             Restart = lib.mkForce "always";
             RestartSec = 5;
           };
