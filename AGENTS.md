@@ -6,7 +6,10 @@ Guidance for agents working in this NixOS configuration repository.
 
 - Never commit or push changes directly to `main`.
 - Before editing, inspect the working tree and current branch. Preserve unrelated user changes.
-- Use a dedicated branch for each task, named `codex/<short-kebab-case-description>` by default.
+- Use a dedicated branch for each task, named `<conventional-commit-header>/<feature-description>`.
+  The header is the commit type with an optional scope, without a colon or spaces; the description
+  uses kebab-case. Examples: `docs/refresh-agent-guidance`, `feat(modules)/add-service`,
+  and `fix(hosts)/correct-boot-settings`.
   Start new work from the latest `origin/main`; reuse an existing task branch when continuing its PR.
   Do not include unrelated commits from another task's branch.
 - Validate changes, commit only task-related files, push the task branch, and create a pull request
