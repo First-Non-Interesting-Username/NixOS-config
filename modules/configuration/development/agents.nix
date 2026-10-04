@@ -17,8 +17,6 @@
               ".local/share/opencode"
               ".config/kilocode"
               ".config/ChatGPT"
-              ".config/Claude"
-              ".claude"
               ".codex"
             ];
           };
@@ -37,8 +35,6 @@
           kilocode-cli
           ccusage
           chatgpt
-          claude-desktop
-          claude-code
           codex
         ];
       };
