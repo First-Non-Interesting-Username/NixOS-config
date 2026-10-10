@@ -62,6 +62,15 @@ _: {
         )
       '';
 
+      passthru.updateScript = pkgs.lib.getExe (pkgs.writeShellApplication {
+        name = "update-flow-desktop";
+        runtimeInputs = [pkgs.python3 pkgs.nix];
+        # Run the checkout script so release.json remains writable.
+        text = ''
+          exec python3 packages/flow-desktop/update.py
+        '';
+      });
+
       meta = {
         description = "YouTube and YouTube Music client with local recommendations";
         homepage = "https://github.com/Flow-Tube/Flow-Desktop";
