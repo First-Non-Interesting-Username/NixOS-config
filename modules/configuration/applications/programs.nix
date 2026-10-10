@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 first-uninteresting-username
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-_: {
+{self, ...}: {
   flake = {
     nixosModules.programs-desktop = {
       lib,
@@ -41,6 +41,9 @@ _: {
       };
 
       home-manager.users.${config.custom.user.name} = _: {
+        home.packages = [
+          self.packages.${pkgs.stdenv.hostPlatform.system}.flow-desktop
+        ];
       };
     };
   };

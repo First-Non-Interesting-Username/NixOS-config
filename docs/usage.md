@@ -31,8 +31,13 @@ Run it directly:
 nix run .#flow-desktop
 ```
 
-Add `self.packages.${pkgs.stdenv.hostPlatform.system}.flow-desktop` to a module's
-`environment.systemPackages` or Home Manager's `home.packages` to install it.
+The `programs-desktop` module installs Flow Desktop for the configured user on
+`armin` and `victim`. Its launcher appears in the desktop application menu after
+a rebuild.
+
+For other configurations, add
+`self.packages.${pkgs.stdenv.hostPlatform.system}.flow-desktop` to a module's
+`environment.systemPackages` or Home Manager's `home.packages`.
 
 The existing **Update Packages** workflow checks the latest published GitHub
 release every Monday and Thursday and opens an update PR. It runs
