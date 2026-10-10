@@ -58,11 +58,16 @@ jobs:
       - name: Update packages
         env:
           PACKAGES: ${{ steps.list.outputs.packages }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "$PACKAGES" | jq -r '.[]' | while read -r pkg; do
             echo "::group::nix-update $pkg"
-            nix run github:Mic92/nix-update -- --flake "$pkg" \
-              || echo "::warning::nix-update failed for $pkg"
+            if [ "$pkg" = "flow-desktop" ]; then
+              python3 packages/flow-desktop/update.py || exit 1
+            else
+              nix run github:Mic92/nix-update -- --flake "$pkg" \
+                || echo "::warning::nix-update failed for $pkg"
+            fi
             echo "::endgroup::"
           done
 
@@ -81,7 +86,7 @@ jobs:
           commit-message: "deps: update packages"
           title: "chore(update): biweekly package update"
           body: |
-            Automated packages update via `nix-update`.
+            Automated package updates via `nix-update` and the Flow Desktop release updater.
           branch: "chore(update)/package-updates"
           delete-branch: true
           labels: dependencies

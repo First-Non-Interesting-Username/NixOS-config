@@ -46,7 +46,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      # Fetch Git directly because GitLab's default-branch commits API returns HTTP 403.
+      url = "git+https://gitlab.com/rycee/nur-expressions.git?dir=pkgs/firefox-addons&ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
