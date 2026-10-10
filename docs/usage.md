@@ -18,41 +18,6 @@ After those steps are complete, you can address the package and use it with:
 self.packages.${pkgs.stdenv.hostPlatform.system}.PACKAGE_NAME
 ```
 
-### Flow Desktop
-
-`flow-desktop` repackages the upstream release `.deb` for `x86_64-linux` and
-`aarch64-linux`. It extracts and patches the prebuilt executable without compiling
-Flow Desktop. The package includes its desktop launcher, icons, resources, and
-GStreamer codecs for media playback.
-
-Run it directly:
-
-```bash
-nix run .#flow-desktop
-```
-
-The `programs-desktop` module installs Flow Desktop for the configured user on
-`armin` and `victim`. Its launcher appears in the desktop application menu after
-a rebuild.
-
-For other configurations, add
-`self.packages.${pkgs.stdenv.hostPlatform.system}.flow-desktop` to a module's
-`environment.systemPackages` or Home Manager's `home.packages`.
-
-The existing **Update Packages** workflow checks the latest published GitHub
-release every Monday and Thursday and opens an update PR. It runs
-`packages/flow-desktop/update.py` to update the version and both `.deb` hashes in
-`packages/flow-desktop/release.json` together. It follows GitHub's latest release,
-which currently carries a beta version, and excludes releases marked as
-prereleases and nightly Actions artifacts. The package build matrix validates both
-architectures in CI.
-
-Refresh the release pin manually with Python 3 and Nix installed:
-
-```bash
-python3 packages/flow-desktop/update.py
-```
-
 ### Modules
 
 To use modules in other modules or configurations, you need to:
